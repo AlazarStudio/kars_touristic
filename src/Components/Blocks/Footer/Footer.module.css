@@ -5,6 +5,7 @@ footer {
     color: var(--white_color);
     display: flex;
     justify-content: center;
+    margin-top: 40px;
 }
 
 .footer_data {

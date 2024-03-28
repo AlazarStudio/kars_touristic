@@ -1,0 +1,16 @@
+.InfoBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    border-radius: 20px;
+    border: 1px solid #658FB0;
+    padding: 30px;
+}
+
+.InfoBlock img{
+    width: 70px;
+}
