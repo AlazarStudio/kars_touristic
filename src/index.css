@@ -24,3 +24,7 @@ main {
     gap: 80px;
     padding-bottom: 80px;
 }
+
+ul{
+    list-style: none;
+}
