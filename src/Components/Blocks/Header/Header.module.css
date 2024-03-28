@@ -5,6 +5,9 @@ header{
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .navigation{
@@ -20,7 +23,7 @@ header{
 }
 
 .navigation_links ul li a{
-    color: #fff;
+    color: var(--white_color);
 }
 
 .navigation_btn ul {

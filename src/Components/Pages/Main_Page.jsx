@@ -3,7 +3,7 @@ import React from "react";
 function Main_Page({ children, ...props }) {
     return ( 
         <>
-            Main
+            <main>main</main>
         </>
      );
 }

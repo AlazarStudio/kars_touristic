@@ -6,25 +6,25 @@
     scroll-behavior: smooth;
 }
 
+:root {
+    --blockWidth: 1300px;
+    --white_color: #fff;
+    --dark_color: #181818;
+}
+
 a {
     text-decoration: none;
 }
 
-:root {
-    --blockWidth: 1300px;
+ul {
+    list-style: none;
 }
 
 body {
-    background-color: #eef0f4;
+    background-color: #fff;
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    gap: 80px;
-    padding-bottom: 80px;
-}
-
-ul{
-    list-style: none;
+    min-height: 100vh;
+    min-height: 100svh;
 }
