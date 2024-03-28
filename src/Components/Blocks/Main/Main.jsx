@@ -83,25 +83,17 @@ function Main({ children, ...props }) {
             logo: main_11_logo
         }
     ]
-
-    const firstThree = regionData.slice(0, 3);
-    const rest = regionData.slice(3);
-
-    const renderRegionBlocks = (data) => {
-        return data.map((item, index) => (
-            <Region key={index} title={item.title} bg={item.bg} logo={item.logo} />
-        ));
-    };
     return (
         <>
             <div className={classes.main}>
                 <div className={classes.main_title}>Организуем ваш отдых на Кавказе</div>
                 <div className={classes.main_desc}>Подберем индивидуальный тур с учетом ваших пожеланий</div>
                 <div className={classes.main_blocks}>
-                    {renderRegionBlocks(firstThree)}
-                </div>
-                <div className={classes.main_blocks}>
-                    {renderRegionBlocks(rest)}
+                    {
+                        regionData.reverse().map((item, index) => (
+                            <Region key={index} title={item.title} bg={item.bg} logo={item.logo} />
+                        ))
+                    }
                 </div>
             </div>
         </>

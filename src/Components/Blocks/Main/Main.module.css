@@ -34,7 +34,8 @@
 .main_blocks {
     width: var(--blockWidth);
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
     justify-content: center;
     gap: 20px;
 }
