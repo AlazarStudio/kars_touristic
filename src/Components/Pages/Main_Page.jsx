@@ -1,11 +1,12 @@
 import React from "react";
+import Main from "../Blocks/Main/Main";
 
 function Main_Page({ children, ...props }) {
-    return ( 
+    return (
         <>
-            <main>main</main>
+            <Main />
         </>
-     );
+    );
 }
 
 export default Main_Page;
