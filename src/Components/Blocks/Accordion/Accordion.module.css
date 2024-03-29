@@ -1,0 +1,47 @@
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.title {
+    width: 100%;
+    border-radius: 50px;
+    padding: 20px 30px;
+    border: 2px solid #8C8C8C;
+    cursor: pointer;
+}
+
+.title_name {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title_content {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 27px;
+    width: 95%;
+}
+.title_content__line{
+    border-top: 1px solid #8C8C8C;
+    margin-top: 25px;
+    padding-top: 30px;
+}
+
+.title_content {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.title_content.open {
+    max-height: 1000px;
+    /* Задайте высоту, которая больше максимальной высоты содержимого */
+}

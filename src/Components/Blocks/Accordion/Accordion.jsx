@@ -1,30 +1,49 @@
+import React, { useState, useRef } from 'react';
 import classes from './Accordion.module.css';
 
-import React, { useState } from 'react';
+import accordion_arrow from '/accordion_arrow.png';
+import accordion_close from '/accordion_close.png';
 
-const AccordionItem = ({ title, content }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
+const AccordionItem = ({ title, content, isOpen, handleClick }) => {
+  const contentRef = useRef(null);
 
   return (
-    <div className="accordion-item">
-      <div className={`title ${isOpen ? 'active' : ''}`} onClick={handleClick}>
-        <i className="dropdown icon"></i>
-        {title}
+    <div className={classes.accordion_item}>
+      <div className={`${classes.title} ${isOpen ? 'active' : ''}`} onClick={handleClick}>
+        <div className={classes.title_name}>
+          {title}
+          {isOpen ? <img src={accordion_close} alt="" /> : <img src={accordion_arrow} alt="" />}
+        </div>
+        <div
+          ref={contentRef}
+          className={`${classes.title_content} ${isOpen ? classes.open : ''}`}
+          style={{ maxHeight: isOpen ? `${contentRef.current.scrollHeight}px` : '0px' }}
+        >
+          <div className={classes.title_content__line}></div>
+          {content}
+        </div>
       </div>
-      {isOpen && <div className="content">{content}</div>}
     </div>
   );
 };
 
 const Accordion = ({ items }) => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const handleClick = (index) => {
+    setOpenIndex(index === openIndex ? null : index);
+  };
+
   return (
-    <div className="ui styled accordion">
+    <div className={classes.accordion}>
       {items.map((item, index) => (
-        <AccordionItem key={index} title={item.title} content={item.content} />
+        <AccordionItem
+          key={index}
+          title={item.title}
+          content={item.content}
+          isOpen={index === openIndex}
+          handleClick={() => handleClick(index)}
+        />
       ))}
     </div>
   );
