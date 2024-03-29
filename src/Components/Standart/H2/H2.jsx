@@ -17,6 +17,7 @@ function H2({ children, ...props }) {
                 margin: props.margin,
                 display: props.display,
                 color: props.color,
+                textTransform: props.text_transform
             }}>
                 {children}
             </h2>

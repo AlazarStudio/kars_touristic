@@ -9,14 +9,14 @@
     background-size: cover;
 }
 
-.about_title__left{
+.about_title__left {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 45%;
 }
 
-.about_title__right{
+.about_title__right {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -39,6 +39,43 @@
     line-height: 36px;
 }
 
-.info_block_text{
+.info_block_text {
     width: 45%;
+}
+
+.mission {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 0;
+    gap: 30px;
+    background: url("/mission_bg.png");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-bottom: 40px;
+    border-radius: 30px;
+}
+
+.mission_line {
+    display: flex;
+}
+
+.mission_title {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 36px;
+    text-align: center;
+    color: var(--white_color);
+}
+
+.mission_text {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+    text-align: center;
+    color: var(--white_color);
+    width: 80%;
+    margin: 0 auto;
 }
