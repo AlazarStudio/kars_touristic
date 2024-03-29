@@ -19,6 +19,7 @@ function Transfer({ children, ...props }) {
                         linkText={"НАПИСАТЬ В TELEGRAM"}
                         bgImg={transfer_bg}
                         iconImg={tg}
+                        mb={"40px"}
                     />
                 </WidthBlock>
             </CenterBlock>

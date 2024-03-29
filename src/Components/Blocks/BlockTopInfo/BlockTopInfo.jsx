@@ -4,7 +4,7 @@ import classes from './BlockTopInfo.module.css';
 function BlockTopInfo({ children, ...props }) {
     return (
         <>
-            <div className={classes.BlockTopInfo} style={{"background": `url(${props.bgImg})`}}>
+            <div className={classes.BlockTopInfo} style={{"background-image": `url(${props.bgImg})`, "margin-bottom": props.mb}}>
                 <div className={classes.BlockTopInfo_block}>
                     {props.topTitle ? <div className={classes.BlockTopInfo_topTitle}>{props.topTitle}</div> : null}
                     {props.title ? <div className={classes.BlockTopInfo_title}>{props.title}</div> : null}
