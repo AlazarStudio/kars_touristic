@@ -10,6 +10,8 @@ function InfoBlock({ children, ...props }) {
                 gap: props.gap,
                 margin: props.margin,
                 padding: props.padding,
+                border: props.border,
+                backgroundColor: props.background_color
             }}>
                 {children}
             </div>

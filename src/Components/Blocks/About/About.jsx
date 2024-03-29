@@ -79,17 +79,17 @@ function About({ children, ...props }) {
                     </div>
 
                     <RowBlock justifyContent={"space-between"}>
-                        <InfoBlock width={"32%"}>
+                        <InfoBlock width={"32%"} height={"150px"}>
                             <img src={about_certificate} alt="" />
                             Сертифицированный туроператор
                         </InfoBlock>
-                        <InfoBlock width={"32%"}>
+                        <InfoBlock width={"32%"} height={"150px"}>
                             <img src={about_interaction} alt="" />
                             <div className={classes.info_block_text}>
                                 Работаем без посредников
                             </div>
                         </InfoBlock>
-                        <InfoBlock width={"32%"}>
+                        <InfoBlock width={"32%"} height={"150px"}>
                             <img src={about_handshake} alt="" />
                             Оказываем поддержку клиентам
                         </InfoBlock>

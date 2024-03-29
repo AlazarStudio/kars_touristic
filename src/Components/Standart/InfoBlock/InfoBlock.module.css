@@ -9,8 +9,5 @@
     border-radius: 20px;
     border: 1px solid #658FB0;
     padding: 30px;
-}
-
-.InfoBlock img{
-    width: 70px;
+    backdrop-filter: blur(3px);
 }

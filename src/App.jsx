@@ -8,6 +8,8 @@ import Main_Page from "./Components/Pages/Main_Page";
 import About_Page from "./Components/Pages/About_Page";
 import Transfer_Page from "./Components/Pages/Transfer_Page";
 import Faq_Page from "./Components/Pages/Faq_Page";
+import Contacts_Page from "./Components/Pages/Contacts_Page";
+import Turagents_Page from "./Components/Pages/Turagents_Page";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
           <Route path="/about" element={<About_Page />} />
           <Route path="/transfer" element={<Transfer_Page />} />
           <Route path="/faq" element={<Faq_Page />} />
+          <Route path="/contacts" element={<Contacts_Page />} />
+          <Route path="/turagents" element={<Turagents_Page />} />
           <Route path="*" element={<Non_Found_Page />} />
         </Route>
       </Routes>
