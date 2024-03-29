@@ -29,19 +29,25 @@
     font-weight: 500;
     line-height: 27px;
     width: 95%;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
 }
-.title_content__line{
+
+.title_content__line {
     border-top: 1px solid #8C8C8C;
     margin-top: 25px;
     padding-top: 30px;
 }
 
-.title_content {
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-}
-
 .title_content.open {
     max-height: 1000px;
-    /* Задайте высоту, которая больше максимальной высоты содержимого */
+}
+
+.close_icon,
+.arrow_icon {
+    transition: transform 0.3s ease;
+}
+
+.close_icon {
+    transform: rotate(90deg);
 }

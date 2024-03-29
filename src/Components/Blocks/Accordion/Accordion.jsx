@@ -12,7 +12,11 @@ const AccordionItem = ({ title, content, isOpen, handleClick }) => {
       <div className={`${classes.title} ${isOpen ? 'active' : ''}`} onClick={handleClick}>
         <div className={classes.title_name}>
           {title}
-          {isOpen ? <img src={accordion_close} alt="" /> : <img src={accordion_arrow} alt="" />}
+          <img
+            className={isOpen ? classes.close_icon : classes.arrow_icon}
+            src={isOpen ? accordion_close : accordion_arrow}
+            alt=""
+          />
         </div>
         <div
           ref={contentRef}
