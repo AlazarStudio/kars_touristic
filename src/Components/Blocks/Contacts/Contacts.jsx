@@ -3,6 +3,8 @@ import classes from './Contacts.module.css';
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import BlockTopInfo from "../BlockTopInfo/BlockTopInfo";
+import H2 from "../../Standart/H2/H2";
+import Form from "../Form/Form";
 
 import contacts_bg from "/contacts_bg.png";
 
@@ -40,6 +42,12 @@ function Contacts({ children, ...props }) {
                             }
                         ]}
                     />
+
+                    <CenterBlock>
+                        <H2>Если у Вас остались вопросы, оставьте заявку, мы свяжемся с Вами!</H2>
+
+                        <Form/>
+                    </CenterBlock>
                 </WidthBlock>
             </CenterBlock>
         </>
