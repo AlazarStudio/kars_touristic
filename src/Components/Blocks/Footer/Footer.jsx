@@ -2,10 +2,10 @@ import React from "react";
 import classes from './Footer.module.css';
 import { Link } from "react-router-dom";
 
-import logo from '/public/favicon.png';
-import alazar from '/public/alazar_logo.png';
-import tg from '/public/tg.png';
-import vk from '/public/vk.png';
+import logo from '/favicon.png';
+import alazar from '/alazar_logo.png';
+import tg from '/tg.png';
+import vk from '/vk.png';
 
 function Footer({ children, ...props }) {
     return (

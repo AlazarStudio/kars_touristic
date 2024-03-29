@@ -2,11 +2,11 @@ import React from "react";
 import classes from './Header_black.module.css';
 import { Link } from "react-router-dom";
 
-import logo from '/public/favicon_black.png';
-import arnament from '/public/header_arnament.png';
-import favourite from '/public/header_favourite_black.png';
-import cart from '/public/header_cart_black.png';
-import profile from '/public/header_profile_black.png';
+import logo from '/favicon_black.png';
+import arnament from '/header_arnament.png';
+import favourite from '/header_favourite_black.png';
+import cart from '/header_cart_black.png';
+import profile from '/header_profile_black.png';
 
 function Header_black({ children, ...props }) {
     return ( 

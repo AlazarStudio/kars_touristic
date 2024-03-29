@@ -3,13 +3,12 @@ import classes from './About.module.css';
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import RowBlock from "../../Standart/RowBlock/RowBlock";
-
-import logo from "/public/about_title_logo.png";
 import InfoBlock from "../../Standart/InfoBlock/InfoBlock";
 
-import about_certificate from "/public/about_certificate.png";
-import about_interaction from "/public/about_interaction.png";
-import about_handshake from "/public/about_handshake.png";
+import logo from "/about_title_logo.png";
+import about_certificate from "/about_certificate.png";
+import about_interaction from "/about_interaction.png";
+import about_handshake from "/about_handshake.png";
 
 function About({ children, ...props }) {
     return (

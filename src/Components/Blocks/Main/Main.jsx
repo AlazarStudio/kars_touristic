@@ -1,29 +1,29 @@
 import React from "react";
 import classes from './Main.module.css';
-
-import main_1 from "/public/main_1.png";
-import main_2 from "/public/main_2.png";
-import main_3 from "/public/main_3.png";
-import main_4 from "/public/main_4.png";
-import main_5 from "/public/main_5.png";
-import main_6 from "/public/main_6.png";
-import main_7 from "/public/main_7.png";
-import main_8 from "/public/main_8.png";
-import main_9 from "/public/main_9.png";
-import main_10 from "/public/main_10.png";
-import main_11 from "/public/main_11.png";
-
-import main_2_logo from "/public/main_2_logo.png";
-import main_3_logo from "/public/main_3_logo.png";
-import main_4_logo from "/public/main_4_logo.png";
-import main_5_logo from "/public/main_5_logo.png";
-import main_6_logo from "/public/main_6_logo.png";
-import main_7_logo from "/public/main_7_logo.png";
-import main_8_logo from "/public/main_8_logo.png";
-import main_9_logo from "/public/main_9_logo.png";
-import main_10_logo from "/public/main_10_logo.png";
-import main_11_logo from "/public/main_11_logo.png";
 import Region from "../Region/Region";
+
+import main_1 from "/main_1.png";
+import main_2 from "/main_2.png";
+import main_3 from "/main_3.png";
+import main_4 from "/main_4.png";
+import main_5 from "/main_5.png";
+import main_6 from "/main_6.png";
+import main_7 from "/main_7.png";
+import main_8 from "/main_8.png";
+import main_9 from "/main_9.png";
+import main_10 from "/main_10.png";
+import main_11 from "/main_11.png";
+
+import main_2_logo from "/main_2_logo.png";
+import main_3_logo from "/main_3_logo.png";
+import main_4_logo from "/main_4_logo.png";
+import main_5_logo from "/main_5_logo.png";
+import main_6_logo from "/main_6_logo.png";
+import main_7_logo from "/main_7_logo.png";
+import main_8_logo from "/main_8_logo.png";
+import main_9_logo from "/main_9_logo.png";
+import main_10_logo from "/main_10_logo.png";
+import main_11_logo from "/main_11_logo.png";
 
 function Main({ children, ...props }) {
     let regionData = [

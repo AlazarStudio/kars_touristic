@@ -2,11 +2,11 @@ import React from "react";
 import classes from './Header_white.module.css';
 import { Link } from "react-router-dom";
 
-import logo from '/public/favicon.png';
-import arnament from '/public/header_arnament.png';
-import favourite from '/public/header_favourite.png';
-import cart from '/public/header_cart.png';
-import profile from '/public/header_profile.png';
+import logo from '/favicon.png';
+import arnament from '/header_arnament.png';
+import favourite from '/header_favourite.png';
+import cart from '/header_cart.png';
+import profile from '/header_profile.png';
 
 function Header_white({ children, ...props }) {
     return ( 
