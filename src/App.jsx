@@ -1,11 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 
+import Layout from "./Components/Standart/Layout/Layout";
+import Non_Found_Page from "./Components/Pages/Non_Found_Page";
+
 import Main_Page from "./Components/Pages/Main_Page";
 import About_Page from "./Components/Pages/About_Page";
 import Transfer_Page from "./Components/Pages/Transfer_Page";
-import Non_Found_Page from "./Components/Pages/Non_Found_Page";
-import Layout from "./Components/Standart/Layout/Layout";
+import Faq_Page from "./Components/Pages/Faq_Page";
 
 function App() {
   return (

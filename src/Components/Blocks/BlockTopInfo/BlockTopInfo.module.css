@@ -1,0 +1,64 @@
+.BlockTopInfo {
+    min-height: 375px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 40px;
+    border-radius: 30px;
+    overflow: hidden;
+    padding: 75px;
+    color: var(--white_color);
+}
+
+.BlockTopInfo_block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.BlockTopInfo_topTitle {
+    font-family: Montserrat;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 60px;
+    text-align: center;
+}
+
+.BlockTopInfo_title {
+    font-family: Montserrat;
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 60px;
+}
+
+.BlockTopInfo_text {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    width: 50%;
+}
+
+.BlockTopInfo_link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--white_color);
+    padding: 16px 50px;
+    border-radius: 30px;
+}
+
+.BlockTopInfo_link__text {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--black_color);
+}
