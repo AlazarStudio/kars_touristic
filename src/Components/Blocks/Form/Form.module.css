@@ -26,6 +26,7 @@
     border: none;
     border-bottom: 1px solid #8C8C8C;
     padding: 0 15px;
+    outline: none;
 }
 
 .form textarea {
@@ -35,6 +36,7 @@
     padding: 15px;
     margin-top: 20px;
     resize: vertical;
+    outline: none;
 }
 
 .form label {
@@ -44,6 +46,7 @@
     font-size: 12px;
     font-weight: 400;
     line-height: 14.63px;
+    cursor: pointer;
 }
 
 .form label input {
@@ -63,4 +66,5 @@
     padding: 15px 90px;
     border-radius: 30px;
     margin-top: 30px;
+    cursor: pointer;
 }

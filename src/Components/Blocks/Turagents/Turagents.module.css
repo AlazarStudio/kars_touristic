@@ -1,0 +1,44 @@
+.turagentsText {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+    padding: 0 80px;
+}
+
+.turagentsText p {
+    margin-bottom: 20px;
+}
+
+.turagentsText p:last-child {
+    margin-bottom: 0px;
+}
+
+.turagentsButtons {
+    display: flex;
+    justify-content: space-between;
+    gap: 70px;
+    width: 100%;
+    margin-bottom: 80px;
+    padding: 0 80px;
+}
+
+.turagentsButtons_item {
+    display: flex;
+    width: 48%;
+    border: 1px solid var(--black_color);
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    color: var(--black_color);
+    height: 135px;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+    background-color: #0000001A;
+}
+
+.turagentsButtons_item:last-child{
+    background-color: var(--white_color);
+}
