@@ -1,7 +1,38 @@
-import React from "react";
+import React, { useState, useEffect }  from "react";
 import classes from './Filter.module.css';
 
-function Filter({ children, filters, handleFilterChange, ...props }) {
+function Filter({ children, objects, updateFilteredObjects, ...props }) {
+    
+    const [filters, setFilters] = useState({
+        city: "",
+        category: "",
+        date: "",
+        tripType: ""
+    });
+
+    useEffect(() => {
+        applyFilters();
+    }, [filters]);
+
+    const handleFilterChange = (event) => {
+        const { name, value } = event.target;
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            [name]: value === "Показать все" ? "" : value
+        }));
+    };
+
+    const applyFilters = () => {
+        const filteredObjects = objects.filter((item) => {
+            const cityMatch = filters.city === "" || item.city === filters.city;
+            const categoryMatch = filters.category === "" || item.category === filters.category;
+            const dateMatch = filters.date === "" || item.date === filters.date;
+            const tripTypeMatch = filters.tripType === "" || item.tripType === filters.tripType;
+            return cityMatch && categoryMatch && dateMatch && tripTypeMatch;
+        });
+        updateFilteredObjects(filteredObjects);
+    };
+
     return (
         <>
             <div className={classes.filter}>

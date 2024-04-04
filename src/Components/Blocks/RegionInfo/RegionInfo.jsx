@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from './RegionInfo.module.css';
 import { useParams } from 'react-router-dom';
 
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
-import Tours from "../../Blocks/Tours/Tours";
-
-import RowBlock from "../../Standart/RowBlock/RowBlock";
-import InfoBlock from "../../Standart/InfoBlock/InfoBlock";
-import H2 from "../../Standart/H2/H2";
-import TeamBlock from "../TeamBlock/TeamBlock";
+import Tabs from "../../Blocks/Tabs/Tabs";
 
 function RegionInfo({ children, ...props }) {
     const { id } = useParams();
@@ -69,7 +64,103 @@ function RegionInfo({ children, ...props }) {
 
     const handleTabClick = (index) => {
         setActiveTab(index);
+        localStorage.setItem("activeTab", index.toString());
     };
+
+    useEffect(() => {
+        const storedTab = localStorage.getItem("activeTab");
+        if (storedTab) {
+            setActiveTab(parseInt(storedTab)); // Устанавливаем активный таб из локального хранилища
+        }
+    }, []);
+    
+
+
+    let tours = [
+        {
+            img: "object_1.png",
+            title: "«Нoвогодняя сказка Кавказа»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Черкесск",
+            category: "Познавательные",
+            date: "2024-04-05",
+            tripType: "Групповая поездка"
+        },
+        {
+            img: "object_2.png",
+            title: "«Нoвогодние каникулы на Кавказе»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Карачаевск",
+            category: "Гастрономические",
+            date: "2024-04-06",
+            tripType: "Индивидуальная поездка"
+        },
+        {
+            img: "object_3.png",
+            title: "«Нoвогоднее путешествие по Кавказу»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Архыз",
+            category: "Конные",
+            date: "2024-04-05",
+            tripType: "Индивидуальная поездка"
+        },
+        {
+            img: "object_1.png",
+            title: "«Нoвогодняя сказка Кавказа»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Черкесск",
+            category: "Познавательные",
+            date: "2024-04-05",
+            tripType: "Групповая поездка"
+        },
+        {
+            img: "object_2.png",
+            title: "«Нoвогодние каникулы на Кавказе»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Карачаевск",
+            category: "Гастрономические",
+            date: "2024-04-06",
+            tripType: "Индивидуальная поездка"
+        },
+        {
+            img: "object_3.png",
+            title: "«Нoвогоднее путешествие по Кавказу»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Архыз",
+            category: "Конные",
+            date: "2024-04-05",
+            tripType: "Индивидуальная поездка"
+        },
+    ]
+
+    let gids = [
+        {
+            img: "object_1.png",
+            title: "гид",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Черкесск",
+            category: "Познавательные",
+            date: "2024-04-05",
+            tripType: "Групповая поездка"
+        },
+        {
+            img: "object_1.png",
+            title: "гид",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Карачаевск",
+            category: "Конные",
+            date: "2024-04-05",
+            tripType: "Групповая поездка"
+        }
+    ]
 
     return (
         <>
@@ -143,9 +234,9 @@ function RegionInfo({ children, ...props }) {
             <CenterBlock>
                 <WidthBlock>
                     <div id="tab-content">
-                        {activeTab === 1 && <Tours/>}
+                        {activeTab === 1 && <Tabs objects={tours} />}
                         {activeTab === 2 && <div>Content for Tab 2</div>}
-                        {activeTab === 3 && <div>Content for Tab 3</div>}
+                        {activeTab === 3 && <Tabs objects={gids} />}
                         {activeTab === 4 && <div>Content for Tab 4</div>}
                         {activeTab === 5 && <div>Content for Tab 5</div>}
                         {activeTab === 6 && <div>Content for Tab 6</div>}
