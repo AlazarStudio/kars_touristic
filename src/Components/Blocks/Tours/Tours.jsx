@@ -1,60 +1,103 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from './Tours.module.css';
 import Object from "../Object/Object";
+import Filter from "../Filter/Filter";
 
 function Tours({ children, ...props }) {
     let objects = [
         {
-            img : "object_1.png",
-            title : "«Нoвогодняя сказка Кавказа»",
-            price : "От 10000 р.",
-            priceImg : "priceImg.png",
+            img: "object_1.png",
+            title: "«Нoвогодняя сказка Кавказа»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Черкесск",
+            category: "Познавательные",
+            date: "2024-04-05",
+            tripType: "Групповая поездка"
         },
         {
-            img : "object_2.png",
-            title : "«Нoвогодние каникулы на Кавказе»",
-            price : "От 10000 р.",
-            priceImg : "priceImg.png",
+            img: "object_2.png",
+            title: "«Нoвогодние каникулы на Кавказе»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Карачаевск",
+            category: "Гастрономические",
+            date: "2024-04-06",
+            tripType: "Индивидуальная поездка"
         },
         {
-            img : "object_3.png",
-            title : "«Нoвогоднее путешествие по Кавказу»",
-            price : "От 10000 р.",
-            priceImg : "priceImg.png",
+            img: "object_3.png",
+            title: "«Нoвогоднее путешествие по Кавказу»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Архыз",
+            category: "Конные",
+            date: "2024-04-05",
+            tripType: "Индивидуальная поездка"
+        },
+        {
+            img: "object_1.png",
+            title: "«Нoвогодняя сказка Кавказа»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Черкесск",
+            category: "Познавательные",
+            date: "2024-04-05",
+            tripType: "Групповая поездка"
+        },
+        {
+            img: "object_2.png",
+            title: "«Нoвогодние каникулы на Кавказе»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Карачаевск",
+            category: "Гастрономические",
+            date: "2024-04-06",
+            tripType: "Индивидуальная поездка"
+        },
+        {
+            img: "object_3.png",
+            title: "«Нoвогоднее путешествие по Кавказу»",
+            price: "От 10000 р.",
+            priceImg: "priceImg.png",
+            city: "Архыз",
+            category: "Конные",
+            date: "2024-04-05",
+            tripType: "Индивидуальная поездка"
         },
     ]
+
+    const [filters, setFilters] = useState({
+        city: "",
+        category: "",
+        date: "",
+        tripType: ""
+    });
+
+    const handleFilterChange = (event) => {
+        const { name, value } = event.target;
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            [name]: value === "Показать все" ? "" : value
+        }));
+    };
+
+    const filteredObjects = objects.filter((item) => {
+        const cityMatch = filters.city === "" || item.city === filters.city;
+        const categoryMatch = filters.category === "" || item.category === filters.category;
+        const dateMatch = filters.date === "" || item.date === filters.date;
+        const tripTypeMatch = filters.tripType === "" || item.tripType === filters.tripType;
+        return cityMatch && categoryMatch && dateMatch && tripTypeMatch;
+    });
 
     return (
         <>
             <div className={classes.fullBlock}>
-                <div className={classes.filter}>
-                    <select>
-                        <option value="" disabled selected>Город</option>
-                        <option value="Черкесск">Черкесск</option>
-                        <option value="Карачаевск">Карачаевск</option>
-                        <option value="Архыз">Архыз</option>
-                        <option value="Домбай">Домбай</option>
-                        <option value="Теберда">Теберда</option>
-                    </select>
-                    <select>
-                        <option value="" disabled selected>Категория</option>
-                        <option value="Детские">Детские</option>
-                        <option value="Гастрономические">Гастрономические</option>
-                        <option value="Конные">Конные</option>
-                        <option value="Познавательные">Познавательные</option>
-                        <option value="Религиозные">Религиозные</option>
-                    </select>
-                    <input type="date" />
-                    <select>
-                        <option value="Групповая поездка" selected>Групповая поездка</option>
-                        <option value="Индивидуальная поездка">Индивидуальная поездка</option>
-                        <option value="VIP">VIP</option>
-                    </select>
-                </div>
+                <Filter filters={filters} handleFilterChange={handleFilterChange}/>
 
                 <div className={classes.objects}>
                     {
-                        objects.map((item, index) => (
+                        filteredObjects.map((item, index) => (
                             <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} />
                         ))
                     }
