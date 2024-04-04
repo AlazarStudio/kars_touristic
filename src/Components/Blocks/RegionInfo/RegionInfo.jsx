@@ -145,7 +145,7 @@ function RegionInfo({ children, ...props }) {
     useEffect(() => {
         const storedTab = localStorage.getItem("activeTab");
         if (storedTab) {
-            setActiveTab(parseInt(storedTab)); // Устанавливаем активный таб из локального хранилища
+            setActiveTab(parseInt(storedTab));
         }
     }, []);
 
