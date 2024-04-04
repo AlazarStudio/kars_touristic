@@ -29,3 +29,14 @@ main {
     min-height: 100vh;
     min-height: 100svh;
 }
+
+.nonFoundPage{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--black_color);
+    color: var(--white_color);
+    font-size: 28px;
+}

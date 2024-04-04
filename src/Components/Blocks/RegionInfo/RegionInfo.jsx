@@ -5,13 +5,13 @@ import { useParams } from 'react-router-dom';
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import Tabs from "../../Blocks/Tabs/Tabs";
+import Non_Found_Page from "../../Pages/Non_Found_Page";
 
 function RegionInfo({ children, ...props }) {
     const { id } = useParams();
 
-    let regions = [
-        {
-            id_region: "karachaevo_cherkessiya",
+    let regionData = {
+        "karachaevo_cherkessiya": {
             bg_region: "RegionInfo_kchr_bg.png",
             logo_region: "main_2_logo.png",
             title_region: "Карачаево-Черкесская Республика",
@@ -23,21 +23,96 @@ function RegionInfo({ children, ...props }) {
                 Современная Карачаево-Черкесия — субъект Российской Федерации в составе Северо-Кавказского федерального округа, расположена в северо-западной части предгорий Кавказа. Её территория составляет 14 277 кв. км. На западе республика граничит с Краснодарским краем, на севере и северо-востоке со Ставропольским краем, на востоке с Кабардино-Балкарией, на юге — вдоль Главного Кавказского хребта — с Грузией и Абхазией.
                 </p>
             `,
-
+            tours: [
+                {
+                    img: "object_1.png",
+                    title: "«Нoвогодняя сказка Кавказа»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка"
+                },
+                {
+                    img: "object_2.png",
+                    title: "«Нoвогодние каникулы на Кавказе»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Гастрономические",
+                    date: "2024-04-06",
+                    tripType: "Индивидуальная поездка"
+                },
+                {
+                    img: "object_3.png",
+                    title: "«Нoвогоднее путешествие по Кавказу»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Архыз",
+                    category: "Конные",
+                    date: "2024-04-05",
+                    tripType: "Индивидуальная поездка"
+                },
+                {
+                    img: "object_1.png",
+                    title: "«Нoвогодняя сказка Кавказа»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка"
+                },
+                {
+                    img: "object_2.png",
+                    title: "«Нoвогодние каникулы на Кавказе»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Гастрономические",
+                    date: "2024-04-06",
+                    tripType: "Индивидуальная поездка"
+                },
+                {
+                    img: "object_3.png",
+                    title: "«Нoвогоднее путешествие по Кавказу»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Архыз",
+                    category: "Конные",
+                    date: "2024-04-05",
+                    tripType: "Индивидуальная поездка"
+                },
+            ],
+            gids: [
+                {
+                    img: "object_1.png",
+                    title: "гид",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка"
+                },
+                {
+                    img: "object_1.png",
+                    title: "гид",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Конные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка"
+                }
+            ]
         }
-    ]
+    }
+    const regionInfo = regionData[id];
 
-    let id_reg, background, logo, title, desc;
-
-    regions.map((item, index) => {
-        if (item.id_region == id) {
-            id_reg = item.id_region
-            background = item.bg_region
-            logo = item.logo_region
-            title = item.title_region
-            desc = parseHTML(item.desc_region);
-        }
-    })
+    const tours = regionInfo?.tours || [];
+    const gids = regionInfo?.gids || [];
 
     function parseHTML(htmlString) {
         const domParser = new DOMParser();
@@ -73,176 +148,91 @@ function RegionInfo({ children, ...props }) {
             setActiveTab(parseInt(storedTab)); // Устанавливаем активный таб из локального хранилища
         }
     }, []);
-    
-
-
-    let tours = [
-        {
-            img: "object_1.png",
-            title: "«Нoвогодняя сказка Кавказа»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Черкесск",
-            category: "Познавательные",
-            date: "2024-04-05",
-            tripType: "Групповая поездка"
-        },
-        {
-            img: "object_2.png",
-            title: "«Нoвогодние каникулы на Кавказе»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Карачаевск",
-            category: "Гастрономические",
-            date: "2024-04-06",
-            tripType: "Индивидуальная поездка"
-        },
-        {
-            img: "object_3.png",
-            title: "«Нoвогоднее путешествие по Кавказу»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Архыз",
-            category: "Конные",
-            date: "2024-04-05",
-            tripType: "Индивидуальная поездка"
-        },
-        {
-            img: "object_1.png",
-            title: "«Нoвогодняя сказка Кавказа»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Черкесск",
-            category: "Познавательные",
-            date: "2024-04-05",
-            tripType: "Групповая поездка"
-        },
-        {
-            img: "object_2.png",
-            title: "«Нoвогодние каникулы на Кавказе»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Карачаевск",
-            category: "Гастрономические",
-            date: "2024-04-06",
-            tripType: "Индивидуальная поездка"
-        },
-        {
-            img: "object_3.png",
-            title: "«Нoвогоднее путешествие по Кавказу»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Архыз",
-            category: "Конные",
-            date: "2024-04-05",
-            tripType: "Индивидуальная поездка"
-        },
-    ]
-
-    let gids = [
-        {
-            img: "object_1.png",
-            title: "гид",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Черкесск",
-            category: "Познавательные",
-            date: "2024-04-05",
-            tripType: "Групповая поездка"
-        },
-        {
-            img: "object_1.png",
-            title: "гид",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Карачаевск",
-            category: "Конные",
-            date: "2024-04-05",
-            tripType: "Групповая поездка"
-        }
-    ]
 
     return (
         <>
-            <div className={classes.main} style={{ backgroundImage: `url('/${background}')` }}>
-                <CenterBlock>
-                    <WidthBlock>
-                        <div className={classes.region}>
-                            <div className={classes.region_left}>
-                                <div className={classes.region_left__logo}><img src={'/' + logo} alt="" /></div>
-                                <div className={classes.region_left__title}>{title}</div>
-                                <div className={classes.region_left__desc}>{desc}</div>
-                            </div>
-                            <div className={classes.region_right}>
-                                <div className={classes.centerBlock}>
-                                    <a href="#tab-content"
-                                        className={`${classes.region_right__item} ${activeTab === 1 ? `${classes.active_region_item}` : ""}`}
-                                        onClick={() => handleTabClick(1)}
-                                        data-region={id_reg}
-                                    >
-                                        <img src="/region_tours.png" alt="" />
-                                        Туры
-                                    </a>
-                                    <a href="#tab-content"
-                                        className={`${classes.region_right__item} ${activeTab === 2 ? `${classes.active_region_item}` : ""}`}
-                                        onClick={() => handleTabClick(2)}
-                                        data-region={id_reg}
-                                    >
-                                        <img src="/region_exkursii.png" alt="" />
-                                        Экскурсии
-                                    </a>
-                                    <a href="#tab-content"
-                                        className={`${classes.region_right__item} ${activeTab === 3 ? `${classes.active_region_item}` : ""}`}
-                                        onClick={() => handleTabClick(3)}
-                                        data-region={id_reg}
-                                    >
-                                        <img src="/region_gidi.png" alt="" />
-                                        Гиды
-                                    </a>
-                                    <a href="#tab-content"
-                                        className={`${classes.region_right__item} ${activeTab === 4 ? `${classes.active_region_item}` : ""}`}
-                                        onClick={() => handleTabClick(4)}
-                                        data-region={id_reg}
-                                    >
-                                        <img src="/region_hotels.png" alt="" />
-                                        Отели
-                                    </a>
-                                    <a href="#tab-content"
-                                        className={`${classes.region_right__item} ${activeTab === 5 ? `${classes.active_region_item}` : ""}`}
-                                        onClick={() => handleTabClick(5)}
-                                        data-region={id_reg}
-                                    >
-                                        <img src="/region_chro_posetit.png" alt="" />
-                                        Что посетить
-                                    </a>
-                                    <a href="#tab-content"
-                                        className={`${classes.region_right__item} ${activeTab === 6 ? `${classes.active_region_item}` : ""}`}
-                                        onClick={() => handleTabClick(6)}
-                                        data-region={id_reg}
-                                    >
-                                        <img src="/region_events.png" alt="" />
-                                        Региональные ивенты
-                                    </a>
-                                </div>
-                            </div>
+            {
+                regionInfo
+                    ?
+                    <>
+                        <div className={classes.main} style={{ backgroundImage: `url('/${regionInfo.bg_region}')` }}>
+                            <CenterBlock>
+                                <WidthBlock>
+                                    <div className={classes.region}>
+                                        <div className={classes.region_left}>
+                                            <div className={classes.region_left__logo}><img src={'/' + regionInfo.logo_region} alt="" /></div>
+                                            <div className={classes.region_left__title}>{regionInfo.title_region}</div>
+                                            <div className={classes.region_left__desc}>{parseHTML(regionInfo.desc_region)}</div>
+                                        </div>
+                                        <div className={classes.region_right}>
+                                            <div className={classes.centerBlock}>
+                                                <a href="#tab-content"
+                                                    className={`${classes.region_right__item} ${activeTab === 1 ? `${classes.active_region_item}` : ""}`}
+                                                    onClick={() => handleTabClick(1)}
+                                                >
+                                                    <img src="/region_tours.png" alt="" />
+                                                    Туры
+                                                </a>
+                                                <a href="#tab-content"
+                                                    className={`${classes.region_right__item} ${activeTab === 2 ? `${classes.active_region_item}` : ""}`}
+                                                    onClick={() => handleTabClick(2)}
+                                                >
+                                                    <img src="/region_exkursii.png" alt="" />
+                                                    Экскурсии
+                                                </a>
+                                                <a href="#tab-content"
+                                                    className={`${classes.region_right__item} ${activeTab === 3 ? `${classes.active_region_item}` : ""}`}
+                                                    onClick={() => handleTabClick(3)}
+                                                >
+                                                    <img src="/region_gidi.png" alt="" />
+                                                    Гиды
+                                                </a>
+                                                <a href="#tab-content"
+                                                    className={`${classes.region_right__item} ${activeTab === 4 ? `${classes.active_region_item}` : ""}`}
+                                                    onClick={() => handleTabClick(4)}
+                                                >
+                                                    <img src="/region_hotels.png" alt="" />
+                                                    Отели
+                                                </a>
+                                                <a href="#tab-content"
+                                                    className={`${classes.region_right__item} ${activeTab === 5 ? `${classes.active_region_item}` : ""}`}
+                                                    onClick={() => handleTabClick(5)}
+                                                >
+                                                    <img src="/region_chro_posetit.png" alt="" />
+                                                    Что посетить
+                                                </a>
+                                                <a href="#tab-content"
+                                                    className={`${classes.region_right__item} ${activeTab === 6 ? `${classes.active_region_item}` : ""}`}
+                                                    onClick={() => handleTabClick(6)}
+                                                >
+                                                    <img src="/region_events.png" alt="" />
+                                                    Региональные ивенты
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </WidthBlock>
+                            </CenterBlock>
+
                         </div>
-                    </WidthBlock>
-                </CenterBlock>
 
-            </div>
+                        <CenterBlock>
+                            <WidthBlock>
+                                <div id="tab-content">
+                                    {activeTab === 1 && <Tabs objects={tours} />}
+                                    {activeTab === 2 && <div>Content for Tab 2</div>}
+                                    {activeTab === 3 && <Tabs objects={gids} />}
+                                    {activeTab === 4 && <div>Content for Tab 4</div>}
+                                    {activeTab === 5 && <div>Content for Tab 5</div>}
+                                    {activeTab === 6 && <div>Content for Tab 6</div>}
+                                </div>
+                            </WidthBlock>
+                        </CenterBlock>
+                    </>
+                    :
+                    <Non_Found_Page/>
+            }
 
-            <CenterBlock>
-                <WidthBlock>
-                    <div id="tab-content">
-                        {activeTab === 1 && <Tabs objects={tours} />}
-                        {activeTab === 2 && <div>Content for Tab 2</div>}
-                        {activeTab === 3 && <Tabs objects={gids} />}
-                        {activeTab === 4 && <div>Content for Tab 4</div>}
-                        {activeTab === 5 && <div>Content for Tab 5</div>}
-                        {activeTab === 6 && <div>Content for Tab 6</div>}
-                    </div>
-                </WidthBlock>
-            </CenterBlock>
         </>
     );
 }
