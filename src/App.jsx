@@ -10,6 +10,7 @@ import Transfer_Page from "./Components/Pages/Transfer_Page";
 import Faq_Page from "./Components/Pages/Faq_Page";
 import Contacts_Page from "./Components/Pages/Contacts_Page";
 import Turagents_Page from "./Components/Pages/Turagents_Page";
+import Region_Page from "./Components/Pages/RegionInfo_Page";
 
 function App() {
   return (
@@ -22,11 +23,13 @@ function App() {
           <Route path="/faq" element={<Faq_Page />} />
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
+          <Route path="/region/:id" element={<Region_Page />} />
           <Route path="*" element={<Non_Found_Page />} />
         </Route>
       </Routes>
     </>
   )
 }
+
 
 export default App
