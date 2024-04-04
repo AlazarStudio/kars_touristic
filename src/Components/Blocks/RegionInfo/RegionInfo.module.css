@@ -89,6 +89,7 @@
     border: 1px solid transparent;
     transition: all 0.3s ease-in-out;
     color: var(--white_color);
+    text-align: center;
 }
 
 .region_right__item:hover, .active_region_item{
