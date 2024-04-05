@@ -171,21 +171,21 @@ function RegionInfo({ children, ...props }) {
                                                     onClick={() => handleTabClick(1)}
                                                 >
                                                     <img src="/region_tours.png" alt="" />
-                                                    Туры
+                                                    Многодневные туры
                                                 </a>
                                                 <a href="#tab-content"
                                                     className={`${classes.region_right__item} ${activeTab === 2 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(2)}
                                                 >
                                                     <img src="/region_exkursii.png" alt="" />
-                                                    Экскурсии
+                                                    Однодневные экскурсии
                                                 </a>
                                                 <a href="#tab-content"
                                                     className={`${classes.region_right__item} ${activeTab === 3 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(3)}
                                                 >
                                                     <img src="/region_gidi.png" alt="" />
-                                                    Гиды
+                                                    Авторские туры
                                                 </a>
                                                 <a href="#tab-content"
                                                     className={`${classes.region_right__item} ${activeTab === 4 ? `${classes.active_region_item}` : ""}`}
@@ -206,7 +206,7 @@ function RegionInfo({ children, ...props }) {
                                                     onClick={() => handleTabClick(6)}
                                                 >
                                                     <img src="/region_events.png" alt="" />
-                                                    Региональные ивенты
+                                                    Региональные Mice ивенты
                                                 </a>
                                             </div>
                                         </div>
