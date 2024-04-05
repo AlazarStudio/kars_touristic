@@ -23,7 +23,7 @@ function Object({ children, ...props }) {
                         <img src={`/${props.priceImg}`} alt="" />
                         {props.price}
                     </div>
-                    <div className={classes.objects_item__button}>Подробнее</div>
+                    <a href={`/tours/${props.link}`} className={classes.objects_item__button}>Подробнее</a>
                 </div>
             </div>
         </>

@@ -56,4 +56,11 @@
     font-weight: 500;
     line-height: 30px;
     cursor: pointer;
+    color: var(--black_color);
+    transition: all 0.3s ease-in-out;
+}
+
+.objects_item__button:hover{
+    background-color: var(--black_color);
+    color: var(--white_color);
 }

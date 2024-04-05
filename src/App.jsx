@@ -11,6 +11,7 @@ import Faq_Page from "./Components/Pages/Faq_Page";
 import Contacts_Page from "./Components/Pages/Contacts_Page";
 import Turagents_Page from "./Components/Pages/Turagents_Page";
 import Region_Page from "./Components/Pages/RegionInfo_Page";
+import Tours_Page from "./Components/Pages/Tours_Page";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
           <Route path="/region/:id" element={<Region_Page />} />
+          <Route path="/tours/:id" element={<Tours_Page />} />
           <Route path="*" element={<Non_Found_Page />} />
         </Route>
       </Routes>

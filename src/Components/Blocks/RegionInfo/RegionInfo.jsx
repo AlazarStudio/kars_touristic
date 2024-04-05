@@ -32,7 +32,8 @@ function RegionInfo({ children, ...props }) {
                     city: "Черкесск",
                     category: "Познавательные",
                     date: "2024-04-05",
-                    tripType: "Групповая поездка"
+                    tripType: "Групповая поездка",
+                    link: "novogodnyaya_skazka_kavkaza"
                 },
                 {
                     img: "object_2.png",
@@ -42,7 +43,8 @@ function RegionInfo({ children, ...props }) {
                     city: "Карачаевск",
                     category: "Гастрономические",
                     date: "2024-04-06",
-                    tripType: "Индивидуальная поездка"
+                    tripType: "Индивидуальная поездка",
+                    link: "novogodnie_kanikuly_na_kavkaze"
                 },
                 {
                     img: "object_3.png",
@@ -52,59 +54,32 @@ function RegionInfo({ children, ...props }) {
                     city: "Архыз",
                     category: "Конные",
                     date: "2024-04-05",
-                    tripType: "Индивидуальная поездка"
-                },
-                {
-                    img: "object_1.png",
-                    title: "«Нoвогодняя сказка Кавказа»",
-                    price: "От 10000 р.",
-                    priceImg: "priceImg.png",
-                    city: "Черкесск",
-                    category: "Познавательные",
-                    date: "2024-04-05",
-                    tripType: "Групповая поездка"
-                },
-                {
-                    img: "object_2.png",
-                    title: "«Нoвогодние каникулы на Кавказе»",
-                    price: "От 10000 р.",
-                    priceImg: "priceImg.png",
-                    city: "Карачаевск",
-                    category: "Гастрономические",
-                    date: "2024-04-06",
-                    tripType: "Индивидуальная поездка"
-                },
-                {
-                    img: "object_3.png",
-                    title: "«Нoвогоднее путешествие по Кавказу»",
-                    price: "От 10000 р.",
-                    priceImg: "priceImg.png",
-                    city: "Архыз",
-                    category: "Конные",
-                    date: "2024-04-05",
-                    tripType: "Индивидуальная поездка"
+                    tripType: "Индивидуальная поездка",
+                    link: "novogodnee_puteshestvie_po_kavkazu"
                 },
             ],
             gids: [
                 {
                     img: "object_1.png",
-                    title: "гид",
+                    title: "Авторские тур 1",
                     price: "От 10000 р.",
                     priceImg: "priceImg.png",
                     city: "Черкесск",
                     category: "Познавательные",
                     date: "2024-04-05",
-                    tripType: "Групповая поездка"
+                    tripType: "Групповая поездка",
+                    link: "avtorskie_tur_1"
                 },
                 {
                     img: "object_1.png",
-                    title: "гид",
+                    title: "Авторские тур 2",
                     price: "От 10000 р.",
                     priceImg: "priceImg.png",
                     city: "Карачаевск",
                     category: "Конные",
                     date: "2024-04-05",
-                    tripType: "Групповая поездка"
+                    tripType: "Групповая поездка",
+                    link: "avtorskie_tur_2"
                 }
             ]
         }
