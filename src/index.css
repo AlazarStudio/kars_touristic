@@ -79,7 +79,7 @@ main {
     left: -130px;
     background-color: var(--white_color);
     height: 100%;
-    width: 10%;
+    width: 11%;
     z-index: 2;
 }
 .swiper::after{
@@ -89,6 +89,6 @@ main {
     right: -130px;
     background-color: var(--white_color);
     height: 100%;
-    width: 10%;
+    width: 11%;
     z-index: 2;
 }
