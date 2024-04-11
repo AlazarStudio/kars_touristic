@@ -1,0 +1,244 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    align-items: center;
+}
+
+.tour {
+    width: 100%;
+    position: relative;
+}
+
+.tour:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.centerPosition {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tour_topInfo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 1;
+    gap: 55px;
+    margin-top: 160px;
+}
+
+.tour_topInfo__left {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.tour_topInfo__right {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.tour_topInfo__left___items {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.tour_topInfo__left___items____element {
+    width: 48%;
+    height: 115px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF26;
+    border-radius: 20px;
+    backdrop-filter: blur(3px);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: var(--white_color);
+    text-align: center;
+    border: 1px solid var(--white_color);
+    gap: 10px;
+}
+
+.tour_topInfo__left___items____element_____title {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffffb6;
+}
+
+.tour_topInfo__left___items____element_____info {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+}
+
+.tour_topInfo__left___title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-align: center;
+    color: var(--white_color);
+    text-transform: uppercase;
+}
+
+.tour_topInfo__left___btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    color: var(--white_color);
+    background-color: var(--black_color);
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__left___btn:hover {
+    background-color: var(--white_color);
+    color: var(--black_color);
+}
+
+.tour_topInfo__right___img {
+    width: 100%;
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.tour_topInfo__right___img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tour_topInfo__right___places {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    row-gap: 20px;
+    justify-content: space-between;
+}
+
+.tour_topInfo__right___places____place {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--white_color);
+    border-radius: 15px;
+    backdrop-filter: blur(3px);
+    width: 32%;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__right___places____place:hover {
+    background-color: var(--white_color);
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____title {
+    color: var(--black_color);
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____img svg path {
+    fill: var(--black_color)
+}
+
+.tour_topInfo__right___places____place_____img {
+    height: 100%;
+}
+
+.tour_topInfo__right___places____place_____img svg {
+    height: 100%;
+}
+
+.tour_topInfo__right___places____place_____img svg path {
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__right___places____place_____title {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    color: var(--white_color);
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_slider {
+    width: 100%;
+    height: 300px;
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.tour_slider__block {
+    width: 80%;
+    height: 100%;
+}
+
+.tour_slider .mySwiper {
+    width: 100%;
+    height: 100%;
+}
+
+.tourInfo_slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    gap: 20px;
+}
+
+.tourInfo_slide__title {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+}
+
+.tourInfo_slide__desc {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.tourInfo_slide__desc ul{
+    list-style: disc;
+    margin-left: 15px;
+}
