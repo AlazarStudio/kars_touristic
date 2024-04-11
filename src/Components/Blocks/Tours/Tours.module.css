@@ -8,6 +8,8 @@
 .tour {
     width: 100%;
     position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .tour:before {
