@@ -33,7 +33,8 @@ function RegionInfo({ children, ...props }) {
                     category: "Познавательные",
                     date: "2024-04-05",
                     tripType: "Групповая поездка",
-                    link: "novogodnyaya_skazka_kavkaza"
+                    link: "novogodnyaya_skazka_kavkaza",
+                    placeLink: "tours"
                 },
                 {
                     img: "object_2.png",
@@ -44,7 +45,8 @@ function RegionInfo({ children, ...props }) {
                     category: "Гастрономические",
                     date: "2024-04-06",
                     tripType: "Индивидуальная поездка",
-                    link: "novogodnie_kanikuly_na_kavkaze"
+                    link: "novogodnie_kanikuly_na_kavkaze",
+                    placeLink: "tours"
                 },
                 {
                     img: "object_3.png",
@@ -55,7 +57,8 @@ function RegionInfo({ children, ...props }) {
                     category: "Конные",
                     date: "2024-04-05",
                     tripType: "Индивидуальная поездка",
-                    link: "novogodnee_puteshestvie_po_kavkazu"
+                    link: "novogodnee_puteshestvie_po_kavkazu",
+                    placeLink: "tours"
                 },
             ],
             gids: [
@@ -68,7 +71,8 @@ function RegionInfo({ children, ...props }) {
                     category: "Познавательные",
                     date: "2024-04-05",
                     tripType: "Групповая поездка",
-                    link: "avtorskie_tur_1"
+                    link: "avtorskie_tur_1",
+                    placeLink: "gids"
                 },
                 {
                     img: "object_1.png",
@@ -79,7 +83,8 @@ function RegionInfo({ children, ...props }) {
                     category: "Конные",
                     date: "2024-04-05",
                     tripType: "Групповая поездка",
-                    link: "avtorskie_tur_2"
+                    link: "avtorskie_tur_2",
+                    placeLink: "gids"
                 }
             ]
         }

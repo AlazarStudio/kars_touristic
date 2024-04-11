@@ -18,7 +18,7 @@ function Tabs({ children, objects, ...props }) {
                 <div className={classes.objects}>
                     {
                         filteredObjects.map((item, index) => (
-                            <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} link={item.link} />
+                            <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} link={item.link} placeLink={item.placeLink} />
                         ))
                     }
                 </div>

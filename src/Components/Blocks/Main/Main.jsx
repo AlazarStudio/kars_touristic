@@ -2,7 +2,7 @@ import React from "react";
 import classes from './Main.module.css';
 import Region from "../Region/Region";
 
-import main_1 from "/main_1.png";
+// import main_1 from "/main_1.png";
 import main_2 from "/main_2.png";
 import main_3 from "/main_3.png";
 import main_4 from "/main_4.png";
@@ -27,12 +27,12 @@ import main_11_logo from "/main_11_logo.png";
 
 function Main({ children, ...props }) {
     let regionData = [
-        {
-            title: "Все регионы",
-            link: 'vse_regiony',
-            bg: main_1,
-            logo: ''
-        },
+        // {
+        //     title: "Все регионы",
+        //     link: 'vse_regiony',
+        //     bg: main_1,
+        //     logo: ''
+        // },
         {
             title: "Карачаево-Черкессия",
             link: 'karachaevo_cherkessiya',
