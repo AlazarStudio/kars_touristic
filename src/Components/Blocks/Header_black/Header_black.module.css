@@ -22,7 +22,7 @@
 }
 
 .navigation_links ul li a {
-    color: var(--white_color);
+    color: var(--black_color);
     font-size: 16px;
     font-weight: 500;
 }
