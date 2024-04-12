@@ -1,6 +1,4 @@
 import React from "react";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
 
 import classes from './Tours.module.css';
 
@@ -13,6 +11,8 @@ import Object from "../Object/Object";
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+import Feedback from "../Feedback/Feedback";
+import Slider from "../Slider/Slider";
 
 function Tours({ children, ...props }) {
     const tabs = [
@@ -109,6 +109,93 @@ function Tours({ children, ...props }) {
             tripType: "Индивидуальная поездка",
             link: "novogodnee_puteshestvie_po_kavkazu",
             placeLink: "tours"
+        },
+    ]
+
+    const info = [
+        {
+            title: 'Одежда',
+            text: `
+            <ul>
+                <li>sed do eiusmod tempor incidi</li>
+                <li>magna aliqua. Ut enim ad minim</li>
+                <li>exercitation ullamco laboris nisi</li>
+                <li>commodo consequat. Duis aute</li>
+                <li>reprehenderit in voluptate velit</li>
+                <li>fugiat nulla pariatur. Excepteur</li>
+                <li>non proident, sunt in culpa qui</li>
+            </ul>
+            `
+        },
+        {
+            title: 'Защита',
+            text: `
+            <ul>
+                <li>sed do eiusmod tempor incidi</li>
+                <li>magna aliqua. Ut enim ad minim</li>
+                <li>exercitation ullamco laboris nisi</li>
+                <li>commodo consequat. Duis aute</li>
+                <li>reprehenderit in voluptate velit</li>
+                <li>fugiat nulla pariatur. Excepteur</li>
+                <li>non proident, sunt in culpa qui</li>
+            </ul>
+            `
+        },
+        {
+            title: 'Снаряжение',
+            text: `
+            <ul>
+                <li>sed do eiusmod tempor incidi</li>
+                <li>magna aliqua. Ut enim ad minim</li>
+                <li>exercitation ullamco laboris nisi</li>
+                <li>commodo consequat. Duis aute</li>
+                <li>reprehenderit in voluptate velit</li>
+                <li>fugiat nulla pariatur. Excepteur</li>
+                <li>non proident, sunt in culpa qui</li>
+            </ul>
+            `
+        },
+        {
+            title: 'Одежда',
+            text: `
+            <ul>
+                <li>sed do eiusmod tempor incidi</li>
+                <li>magna aliqua. Ut enim ad minim</li>
+                <li>exercitation ullamco laboris nisi</li>
+                <li>commodo consequat. Duis aute</li>
+                <li>reprehenderit in voluptate velit</li>
+                <li>fugiat nulla pariatur. Excepteur</li>
+                <li>non proident, sunt in culpa qui</li>
+            </ul>
+            `
+        },
+        {
+            title: 'Защита',
+            text: `
+            <ul>
+                <li>sed do eiusmod tempor incidi</li>
+                <li>magna aliqua. Ut enim ad minim</li>
+                <li>exercitation ullamco laboris nisi</li>
+                <li>commodo consequat. Duis aute</li>
+                <li>reprehenderit in voluptate velit</li>
+                <li>fugiat nulla pariatur. Excepteur</li>
+                <li>non proident, sunt in culpa qui</li>
+            </ul>
+            `
+        },
+        {
+            title: 'Снаряжение',
+            text: `
+            <ul>
+                <li>sed do eiusmod tempor incidi</li>
+                <li>magna aliqua. Ut enim ad minim</li>
+                <li>exercitation ullamco laboris nisi</li>
+                <li>commodo consequat. Duis aute</li>
+                <li>reprehenderit in voluptate velit</li>
+                <li>fugiat nulla pariatur. Excepteur</li>
+                <li>non proident, sunt in culpa qui</li>
+            </ul>
+            `
         },
     ]
 
@@ -250,119 +337,7 @@ function Tours({ children, ...props }) {
                 </div>
 
                 <WidthBlock>
-                    <div className={classes.tour_slider}>
-                        <div className={classes.tour_slider__block}>
-                            <Swiper
-                                navigation={true}
-                                modules={[Navigation]}
-                                slidesPerView={3}
-                                spaceBetween={30}
-                                className={classes.mySwiper}
-                            >
-                                <SwiperSlide>
-                                    <div className={classes.tourInfo_slide}>
-                                        <div className={classes.tourInfo_slide__title}>Одежда</div>
-                                        <div className={classes.tourInfo_slide__desc}>
-                                            <ul>
-                                                <li>sed do eiusmod tempor incidi</li>
-                                                <li>magna aliqua. Ut enim ad minim</li>
-                                                <li>exercitation ullamco laboris nisi</li>
-                                                <li>commodo consequat. Duis aute</li>
-                                                <li>reprehenderit in voluptate velit</li>
-                                                <li>fugiat nulla pariatur. Excepteur</li>
-                                                <li>non proident, sunt in culpa qui</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                                <SwiperSlide>
-                                    <div className={classes.tourInfo_slide}>
-                                        <div className={classes.tourInfo_slide__title}>Защита</div>
-                                        <div className={classes.tourInfo_slide__desc}>
-                                            <ul>
-                                                <li>sed do eiusmod tempor incidi</li>
-                                                <li>magna aliqua. Ut enim ad minim</li>
-                                                <li>exercitation ullamco laboris nisi</li>
-                                                <li>commodo consequat. Duis aute</li>
-                                                <li>reprehenderit in voluptate velit</li>
-                                                <li>fugiat nulla pariatur. Excepteur</li>
-                                                <li>non proident, sunt in culpa qui</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                                <SwiperSlide>
-                                    <div className={classes.tourInfo_slide}>
-                                        <div className={classes.tourInfo_slide__title}>Снаряжение</div>
-                                        <div className={classes.tourInfo_slide__desc}>
-                                            <ul>
-                                                <li>sed do eiusmod tempor incidi</li>
-                                                <li>magna aliqua. Ut enim ad minim</li>
-                                                <li>exercitation ullamco laboris nisi</li>
-                                                <li>commodo consequat. Duis aute</li>
-                                                <li>reprehenderit in voluptate velit</li>
-                                                <li>fugiat nulla pariatur. Excepteur</li>
-                                                <li>non proident, sunt in culpa qui</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                                <SwiperSlide>
-                                    <div className={classes.tourInfo_slide}>
-                                        <div className={classes.tourInfo_slide__title}>Одежда</div>
-                                        <div className={classes.tourInfo_slide__desc}>
-                                            <ul>
-                                                <li>sed do eiusmod tempor incidi</li>
-                                                <li>magna aliqua. Ut enim ad minim</li>
-                                                <li>exercitation ullamco laboris nisi</li>
-                                                <li>commodo consequat. Duis aute</li>
-                                                <li>reprehenderit in voluptate velit</li>
-                                                <li>fugiat nulla pariatur. Excepteur</li>
-                                                <li>non proident, sunt in culpa qui</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                                <SwiperSlide>
-                                    <div className={classes.tourInfo_slide}>
-                                        <div className={classes.tourInfo_slide__title}>Защита</div>
-                                        <div className={classes.tourInfo_slide__desc}>
-                                            <ul>
-                                                <li>sed do eiusmod tempor incidi</li>
-                                                <li>magna aliqua. Ut enim ad minim</li>
-                                                <li>exercitation ullamco laboris nisi</li>
-                                                <li>commodo consequat. Duis aute</li>
-                                                <li>reprehenderit in voluptate velit</li>
-                                                <li>fugiat nulla pariatur. Excepteur</li>
-                                                <li>non proident, sunt in culpa qui</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-
-                                <SwiperSlide>
-                                    <div className={classes.tourInfo_slide}>
-                                        <div className={classes.tourInfo_slide__title}>Снаряжение</div>
-                                        <div className={classes.tourInfo_slide__desc}>
-                                            <ul>
-                                                <li>sed do eiusmod tempor incidi</li>
-                                                <li>magna aliqua. Ut enim ad minim</li>
-                                                <li>exercitation ullamco laboris nisi</li>
-                                                <li>commodo consequat. Duis aute</li>
-                                                <li>reprehenderit in voluptate velit</li>
-                                                <li>fugiat nulla pariatur. Excepteur</li>
-                                                <li>non proident, sunt in culpa qui</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                            </Swiper>
-                        </div>
-                    </div>
+                    <Slider info={info} boxShadow={'0px 4px 46.4px 0px #B4B4B440'} loop={false}/>
 
                     <ToursTab tabs={tabs} />
 
@@ -370,66 +345,7 @@ function Tours({ children, ...props }) {
                         <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                     </CenterBlock>
 
-                    <div className={`${classes.tour_slider} ${classes.feedback}`}>
-                        <div className={classes.tour_slider__block}>
-                            <Swiper
-                                navigation={true}
-                                modules={[Navigation]}
-                                slidesPerView={2}
-                                spaceBetween={30}
-                                className={classes.mySwiper}
-                            >
-                                <SwiperSlide>
-                                    <div className={classes.feedback_slide}>
-                                        <div className={classes.feedback_slide__top}>
-                                            <div className={classes.feedback_slide__top___img}>
-                                                <img src="/feedback_photo.png" alt="" />
-                                            </div>
-                                            <div className={classes.feedback_slide__top___name}>Иван Иванов</div>
-                                            <div className={classes.feedback_slide__top___stars}>
-                                                <img src="/rating_all.png" alt="" />
-                                            </div>
-                                        </div>
-                                        <div className={classes.feedback_slide__bottom}>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut Duis aute irure dolor
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className={classes.feedback_slide}>
-                                        <div className={classes.feedback_slide__top}>
-                                            <div className={classes.feedback_slide__top___img}>
-                                                <img src="/feedback_photo.png" alt="" />
-                                            </div>
-                                            <div className={classes.feedback_slide__top___name}>Иван Иванов</div>
-                                            <div className={classes.feedback_slide__top___stars}>
-                                                <img src="/rating_all.png" alt="" />
-                                            </div>
-                                        </div>
-                                        <div className={classes.feedback_slide__bottom}>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut Duis aute irure dolor
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className={classes.feedback_slide}>
-                                        <div className={classes.feedback_slide__top}>
-                                            <div className={classes.feedback_slide__top___img}>
-                                                <img src="/feedback_photo.png" alt="" />
-                                            </div>
-                                            <div className={classes.feedback_slide__top___name}>Иван Иванов</div>
-                                            <div className={classes.feedback_slide__top___stars}>
-                                                <img src="/rating_all.png" alt="" />
-                                            </div>
-                                        </div>
-                                        <div className={classes.feedback_slide__bottom}>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut Duis aute irure dolor
-                                        </div>
-                                    </div>
-                                </SwiperSlide>
-                            </Swiper>
-                        </div>
-                    </div>
+                    <Feedback />
 
                     <CenterBlock>
                         <H2 text_transform="uppercase" font_size="36px">Популярные туры</H2>

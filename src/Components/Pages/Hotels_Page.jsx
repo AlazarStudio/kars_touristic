@@ -1,6 +1,6 @@
 import React from "react";
 import Header_white from "../Blocks/Header_white/Header_white";
-import Tours from "../Blocks/Tours/Tours";
+import Hotels from "../Blocks/Hotels/Hotels";
 
 function Tours_Page({ children, ...props }) {
     window.scrollTo({
@@ -11,7 +11,7 @@ function Tours_Page({ children, ...props }) {
     return (
         <>
             <Header_white />
-            hgdjkdfh
+            <Hotels/>
         </>
     );
 }
