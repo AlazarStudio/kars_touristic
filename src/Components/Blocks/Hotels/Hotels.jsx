@@ -157,6 +157,10 @@ function Hotels({ children, ...props }) {
                     <Slider info={info} boxShadow={'none'} loop={true}/>
 
                     <CenterBlock>
+                        <H2 text_transform="uppercase" font_size="36px">НОМЕРА</H2>
+                    </CenterBlock>
+
+                    <CenterBlock>
                         <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                     </CenterBlock>
 
