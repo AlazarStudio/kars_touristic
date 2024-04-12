@@ -240,7 +240,56 @@
     line-height: 24px;
 }
 
-.tourInfo_slide__desc ul{
+.tourInfo_slide__desc ul {
     list-style: disc;
     margin-left: 15px;
+}
+
+.feedback {
+    box-shadow: none;
+    height: 200px;
+}
+
+.feedback_slide {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #8A8EA3;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 35px;
+    gap: 10px;
+}
+
+.feedback_slide__top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.feedback_slide__top___name {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.38px;
+    width: 100%;
+}
+
+.feedback_slide__bottom {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+}
+
+.similar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 80px;
 }
