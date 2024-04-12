@@ -1,0 +1,102 @@
+.hotelNumbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 45px;
+}
+
+.hotelNumbers_item {
+    width: 31%;
+}
+
+.hotelNumbers_item__img {
+    width: 100%;
+    height: 270px;
+    border-radius: 20px 20px 0 0;
+    overflow: hidden;
+}
+
+.hotelNumbers_item__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hotelNumbers_item__bottom {
+    padding: 25px 30px;
+    border: 1px solid #8C8C8C;
+    border-top: none;
+    border-radius: 0 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    height: 285px;
+}
+
+.hotelNumbers_item__bottom___title {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.38px;
+    width: 90%;
+}
+
+.hotelNumbers_item__bottom___feedback {
+    display: flex;
+    border: 1px solid var(--black_color);
+    border-radius: 5px;
+    width: 250px;
+    padding: 8px;
+}
+
+.hotelNumbers_item__bottom___feedback____item {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19.5px;
+    color: var(--black_color);
+}
+
+.hotelNumbers_item__bottom___feedback____item:last-child {
+    width: 60%;
+    border-left: 1px solid var(--black_color);
+}
+
+.hotelNumbers_item__bottom___infoBlocks {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hotelNumbers_item__bottom___infoBlocks____block {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.hotelNumbers_item__bottom___infoBlocks____block_____title {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19.5px;
+}
+
+.hotelNumbers_item__bottom___button {
+    width: 100%;
+    background-color: var(--black_color);
+    color: var(--white_color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 20px;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    cursor: pointer;
+}

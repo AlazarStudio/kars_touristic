@@ -3,7 +3,7 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;  
+    justify-content: center;
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
@@ -134,10 +134,28 @@
     justify-content: center;
     gap: 20px;
 }
-.similar{
+
+.similar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 30px;
     margin-bottom: 80px;
+}
+
+.links {
+    display: flex;
+    justify-content: center;
+    gap: 85px;
+}
+
+.links_item {
+    width: 125px;
+    height: 125px;
+    background-color: #181818;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 80px;
+    border-radius: 20px;
 }
