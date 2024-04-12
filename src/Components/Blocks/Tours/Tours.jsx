@@ -70,7 +70,7 @@ function Tours({ children, ...props }) {
         ` },
         { label: 'День 2', content: 'Content for Tab 2' },
         { label: 'День 3', content: 'Content for Tab 3' },
-        { label: 'День 4', content: 'Content for Tab 3' },
+        { label: 'День 4', content: 'Content for Tab 4' },
     ];
 
     const tours = [
@@ -112,6 +112,10 @@ function Tours({ children, ...props }) {
         },
     ]
 
+    window.scrollTo({
+        top: 0,
+        behavior: 'auto'
+    });
     return (
         <>
             <div className={classes.main}>

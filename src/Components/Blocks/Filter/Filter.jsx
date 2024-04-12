@@ -48,11 +48,13 @@ function Filter({ children, objects, updateFilteredObjects, ...props }) {
 
                 <select name="category" value={filters.category} onChange={handleFilterChange}>
                     <option value="" disabled>Категория</option>
+                    <option value="Активные">Активные</option>
+                    <option value="Промышленные">Промышленные</option>
                     <option value="Детские">Детские</option>
-                    <option value="Гастрономические">Гастрономические</option>
+                    <option value="Семейные">Семейные</option>
                     <option value="Конные">Конные</option>
                     <option value="Познавательные">Познавательные</option>
-                    <option value="Религиозные">Религиозные</option>
+                    <option value="Фото туры">Фото туры</option>
                     <option value="Показать все">Показать все</option>
                 </select>
 

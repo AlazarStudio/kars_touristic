@@ -1,5 +1,6 @@
 import React from "react";
 import classes from './Object.module.css';
+import { Link } from "react-router-dom";
 
 function Object({ children, ...props }) {
     function truncateString(str, maxLength) {
@@ -7,6 +8,13 @@ function Object({ children, ...props }) {
             return str.substring(0, maxLength) + '...';
         }
         return str;
+    }
+
+    function toTop(){
+        window.scrollTo({
+            top: 0,
+            behavior: 'auto'
+        });
     }
 
     return (
@@ -23,7 +31,7 @@ function Object({ children, ...props }) {
                         <img src={`/${props.priceImg}`} alt="" />
                         {props.price}
                     </div>
-                    <a href={`/${props.placeLink}/${props.link}`} className={classes.objects_item__button}>Подробнее</a>
+                    <Link to={`/${props.placeLink}/${props.link}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
                 </div>
             </div>
         </>

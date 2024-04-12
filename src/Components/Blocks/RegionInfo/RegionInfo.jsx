@@ -61,6 +61,80 @@ function RegionInfo({ children, ...props }) {
                     placeLink: "tours"
                 },
             ],
+            excursions: [
+                {
+                    img: "object_1.png",
+                    title: "«Нoвогодняя сказка Кавказа»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка",
+                    link: "novogodnyaya_skazka_kavkaza",
+                    placeLink: "excursions"
+                },
+                {
+                    img: "object_2.png",
+                    title: "«Нoвогодние каникулы на Кавказе»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Гастрономические",
+                    date: "2024-04-06",
+                    tripType: "Индивидуальная поездка",
+                    link: "novogodnie_kanikuly_na_kavkaze",
+                    placeLink: "excursions"
+                },
+                {
+                    img: "object_3.png",
+                    title: "«Нoвогоднее путешествие по Кавказу»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Архыз",
+                    category: "Конные",
+                    date: "2024-04-05",
+                    tripType: "Индивидуальная поездка",
+                    link: "novogodnee_puteshestvie_po_kavkazu",
+                    placeLink: "excursions"
+                },
+                {
+                    img: "object_1.png",
+                    title: "«Нoвогодняя сказка Кавказа»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка",
+                    link: "novogodnyaya_skazka_kavkaza",
+                    placeLink: "excursions"
+                },
+                {
+                    img: "object_2.png",
+                    title: "«Нoвогодние каникулы на Кавказе»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Гастрономические",
+                    date: "2024-04-06",
+                    tripType: "Индивидуальная поездка",
+                    link: "novogodnie_kanikuly_na_kavkaze",
+                    placeLink: "excursions"
+                },
+                {
+                    img: "object_3.png",
+                    title: "«Нoвогоднее путешествие по Кавказу»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Архыз",
+                    category: "Конные",
+                    date: "2024-04-05",
+                    tripType: "Индивидуальная поездка",
+                    link: "novogodnee_puteshestvie_po_kavkazu",
+                    placeLink: "excursions"
+                },
+            ],
             gids: [
                 {
                     img: "object_1.png",
@@ -86,13 +160,143 @@ function RegionInfo({ children, ...props }) {
                     link: "avtorskie_tur_2",
                     placeLink: "gids"
                 }
-            ]
+            ],
+            hotels: [
+                {
+                    img: "object_1.png",
+                    title: "Отель 1",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка",
+                    link: "hotel_1",
+                    placeLink: "hotels"
+                },
+                {
+                    img: "object_2.png",
+                    title: "Отель 2",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Гастрономические",
+                    date: "2024-04-06",
+                    tripType: "Индивидуальная поездка",
+                    link: "hotel_2",
+                    placeLink: "hotels"
+                },
+                {
+                    img: "object_3.png",
+                    title: "Отель 3",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Архыз",
+                    category: "Конные",
+                    date: "2024-04-05",
+                    tripType: "Индивидуальная поездка",
+                    link: "hotel_3",
+                    placeLink: "hotels"
+                },
+            ],
+            visits: [
+                {
+                    img: "object_1.png",
+                    title: "Гора Эльбрус",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка",
+                    link: "gora_elbrus",
+                    placeLink: "events"
+                },
+                {
+                    img: "object_1.png",
+                    title: "Гора Эльбрус",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Конные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка",
+                    link: "gora_elbrus",
+                    placeLink: "events"
+                }
+            ],
+            events: [
+                {
+                    img: "object_1.png",
+                    title: "«Праздник айрана»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка",
+                    link: "prazdnik_airana",
+                    placeLink: "visits"
+                },
+                {
+                    img: "object_2.png",
+                    title: "«Праздник айрана»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Гастрономические",
+                    date: "2024-04-06",
+                    tripType: "Индивидуальная поездка",
+                    link: "prazdnik_airana",
+                    placeLink: "visits"
+                },
+                {
+                    img: "object_3.png",
+                    title: "«Праздник айрана»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Архыз",
+                    category: "Конные",
+                    date: "2024-04-05",
+                    tripType: "Индивидуальная поездка",
+                    link: "prazdnik_airana",
+                    placeLink: "visits"
+                },
+                {
+                    img: "object_1.png",
+                    title: "«Праздник айрана»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Черкесск",
+                    category: "Познавательные",
+                    date: "2024-04-05",
+                    tripType: "Групповая поездка",
+                    link: "prazdnik_airana",
+                    placeLink: "visits"
+                },
+                {
+                    img: "object_2.png",
+                    title: "«Праздник айрана»",
+                    price: "От 10000 р.",
+                    priceImg: "priceImg.png",
+                    city: "Карачаевск",
+                    category: "Гастрономические",
+                    date: "2024-04-06",
+                    tripType: "Индивидуальная поездка",
+                    link: "prazdnik_airana",
+                    placeLink: "visits"
+                },
+            ],
         }
     }
     const regionInfo = regionData[id];
 
     const tours = regionInfo?.tours || [];
     const gids = regionInfo?.gids || [];
+    const excursions = regionInfo?.excursions || [];
+    const hotels = regionInfo?.hotels || [];
+    const visits = regionInfo?.visits || [];
+    const events = regionInfo?.events || [];
 
     function parseHTML(htmlString) {
         const domParser = new DOMParser();
@@ -120,6 +324,11 @@ function RegionInfo({ children, ...props }) {
     const handleTabClick = (index) => {
         setActiveTab(index);
         localStorage.setItem("activeTab", index.toString());
+
+        window.scrollTo({
+            top: '950',
+            behavior: 'smooth'
+        });
     };
 
     useEffect(() => {
@@ -146,48 +355,48 @@ function RegionInfo({ children, ...props }) {
                                         </div>
                                         <div className={classes.region_right}>
                                             <div className={classes.centerBlock}>
-                                                <a href="#tab-content"
+                                                <div
                                                     className={`${classes.region_right__item} ${activeTab === 1 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(1)}
                                                 >
                                                     <img src="/region_tours.png" alt="" />
                                                     Многодневные туры
-                                                </a>
-                                                <a href="#tab-content"
+                                                </div>
+                                                <div
                                                     className={`${classes.region_right__item} ${activeTab === 2 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(2)}
                                                 >
                                                     <img src="/region_exkursii.png" alt="" />
                                                     Однодневные экскурсии
-                                                </a>
-                                                <a href="#tab-content"
+                                                </div>
+                                                <div
                                                     className={`${classes.region_right__item} ${activeTab === 3 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(3)}
                                                 >
                                                     <img src="/region_gidi.png" alt="" />
                                                     Авторские туры
-                                                </a>
-                                                <a href="#tab-content"
+                                                </div>
+                                                <div
                                                     className={`${classes.region_right__item} ${activeTab === 4 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(4)}
                                                 >
                                                     <img src="/region_hotels.png" alt="" />
                                                     Отели
-                                                </a>
-                                                <a href="#tab-content"
+                                                </div>
+                                                <div
                                                     className={`${classes.region_right__item} ${activeTab === 5 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(5)}
                                                 >
                                                     <img src="/region_chro_posetit.png" alt="" />
                                                     Что посетить
-                                                </a>
-                                                <a href="#tab-content"
+                                                </div>
+                                                <div
                                                     className={`${classes.region_right__item} ${activeTab === 6 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(6)}
                                                 >
                                                     <img src="/region_events.png" alt="" />
                                                     Региональные Mice ивенты
-                                                </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -198,19 +407,19 @@ function RegionInfo({ children, ...props }) {
 
                         <CenterBlock>
                             <WidthBlock>
-                                <div id="tab-content">
+                                <div>
                                     {activeTab === 1 && <Tabs objects={tours} />}
-                                    {activeTab === 2 && <div>Content for Tab 2</div>}
+                                    {activeTab === 2 && <Tabs objects={excursions} />}
                                     {activeTab === 3 && <Tabs objects={gids} />}
-                                    {activeTab === 4 && <div>Content for Tab 4</div>}
-                                    {activeTab === 5 && <div>Content for Tab 5</div>}
-                                    {activeTab === 6 && <div>Content for Tab 6</div>}
+                                    {activeTab === 4 && <Tabs objects={hotels} />}
+                                    {activeTab === 5 && <Tabs objects={visits} />}
+                                    {activeTab === 6 && <Tabs objects={events} />}
                                 </div>
                             </WidthBlock>
                         </CenterBlock>
                     </>
                     :
-                    <Non_Found_Page/>
+                    <Non_Found_Page />
             }
 
         </>
