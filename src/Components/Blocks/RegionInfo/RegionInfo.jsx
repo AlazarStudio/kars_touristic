@@ -408,12 +408,12 @@ function RegionInfo({ children, ...props }) {
                         <CenterBlock>
                             <WidthBlock>
                                 <div>
-                                    {activeTab === 1 && <Tabs objects={tours} />}
-                                    {activeTab === 2 && <Tabs objects={excursions} />}
-                                    {activeTab === 3 && <Tabs objects={gids} />}
-                                    {activeTab === 4 && <Tabs objects={hotels} />}
-                                    {activeTab === 5 && <Tabs objects={visits} />}
-                                    {activeTab === 6 && <Tabs objects={events} />}
+                                    {activeTab === 1 && <Tabs objects={tours} title={'Многодневные туры'}/>}
+                                    {activeTab === 2 && <Tabs objects={excursions} title={'Однодневные экскурсии'} />}
+                                    {activeTab === 3 && <Tabs objects={gids} title={'Авторские туры'} />}
+                                    {activeTab === 4 && <Tabs objects={hotels} title={'Отели'} />}
+                                    {activeTab === 5 && <Tabs objects={visits} title={'Что посетить'} />}
+                                    {activeTab === 6 && <Tabs objects={events} title={'Региональные Mice ивенты'} />}
                                 </div>
                             </WidthBlock>
                         </CenterBlock>

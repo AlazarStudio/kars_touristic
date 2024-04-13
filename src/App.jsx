@@ -14,6 +14,8 @@ import Region_Page from "./Components/Pages/RegionInfo_Page";
 import Tours_Page from "./Components/Pages/Tours_Page";
 import Hotels_Page from "./Components/Pages/Hotels_Page";
 import Number_Page from "./Components/Pages/Number_Page";
+import Visit_Page from "./Components/Pages/Visit_Page";
+import Event_Page from "./Components/Pages/Event_Page";
 
 function App() {
   return (
@@ -28,8 +30,12 @@ function App() {
           <Route path="/turagents" element={<Turagents_Page />} />
           <Route path="/region/:id" element={<Region_Page />} />
           <Route path="/tours/:id" element={<Tours_Page />} />
+          <Route path="/excursions/:id" element={<Tours_Page />} />
+          <Route path="/gids/:id" element={<Tours_Page />} />
           <Route path="/hotels/:id" element={<Hotels_Page />} />
           <Route path="/hotels/:id/:numID" element={<Number_Page />} />
+          <Route path="/visits/:id" element={<Visit_Page />} />
+          <Route path="/events/:id" element={<Event_Page />} />
           <Route path="*" element={<Non_Found_Page />} />
         </Route>
       </Routes>

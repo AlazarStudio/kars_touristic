@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import classes from './Tabs.module.css';
 import Object from "../Object/Object";
 import Filter from "../Filter/Filter";
+import H2 from "../../Standart/H2/H2";
+import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 
 function Tabs({ children, objects, ...props }) {
     const [filteredObjects, setFilteredObjects] = useState(objects);
@@ -13,7 +15,11 @@ function Tabs({ children, objects, ...props }) {
     return (
         <>
             <div className={classes.fullBlock}>
-                <Filter objects={objects} updateFilteredObjects={updateFilteredObjects}/>
+                <CenterBlock>
+                    <H2 text_transform="uppercase">{props.title}</H2>
+                </CenterBlock>
+
+                <Filter objects={objects} updateFilteredObjects={updateFilteredObjects} />
 
                 <div className={classes.objects}>
                     {
