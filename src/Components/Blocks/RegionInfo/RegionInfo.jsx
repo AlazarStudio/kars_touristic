@@ -210,7 +210,7 @@ function RegionInfo({ children, ...props }) {
                     date: "2024-04-05",
                     tripType: "Групповая поездка",
                     link: "gora_elbrus",
-                    placeLink: "events"
+                    placeLink: "visits"
                 },
                 {
                     img: "object_1.png",
@@ -222,7 +222,7 @@ function RegionInfo({ children, ...props }) {
                     date: "2024-04-05",
                     tripType: "Групповая поездка",
                     link: "gora_elbrus",
-                    placeLink: "events"
+                    placeLink: "visits"
                 }
             ],
             events: [
@@ -236,7 +236,7 @@ function RegionInfo({ children, ...props }) {
                     date: "2024-04-05",
                     tripType: "Групповая поездка",
                     link: "prazdnik_airana",
-                    placeLink: "visits"
+                    placeLink: "events"
                 },
                 {
                     img: "object_2.png",
@@ -248,7 +248,7 @@ function RegionInfo({ children, ...props }) {
                     date: "2024-04-06",
                     tripType: "Индивидуальная поездка",
                     link: "prazdnik_airana",
-                    placeLink: "visits"
+                    placeLink: "events"
                 },
                 {
                     img: "object_3.png",
@@ -260,7 +260,7 @@ function RegionInfo({ children, ...props }) {
                     date: "2024-04-05",
                     tripType: "Индивидуальная поездка",
                     link: "prazdnik_airana",
-                    placeLink: "visits"
+                    placeLink: "events"
                 },
                 {
                     img: "object_1.png",
@@ -272,7 +272,7 @@ function RegionInfo({ children, ...props }) {
                     date: "2024-04-05",
                     tripType: "Групповая поездка",
                     link: "prazdnik_airana",
-                    placeLink: "visits"
+                    placeLink: "events"
                 },
                 {
                     img: "object_2.png",
@@ -284,7 +284,7 @@ function RegionInfo({ children, ...props }) {
                     date: "2024-04-06",
                     tripType: "Индивидуальная поездка",
                     link: "prazdnik_airana",
-                    placeLink: "visits"
+                    placeLink: "events"
                 },
             ],
         }

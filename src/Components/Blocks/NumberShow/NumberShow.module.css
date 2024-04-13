@@ -17,6 +17,7 @@
     height: 570px;
     border-radius: 20px;
     overflow: hidden;
+    position: relative;
 }
 
 .numberInfo_left__slider img {

@@ -94,3 +94,36 @@ main {
     width: 11%;
     z-index: 2;
 }
+
+.numberSlider .swiper-button-prev {
+    color: var(--black_color);
+    background-color: #FFFFFFB2;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    left: 10px;
+}
+
+.numberSlider .swiper-button-next {
+    color: var(--black_color);
+    background-color: #FFFFFFB2;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    right: 10px;
+}
+
+
+.numberSlider .swiper-button-prev:after {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 2px;
+}
+
+.numberSlider .swiper-button-next:after {
+    font-size: 20px;
+    margin-left: 2px;
+    font-weight: 600;
+}

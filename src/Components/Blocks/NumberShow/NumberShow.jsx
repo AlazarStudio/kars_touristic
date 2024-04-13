@@ -1,4 +1,11 @@
 import React from "react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+
+import { Navigation } from 'swiper/modules';
+
 import classes from './NumberShow.module.css';
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
@@ -11,9 +18,16 @@ function NumberShow({ children, ...props }) {
                 <WidthBlock>
                     <div className={classes.numberInfo}>
                         <div className={classes.numberInfo_left}>
-                            <div className={classes.numberInfo_left__slider}>
-                                <img src="/numberSlide1.png" alt="" />
+
+                            <div className={`${classes.numberInfo_left__slider} numberSlider`}>
+                                <Swiper navigation={true} modules={[Navigation]} loop={true} className="mySwiper">
+                                    <SwiperSlide><img src="/numberSlide1.png" alt="" /></SwiperSlide>
+                                    <SwiperSlide><img src="/numberSlide1.png" alt="" /></SwiperSlide>
+                                    <SwiperSlide><img src="/numberSlide1.png" alt="" /></SwiperSlide>
+                                    <SwiperSlide><img src="/numberSlide1.png" alt="" /></SwiperSlide>
+                                </Swiper>
                             </div>
+
                             <div className={classes.numberInfo_left__desc}>
                                 <div className={classes.numberInfo_left__desc___item}>
                                     <p>Площадь</p>
@@ -83,11 +97,10 @@ function NumberShow({ children, ...props }) {
                             </div>
                         </div>
                     </div>
-
                     <CenterBlock>
                         <H2 text_transform="uppercase" margin="0 0 25px 0">Стоимость</H2>
                         <H2 font_weight="500" margin="0 0 50px 0">Цена меняется в зависимости от сезона. Обратите внимание на даты!</H2>
-                        
+
                         <div className={classes.table}>
                             <div className={classes.table_row}>
                                 <div className={classes.table_row__element}></div>
