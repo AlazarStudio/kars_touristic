@@ -27,7 +27,7 @@ function HotelNumber({ children, ...props }) {
                                 <div className={classes.hotelNumbers_item__bottom___infoBlocks____block_____title}>{item.size}</div>
                             </div>
                         </div>
-                        <Link to={"#"} className={classes.hotelNumbers_item__bottom___button}>Подробнее</Link>
+                        <Link to={item.link} className={classes.hotelNumbers_item__bottom___button}>Подробнее</Link>
                     </div>
                 </div>
                 ))}

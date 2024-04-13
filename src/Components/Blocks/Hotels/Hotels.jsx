@@ -10,45 +10,6 @@ import HotelNumber from "../HotelNumber/HotelNumber";
 function Hotels({ children, ...props }) {
     let img = '/hotel_bg.png';
 
-    const tours = [
-        {
-            img: "object_1.png",
-            title: "«Нoвогодняя сказка Кавказа»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Черкесск",
-            category: "Познавательные",
-            date: "2024-04-05",
-            tripType: "Групповая поездка",
-            link: "novogodnyaya_skazka_kavkaza",
-            placeLink: "tours"
-        },
-        {
-            img: "object_2.png",
-            title: "«Нoвогодние каникулы на Кавказе»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Карачаевск",
-            category: "Гастрономические",
-            date: "2024-04-06",
-            tripType: "Индивидуальная поездка",
-            link: "novogodnie_kanikuly_na_kavkaze",
-            placeLink: "tours"
-        },
-        {
-            img: "object_3.png",
-            title: "«Нoвогоднее путешествие по Кавказу»",
-            price: "От 10000 р.",
-            priceImg: "priceImg.png",
-            city: "Архыз",
-            category: "Конные",
-            date: "2024-04-05",
-            tripType: "Индивидуальная поездка",
-            link: "novogodnee_puteshestvie_po_kavkazu",
-            placeLink: "tours"
-        },
-    ]
-
     const info = [
         {
             img: 'galery1.png',
@@ -76,18 +37,21 @@ function Hotels({ children, ...props }) {
             title: 'Двухместный полулюкс (двуспальный)',
             places: 'до 2 мест',
             size: '18 м²',
+            link: "dvuhmestnyj_polulyuks_(dvuspalnyj)"
         },
         {
             img: 'hotel_number_2.png',
             title: 'Двухместный номер с видом',
             places: 'до 2 мест',
             size: '18 м²',
+            link: 'dvuhmestnyj_nomer_s_vidom'
         },
         {
             img: 'hotel_number_3.png',
-            title: 'Двухместный полулюкс (двуспальный)',
+            title: 'Двухместный полулюкс 1 (двуспальный)',
             places: 'до 2 мест',
             size: '18 м²',
+            link: 'dvuhmestnyj_polulyuks_1_(dvuspalnyj)'
         },
     ]
 
