@@ -30,7 +30,7 @@ main {
     min-height: 100svh;
 }
 
-.nonFoundPage{
+.nonFoundPage {
     width: 100%;
     height: 100vh;
     display: flex;
@@ -41,7 +41,7 @@ main {
     font-size: 28px;
 }
 
-.swiper-button-prev{
+.swiper-button-prev {
     color: var(--black_color);
     border: 1px solid var(--black_color);
     width: 60px;
@@ -50,7 +50,7 @@ main {
     left: -90px;
 }
 
-.swiper-button-next{
+.swiper-button-next {
     color: var(--black_color);
     border: 1px solid var(--black_color);
     width: 60px;
@@ -59,20 +59,21 @@ main {
     right: -90px;
 }
 
-.swiper-button-prev:after{
+.swiper-button-prev:after {
     font-size: 35px;
     margin-right: 5px;
 }
 
-.swiper-button-next:after{
+.swiper-button-next:after {
     font-size: 35px;
     margin-left: 5px;
 }
-.swiper{
+
+.swiper {
     overflow: visible;
 }
 
-.swiper::before{
+.swiper::before {
     content: "";
     position: absolute;
     top: 0;
@@ -82,7 +83,8 @@ main {
     width: 11%;
     z-index: 2;
 }
-.swiper::after{
+
+.swiper::after {
     content: "";
     position: absolute;
     top: 0;
