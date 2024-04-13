@@ -16,6 +16,7 @@ import Hotels_Page from "./Components/Pages/Hotels_Page";
 import Number_Page from "./Components/Pages/Number_Page";
 import Visit_Page from "./Components/Pages/Visit_Page";
 import Event_Page from "./Components/Pages/Event_Page";
+import Admin_Page from "./Components/Admin/Admin_Page";
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
           <Route path="/events/:id" element={<Event_Page />} />
           <Route path="*" element={<Non_Found_Page />} />
         </Route>
+        
+        <Route path="/admin/" element={<Admin_Page />} />
       </Routes>
     </>
   )
