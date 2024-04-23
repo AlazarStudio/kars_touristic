@@ -76,3 +76,13 @@ footer {
 .footer_data__column___logo img{
     width: 100%;
 }
+
+.footerArnament{
+    width: 100%;
+    height: auto;
+    background-color: #131313;
+    padding: 15px 0 10px;
+}
+.footerArnament img{
+    width: 100%;
+}

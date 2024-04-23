@@ -12,7 +12,7 @@ function Header_white({ children, ...props }) {
     return ( 
         <>
             <header className={classes.header}>
-                <img src={arnament} alt="" />
+                {/* <img src={arnament} alt="" /> */}
                 <div className={classes.navigation}>
                     <Link to="/" className="navigation_logo">
                         <img src={logo} alt="Logo Kars Touristic" />

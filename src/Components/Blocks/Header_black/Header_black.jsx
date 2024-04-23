@@ -12,7 +12,6 @@ function Header_black({ children, ...props }) {
     return ( 
         <>
             <header className={classes.header}>
-                <img src={arnament} alt="" />
                 <div className={classes.navigation}>
                     <Link to="/" className={classes.navigation_logo}>
                         <img src={logo} alt="Logo Kars Touristic" />

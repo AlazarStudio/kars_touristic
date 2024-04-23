@@ -7,6 +7,8 @@ import alazar from '/alazar_logo.png';
 import tg from '/tg.png';
 import vk from '/vk.png';
 
+import arnament from '/header_arnament.png';
+
 function Footer({ children, ...props }) {
     return (
         <>
@@ -62,6 +64,9 @@ function Footer({ children, ...props }) {
                     </div>
                 </div>
             </footer>
+            <div className={classes.footerArnament}>
+                <img src={arnament} alt="" />
+            </div>
         </>
     );
 }
