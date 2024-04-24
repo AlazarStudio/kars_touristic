@@ -1,0 +1,53 @@
+
+.addData_form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.addData_form label {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.addData_form input {
+    border: 1px solid #000000;
+    border-radius: 20px;
+    padding: 15px 25px;
+    margin-bottom: 25px;
+}
+
+.addData_form textarea {
+    border: 1px solid #000000;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    height: 380px;
+    resize: vertical;
+}
+
+.addData_form .noBorder {
+    border: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+.addData_form button {
+    background-color: #000;
+    color: #fff;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.5px;
+    text-align: center;
+    width: 305px;
+    height: 56px;
+    border: none;
+    cursor: pointer;
+}

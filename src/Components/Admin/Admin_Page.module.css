@@ -1,0 +1,139 @@
+.admin {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.admin_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.admin_header__logo {
+    width: 105px;
+    height: 98px;
+}
+
+.admin_header__logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.admin_header__items {
+    display: flex;
+    align-items: center;
+    gap: 45px;
+}
+
+.admin_header__items___item {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    padding: 5px 0;
+}
+
+.admin_header__items___item____dashboard {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    margin-left: 40px;
+}
+
+.admin_header__items___item:hover {
+    border-bottom: 1px solid #000;
+}
+
+.dashboard:hover {
+    border-bottom: 2px solid transparent;
+}
+
+/* ------------------------------------------- */
+
+.admin_data {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 80px;
+}
+
+.admin_data__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    box-shadow: 0px 4px 24px 0px #B4B4B440;
+    padding: 35px 40px;
+    border-radius: 20px;
+    width: 450px;
+    max-height: 745px;
+}
+
+.admin_data__nav___item {
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.admin_data__nav___item____desc {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin_data__nav___item____subItem_____add {
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 20px;
+}
+
+.admin_data__nav___item____subItem {
+    cursor: pointer;
+    width: 100%;
+    padding: 8px 20px;
+}
+
+.admin_data__nav___item____subItem_____add:hover,
+.admin_data__nav___item____subItem:hover {
+    font-weight: 600;
+}
+
+/* -------------------------------- */
+
+.admin_data__info {
+    width: 100%;
+    height: 745px;
+    /* overflow: hidden;
+    overflow-y: scroll; */
+}
+
+/* 
+.admin_data__info::-webkit-scrollbar{
+    width: 0;
+} */
+
+.addData {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-bottom: 40px;
+}
+
+.addData_title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
