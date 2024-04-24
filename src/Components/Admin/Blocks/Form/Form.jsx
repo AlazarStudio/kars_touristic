@@ -49,8 +49,6 @@ function Form({ children, ...props }) {
         }
     };
     
-
-
     return (
         <>
             <form className={classes.addData_form} onSubmit={handleSubmit}>
