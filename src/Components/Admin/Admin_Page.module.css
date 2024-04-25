@@ -116,3 +116,7 @@
     /* overflow: hidden;
     overflow-y: scroll; */
 }
+
+.boldText{
+    font-weight: 600;
+}

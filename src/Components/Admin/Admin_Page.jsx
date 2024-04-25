@@ -11,11 +11,22 @@ import AddOurMission from "./Blocks/AdminTabsComponents/AddOurMission/AddOurMiss
 
 function Admin_Page({ children, ...props }) {
     const [activeTab, setActiveTab] = useState('');
+    const [openSection, setOpenSection] = useState('');
 
     window.scrollTo({
         top: 0,
         behavior: 'auto'
     });
+
+    const toggleSection = (sectionName) => {
+        if (openSection === sectionName) {
+            setOpenSection(''); // Закрыть текущий раздел, если он уже открыт
+        } else {
+            setOpenSection(sectionName);
+        }
+    };
+    
+    const isActive = (sectionName) => openSection === sectionName ? `${classes.boldText}` : '';
 
     return (
         <>
@@ -39,33 +50,36 @@ function Admin_Page({ children, ...props }) {
                         <div className={classes.admin_data}>
                             <div className={classes.admin_data__nav}>
                                 <div className={classes.admin_data__nav___item}>
-                                    <div className={classes.admin_data__nav___item____title}>Регион</div>
-                                    <div className={classes.admin_data__nav___item____desc}>
-                                        <div
-                                            className={classes.admin_data__nav___item____subItem_____add}
-                                            onClick={() => setActiveTab('addRegion')}
-                                        >
-                                            + Добавить регион
+                                    <div className={`${classes.admin_data__nav___item____title} ${isActive('regions')} ${classes.hoverBlock}`}  onClick={() => toggleSection('regions')}>Регион</div>
+                                    {openSection === 'regions' && (
+                                        <div className={classes.admin_data__nav___item____desc}>
+                                            <div
+                                                className={classes.admin_data__nav___item____subItem_____add}
+                                                onClick={() => setActiveTab('addRegion')}
+                                            >
+                                                + Добавить регион
+                                            </div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Карачаево-Черкессия</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Кабардино-Балкария</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Осетия</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Ингушетия</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Чечня</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Дагестан</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Адыгея</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Краснодарский край</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Ставропольский край</div>
+                                            <div className={classes.admin_data__nav___item____subItem}>Абхазия</div>
                                         </div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Карачаево-Черкессия</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Кабардино-Балкария</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Осетия</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Ингушетия</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Чечня</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Дагестан</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Адыгея</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Краснодарский край</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Ставропольский край</div>
-                                        <div className={classes.admin_data__nav___item____subItem}>Абхазия</div>
-                                    </div>
+                                    )}
                                 </div>
                                 <div className={`${classes.admin_data__nav___item}`}>
-                                    <div className={classes.admin_data__nav___item____title}>О нас</div>
-                                    <div className={classes.admin_data__nav___item____desc}>
+                                    <div className={`${classes.admin_data__nav___item____title} ${isActive('about')} ${classes.hoverBlock}`} onClick={() => toggleSection('about')}>О нас</div>
+                                    {openSection === 'about' && (<div className={classes.admin_data__nav___item____desc}>
                                         <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addAboutCompany')}>О компании</div>
                                         <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurTeam')} >Наша команда</div>
                                         <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurMission')} >Наша миссия</div>
                                     </div>
+                                    )}
                                 </div>
                                 <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>Трансфер</div>
                                 <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>FAQ</div>
