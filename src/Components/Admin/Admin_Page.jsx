@@ -50,7 +50,7 @@ function Admin_Page({ children, ...props }) {
                         <div className={classes.admin_data}>
                             <div className={classes.admin_data__nav}>
                                 <div className={classes.admin_data__nav___item}>
-                                    <div className={`${classes.admin_data__nav___item____title} ${isActive('regions')} ${classes.hoverBlock}`}  onClick={() => toggleSection('regions')}>Регион</div>
+                                    <div className={`${isActive('regions')} ${classes.hoverBlock}`}  onClick={() => toggleSection('regions')}>Регион</div>
                                     {openSection === 'regions' && (
                                         <div className={classes.admin_data__nav___item____desc}>
                                             <div
@@ -73,7 +73,7 @@ function Admin_Page({ children, ...props }) {
                                     )}
                                 </div>
                                 <div className={`${classes.admin_data__nav___item}`}>
-                                    <div className={`${classes.admin_data__nav___item____title} ${isActive('about')} ${classes.hoverBlock}`} onClick={() => toggleSection('about')}>О нас</div>
+                                    <div className={`${isActive('about')} ${classes.hoverBlock}`} onClick={() => toggleSection('about')}>О нас</div>
                                     {openSection === 'about' && (<div className={classes.admin_data__nav___item____desc}>
                                         <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addAboutCompany')}>О компании</div>
                                         <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurTeam')} >Наша команда</div>
