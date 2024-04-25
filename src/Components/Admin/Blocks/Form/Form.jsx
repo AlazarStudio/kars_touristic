@@ -3,67 +3,65 @@ import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ children, ...props }) {
-    const [form, setForm] = useState({
-        title: '',
-        description: '',
-        iconPath: null,
-        backgroundImgPath: null
-    });
+function Form({ onSubmit, actionUrl, method = 'post', children }) {
+    const [form, setForm] = useState({});
 
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
-        if (type === 'file') {
-            setForm(prevState => ({
-                ...prevState,
-                [name]: files[0]
-            }));
-        } else {
-            setForm(prevState => ({
-                ...prevState,
-                [name]: value
-            }));
-        }
-
+        setForm(prevState => ({
+            ...prevState,
+            [name]: type === 'file' ? files[0] : value
+        }));
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (onSubmit) {
+            onSubmit(form);
+            return;
+        }
+
         const formData = new FormData();
-    
-        formData.append('title', form.title);
-        formData.append('description', form.description);
-        formData.append('iconPath', form.iconPath); 
-        formData.append('backgroundImgPath', form.backgroundImgPath);
-    
+        Object.keys(form).forEach(key => {
+            formData.append(key, form[key]);
+        });
+
         try {
             const response = await axios({
-                method: 'post',
-                url: 'http://localhost:5002/api/addRegion',
+                method: method,
+                url: actionUrl,
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-            console.log(response); 
+            console.log(response);
         } catch (error) {
             console.error(error);
         }
     };
-    
+
+    const childrenWithProps = React.Children.map(children, child => {
+        if (React.isValidElement(child)) {
+          const childProps = {
+            ...child.props,
+            onChange: handleChange,
+            ...(child.props.type !== 'file' && { value: form[child.props.name] || '' }),
+          };
+      
+          if (child.props.className) {
+            childProps.className = `${child.props.className} ${childProps.className.includes(classes.noBorder) ? '' : classes.formInput}`.trim();
+          }
+      
+          return React.cloneElement(child, childProps);
+        }
+        return child;
+      });
+      
+
     return (
         <>
             <form className={classes.addData_form} onSubmit={handleSubmit}>
-                <label>Введите название региона</label>
-                <input name="title" type="text" placeholder="Название" value={form.title} onChange={handleChange} required/>
-
-                <label>Добавить описание</label>
-                <textarea name="description" placeholder="Описание" value={form.description} onChange={handleChange}  required/>
-
-                <label>Загрузите фоновое фото региона</label>
-                <input type="file" name="iconPath" className={classes.noBorder} onChange={handleChange}  required/>
-
-                <label>Загрузите фото для обложки региона</label>
-                <input type="file" name="backgroundImgPath" className={classes.noBorder} onChange={handleChange}  required/>
-
+                {childrenWithProps}
                 <button type="submit">Добавить регион</button>
             </form>
         </>

@@ -28,11 +28,6 @@
     resize: vertical;
 }
 
-.addData_form .noBorder {
-    border: none;
-    padding: 0;
-    border-radius: 0;
-}
 
 .addData_form button {
     background-color: #000;

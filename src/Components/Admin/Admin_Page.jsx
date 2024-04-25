@@ -67,7 +67,22 @@ function Admin_Page({ children, ...props }) {
                                     <div className={classes.addData}>
                                         <div className={classes.addData_title}>ДОБАВИТЬ РЕГИОН</div>
 
-                                        <Form />
+                                        <Form actionUrl="http://localhost:5002/api/addRegion" method="post">
+                                            <label>Введите название региона</label>
+                                            <input name="title" type="text" placeholder="Название" required />
+
+                                            <label>Добавить описание</label>
+                                            <textarea name="description" placeholder="Описание" required />
+
+                                            <label>Загрузите иконку для региона</label>
+                                            <input type="file" name="iconPath" className={classes.noBorder} required />
+
+                                            <label>Загрузите фото для обложки региона (на главной) </label>
+                                            <input type="file" name="coverImgPath" className={classes.noBorder} required />                                            
+
+                                            <label>Загрузите фото для фона региона</label>
+                                            <input type="file" name="backgroundImgPath" className={classes.noBorder} required />                                            
+                                        </Form>
                                     </div>
                                 }
                             </div>

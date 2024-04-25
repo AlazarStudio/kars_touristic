@@ -137,3 +137,9 @@
     line-height: 48px;
     text-transform: uppercase;
 }
+
+.addData .noBorder {
+    border: none;
+    padding: 0;
+    border-radius: 0;
+}
