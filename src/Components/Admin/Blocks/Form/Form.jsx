@@ -53,16 +53,16 @@ function Form({ children, ...props }) {
         <>
             <form className={classes.addData_form} onSubmit={handleSubmit}>
                 <label>Введите название региона</label>
-                <input name="title" type="text" placeholder="Название" value={form.title} onChange={handleChange} />
+                <input name="title" type="text" placeholder="Название" value={form.title} onChange={handleChange} required/>
 
                 <label>Добавить описание</label>
-                <textarea name="description" placeholder="Описание" value={form.description} onChange={handleChange} />
+                <textarea name="description" placeholder="Описание" value={form.description} onChange={handleChange}  required/>
 
                 <label>Загрузите фоновое фото региона</label>
-                <input type="file" name="iconPath" className={classes.noBorder} onChange={handleChange} />
+                <input type="file" name="iconPath" className={classes.noBorder} onChange={handleChange}  required/>
 
                 <label>Загрузите фото для обложки региона</label>
-                <input type="file" name="backgroundImgPath" className={classes.noBorder} onChange={handleChange} />
+                <input type="file" name="backgroundImgPath" className={classes.noBorder} onChange={handleChange}  required/>
 
                 <button type="submit">Добавить регион</button>
             </form>
