@@ -3,11 +3,14 @@ import classes from './Admin_Page.module.css';
 import CenterBlock from "../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../Standart/WidthBlock/WidthBlock";
 
-import Form from "../Admin/Blocks/Form/Form"
+import AddRegion from "./Blocks/AdminTabsComponents/AddRegion/AddRegion";
+import AddAboutCompany from "./Blocks/AdminTabsComponents/AddAboutCompany/AddAboutCompany";
+import AddOurTeam from "./Blocks/AdminTabsComponents/AddOurTeam/AddOurTeam";
+import AddOurMission from "./Blocks/AdminTabsComponents/AddOurMission/AddOurMission";
 
 
 function Admin_Page({ children, ...props }) {
-    const [activeTab, setActiveTab] = useState('addRegion');
+    const [activeTab, setActiveTab] = useState('');
 
     window.scrollTo({
         top: 0,
@@ -44,7 +47,7 @@ function Admin_Page({ children, ...props }) {
                                         >
                                             + Добавить регион
                                         </div>
-                                        <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addRegion2')}>Карачаево-Черкессия</div>
+                                        <div className={classes.admin_data__nav___item____subItem}>Карачаево-Черкессия</div>
                                         <div className={classes.admin_data__nav___item____subItem}>Кабардино-Балкария</div>
                                         <div className={classes.admin_data__nav___item____subItem}>Осетия</div>
                                         <div className={classes.admin_data__nav___item____subItem}>Ингушетия</div>
@@ -56,35 +59,27 @@ function Admin_Page({ children, ...props }) {
                                         <div className={classes.admin_data__nav___item____subItem}>Абхазия</div>
                                     </div>
                                 </div>
-                                <div className={classes.admin_data__nav___item}>О нас</div>
-                                <div className={classes.admin_data__nav___item}>Трансфер</div>
-                                <div className={classes.admin_data__nav___item}>FAQ</div>
-                                <div className={classes.admin_data__nav___item}>Контакты</div>
-                                <div className={classes.admin_data__nav___item}>Турагентам</div>
+                                <div className={`${classes.admin_data__nav___item}`}>
+                                    <div className={classes.admin_data__nav___item____title}>О нас</div>
+                                    <div className={classes.admin_data__nav___item____desc}>
+                                        <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addAboutCompany')}>О компании</div>
+                                        <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurTeam')} >Наша команда</div>
+                                        <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurMission')} >Наша миссия</div>
+                                    </div>
+                                </div>
+                                <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>Трансфер</div>
+                                <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>FAQ</div>
+                                <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>Контакты</div>
+                                <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>Турагентам</div>
                             </div>
                             <div className={classes.admin_data__info}>
-                                {activeTab === 'addRegion' &&
-                                    <div className={classes.addData}>
-                                        <div className={classes.addData_title}>ДОБАВИТЬ РЕГИОН</div>
+                                {/* Добавить регион */}
+                                {activeTab === 'addRegion' && <AddRegion />}
 
-                                        <Form actionUrl="http://localhost:5002/api/addRegion" method="post">
-                                            <label>Введите название региона</label>
-                                            <input name="title" type="text" placeholder="Название" required />
-
-                                            <label>Добавить описание</label>
-                                            <textarea name="description" placeholder="Описание" required />
-
-                                            <label>Загрузите иконку для региона</label>
-                                            <input type="file" name="iconPath" className={classes.noBorder} required />
-
-                                            <label>Загрузите фото для обложки региона (на главной) </label>
-                                            <input type="file" name="coverImgPath" className={classes.noBorder} required />                                            
-
-                                            <label>Загрузите фото для фона региона</label>
-                                            <input type="file" name="backgroundImgPath" className={classes.noBorder} required />                                            
-                                        </Form>
-                                    </div>
-                                }
+                                {/* О нас */}
+                                {activeTab === 'addAboutCompany' && <AddAboutCompany />}
+                                {activeTab === 'addOurTeam' && <AddOurTeam />}
+                                {activeTab === 'addOurMission' && <AddOurMission />}
                             </div>
                         </div>
                     </div>

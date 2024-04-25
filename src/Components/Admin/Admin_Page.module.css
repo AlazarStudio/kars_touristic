@@ -77,12 +77,11 @@
     padding: 35px 40px;
     border-radius: 20px;
     width: 450px;
-    max-height: 745px;
+    /* max-height: 745px; */
 }
 
 .admin_data__nav___item {
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
 }
 
 .admin_data__nav___item____desc {
@@ -104,6 +103,7 @@
 }
 
 .admin_data__nav___item____subItem_____add:hover,
+.hoverBlock:hover,
 .admin_data__nav___item____subItem:hover {
     font-weight: 600;
 }
@@ -115,31 +115,4 @@
     height: 745px;
     /* overflow: hidden;
     overflow-y: scroll; */
-}
-
-/* 
-.admin_data__info::-webkit-scrollbar{
-    width: 0;
-} */
-
-.addData {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    padding-bottom: 40px;
-}
-
-.addData_title {
-    font-family: Montserrat;
-    font-size: 32px;
-    font-weight: 600;
-    line-height: 48px;
-    text-transform: uppercase;
-}
-
-.addData .noBorder {
-    border: none;
-    padding: 0;
-    border-radius: 0;
 }

@@ -62,7 +62,6 @@ function Form({ onSubmit, actionUrl, method = 'post', children }) {
         <>
             <form className={classes.addData_form} onSubmit={handleSubmit}>
                 {childrenWithProps}
-                <button type="submit">Добавить регион</button>
             </form>
         </>
     );
