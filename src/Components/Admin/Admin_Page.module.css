@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
+    padding: 0 50px;
 }
 
 .admin_header {

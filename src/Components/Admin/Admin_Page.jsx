@@ -43,8 +43,8 @@ function Admin_Page({ children, ...props }) {
 
     return (
         <>
-            <CenterBlock>
-                <WidthBlock>
+            {/* <CenterBlock>
+                <WidthBlock> */}
                     <div className={classes.admin}>
                         <div className={classes.admin_header}>
                             <a href="/" target="_blank" className={classes.admin_header__logo}>
@@ -102,11 +102,14 @@ function Admin_Page({ children, ...props }) {
                                 {activeTab === 'addAboutCompany' && <AddAboutCompany />}
                                 {activeTab === 'addOurTeam' && <AddOurTeam />}
                                 {activeTab === 'addOurMission' && <AddOurMission />}
+                                
+                                {/* Транфер */}
+
                             </div>
                         </div>
                     </div>
-                </WidthBlock>
-            </CenterBlock>
+                {/* </WidthBlock>
+            </CenterBlock> */}
         </>
     );
 }
