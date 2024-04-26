@@ -11,7 +11,19 @@ import AddOurMission from "./Blocks/AdminTabsComponents/AddOurMission/AddOurMiss
 
 function Admin_Page({ children, ...props }) {
     const [activeTab, setActiveTab] = useState('');
-    const [openSection, setOpenSection] = useState('');
+    const [openSection, setOpenSection] = useState('regions');
+    const [regions, setRegions] = useState([]);
+
+    const fetchRegions = () => {
+        fetch('http://localhost:5002/api/getRegions')
+            .then(response => response.json())
+            .then(data => setRegions(data.regions))
+            .catch(error => console.error('Ошибка при загрузке регионов:', error));
+    };
+
+    useEffect(() => {
+        fetchRegions()
+    }, []);
 
     window.scrollTo({
         top: 0,
@@ -20,13 +32,14 @@ function Admin_Page({ children, ...props }) {
 
     const toggleSection = (sectionName) => {
         if (openSection === sectionName) {
-            setOpenSection(''); // Закрыть текущий раздел, если он уже открыт
+            setOpenSection('');
         } else {
             setOpenSection(sectionName);
         }
     };
-    
+
     const isActive = (sectionName) => openSection === sectionName ? `${classes.boldText}` : '';
+
 
     return (
         <>
@@ -50,7 +63,7 @@ function Admin_Page({ children, ...props }) {
                         <div className={classes.admin_data}>
                             <div className={classes.admin_data__nav}>
                                 <div className={classes.admin_data__nav___item}>
-                                    <div className={`${isActive('regions')} ${classes.hoverBlock}`}  onClick={() => toggleSection('regions')}>Регион</div>
+                                    <div className={`${isActive('regions')} ${classes.hoverBlock}`} onClick={() => toggleSection('regions')}>Регион</div>
                                     {openSection === 'regions' && (
                                         <div className={classes.admin_data__nav___item____desc}>
                                             <div
@@ -59,16 +72,11 @@ function Admin_Page({ children, ...props }) {
                                             >
                                                 + Добавить регион
                                             </div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Карачаево-Черкессия</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Кабардино-Балкария</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Осетия</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Ингушетия</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Чечня</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Дагестан</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Адыгея</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Краснодарский край</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Ставропольский край</div>
-                                            <div className={classes.admin_data__nav___item____subItem}>Абхазия</div>
+                                            {regions.map(region => (
+                                                <div className={classes.admin_data__nav___item____subItem} key={region._id}>
+                                                    {region.title}
+                                                </div>
+                                            ))}
                                         </div>
                                     )}
                                 </div>
@@ -88,7 +96,7 @@ function Admin_Page({ children, ...props }) {
                             </div>
                             <div className={classes.admin_data__info}>
                                 {/* Добавить регион */}
-                                {activeTab === 'addRegion' && <AddRegion />}
+                                {activeTab === 'addRegion' && <AddRegion fetchRegions={fetchRegions}/>}
 
                                 {/* О нас */}
                                 {activeTab === 'addAboutCompany' && <AddAboutCompany />}
