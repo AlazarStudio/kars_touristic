@@ -2,12 +2,12 @@ import React from "react";
 import classes from './AddOurTeam.module.css';
 import Form from "../../Form/Form";
 
-function AddOurTeam({ children, activeTab, ...props }) {
+function AddOurTeam({ children, activeTab, setIsDirty, ...props }) {
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>НАША КОМАНДА</div>
 
-            <Form actionUrl="http://localhost:5002/api/addRegion" method="post">
+            <Form actionUrl="http://localhost:5002/api/addRegion" method="post" setIsDirty={setIsDirty}>
                 <label>Введите ФИО</label>
                 <input name="fio" type="text" placeholder="Описание" required />
 

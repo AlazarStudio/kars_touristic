@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions }) {
+function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, setIsDirty }) {
     const [form, setForm] = useState({});
     const [submissionMessage, setSubmissionMessage] = useState('');
     const formRef = useRef(null);
@@ -14,6 +14,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions }) 
             ...prevState,
             [name]: type === 'file' ? files[0] : value
         }));
+        setIsDirty(true);
     };
 
     const resetForm = () => {
@@ -24,7 +25,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions }) 
                 input.value = '';
             });
         }
-        setSubmissionMessage('Данные успешно доавлены');
+        setSubmissionMessage('Данные успешно добавлены');
         setTimeout(() => setSubmissionMessage(''), 5000); 
     };
 
