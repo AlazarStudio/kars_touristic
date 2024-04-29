@@ -98,7 +98,7 @@ function Admin_Page({ children, ...props }) {
                                     </Link>
                                     {regions.map(region => (
                                         <Link to={`/admin/edit/${region.link}`}
-                                            className={`${classes.admin_data__nav___item____subItem} ${isActive(region.title)}`}
+                                            className={`${classes.admin_data__nav___item____subItem} ${isActive(region.link)}`}
                                             key={region._id}
                                             onClick={() => setActiveTab('editRegion')}
                                         >
