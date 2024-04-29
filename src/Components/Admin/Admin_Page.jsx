@@ -6,6 +6,9 @@ import AddAboutCompany from "./Blocks/AdminTabsComponents/AddAboutCompany/AddAbo
 import AddOurTeam from "./Blocks/AdminTabsComponents/AddOurTeam/AddOurTeam";
 import AddOurMission from "./Blocks/AdminTabsComponents/AddOurMission/AddOurMission";
 import AddTransfer from "./Blocks/AdminTabsComponents/AddTransfer/AddTransfer";
+import AddFAQ from "./Blocks/AdminTabsComponents/AddFAQ/AddFAQ";
+import AddContacts from "./Blocks/AdminTabsComponents/AddContacts/AddContacts";
+import AddTuragent from "./Blocks/AdminTabsComponents/AddTuragent/AddTuragent";
 
 function Admin_Page({ children, ...props }) {
     const [activeTab, setActiveTabInner] = useState('');
@@ -93,9 +96,23 @@ function Admin_Page({ children, ...props }) {
                             Трансфер
                         </div>
 
-                        <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>FAQ</div>
-                        <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>Контакты</div>
-                        <div className={`${classes.admin_data__nav___item} ${classes.hoverBlock}`}>Турагентам</div>
+                        <div
+                            className={`${classes.admin_data__nav___item} ${isActive('addFAQ')} ${classes.hoverBlock}`}
+                            onClick={() => { setActiveTab('addFAQ'); setOpenSection('addFAQ'); }}>
+                            FAQ
+                        </div>
+
+                        <div
+                            className={`${classes.admin_data__nav___item} ${isActive('addContacts')} ${classes.hoverBlock}`}
+                            onClick={() => { setActiveTab('addContacts'); setOpenSection('addContacts'); }}>
+                            Контакты
+                        </div>
+
+                        <div
+                            className={`${classes.admin_data__nav___item} ${isActive('addTuragent')} ${classes.hoverBlock}`}
+                            onClick={() => { setActiveTab('addTuragent'); setOpenSection('addTuragent'); }}>
+                            Турагентам
+                        </div>
                     </div>
                     <div className={classes.admin_data__info}>
                         {/* Добавить регион */}
@@ -110,9 +127,13 @@ function Admin_Page({ children, ...props }) {
                         {activeTab === 'addTransfer' && <AddTransfer setIsDirty={setIsDirty} />}
                         
                         {/* Добавить FAQ */}
-                        {/* {activeTab === 'addTransfer' && <AddTransfer setIsDirty={setIsDirty} />} */}
-
-
+                        {activeTab === 'addFAQ' && <AddFAQ setIsDirty={setIsDirty} />}
+                        
+                        {/* Добавить Контакты */}
+                        {activeTab === 'addContacts' && <AddContacts setIsDirty={setIsDirty} />}
+                        
+                        {/* Добавить Турагентам */}
+                        {activeTab === 'addTuragent' && <AddTuragent setIsDirty={setIsDirty} />}
                     </div>
                 </div>
             </div>

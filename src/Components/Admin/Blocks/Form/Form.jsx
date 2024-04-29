@@ -8,6 +8,16 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, se
     const [submissionMessage, setSubmissionMessage] = useState('');
     const formRef = useRef(null);
 
+    const [showMessage, setShowMessage] = useState(false);
+
+    const displayMessage = (message) => {
+        setSubmissionMessage(message);
+        setShowMessage(true);
+        setTimeout(() => {
+            setShowMessage(false);
+        }, 5000);
+    };
+
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
         setForm(prevState => ({
@@ -25,8 +35,8 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, se
                 input.value = '';
             });
         }
-        setSubmissionMessage('Данные успешно добавлены');
-        setTimeout(() => setSubmissionMessage(''), 5000); 
+        displayMessage('Данные успешно добавлены');
+        setTimeout(() => setShowMessage(false), 5000);
     };
 
     const handleSubmit = async (event) => {
@@ -53,7 +63,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, se
             resetForm();
         } catch (error) {
             console.error(error);
-            setSubmissionMessage('Ошибка при добавлении. Пожалуйста попробуйте заново');
+            displayMessage('Ошибка при добавлении. Пожалуйста попробуйте заново'); 
         }
     };
 
@@ -77,7 +87,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, se
 
     return (
         <>
-            {submissionMessage && <p className={classes.successMessage}>{submissionMessage}</p>}
+            <p className={`${classes.successMessage} ${showMessage ? classes.showMessage : ''}`}>{submissionMessage}</p>
 
             <form ref={formRef} className={classes.addData_form} onSubmit={handleSubmit}>
                 {childrenWithProps}
