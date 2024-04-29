@@ -33,6 +33,7 @@
     padding: 20px;
     transition: all 0.2s ease-in-out;
     background-color: var(--white_color);
+    color: var(--black_color);
 }
 
 .editBlocks_item:hover{

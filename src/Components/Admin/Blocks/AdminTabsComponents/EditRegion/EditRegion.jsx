@@ -1,20 +1,20 @@
 import React from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import classes from './EditRegion.module.css';
 
 function EditRegion({ children, ...props }) {
-    const { id } = useParams();
+    const { id, title } = useParams();
     return (
         <>
             <div className={classes.edit}>
-                <div className={classes.editTitle}>Редактировать РЕГИОН: {id}</div>
+                <div className={classes.editTitle}>Редактировать РЕГИОН: «{title}»</div>
                 <div className={classes.editBlocks}>
-                    <div className={classes.editBlocks_item}>
+                    <Link to={`/admin/${id}/${title}/multiday_tours`} className={classes.editBlocks_item}>
                         <div className={classes.editBlocks_item__img}>
                             <img src="/admin_turi.png" alt="" />
                         </div>
                         <div className={classes.editBlocks_item__title}>Многодневные туры</div>
-                    </div>
+                    </Link>
                     <div className={classes.editBlocks_item}>
                         <div className={classes.editBlocks_item__img}>
                             <img src="/admin_exkursii.png" alt="" />
