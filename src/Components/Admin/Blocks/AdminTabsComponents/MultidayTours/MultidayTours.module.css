@@ -55,11 +55,15 @@
     width: 14px;
 }
 
+.mb40{
+    margin-bottom: 40px;
+}
+
 .multidayTours_data {
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    gap: 25px;
+    gap: 50px 25px;
 }
 
 .multidayTours_data__tour {
