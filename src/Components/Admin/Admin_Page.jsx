@@ -12,6 +12,8 @@ import AddContacts from "./Blocks/AdminTabsComponents/AddContacts/AddContacts";
 import AddTuragent from "./Blocks/AdminTabsComponents/AddTuragent/AddTuragent";
 import EditRegion from "./Blocks/AdminTabsComponents/EditRegion/EditRegion";
 import { Link } from "react-router-dom";
+import CenterBlock from "../Standart/CenterBlock/CenterBlock";
+import WidthBlock from "../Standart/WidthBlock/WidthBlock";
 
 function Admin_Page({ children, ...props }) {
     const { id, title } = useParams();
@@ -166,8 +168,6 @@ function Admin_Page({ children, ...props }) {
 
                         {/* Добавить Турагентам */}
                         {activeTab === 'addTuragent' && <AddTuragent setIsDirty={setIsDirty} />}
-
-
                     </div>
                 </div>
             </div>
