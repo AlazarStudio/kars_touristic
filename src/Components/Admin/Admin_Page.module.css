@@ -96,12 +96,14 @@
     font-weight: 600;
     cursor: pointer;
     padding: 8px 20px;
+    color: var(--black_color);
 }
 
 .admin_data__nav___item____subItem {
     cursor: pointer;
     width: 100%;
     padding: 8px 20px;
+    color: var(--black_color);
 }
 
 .admin_data__nav___item____subItem_____add:hover,

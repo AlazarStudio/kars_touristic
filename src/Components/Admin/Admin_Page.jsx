@@ -9,9 +9,11 @@ import AddTransfer from "./Blocks/AdminTabsComponents/AddTransfer/AddTransfer";
 import AddFAQ from "./Blocks/AdminTabsComponents/AddFAQ/AddFAQ";
 import AddContacts from "./Blocks/AdminTabsComponents/AddContacts/AddContacts";
 import AddTuragent from "./Blocks/AdminTabsComponents/AddTuragent/AddTuragent";
+import EditRegion from "./Blocks/AdminTabsComponents/EditRegion/EditRegion";
+import { Link } from "react-router-dom";
 
 function Admin_Page({ children, ...props }) {
-    const [activeTab, setActiveTabInner] = useState('');
+    const [activeTab, setActiveTabInner] = useState('editRegion');
     const [openSection, setOpenSection] = useState('regions');
     const [regions, setRegions] = useState([]);
     const [isDirty, setIsDirty] = useState(false);
@@ -68,13 +70,17 @@ function Admin_Page({ children, ...props }) {
                             <div className={`${isActive('regions')} ${classes.hoverBlock}`} onClick={() => setOpenSection('regions')}>Регион</div>
                             {openSection === 'regions' && (
                                 <div className={classes.admin_data__nav___item____desc}>
-                                    <div className={classes.admin_data__nav___item____subItem_____add} onClick={() => setActiveTab('addRegion')}>
+                                    <Link to={'/admin'} className={classes.admin_data__nav___item____subItem_____add} onClick={() => setActiveTab('addRegion')}>
                                         + Добавить регион
-                                    </div>
+                                    </Link>
                                     {regions.map(region => (
-                                        <div className={classes.admin_data__nav___item____subItem} key={region._id}>
+                                        <Link to={`/admin/${region.title}`}
+                                            className={classes.admin_data__nav___item____subItem}
+                                            key={region._id}
+                                            onClick={() => setActiveTab('editRegion')}
+                                        >
                                             {region.title}
-                                        </div>
+                                        </Link>
                                     ))}
                                 </div>
                             )}
@@ -117,23 +123,29 @@ function Admin_Page({ children, ...props }) {
                     <div className={classes.admin_data__info}>
                         {/* Добавить регион */}
                         {activeTab === 'addRegion' && <AddRegion fetchRegions={fetchRegions} setIsDirty={setIsDirty} />}
-                        
+
+                        {/* Редактировать регион */}
+                        {activeTab === 'editRegion' && <EditRegion/>}
+
+
                         {/* Добавить О нас */}
                         {activeTab === 'addAboutCompany' && <AddAboutCompany setIsDirty={setIsDirty} />}
                         {activeTab === 'addOurTeam' && <AddOurTeam setIsDirty={setIsDirty} />}
                         {activeTab === 'addOurMission' && <AddOurMission setIsDirty={setIsDirty} />}
-                        
+
                         {/* Добавить Транфер */}
                         {activeTab === 'addTransfer' && <AddTransfer setIsDirty={setIsDirty} />}
-                        
+
                         {/* Добавить FAQ */}
                         {activeTab === 'addFAQ' && <AddFAQ setIsDirty={setIsDirty} />}
-                        
+
                         {/* Добавить Контакты */}
                         {activeTab === 'addContacts' && <AddContacts setIsDirty={setIsDirty} />}
-                        
+
                         {/* Добавить Турагентам */}
                         {activeTab === 'addTuragent' && <AddTuragent setIsDirty={setIsDirty} />}
+
+
                     </div>
                 </div>
             </div>
