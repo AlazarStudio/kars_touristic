@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import classes from './Admin_Page.module.css';
 
 import AddRegion from "./Blocks/AdminTabsComponents/AddRegion/AddRegion";
@@ -13,10 +14,28 @@ import EditRegion from "./Blocks/AdminTabsComponents/EditRegion/EditRegion";
 import { Link } from "react-router-dom";
 
 function Admin_Page({ children, ...props }) {
-    const [activeTab, setActiveTabInner] = useState('editRegion');
-    const [openSection, setOpenSection] = useState('regions');
+    const { id, title } = useParams();
+
+    let block = id;
+
+    let section = ''
+
+    if (title) {
+        block = 'editRegion';
+        section = 'regions';
+    }
+    if (block == 'addRegion') {
+        section = 'regions';
+    }
+    if (block == 'addAboutCompany' || block == 'addOurTeam' || block == 'addOurMission') {
+        section = 'about';
+    }
+    
+    const [activeTab, setActiveTabInner] = useState(block);
+    const [openSection, setOpenSection] = useState(section);
     const [regions, setRegions] = useState([]);
     const [isDirty, setIsDirty] = useState(false);
+
 
     const fetchRegions = () => {
         fetch('http://localhost:5002/api/getRegions')
@@ -47,6 +66,7 @@ function Admin_Page({ children, ...props }) {
 
     const isActive = (sectionName) => openSection === sectionName ? `${classes.boldText}` : '';
 
+
     return (
         <>
             <div className={classes.admin}>
@@ -70,11 +90,11 @@ function Admin_Page({ children, ...props }) {
                             <div className={`${isActive('regions')} ${classes.hoverBlock}`} onClick={() => setOpenSection('regions')}>Регион</div>
                             {openSection === 'regions' && (
                                 <div className={classes.admin_data__nav___item____desc}>
-                                    <Link to={'/admin'} className={classes.admin_data__nav___item____subItem_____add} onClick={() => setActiveTab('addRegion')}>
+                                    <Link to={'/admin/addRegion'} className={classes.admin_data__nav___item____subItem_____add} onClick={() => setActiveTab('addRegion')}>
                                         + Добавить регион
                                     </Link>
                                     {regions.map(region => (
-                                        <Link to={`/admin/${region.title}`}
+                                        <Link to={`/admin/edit/${region.title}`}
                                             className={classes.admin_data__nav___item____subItem}
                                             key={region._id}
                                             onClick={() => setActiveTab('editRegion')}
@@ -89,36 +109,36 @@ function Admin_Page({ children, ...props }) {
                             <div className={`${isActive('about')} ${classes.hoverBlock}`} onClick={() => setOpenSection('about')}>О нас</div>
                             {openSection === 'about' && (
                                 <div className={classes.admin_data__nav___item____desc}>
-                                    <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addAboutCompany')}>О компании</div>
-                                    <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurTeam')}>Наша команда</div>
-                                    <div className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurMission')}>Наша миссия</div>
+                                    <Link to={`/admin/addAboutCompany`} className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addAboutCompany')}>О компании</Link>
+                                    <Link to={`/admin/addOurTeam`} className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurTeam')}>Наша команда</Link>
+                                    <Link to={`/admin/addOurMission`} className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('addOurMission')}>Наша миссия</Link>
                                 </div>
                             )}
                         </div>
 
-                        <div
+                        <Link to={`/admin/addTransfer`}
                             className={`${classes.admin_data__nav___item} ${isActive('addTransfer')} ${classes.hoverBlock}`}
                             onClick={() => { setActiveTab('addTransfer'); setOpenSection('addTransfer'); }}>
                             Трансфер
-                        </div>
+                        </Link>
 
-                        <div
+                        <Link to={`/admin/addFAQ`}
                             className={`${classes.admin_data__nav___item} ${isActive('addFAQ')} ${classes.hoverBlock}`}
                             onClick={() => { setActiveTab('addFAQ'); setOpenSection('addFAQ'); }}>
                             FAQ
-                        </div>
+                        </Link>
 
-                        <div
+                        <Link to={`/admin/addContacts`}
                             className={`${classes.admin_data__nav___item} ${isActive('addContacts')} ${classes.hoverBlock}`}
                             onClick={() => { setActiveTab('addContacts'); setOpenSection('addContacts'); }}>
                             Контакты
-                        </div>
+                        </Link>
 
-                        <div
+                        <Link to={`/admin/addTuragent`}
                             className={`${classes.admin_data__nav___item} ${isActive('addTuragent')} ${classes.hoverBlock}`}
                             onClick={() => { setActiveTab('addTuragent'); setOpenSection('addTuragent'); }}>
                             Турагентам
-                        </div>
+                        </Link>
                     </div>
                     <div className={classes.admin_data__info}>
                         {/* Добавить регион */}
@@ -126,7 +146,6 @@ function Admin_Page({ children, ...props }) {
 
                         {/* Редактировать регион */}
                         {activeTab === 'editRegion' && <EditRegion/>}
-
 
                         {/* Добавить О нас */}
                         {activeTab === 'addAboutCompany' && <AddAboutCompany setIsDirty={setIsDirty} />}

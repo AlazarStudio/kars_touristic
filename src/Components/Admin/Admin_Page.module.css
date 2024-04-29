@@ -84,6 +84,7 @@
 
 .admin_data__nav___item {
     cursor: pointer;
+    color: var(--black_color);
 }
 
 .admin_data__nav___item____desc {

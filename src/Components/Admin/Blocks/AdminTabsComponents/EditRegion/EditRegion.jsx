@@ -7,7 +7,7 @@ function EditRegion({ children, ...props }) {
     return (
         <>
             <div className={classes.edit}>
-                <div className={classes.editTitle}>Редактировать РЕГИОН {id}</div>
+                <div className={classes.editTitle}>Редактировать РЕГИОН: {id}</div>
                 <div className={classes.editBlocks}>
                     <div className={classes.editBlocks_item}>
                         <div className={classes.editBlocks_item__img}>
