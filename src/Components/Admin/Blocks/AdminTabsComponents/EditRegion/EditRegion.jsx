@@ -23,6 +23,12 @@ function EditRegion({ children, ...props }) {
                             </div>
                             <div className={classes.editBlocks_item__title}>Однодневные экскурсии</div>
                         </Link>
+                        <Link to={`/admin/${id}/${title}/gids`}  className={classes.editBlocks_item}>
+                            <div className={classes.editBlocks_item__img}>
+                                <img src="/admin_gidi.png" alt="" />
+                            </div>
+                            <div className={classes.editBlocks_item__title}>Гиды</div>
+                        </Link>
                         <Link to={`/admin/${id}/${title}/hotels`}  className={classes.editBlocks_item}>
                             <div className={classes.editBlocks_item__img}>
                                 <img src="/admin_oteli.png" alt="" />

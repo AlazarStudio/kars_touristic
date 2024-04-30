@@ -1,0 +1,140 @@
+.multidayTours {
+    width: 100%;
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    padding: 50px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.multidayTours_top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.multidayTours_top__title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
+
+.multidayTours_top__add {
+    color: var(--black_color);
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--black_color);
+    border-radius: 30px;
+    padding: 15px 50px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.multidayTours_top__add:hover {
+    color: var(--white_color);
+    background-color: var(--black_color);
+}
+
+.multidayTours_back a {
+    color: var(--black_color);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 170px;
+}
+
+.multidayTours_back a img {
+    width: 14px;
+}
+
+.mb40 {
+    margin-bottom: 40px;
+}
+
+.gids {
+    display: flex;
+    flex-direction: column;
+}
+
+.gids_info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+    border-bottom: 1px solid var(--black_color);
+    gap: 50px;
+}
+
+.gids_info:last-child {
+    border: none;
+}
+
+.gids_info__img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.gids_info__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gids_info__name {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24.38px;
+    width: 310px;
+}
+
+.gids_info__email {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24.38px;
+    width: 300px;
+}
+
+.gids_info__activeBTN {
+    background: #169A4C;
+    border-radius: 30px;
+    padding: 15px 0px;
+    color: var(--white_color);
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gids_info__changeBTN {
+    background: var(--black_color);
+    border-radius: 30px;
+    padding: 15px 0px;
+    color: var(--white_color);
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
