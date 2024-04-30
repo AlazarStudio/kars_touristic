@@ -1,10 +1,10 @@
 import React from "react";
-import classes from './MultidayTours.module.css';
+import classes from './OnedayTours.module.css';
 
 import { Link, useParams } from "react-router-dom";
-import AddMultidayTours from "../AddMultidayTours/AddMultidayTours";
+import AddOnedayTours from "../AddOnedayTours/AddOnedayTours";
 
-function MultidayTours({ children, title, type, ...props }) {
+function OnedayTours({ children, title, type, ...props }) {
     const { add } = useParams();
     return (
         <>
@@ -15,8 +15,8 @@ function MultidayTours({ children, title, type, ...props }) {
                     </div>
 
                     <div className={classes.multidayTours_top}>
-                        <div className={classes.multidayTours_top__title}>Многодневные туры региона</div>
-                        <Link to={'addMultiday_tour'} className={classes.multidayTours_top__add}>Добавить многодневный тур</Link>
+                        <div className={classes.multidayTours_top__title}>Однодневные туры региона</div>
+                        <Link to={'addOneday_tour'} className={classes.multidayTours_top__add}>Добавить однодневный тур</Link>
                     </div>
 
                     <div className={classes.multidayTours_data}>
@@ -92,11 +92,11 @@ function MultidayTours({ children, title, type, ...props }) {
                         <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                     </div>
 
-                    <AddMultidayTours />
+                    <AddOnedayTours />
                 </>
             }
         </>
     );
 }
 
-export default MultidayTours;
+export default OnedayTours;
