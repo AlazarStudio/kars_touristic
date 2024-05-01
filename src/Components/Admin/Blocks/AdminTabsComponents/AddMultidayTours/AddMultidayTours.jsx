@@ -52,7 +52,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, ...props }) {
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
-            <Form actionUrl="http://localhost:5002/api/addMultiday_tour" method="post">
+            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post">
                 <label className={classes.addData_step}>Первый этап</label>
 
                 <label>Название тура</label>
