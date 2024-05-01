@@ -56,7 +56,7 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
 
     return (
         <div className={classes.addData}>
-            <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
+            <div className={classes.addData_title}>ДОБАВИТЬ Однодневный тур</div>
 
             <Form actionUrl="http://localhost:5002/api/addOnedayTour" method="post" resetAll={resetAll} initialValues={{ region }}>
                 <label className={classes.addData_step}>Первый этап</label>
