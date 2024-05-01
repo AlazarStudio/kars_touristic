@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import classes from './AddMultidayTours.module.css';
 import Form from "../../Form/Form";
 
-function AddMultidayTours({ children, activeTab, setIsDirty, ...props }) {
+function AddMultidayTours({ children, activeTab, setIsDirty, region, ...props }) {
     const [places, setPlaces] = useState(['']);
     const [checklists, setChecklists] = useState(['']);
     const [days, setDays] = useState(['']);
     const [photos, setPhotos] = useState([]);
-
+    
     const handleAddPlace = () => setPlaces([...places, '']);
     const handleAddChecklist = () => setChecklists([...checklists, '']);
     const handleAddDay = () => setDays([...days, '']);
@@ -54,13 +54,14 @@ function AddMultidayTours({ children, activeTab, setIsDirty, ...props }) {
         setDays(current => removeItemFromArray(current, index));
     };
 
-
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
-            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll}>
+            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll} initialValues={{ region }}>
                 <label className={classes.addData_step}>Первый этап</label>
+
+                <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
                 <label>Название тура</label>
                 <input name="tourTitle" type="text" placeholder="Название тура" required />

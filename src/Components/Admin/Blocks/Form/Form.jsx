@@ -3,12 +3,12 @@ import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll }) {
-    const [form, setForm] = useState({});
-    const [submissionMessage, setSubmissionMessage] = useState('');
-    const formRef = useRef(null);
+function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues }) {
+    const [form, setForm] = useState(initialValues || {}); // Инициализируем состояние с начальными значениями
 
+    const [submissionMessage, setSubmissionMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
+    const formRef = useRef(null);
 
     const displayMessage = (message) => {
         setSubmissionMessage(message);
@@ -46,7 +46,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
     };
 
     const resetForm = () => {
-        setForm({});
+        setForm(initialValues || {}); // Сбросить форму к начальным значениям
         if (formRef.current) {
             const fileInputs = formRef.current.querySelectorAll('input[type="file"]');
             fileInputs.forEach(input => {
@@ -55,7 +55,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
         }
         displayMessage('Данные успешно добавлены');
         setTimeout(() => setShowMessage(false), 5000);
-        resetAll(); 
+        resetAll && resetAll(); 
     };
 
     const handleSubmit = async (event) => {
