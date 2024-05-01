@@ -20,10 +20,17 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
 
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
-        setForm(prevState => ({
-            ...prevState,
-            [name]: type === 'file' ? files[0] : value
-        }));
+        if (type === 'file' && files.length) {
+            setForm(prevState => ({
+                ...prevState,
+                [name]: files.length > 1 ? [...files] : files[0]
+            }));
+        } else {
+            setForm(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
     };
 
     const resetForm = () => {
@@ -48,17 +55,22 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
 
         let urlAdd = '';
 
-        if (type == 'query') {
+        if (type === 'query') {
             urlAdd = '?';
+            Object.keys(form).forEach(key => {
+                urlAdd += `${encodeURIComponent(key)}=${encodeURIComponent(form[key])}&`;
+            });
         }
 
         const formData = new FormData();
         Object.keys(form).forEach(key => {
-            if (type == 'query') {
-                urlAdd = urlAdd + key + '=' + form[key] + '&';
+            if (Array.isArray(form[key])) {
+                form[key].forEach((item) => {
+                    formData.append(key, item);
+                });
+            } else {
+                formData.append(key, form[key]);
             }
-            
-            formData.append(key, form[key]);
         });
 
         try {
@@ -68,13 +80,14 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-            fetchRegions ? fetchRegions() : null;
+            fetchRegions && fetchRegions();
             resetForm();
         } catch (error) {
             console.error(error);
             displayMessage('Ошибка при добавлении. Пожалуйста попробуйте заново');
         }
     };
+
 
     const childrenWithProps = React.Children.map(children, child => {
         if (React.isValidElement(child)) {
