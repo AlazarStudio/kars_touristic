@@ -13,6 +13,13 @@ function AddMultidayTours({ children, activeTab, setIsDirty, ...props }) {
     const handleAddDay = () => setDays([...days, '']);
     const handleFileChange = (event) => setPhotos([...photos, ...Array.from(event.target.files)]);
 
+    const resetAll = () => {
+        setPlaces(['']);
+        setChecklists(['']);
+        setDays(['']);
+        setPhotos([]);
+    };
+
     const handlePlaceChange = (index, event) => {
         const newPlaces = [...places];
         newPlaces[index] = event.target.value;
@@ -52,7 +59,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, ...props }) {
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
-            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post">
+            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll}>
                 <label className={classes.addData_step}>Первый этап</label>
 
                 <label>Название тура</label>
@@ -99,6 +106,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, ...props }) {
                             <input
                                 type="text"
                                 name={`places[]`}
+                                data-index={index}
                                 placeholder={`Место ${index + 1}`}
                                 value={place}
                                 onChange={(event) => handlePlaceChange(index, event)}
@@ -121,6 +129,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, ...props }) {
                             <input
                                 type="text"
                                 name={`checklists[]`}
+                                data-index={index}
                                 placeholder={`Чек-лист ${index + 1}`}
                                 value={checklist}
                                 onChange={(event) => handleChecklistChange(index, event)}
@@ -142,6 +151,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, ...props }) {
                         <div className={classes.add_remove_btn}>
                             <textarea
                                 name={`days[]`}
+                                data-index={index}
                                 placeholder={`День ${index + 1}`}
                                 value={day}
                                 onChange={(event) => handleDayChange(index, event)}

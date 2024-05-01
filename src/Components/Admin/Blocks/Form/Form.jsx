@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type }) {
+function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll }) {
     const [form, setForm] = useState({});
     const [submissionMessage, setSubmissionMessage] = useState('');
     const formRef = useRef(null);
@@ -26,10 +26,22 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
                 [name]: files.length > 1 ? [...files] : files[0]
             }));
         } else {
-            setForm(prevState => ({
-                ...prevState,
-                [name]: value
-            }));
+            if (name.endsWith('[]')) {
+                const fieldName = name.slice(0, -2);
+                const existingArray = form[fieldName] || [];
+                const index = parseInt(event.target.dataset.index, 10);
+                const updatedArray = [...existingArray];
+                updatedArray[index] = value;
+                setForm(prevForm => ({
+                    ...prevForm,
+                    [fieldName]: updatedArray
+                }));
+            } else {
+                setForm(prevForm => ({
+                    ...prevForm,
+                    [name]: value
+                }));
+            }
         }
     };
 
@@ -43,6 +55,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
         }
         displayMessage('Данные успешно добавлены');
         setTimeout(() => setShowMessage(false), 5000);
+        resetAll(); 
     };
 
     const handleSubmit = async (event) => {
