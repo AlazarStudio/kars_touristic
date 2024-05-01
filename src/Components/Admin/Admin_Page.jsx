@@ -35,10 +35,9 @@ function Admin_Page({ children, ...props }) {
         section = 'about';
     }
 
-    const [activeTab, setActiveTabInner] = useState(block);
+    const [activeTab, setActiveTab] = useState(block);
     const [openSection, setOpenSection] = useState(section);
     const [regions, setRegions] = useState([]);
-    const [isDirty, setIsDirty] = useState(false);
 
 
     const fetchRegions = () => {
@@ -57,20 +56,8 @@ function Admin_Page({ children, ...props }) {
         behavior: 'auto'
     });
 
-    const setActiveTab = (tabName) => {
-        if (isDirty && activeTab !== tabName) {
-            if (window.confirm("У вас есть несохраненные изменения. Если вы уйдете, они будут утеряны. Продолжить?")) {
-                setIsDirty(false);
-                setActiveTabInner(tabName);
-            }
-        } else {
-            setActiveTabInner(tabName);
-        }
-    };
-
     const isActive = (sectionName) => boldName === sectionName ? `${classes.boldText}` : '';
     const isActiveEdit = (sectionName) => id === sectionName ? `${classes.boldText}` : '';
-
 
     return (
         <>
@@ -147,27 +134,27 @@ function Admin_Page({ children, ...props }) {
                     </div>
                     <div className={classes.admin_data__info}>
                         {/* Добавить регион */}
-                        {activeTab === 'addRegion' && <AddRegion fetchRegions={fetchRegions} setIsDirty={setIsDirty} />}
+                        {activeTab === 'addRegion' && <AddRegion fetchRegions={fetchRegions} />}
 
                         {/* Редактировать регион */}
                         {activeTab === 'editRegion' && <EditRegion />}
 
                         {/* Добавить О нас */}
-                        {activeTab === 'addAboutCompany' && <AddAboutCompany setIsDirty={setIsDirty} />}
-                        {activeTab === 'addOurTeam' && <AddOurTeam setIsDirty={setIsDirty} />}
-                        {activeTab === 'addOurMission' && <AddOurMission setIsDirty={setIsDirty} />}
+                        {activeTab === 'addAboutCompany' && <AddAboutCompany/>}
+                        {activeTab === 'addOurTeam' && <AddOurTeam />}
+                        {activeTab === 'addOurMission' && <AddOurMission/>}
 
                         {/* Добавить Транфер */}
-                        {activeTab === 'addTransfer' && <AddTransfer setIsDirty={setIsDirty} />}
+                        {activeTab === 'addTransfer' && <AddTransfer/>}
 
                         {/* Добавить FAQ */}
-                        {activeTab === 'addFAQ' && <AddFAQ setIsDirty={setIsDirty} />}
+                        {activeTab === 'addFAQ' && <AddFAQ />}
 
                         {/* Добавить Контакты */}
-                        {activeTab === 'addContacts' && <AddContacts setIsDirty={setIsDirty} />}
+                        {activeTab === 'addContacts' && <AddContacts/>}
 
                         {/* Добавить Турагентам */}
-                        {activeTab === 'addTuragent' && <AddTuragent setIsDirty={setIsDirty} />}
+                        {activeTab === 'addTuragent' && <AddTuragent/>}
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, setIsDirty }) {
+function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type }) {
     const [form, setForm] = useState({});
     const [submissionMessage, setSubmissionMessage] = useState('');
     const formRef = useRef(null);
@@ -24,7 +24,6 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, se
             ...prevState,
             [name]: type === 'file' ? files[0] : value
         }));
-        setIsDirty(true);
     };
 
     const resetForm = () => {
@@ -47,23 +46,33 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, se
             return;
         }
 
+        let urlAdd = '';
+
+        if (type == 'query') {
+            urlAdd = '?';
+        }
+
         const formData = new FormData();
         Object.keys(form).forEach(key => {
+            if (type == 'query') {
+                urlAdd = urlAdd + key + '=' + form[key] + '&';
+            }
+            
             formData.append(key, form[key]);
         });
 
         try {
             const response = await axios({
                 method: method,
-                url: actionUrl,
+                url: actionUrl + urlAdd,
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-            fetchRegions();
+            fetchRegions ? fetchRegions() : null;
             resetForm();
         } catch (error) {
             console.error(error);
-            displayMessage('Ошибка при добавлении. Пожалуйста попробуйте заново'); 
+            displayMessage('Ошибка при добавлении. Пожалуйста попробуйте заново');
         }
     };
 
