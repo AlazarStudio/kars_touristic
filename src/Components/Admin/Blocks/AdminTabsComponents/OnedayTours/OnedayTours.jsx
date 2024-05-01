@@ -92,7 +92,7 @@ function OnedayTours({ children, title, type, ...props }) {
                         <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                     </div>
 
-                    <AddOnedayTours />
+                    <AddOnedayTours region={title} />
                 </>
             }
         </>
