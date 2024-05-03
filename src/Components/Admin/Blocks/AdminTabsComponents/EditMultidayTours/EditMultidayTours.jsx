@@ -106,10 +106,10 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>
 
-            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
+            <Form actionUrl={`http://localhost:5002/api/updateOneMultidayTour/${idToEdit}`} method="put" resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
                 <label className={classes.addData_step}>Первый этап</label>
 
-                <input name="region" type="text" placeholder="Регион" required value={region} readOnly />
+                <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
                 <label>Название тура </label>
                 <input name="tourTitle" type="text" placeholder="Название тура" value={selectedTour.tourTitle} required />
