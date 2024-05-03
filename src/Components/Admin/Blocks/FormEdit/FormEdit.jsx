@@ -69,7 +69,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
     
         let urlAdd = '';
         const formData = new FormData();
-        
+
         // Добавляем существующие данные из формы
         Object.entries(form).forEach(([key, value]) => {
             if (Array.isArray(value)) {

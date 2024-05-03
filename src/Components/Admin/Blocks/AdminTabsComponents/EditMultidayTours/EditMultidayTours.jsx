@@ -26,7 +26,6 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const [loadedPhotos, setLoadedPhotos] = useState([]);
     const [newPhotos, setNewPhotos] = useState([]);
 
-    // Используйте деструктуризацию для доступа к вложенным массивам
     const { places, checklists, days, photos } = selectedTour;
 
     const fetchTourById = (id) => {
@@ -49,16 +48,14 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         }
     }, [idToEdit]);
 
-    // Добавление элементов в массивы состояния
     const handleAddPlace = () => setSelectedTour(prevState => ({ ...prevState, places: [...prevState.places, ''] }));
     const handleAddChecklist = () => setSelectedTour(prevState => ({ ...prevState, checklists: [...prevState.checklists, ''] }));
     const handleAddDay = () => setSelectedTour(prevState => ({ ...prevState, days: [...prevState.days, ''] }));
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
-        setNewPhotos(files); // Обновляем только список новых фотографий
+        setNewPhotos(files); 
     };
 
-    // Обработка изменений в массивах состояния
     const handlePlaceChange = (index, event) => {
         const newPlaces = [...places];
         newPlaces[index] = event.target.value;
@@ -77,10 +74,44 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         setSelectedTour(prevState => ({ ...prevState, days: newDays }));
     };
 
-    // Удаление элементов из массивов состояния
     const handleRemovePlace = index => setSelectedTour(prevState => ({ ...prevState, places: prevState.places.filter((_, i) => i !== index) }));
     const handleRemoveChecklist = index => setSelectedTour(prevState => ({ ...prevState, checklists: prevState.checklists.filter((_, i) => i !== index) }));
     const handleRemoveDay = index => setSelectedTour(prevState => ({ ...prevState, days: prevState.days.filter((_, i) => i !== index) }));
+
+    const [photosToDelete, setPhotosToDelete] = useState([]);
+
+    const handleRemovePhoto = (index, photo) => {
+        const updatedPhotos = loadedPhotos.filter((_, i) => i !== index);
+        setLoadedPhotos(updatedPhotos);
+
+        setPhotosToDelete(prevPhotos => {
+            const newPhotosToDelete = [photo];
+
+            updatePhotosOnServer(idToEdit, updatedPhotos, newPhotosToDelete);
+
+            return newPhotosToDelete;
+        });
+    };
+
+
+    const updatePhotosOnServer = async (id, photos, photosToDelete) => {
+        const formData = new FormData();
+        photos.forEach(photo => {
+            formData.append('photos', photo);
+        });
+
+        formData.append('photosToDelete', JSON.stringify(photosToDelete));
+
+        try {
+            const response = await fetch(`http://localhost:5002/api/updateOneMultidayTour/${id}`, {
+                method: 'PUT',
+                body: formData
+            });
+        } catch (error) {
+            console.error('Error updating photos', error);
+        }
+    };
+
 
     return (
         <div className={classes.addData}>
@@ -119,8 +150,8 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                     {loadedPhotos.map((photo, index) => (
                         <div className={classes.imgBlock__item} key={index}>
                             <img src={imgUrl + photo} alt="" />
-                            <div className={classes.imgBlock_close} >
-                                <img src="/delete.png" alt="" />
+                            <div className={classes.imgBlock_close} onClick={() => handleRemovePhoto(index, photo)}>
+                                <img src="/delete.png" alt="Delete" />
                             </div>
                         </div>
                     ))}
