@@ -7,6 +7,8 @@ import FormEdit from "../../FormEdit/FormEdit";
 function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
     const { idToEdit } = useParams();
 
+    let imgUrl = 'http://localhost:5002/refs/';
+
     const [selectedTour, setSelectedTour] = useState({
         tourTitle: '',
         travelMethod: '',
@@ -77,33 +79,48 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>
 
-            <FormEdit actionUrl={`http://localhost:5002/api/updateOneMultidayTour/${idToEdit}`} method="put" needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded}>
-                <label className={classes.addData_step}>Первый этап</label>
+            <FormEdit actionUrl={`http://localhost:5002/api/updateOneMultidayTour/${idToEdit}`} method="put" needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
+                <label className={classes.addData_step}>Шаг 1</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
                 <label>Название тура </label>
-                <input name="tourTitle" type="text" placeholder="Название тура" value={selectedTour.tourTitle}  />
+                <input name="tourTitle" type="text" placeholder="Название тура" value={selectedTour.tourTitle} />
 
                 <label>Cпособ передвижения</label>
-                <input name="travelMethod" type="text" placeholder="Способ передвижения" value={selectedTour.travelMethod}  />
+                <input name="travelMethod" type="text" placeholder="Способ передвижения" value={selectedTour.travelMethod} />
 
                 <label>Продолжительность</label>
-                <input name="duration" type="text" placeholder="Продолжительность" value={selectedTour.duration}  />
+                <input name="duration" type="text" placeholder="Продолжительность" value={selectedTour.duration} />
 
                 <label>Время отправления</label>
-                <input name="departureTime" type="text" placeholder="Время отправления" value={selectedTour.departureTime}  />
+                <input name="departureTime" type="text" placeholder="Время отправления" value={selectedTour.departureTime} />
 
                 <label>Тип экскурсии</label>
-                <input name="tourType" type="text" placeholder="Тип экскурсии" value={selectedTour.tourType}  />
+                <input name="tourType" type="text" placeholder="Тип экскурсии" value={selectedTour.tourType} />
 
                 <label>Сложность</label>
-                <input name="difficulty" type="text" placeholder="Сложность" value={selectedTour.difficulty}  />
+                <input name="difficulty" type="text" placeholder="Сложность" value={selectedTour.difficulty} />
 
                 <label>Стоимость</label>
-                <input name="cost" type="text" placeholder="Стоимость" value={selectedTour.cost}  />
+                <input name="cost" type="text" placeholder="Стоимость" value={selectedTour.cost} />
 
-                <label className={classes.addData_step}>Второй этап</label>
+                <label className={classes.addData_step}>Шаг 2</label>
+                <label>Фотографии</label>
+
+                {console.log(photos)}
+                <div className={classes.imgBlock}>
+                    {photos.map((photo, index) => (
+                        <div className={classes.imgBlock__item} key={index}>
+                            <img src={imgUrl + photo} alt="" />
+                            <div className={classes.imgBlock_close} >
+                                <img src="/delete.png" alt="" />
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <br />
                 <label>Загрузите фотографии для слайдера</label>
                 <input
                     type="file"
@@ -113,9 +130,10 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                     onChange={handleFileChange}
                 />
 
+
                 {/* Третий этап - Места */}
                 <label className={classes.addData_step}>
-                    Третий этап
+                    Шаг 3
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddPlace}>+</div>
                 </label>
                 {places.map((place, index) => (
@@ -129,7 +147,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 placeholder={`Место ${index + 1}`}
                                 value={place}
                                 onChange={(event) => handlePlaceChange(index, event)}
-                                
+
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemovePlace(index)}>-</div>
                         </div>
@@ -138,7 +156,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
 
                 {/* Четвертый этап - Чек-листы */}
                 <label className={classes.addData_step}>
-                    Четвертый этап
+                    Шаг 4
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddChecklist}>+</div>
                 </label>
                 {checklists.map((checklist, index) => (
@@ -152,7 +170,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 placeholder={`Чек-лист ${index + 1}`}
                                 value={checklist}
                                 onChange={(event) => handleChecklistChange(index, event)}
-                                
+
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveChecklist(index)}>-</div>
                         </div>
@@ -161,7 +179,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
 
                 {/* Пятый этап - Дни */}
                 <label className={classes.addData_step}>
-                    Пятый этап
+                    Шаг 5
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div>
                 </label>
                 {days.map((day, index) => (
@@ -174,7 +192,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 placeholder={`День ${index + 1}`}
                                 value={day}
                                 onChange={(event) => handleDayChange(index, event)}
-                                
+
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDay(index)}>-</div>
                         </div>

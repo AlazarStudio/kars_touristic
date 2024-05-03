@@ -63,7 +63,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
             <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
             <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
-                <label className={classes.addData_step}>Первый этап</label>
+                <label className={classes.addData_step}>Шаг 1</label>
 
                 <div><input name="region" type="hidden" placeholder="Регион" required value={region} readOnly /></div>
 
@@ -88,7 +88,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
                 <label>Стоимость</label>
                 <input name="cost" type="text" placeholder="Стоимость" required />
 
-                <label className={classes.addData_step}>Второй этап</label>
+                <label className={classes.addData_step}>Шаг 2</label>
                 <label>Загрузите фотографии для слайдера</label>
                 <input
                     type="file"
@@ -101,7 +101,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
 
                 {/* Третий этап - Места */}
                 <label className={classes.addData_step}>
-                    Третий этап
+                    Шаг 3
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddPlace}>+</div>
                 </label>
                 {places.map((place, index) => (
@@ -124,7 +124,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
 
                 {/* Четвертый этап - Чек-листы */}
                 <label className={classes.addData_step}>
-                    Четвертый этап
+                    Шаг 4
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddChecklist}>+</div>
                 </label>
                 {checklists.map((checklist, index) => (
@@ -147,7 +147,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
 
                 {/* Пятый этап - Дни */}
                 <label className={classes.addData_step}>
-                    Пятый этап
+                    Шаг 5
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div>
                 </label>
                 {days.map((day, index) => (

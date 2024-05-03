@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FormEdit.module.css';
 
-function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate }) {
+function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour }) {
     const navigate = useNavigate();
     const [form, setForm] = useState(initialValues || {});
     const [submissionMessage, setSubmissionMessage] = useState('');
@@ -25,26 +25,25 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
 
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
-        if (type === 'file') {
-            setForm(prev => ({
-                ...prev,
-                [name]: files.length > 1 ? [...files] : files[0]
-            }));
-        } else if (name.endsWith('[]')) {
-            const fieldName = name.slice(0, -2);
-            const index = parseInt(event.target.dataset.index, 10);
-            const updatedArray = [...(form[fieldName] || [])];
-            updatedArray[index] = value;
-            setForm(prev => ({
-                ...prev,
-                [fieldName]: updatedArray
-            }));
-        } else {
-            setForm(prev => ({
-                ...prev,
-                [name]: value
-            }));
-        }
+        setForm(prev => {
+            const newFormState = { ...prev };
+
+            if (type === 'file') {
+                newFormState[name] = files.length > 1 ? [...files] : files[0];
+            } else if (name.endsWith('[]')) {
+                const fieldName = name.slice(0, -2);
+                const index = parseInt(event.target.dataset.index, 10);
+                const updatedArray = [...(prev[fieldName] || [])];
+                updatedArray[index] = value;
+                newFormState[fieldName] = updatedArray;
+            } else {
+                newFormState[name] = value;
+            }
+
+            setSelectedTour(newFormState);
+
+            return newFormState;
+        });
     };
 
     const resetForm = () => {
@@ -66,6 +65,8 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             onSubmit(form);
             return;
         }
+
+        setSelectedTour
 
         let urlAdd = '';
 
