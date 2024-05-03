@@ -14,7 +14,7 @@ function MultidayTours({ children, title, type, ...props }) {
     let imgUrl = 'http://localhost:5002/refs/';
 
     const response = () => {
-        fetch(`http://localhost:5002/api/getMultidayTours?region=${title}`)
+        fetch(`http://localhost:5002/api/getMultidayTours?region=${title}&filter='-'`)
             .then(response => response.json())
             .then(data => setTours(data))
             .catch(error => console.error('Ошибка:', error));
@@ -36,7 +36,6 @@ function MultidayTours({ children, title, type, ...props }) {
         })
             .then(() => {
                 response();
-                // alert('Тур удален')
             })
             .catch(error => console.error('Ошибка при удалении тура:', error));
     }

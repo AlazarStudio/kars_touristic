@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import classes from './EditMultidayTours.module.css';
-import Form from "../../Form/Form";
+import FormEdit from "../../FormEdit/FormEdit";
 
 function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
     const { idToEdit } = useParams();
@@ -14,14 +14,20 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         departureTime: '',
         tourType: '',
         difficulty: '',
-        cost: ''
+        cost: '',
+        places: [],
+        checklists: [],
+        days: [],
+        photos: []
     });
+
+    // Используйте деструктуризацию для доступа к вложенным массивам
+    const { places, checklists, days, photos } = selectedTour;
 
     const fetchTourById = (id) => {
         fetch(`http://localhost:5002/api/getOneMultidayTour/${id}`)
             .then(response => response.json())
             .then(data => {
-                // Убедитесь, что полученные данные - это объект
                 if (data && typeof data === 'object') {
                     setSelectedTour(data);
                 } else {
@@ -37,100 +43,65 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         }
     }, [idToEdit]);
 
-    useEffect(() => {
-        if (selectedTour) {
-            setPlaces(selectedTour.places || ['']);
-            setChecklists(selectedTour.checklists || ['']);
-            setDays(selectedTour.days || ['']);
-            setPhotos(selectedTour.photos || []);
-        }
-    }, [selectedTour]);
+    // Добавление элементов в массивы состояния
+    const handleAddPlace = () => setSelectedTour(prevState => ({ ...prevState, places: [...prevState.places, ''] }));
+    const handleAddChecklist = () => setSelectedTour(prevState => ({ ...prevState, checklists: [...prevState.checklists, ''] }));
+    const handleAddDay = () => setSelectedTour(prevState => ({ ...prevState, days: [...prevState.days, ''] }));
+    const handleFileChange = (event) => setSelectedTour(prevState => ({ ...prevState, photos: [...prevState.photos, ...Array.from(event.target.files)] }));
 
-    const [places, setPlaces] = useState([]);
-    const [checklists, setChecklists] = useState([]);
-    const [days, setDays] = useState([]);
-    const [photos, setPhotos] = useState([]);
-
-    const handleAddPlace = () => setPlaces([...places, '']);
-    const handleAddChecklist = () => setChecklists([...checklists, '']);
-    const handleAddDay = () => setDays([...days, '']);
-    const handleFileChange = (event) => setPhotos([...photos, ...Array.from(event.target.files)]);
-
-    const resetAll = () => {
-        setPlaces(['']);
-        setChecklists(['']);
-        setDays(['']);
-        setPhotos([]);
-    };
-
+    // Обработка изменений в массивах состояния
     const handlePlaceChange = (index, event) => {
         const newPlaces = [...places];
         newPlaces[index] = event.target.value;
-        setPlaces(newPlaces);
+        setSelectedTour(prevState => ({ ...prevState, places: newPlaces }));
     };
 
     const handleChecklistChange = (index, event) => {
         const newChecklists = [...checklists];
         newChecklists[index] = event.target.value;
-        setChecklists(newChecklists);
+        setSelectedTour(prevState => ({ ...prevState, checklists: newChecklists }));
     };
 
     const handleDayChange = (index, event) => {
         const newDays = [...days];
         newDays[index] = event.target.value;
-        setDays(newDays);
+        setSelectedTour(prevState => ({ ...prevState, days: newDays }));
     };
 
-    function removeItemFromArray(array, index) {
-        return array.filter((item, i) => i !== index);
-    }
-
-    const handleRemovePlace = index => {
-        setPlaces(current => removeItemFromArray(current, index));
-    };
-
-    const handleRemoveChecklist = index => {
-        setChecklists(current => removeItemFromArray(current, index));
-    };
-
-    const handleRemoveDay = index => {
-        setDays(current => removeItemFromArray(current, index));
-    };
-
-    const initialValues = {
-        region,
-        ...selectedTour
-    };
+    // Удаление элементов из массивов состояния
+    const handleRemovePlace = index => setSelectedTour(prevState => ({ ...prevState, places: prevState.places.filter((_, i) => i !== index) }));
+    const handleRemoveChecklist = index => setSelectedTour(prevState => ({ ...prevState, checklists: prevState.checklists.filter((_, i) => i !== index) }));
+    const handleRemoveDay = index => setSelectedTour(prevState => ({ ...prevState, days: prevState.days.filter((_, i) => i !== index) }));
 
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>
 
-            <Form actionUrl={`http://localhost:5002/api/updateOneMultidayTour/${idToEdit}`} method="put" resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
+            <FormEdit actionUrl={`http://localhost:5002/api/updateOneMultidayTour/${idToEdit}`} method="put" needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded}>
                 <label className={classes.addData_step}>Первый этап</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
                 <label>Название тура </label>
-                <input name="tourTitle" type="text" placeholder="Название тура" value={selectedTour.tourTitle} required />
+                <input name="tourTitle" type="text" placeholder="Название тура" value={selectedTour.tourTitle}  />
 
                 <label>Cпособ передвижения</label>
-                <input name="travelMethod" type="text" placeholder="Способ передвижения" value={selectedTour.travelMethod} required />
+                <input name="travelMethod" type="text" placeholder="Способ передвижения" value={selectedTour.travelMethod}  />
 
                 <label>Продолжительность</label>
-                <input name="duration" type="text" placeholder="Продолжительность" value={selectedTour.duration} required />
+                <input name="duration" type="text" placeholder="Продолжительность" value={selectedTour.duration}  />
 
                 <label>Время отправления</label>
-                <input name="departureTime" type="text" placeholder="Время отправления" value={selectedTour.departureTime} required />
+                <input name="departureTime" type="text" placeholder="Время отправления" value={selectedTour.departureTime}  />
 
                 <label>Тип экскурсии</label>
-                <input name="tourType" type="text" placeholder="Тип экскурсии" value={selectedTour.tourType} required />
+                <input name="tourType" type="text" placeholder="Тип экскурсии" value={selectedTour.tourType}  />
 
                 <label>Сложность</label>
-                <input name="difficulty" type="text" placeholder="Сложность" value={selectedTour.difficulty} required />
+                <input name="difficulty" type="text" placeholder="Сложность" value={selectedTour.difficulty}  />
 
                 <label>Стоимость</label>
-                <input name="cost" type="text" placeholder="Стоимость" value={selectedTour.cost} required />
+                <input name="cost" type="text" placeholder="Стоимость" value={selectedTour.cost}  />
 
                 <label className={classes.addData_step}>Второй этап</label>
                 <label>Загрузите фотографии для слайдера</label>
@@ -140,7 +111,6 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                     className={classes.noBorder}
                     multiple
                     onChange={handleFileChange}
-                    required
                 />
 
                 {/* Третий этап - Места */}
@@ -159,7 +129,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 placeholder={`Место ${index + 1}`}
                                 value={place}
                                 onChange={(event) => handlePlaceChange(index, event)}
-                                required
+                                
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemovePlace(index)}>-</div>
                         </div>
@@ -182,7 +152,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 placeholder={`Чек-лист ${index + 1}`}
                                 value={checklist}
                                 onChange={(event) => handleChecklistChange(index, event)}
-                                required
+                                
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveChecklist(index)}>-</div>
                         </div>
@@ -204,15 +174,15 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 placeholder={`День ${index + 1}`}
                                 value={day}
                                 onChange={(event) => handleDayChange(index, event)}
-                                required
+                                
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDay(index)}>-</div>
                         </div>
                     </div>
                 ))}
 
-                <button type="submit">Добавить Тур</button>
-            </Form>
+                <button type="submit">Изменить Тур</button>
+            </FormEdit>
         </div>
     );
 }
