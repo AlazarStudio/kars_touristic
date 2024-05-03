@@ -1,10 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 
 import classes from './Form.module.css';
 
 function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded }) {
-    const [form, setForm] = useState(initialValues || {});
+    useEffect(() => {
+        if (initialValues) {
+            setForm(initialValues);
+        }
+    }, [initialValues]);
+
+    const [form, setForm] = useState({});
 
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
@@ -20,6 +26,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
 
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
+
         if (type === 'file' && files.length) {
             setForm(prevState => ({
                 ...prevState,
@@ -95,7 +102,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
             });
             fetchRegions && fetchRegions();
             resetForm();
-            onTourAdded()
+            onTourAdded ? onTourAdded() : null
         } catch (error) {
             console.error(error);
             displayMessage('Ошибка при добавлении. Пожалуйста попробуйте заново');

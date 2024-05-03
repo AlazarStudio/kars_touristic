@@ -45,6 +45,7 @@ function App() {
         <Route path="/admin/:id/:title" element={<Admin_Page />} />
         <Route path="/admin/:id/:title/:type" element={<Admin_Page />} />
         <Route path="/admin/:id/:title/:type/:add" element={<Admin_Page />} />
+        <Route path="/admin/:id/:title/:type/:add/:idToEdit" element={<Admin_Page />} />
       </Routes>
     </>
   )

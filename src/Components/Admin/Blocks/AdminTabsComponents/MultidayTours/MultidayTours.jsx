@@ -3,10 +3,12 @@ import classes from './MultidayTours.module.css';
 
 import { Link, useParams } from "react-router-dom";
 import AddMultidayTours from "../AddMultidayTours/AddMultidayTours";
+import EditMultidayTours from "../EditMultidayTours/EditMultidayTours";
 
 function MultidayTours({ children, title, type, ...props }) {
     const { add } = useParams();
 
+    const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState({});
 
     let imgUrl = 'http://localhost:5002/refs/';
@@ -38,7 +40,6 @@ function MultidayTours({ children, title, type, ...props }) {
             })
             .catch(error => console.error('Ошибка при удалении тура:', error));
     }
-
     return (
         <>
             {!add ?
@@ -63,19 +64,30 @@ function MultidayTours({ children, title, type, ...props }) {
                                 </div>
                                 <div className={classes.multidayTours_data__tour___btns}>
                                     <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(tour._id)}>Удалить</div>
-                                    <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
+                                    <Link to={`editMultiday_tour/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</Link>
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
-                :
-                <>
-                    <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                        <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
-                    </div>
+                : <>
+                    {add == 'addMultiday_tour' ?
+                        <>
+                            <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
+                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                            </div>
 
-                    <AddMultidayTours region={title} onTourAdded={response}/>
+                            <AddMultidayTours region={title} onTourAdded={response} />
+                        </>
+                        :
+                        <>
+                            <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
+                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                            </div>
+
+                            <EditMultidayTours region={title} onTourAdded={response} />
+                        </>
+                    }
                 </>
             }
         </>
