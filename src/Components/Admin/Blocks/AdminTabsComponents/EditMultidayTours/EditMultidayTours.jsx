@@ -23,6 +23,9 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         photos: []
     });
 
+    const [loadedPhotos, setLoadedPhotos] = useState([]);
+    const [newPhotos, setNewPhotos] = useState([]);
+
     // Используйте деструктуризацию для доступа к вложенным массивам
     const { places, checklists, days, photos } = selectedTour;
 
@@ -32,6 +35,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
             .then(data => {
                 if (data && typeof data === 'object') {
                     setSelectedTour(data);
+                    setLoadedPhotos(data.photos || []);
                 } else {
                     console.error('Received data is not an object:', data);
                 }
@@ -49,7 +53,10 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const handleAddPlace = () => setSelectedTour(prevState => ({ ...prevState, places: [...prevState.places, ''] }));
     const handleAddChecklist = () => setSelectedTour(prevState => ({ ...prevState, checklists: [...prevState.checklists, ''] }));
     const handleAddDay = () => setSelectedTour(prevState => ({ ...prevState, days: [...prevState.days, ''] }));
-    const handleFileChange = (event) => setSelectedTour(prevState => ({ ...prevState, photos: [...prevState.photos, ...Array.from(event.target.files)] }));
+    const handleFileChange = (event) => {
+        const files = Array.from(event.target.files);
+        setNewPhotos(files); // Обновляем только список новых фотографий
+    };
 
     // Обработка изменений в массивах состояния
     const handlePlaceChange = (index, event) => {
@@ -79,7 +86,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>
 
-            <FormEdit actionUrl={`http://localhost:5002/api/updateOneMultidayTour/${idToEdit}`} method="put" needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
+            <FormEdit actionUrl={`http://localhost:5002/api/updateOneMultidayTour/${idToEdit}`} method="put" newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
@@ -108,9 +115,8 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                 <label className={classes.addData_step}>Шаг 2</label>
                 <label>Фотографии</label>
 
-                {console.log(photos)}
                 <div className={classes.imgBlock}>
-                    {photos.map((photo, index) => (
+                    {loadedPhotos.map((photo, index) => (
                         <div className={classes.imgBlock__item} key={index}>
                             <img src={imgUrl + photo} alt="" />
                             <div className={classes.imgBlock_close} >

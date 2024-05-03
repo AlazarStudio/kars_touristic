@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FormEdit.module.css';
 
-function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour }) {
+function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, newPhotos }) {
     const navigate = useNavigate();
     const [form, setForm] = useState(initialValues || {});
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
     const formRef = useRef(null);
 
-    // Инициализация формы с начальными значениями
     useEffect(() => {
         if (initialValues) {
             setForm(initialValues);
@@ -22,6 +21,10 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
         setShowMessage(true);
         setTimeout(() => setShowMessage(false), 5000);
     };
+
+    useEffect(() => {
+        setSelectedTour(form);
+    }, [form]);
 
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
@@ -39,8 +42,6 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             } else {
                 newFormState[name] = value;
             }
-
-            setSelectedTour(newFormState);
 
             return newFormState;
         });
@@ -65,12 +66,11 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             onSubmit(form);
             return;
         }
-
-        setSelectedTour
-
+    
         let urlAdd = '';
-
         const formData = new FormData();
+        
+        // Добавляем существующие данные из формы
         Object.entries(form).forEach(([key, value]) => {
             if (Array.isArray(value)) {
                 value.forEach(item => formData.append(key, item));
@@ -78,14 +78,19 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
                 formData.append(key, value);
             }
         });
-
+    
+        // Добавляем новые фотографии
+        newPhotos.forEach(photo => {
+            formData.append('photos', photo);
+        });
+    
         if (type === 'query') {
             urlAdd = '?';
             Object.keys(form).forEach(key => {
                 urlAdd += `${encodeURIComponent(key)}=${encodeURIComponent(form[key])}&`;
             });
         }
-
+    
         try {
             const response = await axios({
                 method: method,
@@ -103,6 +108,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             displayMessage('Ошибка при добавлении данных');
         }
     };
+    
 
     const childrenWithProps = React.Children.map(children, child =>
         React.isValidElement(child) ? React.cloneElement(child, {
@@ -120,6 +126,6 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             </form>
         </>
     );
-}
-
-export default FormEdit;
+    }
+    
+    export default FormEdit;
