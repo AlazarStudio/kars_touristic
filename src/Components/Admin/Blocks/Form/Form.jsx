@@ -3,8 +3,8 @@ import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues }) {
-    const [form, setForm] = useState(initialValues || {}); // Инициализируем состояние с начальными значениями
+function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded }) {
+    const [form, setForm] = useState(initialValues || {});
 
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
@@ -46,7 +46,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
     };
 
     const resetForm = () => {
-        setForm(initialValues || {}); // Сбросить форму к начальным значениям
+        setForm(initialValues || {});
         if (formRef.current) {
             const fileInputs = formRef.current.querySelectorAll('input[type="file"]');
             fileInputs.forEach(input => {
@@ -95,6 +95,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
             });
             fetchRegions && fetchRegions();
             resetForm();
+            onTourAdded()
         } catch (error) {
             console.error(error);
             displayMessage('Ошибка при добавлении. Пожалуйста попробуйте заново');

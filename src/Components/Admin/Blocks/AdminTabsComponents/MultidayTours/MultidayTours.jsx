@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classes from './MultidayTours.module.css';
 
 import { Link, useParams } from "react-router-dom";
@@ -6,6 +6,39 @@ import AddMultidayTours from "../AddMultidayTours/AddMultidayTours";
 
 function MultidayTours({ children, title, type, ...props }) {
     const { add } = useParams();
+
+    const [tours, setTours] = useState({});
+
+    let imgUrl = 'http://localhost:5002/refs/';
+
+    const response = () => {
+        fetch(`http://localhost:5002/api/getMultidayTours?region=${title}`)
+            .then(response => response.json())
+            .then(data => setTours(data))
+            .catch(error => console.error('Ошибка:', error));
+    };
+
+    useEffect(() => { response() }, [title]);
+
+    let data = [];
+    let count;
+
+    if (tours && tours.multidayTour) {
+        data = tours.multidayTour;
+        count = tours.totalCount;
+    }
+
+    function deleteElement(id) {
+        fetch(`http://localhost:5002/api/deleteMultidayTour/${id}`, {
+            method: 'DELETE'
+        })
+            .then(() => {
+                response();
+                // alert('Тур удален')
+            })
+            .catch(error => console.error('Ошибка при удалении тура:', error));
+    }
+
     return (
         <>
             {!add ?
@@ -20,70 +53,20 @@ function MultidayTours({ children, title, type, ...props }) {
                     </div>
 
                     <div className={classes.multidayTours_data}>
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
+                        {data.map((tour, index) => (
+                            <div className={classes.multidayTours_data__tour} key={index}>
+                                <div className={classes.multidayTours_data__tour___img}>
+                                    <img src={imgUrl + tour.photos[0]} alt="" />
+                                </div>
+                                <div className={classes.multidayTours_data__tour___info}>
+                                    <div className={classes.multidayTours_data__tour___info____title}>{tour.tourTitle}</div>
+                                </div>
+                                <div className={classes.multidayTours_data__tour___btns}>
+                                    <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(tour._id)}>Удалить</div>
+                                    <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
+                                </div>
                             </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
-
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
-                            </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
-
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
-                            </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
-
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
-                            </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
-
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
-                            </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
                 :
@@ -92,7 +75,7 @@ function MultidayTours({ children, title, type, ...props }) {
                         <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                     </div>
 
-                    <AddMultidayTours region={title}/>
+                    <AddMultidayTours region={title} onTourAdded={response}/>
                 </>
             }
         </>

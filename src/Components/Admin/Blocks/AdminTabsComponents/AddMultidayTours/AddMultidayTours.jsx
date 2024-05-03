@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classes from './AddMultidayTours.module.css';
 import Form from "../../Form/Form";
 
-function AddMultidayTours({ children, activeTab, setIsDirty, region, ...props }) {
+function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
     const [places, setPlaces] = useState(['']);
     const [checklists, setChecklists] = useState(['']);
     const [days, setDays] = useState(['']);
@@ -58,7 +58,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, ...props })
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
-            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll} initialValues={{ region }}>
+            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll} initialValues={{ region }} onTourAdded={onTourAdded}>
                 <label className={classes.addData_step}>Первый этап</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
