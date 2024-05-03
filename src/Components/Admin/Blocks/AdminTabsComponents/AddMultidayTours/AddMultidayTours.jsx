@@ -54,14 +54,18 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
         setDays(current => removeItemFromArray(current, index));
     };
 
+    const initialValues = {
+        region
+    };
+
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
-            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll} initialValues={{ region }} onTourAdded={onTourAdded}>
+            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
                 <label className={classes.addData_step}>Первый этап</label>
 
-                <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
+                <div><input name="region" type="hidden" placeholder="Регион" required value={region} readOnly /></div>
 
                 <label>Название тура</label>
                 <input name="tourTitle" type="text" placeholder="Название тура" required />
