@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import classes from './EditMultidayTours.module.css';
@@ -53,7 +53,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const handleAddDay = useCallback(() => setSelectedTour(prevState => ({ ...prevState, days: [...prevState.days, ''] })), []);
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
-        setNewPhotos(files); 
+        setNewPhotos(files);
     };
 
     const handlePlaceChange = (index, event) => {
@@ -81,21 +81,25 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const [photosToDelete, setPhotosToDelete] = useState([]);
 
     const handleRemovePhoto = (index, photo) => {
-        const updatedPhotos = loadedPhotos.filter((_, i) => i !== index);
-        setLoadedPhotos(updatedPhotos);
 
-        setPhotosToDelete(prevPhotos => {
-            const newPhotosToDelete = [photo];
+        if (confirm("Вы уверены, что хотите удалить картинку?")) {
+            const updatedPhotos = loadedPhotos.filter((_, i) => i !== index);
+            setLoadedPhotos(updatedPhotos);
 
-            updatePhotosOnServer(idToEdit, updatedPhotos, newPhotosToDelete);
+            setPhotosToDelete(prevPhotos => {
+                const newPhotosToDelete = [photo];
 
-            return newPhotosToDelete;
-        });
+                updatePhotosOnServer(idToEdit, updatedPhotos, newPhotosToDelete);
+
+                return newPhotosToDelete;
+            });
+        } 
     };
 
 
     const updatePhotosOnServer = async (id, photos, photosToDelete) => {
         const formData = new FormData();
+
         photos.forEach(photo => {
             formData.append('photos', photo);
         });
