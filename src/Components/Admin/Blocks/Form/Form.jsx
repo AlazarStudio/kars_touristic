@@ -5,7 +5,6 @@ import classes from './Form.module.css';
 
 function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded }) {
     const [form, setForm] = useState(initialValues || {});
-    console.log(initialValues)
 
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
@@ -21,8 +20,6 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
 
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
-
-        console.log(form);
 
         if (type === 'file' && files.length) {
             setForm(prevState => ({
