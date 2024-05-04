@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classes from './AddOnedayTours.module.css';
 import Form from "../../Form/Form";
 
-function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region, ...props }) {
+function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region, onTourAdded, ...props }) {
     const [places, setPlaces] = useState(['']);
     const [checklists, setChecklists] = useState(['']);
     const [days, setDays] = useState(['']);
@@ -54,11 +54,14 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
         setDays(current => removeItemFromArray(current, index));
     };
 
+    const initialValues = {
+        region
+    };
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Однодневный тур</div>
 
-            <Form actionUrl="http://localhost:5002/api/addOnedayTour" method="post" resetAll={resetAll} initialValues={{ region }}>
+            <Form actionUrl="http://localhost:5002/api/addOnedayTour" method="post" needNavigate={true} resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
                 <label className={classes.addData_step}>Первый этап</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />

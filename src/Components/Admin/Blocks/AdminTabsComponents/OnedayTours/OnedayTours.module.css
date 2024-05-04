@@ -111,6 +111,7 @@
     width: 50%;
     padding: 12px 20px;
     border: 1px solid var(--black_color);
+    color: var(--black_color);
     border-radius: 30px;
     display: flex;
     justify-content: center;
