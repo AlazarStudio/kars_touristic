@@ -1,9 +1,11 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FormEdit.module.css';
 
 function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, newPhotos }) {
+    let regionName = useParams().title;
+    let regionTypeData = useParams().type;
 
     const navigate = useNavigate();
     const [form, setForm] = useState(initialValues || {});
@@ -104,7 +106,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             resetForm();
             displayMessage('Данные успешно добавлены');
             onTourAdded?.();
-            needNavigate ? navigate('/admin/edit/Karachaevo-Cherkessiya/multiday_tours/', { replace: true }) : null;
+            needNavigate ? navigate(`/admin/edit/${regionName}/${regionTypeData}/`, { replace: true }) : null;
         } catch (error) {
             console.error(error);
             displayMessage('Ошибка при добавлении данных');

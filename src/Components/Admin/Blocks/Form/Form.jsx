@@ -1,9 +1,15 @@
 import React, { useState, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded }) {
+function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate }) {
+    let regionName = useParams().title;
+    let regionTypeData = useParams().type;
+
+    const navigate = useNavigate();
+
     const [form, setForm] = useState(initialValues || {});
 
     const [submissionMessage, setSubmissionMessage] = useState('');
@@ -97,6 +103,8 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
             fetchRegions && fetchRegions();
             resetForm();
             onTourAdded ? onTourAdded() : null
+            
+            needNavigate ? navigate(`/admin/edit/${regionName}/${regionTypeData}/`, { replace: true }) : null;
         } catch (error) {
             console.error(error);
             displayMessage('Ошибка при добавлении. Пожалуйста попробуйте заново');

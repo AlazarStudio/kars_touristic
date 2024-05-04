@@ -7,7 +7,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
     const [checklists, setChecklists] = useState(['']);
     const [days, setDays] = useState(['']);
     const [photos, setPhotos] = useState([]);
-    
+
     const handleAddPlace = () => setPlaces([...places, '']);
     const handleAddChecklist = () => setChecklists([...checklists, '']);
     const handleAddDay = () => setDays([...days, '']);
@@ -62,7 +62,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
-            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
+            <Form actionUrl="http://localhost:5002/api/addMultidayTour" method="post" needNavigate={true} resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <div><input name="region" type="hidden" placeholder="Регион" required value={region} readOnly /></div>
