@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import classes from './EditMultidayTours.module.css';
@@ -48,9 +48,9 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         }
     }, [idToEdit]);
 
-    const handleAddPlace = () => setSelectedTour(prevState => ({ ...prevState, places: [...prevState.places, ''] }));
-    const handleAddChecklist = () => setSelectedTour(prevState => ({ ...prevState, checklists: [...prevState.checklists, ''] }));
-    const handleAddDay = () => setSelectedTour(prevState => ({ ...prevState, days: [...prevState.days, ''] }));
+    const handleAddPlace = useCallback(() => setSelectedTour(prevState => ({ ...prevState, places: [...prevState.places, ''] })), []);
+    const handleAddChecklist = useCallback(() => setSelectedTour(prevState => ({ ...prevState, checklists: [...prevState.checklists, ''] })), []);
+    const handleAddDay = useCallback(() => setSelectedTour(prevState => ({ ...prevState, days: [...prevState.days, ''] })), []);
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
         setNewPhotos(files); 

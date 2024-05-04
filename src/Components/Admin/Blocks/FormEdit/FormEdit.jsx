@@ -1,20 +1,22 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FormEdit.module.css';
 
 function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, newPhotos }) {
+
     const navigate = useNavigate();
     const [form, setForm] = useState(initialValues || {});
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
     const formRef = useRef(null);
 
-    useEffect(() => {
+    useMemo(() => {
         if (initialValues) {
             setForm(initialValues);
         }
     }, [initialValues]);
+
 
     const displayMessage = (message) => {
         setSubmissionMessage(message);
@@ -66,7 +68,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             onSubmit(form);
             return;
         }
-    
+
         let urlAdd = '';
         const formData = new FormData();
 
@@ -78,19 +80,19 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
                 formData.append(key, value);
             }
         });
-    
+
         // Добавляем новые фотографии
         newPhotos.forEach(photo => {
             formData.append('photos', photo);
         });
-    
+
         if (type === 'query') {
             urlAdd = '?';
             Object.keys(form).forEach(key => {
                 urlAdd += `${encodeURIComponent(key)}=${encodeURIComponent(form[key])}&`;
             });
         }
-    
+
         try {
             const response = await axios({
                 method: method,
@@ -108,7 +110,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             displayMessage('Ошибка при добавлении данных');
         }
     };
-    
+
 
     const childrenWithProps = React.Children.map(children, child =>
         React.isValidElement(child) ? React.cloneElement(child, {
@@ -126,6 +128,6 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             </form>
         </>
     );
-    }
-    
-    export default FormEdit;
+}
+
+export default React.memo(FormEdit);
