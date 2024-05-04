@@ -2,12 +2,14 @@ import React from "react";
 import classes from './AddOurTeam.module.css';
 import Form from "../../Form/Form";
 
+import server from '../../../../../serverConfig';
+
 function AddOurTeam({ children, activeTab, ...props }) {
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>НАША КОМАНДА</div>
 
-            <Form actionUrl="http://localhost:5002/api/team" method="post">
+            <Form actionUrl={`${server}/api/team`} method="post">
                 <label>Введите ФИО</label>
                 <input name="name" type="text" placeholder="Описание" required />
 

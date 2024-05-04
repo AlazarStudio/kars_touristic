@@ -19,8 +19,6 @@ import Event_Page from "./Components/Pages/Event_Page";
 import Admin_Page from "./Components/Admin/Admin_Page";
 
 function App() {
-  // const server = 'http://localhost:5002/api/';
-  const server = 'http://5.35.91.96:5002/api/';
   return (
     <>
       <Routes>

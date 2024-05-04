@@ -2,12 +2,14 @@ import React from "react";
 import classes from './AddFAQ.module.css';
 import Form from "../../Form/Form";
 
+import server from '../../../../../serverConfig';
+
 function AddFAQ({ children, activeTab, ...props }) {
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>FAQ</div>
 
-            <Form actionUrl="http://localhost:5002/api/faq" method="post" type={'query'}>
+            <Form actionUrl={`${server}/api/faq`} method="post" type={'query'}>
                 <label>Введите вопрос</label>
                 <input name="question" type="text" placeholder="Название" required />
 

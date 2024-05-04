@@ -1,13 +1,14 @@
 import React from "react";
 import classes from './AddRegion.module.css';
 import Form from "../../Form/Form";
+import server from '../../../../../serverConfig';
 
 function AddRegion({ children, activeTab, fetchRegions, ...props }) {
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ РЕГИОН</div>
 
-            <Form actionUrl="http://localhost:5002/api/addRegion" method="post" fetchRegions={fetchRegions}>
+            <Form actionUrl={`${server}/api/addRegion`} method="post" fetchRegions={fetchRegions}>
                 <label>Введите название региона</label>
                 <input name="title" type="text" placeholder="Название" required />
 

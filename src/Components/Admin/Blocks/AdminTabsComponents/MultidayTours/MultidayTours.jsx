@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import classes from './MultidayTours.module.css';
 
+import server from '../../../../../serverConfig';
+
 import { Link, useParams } from "react-router-dom";
 import AddMultidayTours from "../AddMultidayTours/AddMultidayTours";
 import EditMultidayTours from "../EditMultidayTours/EditMultidayTours";
@@ -11,10 +13,10 @@ function MultidayTours({ children, title, type, ...props }) {
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState({});
 
-    let imgUrl = 'http://localhost:5002/refs/';
+    let imgUrl = `${server}/refs/`;
 
     const response = () => {
-        fetch(`http://localhost:5002/api/getMultidayTours?region=${title}&filter='-'`)
+        fetch(`${server}/api/getMultidayTours?region=${title}&filter='-'`)
             .then(response => response.json())
             .then(data => setTours(data))
             .catch(error => console.error('Ошибка:', error));
@@ -31,7 +33,7 @@ function MultidayTours({ children, title, type, ...props }) {
     }
 
     function deleteElement(id) {
-        fetch(`http://localhost:5002/api/deleteMultidayTour/${id}`, {
+        fetch(`${server}/api/deleteMultidayTour/${id}`, {
             method: 'DELETE'
         })
             .then(() => {

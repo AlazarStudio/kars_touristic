@@ -7,7 +7,7 @@ import FormEdit from "../../FormEdit/FormEdit";
 function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
     const { idToEdit } = useParams();
 
-    let imgUrl = 'http://localhost:5002/refs/';
+    let imgUrl = `${server}/refs/`;
 
     const [selectedTour, setSelectedTour] = useState({
         tourTitle: '',
@@ -29,7 +29,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const { places, checklists, days, photos } = selectedTour;
 
     const fetchTourById = (id) => {
-        fetch(`http://localhost:5002/api/getOneMultidayTour/${id}`)
+        fetch(`${server}/api/getOneMultidayTour/${id}`)
             .then(response => response.json())
             .then(data => {
                 if (data && typeof data === 'object') {
@@ -107,7 +107,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         formData.append('photosToDelete', JSON.stringify(photosToDelete));
 
         try {
-            const response = await fetch(`http://localhost:5002/api/updateOneMultidayTour/${id}`, {
+            const response = await fetch(`${server}/api/updateOneMultidayTour/${id}`, {
                 method: 'PUT',
                 body: formData
             });
@@ -121,7 +121,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>
 
-            <FormEdit actionUrl={`http://localhost:5002/api/updateOneMultidayTour/${idToEdit}`} method="put" newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
+            <FormEdit actionUrl={`${server}/api/updateOneMultidayTour/${idToEdit}`} method="put" newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />

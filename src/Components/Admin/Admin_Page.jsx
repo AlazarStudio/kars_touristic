@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 import classes from './Admin_Page.module.css';
 
+import server from '../../serverConfig';
+
 import AddRegion from "./Blocks/AdminTabsComponents/AddRegion/AddRegion";
 import AddAboutCompany from "./Blocks/AdminTabsComponents/AddAboutCompany/AddAboutCompany";
 import AddOurTeam from "./Blocks/AdminTabsComponents/AddOurTeam/AddOurTeam";
@@ -41,7 +43,7 @@ function Admin_Page({ children, ...props }) {
 
 
     const fetchRegions = () => {
-        fetch('http://localhost:5002/api/getRegions')
+        fetch(`${server}/api/getRegions`)
             .then(response => response.json())
             .then(data => setRegions(data.regions))
             .catch(error => console.error('Ошибка при загрузке регионов:', error));

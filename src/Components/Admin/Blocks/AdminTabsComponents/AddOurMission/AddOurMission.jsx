@@ -2,12 +2,14 @@ import React from "react";
 import classes from './AddOurMission.module.css';
 import Form from "../../Form/Form";
 
+import server from '../../../../../serverConfig';
+
 function AddOurMission({ children, activeTab, ...props }) {
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>Наша миссия</div>
 
-            <Form actionUrl="http://localhost:5002/api/mission" method="post" type={'query'}>
+            <Form actionUrl={`${server}/api/mission`} method="post" type={'query'}>
                 <label>Добавить описание миссии</label>
                 <textarea name="mission" placeholder="Описание" required />
 

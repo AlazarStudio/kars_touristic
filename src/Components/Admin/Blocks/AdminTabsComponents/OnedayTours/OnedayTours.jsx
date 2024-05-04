@@ -11,10 +11,10 @@ function OnedayTours({ children, title, type, ...props }) {
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState({});
 
-    let imgUrl = 'http://localhost:5002/refs/';
+    let imgUrl = `${server}/refs/`;
 
     const response = () => {
-        fetch(`http://localhost:5002/api/getOnedayTours?region=${title}&filter='-'`)
+        fetch(`${server}/api/getOnedayTours?region=${title}&filter='-'`)
             .then(response => response.json())
             .then(data => setTours(data))
             .catch(error => console.error('Ошибка:', error));
@@ -31,7 +31,7 @@ function OnedayTours({ children, title, type, ...props }) {
     }
 
     function deleteElement(id) {
-        fetch(`http://localhost:5002/api/deleteOnedayTour/${id}`, {
+        fetch(`${server}/api/deleteOnedayTour/${id}`, {
             method: 'DELETE'
         })
             .then(() => {

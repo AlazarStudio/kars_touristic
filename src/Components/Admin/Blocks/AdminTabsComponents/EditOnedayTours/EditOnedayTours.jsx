@@ -7,7 +7,7 @@ import FormEdit from "../../FormEdit/FormEdit";
 function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
     const { idToEdit } = useParams();
 
-    let imgUrl = 'http://localhost:5002/refs/';
+    let imgUrl = `${server}/refs/`;
 
     const [selectedTour, setSelectedTour] = useState({
         tourTitle: '',
@@ -29,7 +29,7 @@ function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded,
     const { places, checklists, days, photos } = selectedTour;
 
     const fetchTourById = (id) => {
-        fetch(`http://localhost:5002/api/getOneOnedayTour/${id}`)
+        fetch(`${server}/api/getOneOnedayTour/${id}`)
             .then(response => response.json())
             .then(data => {
                 if (data && typeof data === 'object') {
@@ -103,7 +103,7 @@ function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded,
         formData.append('photosToDelete', JSON.stringify(photosToDelete));
 
         try {
-            const response = await fetch(`http://localhost:5002/api/updateOneOnedayTour/${id}`, {
+            const response = await fetch(`${server}/api/updateOneOnedayTour/${id}`, {
                 method: 'PUT',
                 body: formData
             });
@@ -117,7 +117,7 @@ function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded,
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Однодневный тур</div>
 
-            <FormEdit actionUrl={`http://localhost:5002/api/updateOneOnedayTour/${idToEdit}`} method="put" newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
+            <FormEdit actionUrl={`${server}/api/updateOneOnedayTour/${idToEdit}`} method="put" newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />

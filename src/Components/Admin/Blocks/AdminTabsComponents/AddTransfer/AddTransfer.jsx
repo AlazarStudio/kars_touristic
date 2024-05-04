@@ -2,12 +2,14 @@ import React from "react";
 import classes from './AddTransfer.module.css';
 import Form from "../../Form/Form";
 
+import server from '../../../../../serverConfig';
+
 function AddTransfer({ children, activeTab, ...props }) {
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>Трансфер</div>
 
-            <Form actionUrl="http://localhost:5002/api/transfer" method="post" type={'query'}>
+            <Form actionUrl={`${server}/api/transfer`} method="post" type={'query'}>
                 <label>Введите заголовок</label>
                 <input name="title" type="text" placeholder="Название" required />
 
