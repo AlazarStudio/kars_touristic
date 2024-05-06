@@ -29,7 +29,7 @@ function EditRegion({ children, ...props }) {
                             </div>
                             <div className={classes.editBlocks_item__title}>Гиды</div>
                         </Link>
-                        <Link to={`/admin/${id}/${title}/hotels`}  className={classes.editBlocks_item}>
+                        {/* <Link to={`/admin/${id}/${title}/hotels`}  className={classes.editBlocks_item}>
                             <div className={classes.editBlocks_item__img}>
                                 <img src="/admin_oteli.png" alt="" />
                             </div>
@@ -46,7 +46,7 @@ function EditRegion({ children, ...props }) {
                                 <img src="/admin_events.png" alt="" />
                             </div>
                             <div className={classes.editBlocks_item__title}>Региональные Mice ивенты</div>
-                        </Link>
+                        </Link> */}
                     </div>
                 </div> : 
                     <EditingPlace type={type} title={title}/>

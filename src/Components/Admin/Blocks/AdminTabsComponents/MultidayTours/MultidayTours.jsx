@@ -10,6 +10,8 @@ import EditMultidayTours from "../EditMultidayTours/EditMultidayTours";
 function MultidayTours({ children, title, type, ...props }) {
     const { add } = useParams();
 
+    console.log(server);
+
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState({});
 

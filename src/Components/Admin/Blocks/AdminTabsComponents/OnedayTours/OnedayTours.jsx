@@ -5,6 +5,9 @@ import { Link, useParams } from "react-router-dom";
 import AddOnedayTours from "../AddOnedayTours/AddOnedayTours";
 import EditOnedayTours from "../EditOnedayTours/EditOnedayTours";
 
+
+import server from '../../../../../serverConfig';
+
 function OnedayTours({ children, title, type, ...props }) {
     const { add } = useParams();
 

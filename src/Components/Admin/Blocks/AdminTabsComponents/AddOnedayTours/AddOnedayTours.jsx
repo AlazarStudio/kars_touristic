@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import classes from './AddOnedayTours.module.css';
 import Form from "../../Form/Form";
 
+import server from '../../../../../serverConfig';
+
 function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region, onTourAdded, ...props }) {
     const [places, setPlaces] = useState(['']);
     const [checklists, setChecklists] = useState(['']);

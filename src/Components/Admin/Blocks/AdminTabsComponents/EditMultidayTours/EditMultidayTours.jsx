@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import classes from './EditMultidayTours.module.css';
 import FormEdit from "../../FormEdit/FormEdit";
 
+import server from '../../../../../serverConfig';
+
 function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
     const { idToEdit } = useParams();
 
