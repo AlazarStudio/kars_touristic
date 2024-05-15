@@ -86,6 +86,11 @@ function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded,
         const updatedPhotos = loadedPhotos.filter((_, i) => i !== index);
         setLoadedPhotos(updatedPhotos);
 
+        setSelectedTour(prevState => ({
+            ...prevState,
+            photos: updatedPhotos
+        }));
+        
         setPhotosToDelete(prevPhotos => {
             const newPhotosToDelete = [photo];
 
