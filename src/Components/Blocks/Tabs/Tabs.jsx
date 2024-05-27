@@ -1,34 +1,54 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classes from './Tabs.module.css';
 import Object from "../Object/Object";
 import Filter from "../Filter/Filter";
 import H2 from "../../Standart/H2/H2";
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 
-function Tabs({ children, objects, ...props }) {
-    const [filteredObjects, setFilteredObjects] = useState(objects);
+import server from '../../../serverConfig'
+
+function Tabs({ children, regionName, requestType, tableName, ...props }) {
+    const [filteredObjects, setFilteredObjects] = useState([]);
+
 
     const updateFilteredObjects = (filteredObjects) => {
         setFilteredObjects(filteredObjects);
     };
 
+    const fetchData = () => {
+        fetch(`${server}/api/${requestType}`)
+            .then(response => response.json())
+            .then(data => setFilteredObjects(data[tableName]))
+            .catch(error => console.error('Ошибка при загрузке регионов:', error));
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+
+    const foundData = filteredObjects ? filteredObjects.filter(filteredObject => filteredObject.region === regionName) : [];
+
     return (
         <>
-            <div className={classes.fullBlock}>
-                <CenterBlock>
-                    <H2 text_transform="uppercase">{props.title}</H2>
-                </CenterBlock>
+            {foundData ?
+                <div className={classes.fullBlock}>
+                    <CenterBlock>
+                        <H2 text_transform="uppercase">{props.title}</H2>
+                    </CenterBlock>
 
-                <Filter objects={objects} updateFilteredObjects={updateFilteredObjects} />
+                    <Filter objects={foundData} updateFilteredObjects={updateFilteredObjects} />
 
-                <div className={classes.objects}>
-                    {
-                        filteredObjects.map((item, index) => (
-                            <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} link={item.link} placeLink={item.placeLink} />
-                        ))
-                    }
+                    <div className={classes.objects}>
+                        {
+                            foundData.map((item, index) => (
+                                <Object key={index} regionData={item} />
+                            ))
+                        }
+                    </div>
                 </div>
-            </div>
+                : null
+            }
         </>
     );
 }

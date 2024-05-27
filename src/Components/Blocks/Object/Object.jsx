@@ -2,6 +2,8 @@ import React from "react";
 import classes from './Object.module.css';
 import { Link } from "react-router-dom";
 
+import server from '../../../serverConfig'
+
 function Object({ children, ...props }) {
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
@@ -21,17 +23,17 @@ function Object({ children, ...props }) {
         <>
             <div className={classes.objects_item}>
                 <div className={classes.objects_item__img}>
-                    <img src={`/${props.img}`} alt="" />
+                    <img src={`${server}/refs/${props.regionData.photos[0]}`} alt="" />
                 </div>
                 <div className={classes.objects_item__bottom}>
                     <div className={classes.objects_item__title}>
-                        {truncateString(props.title, 33)}
+                        {truncateString(props.regionData.tourTitle, 33)}
                     </div>
                     <div className={classes.objects_item__price}>
-                        <img src={`/${props.priceImg}`} alt="" />
-                        {props.price}
+                        <img src={`/${props.regionData.priceImg}`} alt="" />
+                        {props.cost}
                     </div>
-                    <Link to={`/${props.placeLink}/${props.link}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
+                    <Link to={`/tours/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
                 </div>
             </div>
         </>

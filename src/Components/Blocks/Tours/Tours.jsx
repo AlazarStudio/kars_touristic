@@ -203,6 +203,7 @@ function Tours({ children, ...props }) {
         top: 0,
         behavior: 'auto'
     });
+    
     return (
         <>
             <div className={classes.main}>
@@ -337,7 +338,7 @@ function Tours({ children, ...props }) {
                 </div>
 
                 <WidthBlock>
-                    <Slider info={info} boxShadow={'0px 4px 46.4px 0px #B4B4B440'} loop={false}/>
+                    <Slider info={info} boxShadow={'0px 4px 46.4px 0px #B4B4B440'} loop={false} />
 
                     <ToursTab tabs={tabs} />
 
@@ -351,11 +352,12 @@ function Tours({ children, ...props }) {
                         <H2 text_transform="uppercase" font_size="36px">Популярные туры</H2>
                     </CenterBlock>
 
+                    {/* 
                     <div className={classes.similar}>
                         {tours.map((item, index) => (
                             <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} link={item.link} placeLink={item.placeLink} />
                         ))}
-                    </div>
+                    </div> */}
 
                 </WidthBlock>
             </div>
