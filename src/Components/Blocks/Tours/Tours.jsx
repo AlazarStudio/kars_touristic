@@ -146,7 +146,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                         <Feedback />
 
                         <CenterBlock>
-                            <H2 text_transform="uppercase" font_size="36px">Популярные туры</H2>
+                            <H2 text_transform="uppercase" font_size="36px">Похожие туры</H2>
                         </CenterBlock>
 
                         {foundRegion ?
