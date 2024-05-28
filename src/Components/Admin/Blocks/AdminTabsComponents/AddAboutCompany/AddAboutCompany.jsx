@@ -9,7 +9,7 @@ function AddAboutCompany({ children, activeTab, ...props }) {
         <div className={classes.addData}>
             <div className={classes.addData_title}>О компании</div>
 
-            <Form actionUrl={`${server}/api/aboutCompany`} method="post" type={'query'}>
+            <Form actionUrl={`${server}/api/aboutCompany`} method="put" type={'query'}>
                 <label>Добавить краткое описание компании</label>
                 <textarea name="aboutCompany" placeholder="Описание" required />
 

@@ -11,7 +11,7 @@ const ItemTypes = {
     TOUR: 'tour',
 };
 
-function Tour({ tour, index, moveTour }) {
+function Tour({ tour, index, moveTour, deleteElement }) {
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.TOUR,
         item: { index },
@@ -54,7 +54,7 @@ function MultidayTours({ children, title, type, ...props }) {
     const { add } = useParams();
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState([]);
-    
+
     const response = () => {
         fetch(`${server}/api/getMultidayTours?region=${title}&filter='-'`)
             .then(response => response.json())
@@ -71,7 +71,7 @@ function MultidayTours({ children, title, type, ...props }) {
         setTours(updatedTours);
     };
 
-    function deleteElement(id) {
+    const deleteElement = (id) => {
         fetch(`${server}/api/deleteMultidayTour/${id}`, {
             method: 'DELETE'
         })
@@ -79,7 +79,7 @@ function MultidayTours({ children, title, type, ...props }) {
                 response();
             })
             .catch(error => console.error('Ошибка при удалении тура:', error));
-    }
+    };
 
     return (
         <>
@@ -102,6 +102,7 @@ function MultidayTours({ children, title, type, ...props }) {
                                     index={index}
                                     tour={tour}
                                     moveTour={moveTour}
+                                    deleteElement={deleteElement} // Передаем функцию deleteElement
                                 />
                             ))}
                         </div>

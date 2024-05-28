@@ -11,7 +11,7 @@ const ItemTypes = {
     TOUR: 'tour',
 };
 
-function Tour({ tour, index, moveTour }) {
+function Tour({ tour, index, moveTour, deleteElement }) { // добавляем deleteElement в параметры
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.TOUR,
         item: { index },
@@ -102,6 +102,7 @@ function OnedayTours({ children, title, type, ...props }) {
                                     index={index}
                                     tour={tour}
                                     moveTour={moveTour}
+                                    deleteElement={deleteElement} // Передаем функцию deleteElement
                                 />
                             ))}
                         </div>
