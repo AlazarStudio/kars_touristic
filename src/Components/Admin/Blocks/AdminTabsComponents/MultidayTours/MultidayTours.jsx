@@ -1,38 +1,75 @@
 import React, { useState, useEffect } from "react";
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import classes from './MultidayTours.module.css';
-
 import server from '../../../../../serverConfig';
-
 import { Link, useParams } from "react-router-dom";
 import AddMultidayTours from "../AddMultidayTours/AddMultidayTours";
 import EditMultidayTours from "../EditMultidayTours/EditMultidayTours";
 
+const ItemTypes = {
+    TOUR: 'tour',
+};
+
+function Tour({ tour, index, moveTour }) {
+    const [{ isDragging }, drag] = useDrag({
+        type: ItemTypes.TOUR,
+        item: { index },
+        collect: (monitor) => ({
+            isDragging: monitor.isDragging(),
+        }),
+    });
+
+    const [, drop] = useDrop({
+        accept: ItemTypes.TOUR,
+        hover: (draggedItem) => {
+            if (draggedItem.index !== index) {
+                moveTour(draggedItem.index, index);
+                draggedItem.index = index;
+            }
+        },
+    });
+
+    return (
+        <div
+            ref={(node) => drag(drop(node))}
+            className={`${classes.multidayTours_data__tour} ${isDragging ? classes.dragging : ''}`}
+            style={{ opacity: isDragging ? 0.5 : 1 }}
+        >
+            <div className={classes.multidayTours_data__tour___img}>
+                <img src={`${server}/refs/${tour.photos[0]}`} alt="" />
+            </div>
+            <div className={classes.multidayTours_data__tour___info}>
+                <div className={classes.multidayTours_data__tour___info____title}>{tour.tourTitle}</div>
+            </div>
+            <div className={classes.multidayTours_data__tour___btns}>
+                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(tour._id)}>Удалить</div>
+                <Link to={`editMultiday_tour/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</Link>
+            </div>
+        </div>
+    );
+}
+
 function MultidayTours({ children, title, type, ...props }) {
     const { add } = useParams();
-
-    console.log(server);
-
     const [selectedTour, setSelectedTour] = useState(null);
-    const [tours, setTours] = useState({});
-
-    let imgUrl = `${server}/refs/`;
-
+    const [tours, setTours] = useState([]);
+    
     const response = () => {
         fetch(`${server}/api/getMultidayTours?region=${title}&filter='-'`)
             .then(response => response.json())
-            .then(data => setTours(data))
+            .then(data => setTours(data.multidayTour))
             .catch(error => console.error('Ошибка:', error));
     };
 
     useEffect(() => { response() }, [title]);
 
-    let data = [];
-    let count;
-
-    if (tours && tours.multidayTour) {
-        data = tours.multidayTour;
-        count = tours.totalCount;
-    }
+    const moveTour = (fromIndex, toIndex) => {
+        const updatedTours = [...tours];
+        const [movedTour] = updatedTours.splice(fromIndex, 1);
+        updatedTours.splice(toIndex, 0, movedTour);
+        setTours(updatedTours);
+    };
 
     function deleteElement(id) {
         fetch(`${server}/api/deleteMultidayTour/${id}`, {
@@ -43,38 +80,35 @@ function MultidayTours({ children, title, type, ...props }) {
             })
             .catch(error => console.error('Ошибка при удалении тура:', error));
     }
+
     return (
         <>
             {!add ?
-                <div className={classes.multidayTours}>
-                    <div className={classes.multidayTours_back}>
-                        <Link to={`/admin/edit/${title}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
-                    </div>
+                <DndProvider backend={HTML5Backend}>
+                    <div className={classes.multidayTours}>
+                        <div className={classes.multidayTours_back}>
+                            <Link to={`/admin/edit/${title}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                        </div>
 
-                    <div className={classes.multidayTours_top}>
-                        <div className={classes.multidayTours_top__title}>Многодневные туры региона</div>
-                        <Link to={'addMultiday_tour'} className={classes.multidayTours_top__add}>Добавить многодневный тур</Link>
-                    </div>
+                        <div className={classes.multidayTours_top}>
+                            <div className={classes.multidayTours_top__title}>Многодневные туры региона</div>
+                            <Link to={'addMultiday_tour'} className={classes.multidayTours_top__add}>Добавить многодневный тур</Link>
+                        </div>
 
-                    <div className={classes.multidayTours_data}>
-                        {data.map((tour, index) => (
-                            <div className={classes.multidayTours_data__tour} key={index}>
-                                <div className={classes.multidayTours_data__tour___img}>
-                                    <img src={imgUrl + tour.photos[0]} alt="" />
-                                </div>
-                                <div className={classes.multidayTours_data__tour___info}>
-                                    <div className={classes.multidayTours_data__tour___info____title}>{tour.tourTitle}</div>
-                                </div>
-                                <div className={classes.multidayTours_data__tour___btns}>
-                                    <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(tour._id)}>Удалить</div>
-                                    <Link to={`editMultiday_tour/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</Link>
-                                </div>
-                            </div>
-                        ))}
+                        <div className={classes.multidayTours_data}>
+                            {tours.map((tour, index) => (
+                                <Tour
+                                    key={tour._id}
+                                    index={index}
+                                    tour={tour}
+                                    moveTour={moveTour}
+                                />
+                            ))}
+                        </div>
                     </div>
-                </div>
+                </DndProvider>
                 : <>
-                    {add == 'addMultiday_tour' ?
+                    {add === 'addMultiday_tour' ?
                         <>
                             <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
