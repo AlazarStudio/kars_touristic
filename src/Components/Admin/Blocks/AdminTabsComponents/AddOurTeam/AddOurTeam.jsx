@@ -11,10 +11,10 @@ function AddOurTeam({ children, activeTab, ...props }) {
 
             <Form actionUrl={`${server}/api/team`} method="post">
                 <label>Введите ФИО</label>
-                <input name="name" type="text" placeholder="Описание" required />
+                <input name="name" type="text" placeholder="ФИО" required />
 
                 <label>Введите краткое описание сотрудника</label>
-                <input name="description" type="text" placeholder="Описание" required />
+                <input name="description" type="text" placeholder="Краткое описание сотрудника" required />
 
                 <label>Выберите фото сотрудника</label>
                 <input type="file" name="imgPath" className={classes.noBorder} required />

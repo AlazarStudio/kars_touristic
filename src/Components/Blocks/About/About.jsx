@@ -40,26 +40,6 @@ function About({ children, ...props }) {
             title: "Lorem Ipsum",
             text: "Lorem Ipsum"
         },
-        {
-            img: team_no_img,
-            title: "Lorem Ipsum",
-            text: "Lorem Ipsum"
-        },
-        {
-            img: team_no_img,
-            title: "Lorem Ipsum",
-            text: "Lorem Ipsum"
-        },
-        {
-            img: team_no_img,
-            title: "Lorem Ipsum",
-            text: "Lorem Ipsum"
-        },
-        {
-            img: team_no_img,
-            title: "Lorem Ipsum",
-            text: "Lorem Ipsum"
-        },
     ]
 
     const [companyInfo, setCompanyInfo] = useState("");
@@ -131,7 +111,7 @@ function About({ children, ...props }) {
                         <H2 text_transform={"uppercase"}>Наша команда</H2>
                     </CenterBlock>
 
-                    <RowBlock justifyContent={"space-between"}>
+                    <RowBlock>
                         {
                             teamData.map((item, index) => (
                                 <TeamBlock
