@@ -10,8 +10,11 @@ import H2 from "../../Standart/H2/H2";
 
 import Object from "../Object/Object";
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+
 import Feedback from "../Feedback/Feedback";
 import Slider from "../Slider/Slider";
 
@@ -268,7 +271,13 @@ function Tours({ children, requestType, ...props }) {
                                         </div>
                                         <div className={classes.tour_topInfo__right}>
                                             <div className={classes.tour_topInfo__right___img}>
-                                                <img src="/tour_img.png" alt="" />
+                                                <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
+                                                    {tour.photos.map((item, index) => (
+                                                        <SwiperSlide key={index}>
+                                                            <img src={`${server}/refs/${item}`} alt="" />
+                                                        </SwiperSlide>
+                                                    ))}
+                                                </Swiper>
                                             </div>
                                             <div className={classes.tour_topInfo__right___places}>
                                                 <div className={classes.tour_topInfo__right___places____place}>
@@ -368,11 +377,12 @@ function Tours({ children, requestType, ...props }) {
 
                         <Feedback />
 
+                        {/*
                         <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">Популярные туры</H2>
                         </CenterBlock>
 
-                        {/* 
+                         
                     <div className={classes.similar}>
                         {tours.map((item, index) => (
                             <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} link={item.link} placeLink={item.placeLink} />

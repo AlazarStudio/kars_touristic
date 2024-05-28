@@ -59,6 +59,34 @@ main {
     right: -90px;
 }
 
+.tourPhotos .swiper-button-prev {
+    color: var(--white_color);
+    border: 1px solid var(--white_color);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    left: 20px;
+}
+
+.tourPhotos .swiper-button-next {
+    color: var(--white_color);
+    border: 1px solid var(--white_color);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    right: 20px;
+}
+
+.tourPhotos .swiper-button-prev:after {
+    font-size: 25px;
+    margin-right: 5px;
+}
+
+.tourPhotos .swiper-button-next:after {
+    font-size: 25px;
+    margin-left: 5px;
+}
+
 .swiper-button-prev:after {
     font-size: 35px;
     margin-right: 5px;
@@ -71,6 +99,7 @@ main {
 
 .swiper {
     overflow: visible;
+    height: 100%;
 }
 
 .swiper::before {
