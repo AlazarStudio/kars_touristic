@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import server from '../../../serverConfig'
 
-function Object({ children, ...props }) {
+function Object({ children, pageName, ...props }) {
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
             return str.substring(0, maxLength) + '...';
@@ -33,7 +33,7 @@ function Object({ children, ...props }) {
                         <img src={`/${props.regionData.priceImg}`} alt="" />
                         {props.cost}
                     </div>
-                    <Link to={`/tours/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
+                    <Link to={`/${pageName}/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
                 </div>
             </div>
         </>

@@ -7,7 +7,7 @@ import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 
 import server from '../../../serverConfig'
 
-function Tabs({ children, regionName, requestType, tableName, ...props }) {
+function Tabs({ children, regionName, requestType, tableName, pageName, ...props }) {
     const [filteredObjects, setFilteredObjects] = useState([]);
 
 
@@ -42,7 +42,7 @@ function Tabs({ children, regionName, requestType, tableName, ...props }) {
                     <div className={classes.objects}>
                         {
                             foundData.map((item, index) => (
-                                <Object key={index} regionData={item} />
+                                <Object key={index} regionData={item} pageName={pageName}/>
                             ))
                         }
                     </div>

@@ -143,12 +143,12 @@ function RegionInfo({ children, ...props }) {
                         <CenterBlock>
                             <WidthBlock>
                                 <div>
-                                    {activeTab === 1 && <Tabs regionName={id} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'}/>}
-                                    {activeTab === 2 && <Tabs regionName={id} tableName={'onedayTour'} requestType={'getOnedayTours'} title={'Однодневные экскурсии'} />}
-                                    {activeTab === 3 && <Tabs regionName={id} tableName={''} title={'Авторские туры'} />}
-                                    {activeTab === 4 && <Tabs regionName={id} tableName={''} title={'Отели'} />}
-                                    {activeTab === 5 && <Tabs regionName={id} tableName={''} title={'Что посетить'} />}
-                                    {activeTab === 6 && <Tabs regionName={id} tableName={''} title={'Региональные Mice ивенты'} />}
+                                    {activeTab === 1 && <Tabs regionName={id} pageName={'tours'} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'}/>}
+                                    {activeTab === 2 && <Tabs regionName={id} pageName={'excursions'} tableName={'onedayTour'} requestType={'getOnedayTours'} title={'Однодневные экскурсии'} />}
+                                    {activeTab === 3 && <Tabs regionName={id} pageName={'gids'} tableName={''} title={'Авторские туры'} />}
+                                    {activeTab === 4 && <Tabs regionName={id} pageName={'hotels'} tableName={''} title={'Отели'} />}
+                                    {activeTab === 5 && <Tabs regionName={id} pageName={'visits'} tableName={''} title={'Что посетить'} />}
+                                    {activeTab === 6 && <Tabs regionName={id} pageName={'events'} tableName={''} title={'Региональные Mice ивенты'} />}
                                 </div>
                             </WidthBlock>
                         </CenterBlock>

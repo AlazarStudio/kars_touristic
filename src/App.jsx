@@ -30,13 +30,15 @@ function App() {
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
           <Route path="/region/:id" element={<Region_Page />} />
-          <Route path="/tours/:id" element={<Tours_Page />} />
-          <Route path="/excursions/:id" element={<Tours_Page />} />
+
+          <Route path="/tours/:id" element={<Tours_Page requestType={'getOneMultidayTour'}/>} />
+          <Route path="/excursions/:id" element={<Tours_Page requestType={'getOneOnedayTour'}/>} />
           <Route path="/gids/:id" element={<Tours_Page />} />
           <Route path="/hotels/:id" element={<Hotels_Page />} />
           <Route path="/hotels/:id/:numID" element={<Number_Page />} />
           <Route path="/visits/:id" element={<Visit_Page />} />
           <Route path="/events/:id" element={<Event_Page />} />
+
           <Route path="*" element={<Non_Found_Page />} />
         </Route>
         
