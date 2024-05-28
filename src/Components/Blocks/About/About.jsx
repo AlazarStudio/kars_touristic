@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from './About.module.css';
 
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
@@ -15,6 +15,8 @@ import about_handshake from "/about_handshake.png";
 
 import team_no_img from "/team_no_img.png";
 import mission_arnament from "/mission_arnament.png";
+
+import server from '../../../serverConfig';
 
 function About({ children, ...props }) {
     let teamData = [
@@ -60,6 +62,38 @@ function About({ children, ...props }) {
         },
     ]
 
+    const [companyInfo, setCompanyInfo] = useState("");
+
+    useEffect(() => {
+        async function fetchCompanyInfo() {
+            try {
+                const response = await fetch(`${server}/api/aboutCompany`);
+                const data = await response.json();
+                setCompanyInfo(data.aboutCompany);
+            } catch (error) {
+                console.error("Error fetching company info:", error);
+            }
+        }
+
+        fetchCompanyInfo();
+    }, []);
+
+    const [missionInfo, setMissionInfo] = useState("");
+
+    useEffect(() => {
+        async function fetchMissionInfo() {
+            try {
+                const response = await fetch(`${server}/api/mission`);
+                const data = await response.json();
+                setMissionInfo(data.mission);
+            } catch (error) {
+                console.error("Error fetching mission info:", error);
+            }
+        }
+
+        fetchMissionInfo();
+    }, []);
+
     return (
         <>
             <CenterBlock>
@@ -71,9 +105,7 @@ function About({ children, ...props }) {
                         <div className={classes.about_title__right}>
                             <div className={classes.about_title__right___name}>О компании</div>
                             <div className={classes.about_title__right___text}>
-                                Компания Kars Touristic работает с 2000 года без посредников и наценок —
-                                мы уверены в том, что выбирая нас, вы получите от поездок только приятные
-                                впечатления и воспоминания на всю жизнь
+                                {companyInfo ? companyInfo : null}
                             </div>
                         </div>
                     </div>
@@ -123,13 +155,7 @@ function About({ children, ...props }) {
                             <img src={mission_arnament} alt="" />
                         </div>
                         <div className={classes.mission_text}>
-                            Предоставлять уникальные, вдохновляющие и доступные путешествия, которые расширяют 
-                            границы и пробуждают дух открытий у наших клиентов. Мы стремимся помочь каждому 
-                            путешественнику испытать неподдельные эмоции, наладить глубокие связи с новыми 
-                            культурами Кавказа и вдохновляться природными чудесами. Мы обещаем, что каждое 
-                            путешествие, организованное нашей компанией, будет волнующим, безопасным и наполненным 
-                            положительными эмоциями, чтобы наши клиенты возвращались домой с незабываемыми 
-                            воспоминаниями и желанием исследовать мир вновь и вновь.
+                            {missionInfo ? missionInfo : null}
                         </div>
                     </div>
 
