@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate }) {
+function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, onSuccess }) {
     let regionName = useParams().title;
     let regionTypeData = useParams().type;
 
@@ -101,6 +101,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             fetchRegions && fetchRegions();
+            onSuccess && onSuccess();
             resetForm();
             onTourAdded ? onTourAdded() : null
             
