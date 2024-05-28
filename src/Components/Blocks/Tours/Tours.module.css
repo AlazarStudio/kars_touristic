@@ -130,7 +130,7 @@
 
 .tour_topInfo__right___img {
     width: 100%;
-    height: 500px;
+    height: 455px;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -145,8 +145,7 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    row-gap: 20px;
-    justify-content: space-between;
+    gap: 25px;
 }
 
 .tour_topInfo__right___places____place {
@@ -157,7 +156,7 @@
     border: 1px solid var(--white_color);
     border-radius: 15px;
     backdrop-filter: blur(3px);
-    width: 32%;
+    width: 31%;
     padding: 10px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
@@ -239,8 +238,20 @@
 
 .similar{
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.similarBlock{
+    display: flex;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 30px;
     margin-bottom: 80px;
+    width: 80%;
+}
+
+.similarTours{
+    width: 100%;
 }

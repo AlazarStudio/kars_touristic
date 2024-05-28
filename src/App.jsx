@@ -31,8 +31,8 @@ function App() {
           <Route path="/turagents" element={<Turagents_Page />} />
           <Route path="/region/:id" element={<Region_Page />} />
 
-          <Route path="/tours/:id" element={<Tours_Page requestType={'getOneMultidayTour'}/>} />
-          <Route path="/excursions/:id" element={<Tours_Page requestType={'getOneOnedayTour'}/>} />
+          <Route path="/tours/:id" element={<Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} />} />
+          <Route path="/excursions/:id" element={<Tours_Page tableName={'onedayTour'} requestType={'getOneOnedayTour'} similar={'getOnedayTours'} pageName={'excursions'}/>} />
           <Route path="/gids/:id" element={<Tours_Page />} />
           <Route path="/hotels/:id" element={<Hotels_Page />} />
           <Route path="/hotels/:id/:numID" element={<Number_Page />} />

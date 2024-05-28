@@ -22,7 +22,7 @@ function Feedback({ children, ...props }) {
                                 modules={[Navigation]}
                                 slidesPerView={2}
                                 spaceBetween={30}
-                                className={classes.mySwiper}
+                                className={`${classes.mySwiper} feedback`}
                             >
                                 <SwiperSlide>
                                     <div className={classes.feedback_slide}>

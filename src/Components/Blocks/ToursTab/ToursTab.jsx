@@ -28,22 +28,25 @@ function ToursTab({ children, tabs, ...props }) {
 
         return Array.from(parsedDocument.body.childNodes).map(parseNode);
     }
+
+    let massLength = tabs.length;
+
     return (
         <>
             <div className={classes.tabs}>
                 <div className={classes.tabButtons}>
-                    {tabs.map((tab, index) => (
+                    {massLength > 1 && tabs.map((tab, index) => (
                         <div
                             key={index}
                             onClick={() => handleTabClick(index)}
                             className={index === activeTab ? `${classes.active}` : ''}
                         >
-                            {tab.label}
+                            День {index + 1}
                         </div>
                     ))}
                 </div>
                 <div className={classes.tabContent}>
-                    {parseHTML(tabs[activeTab].content)}
+                    {parseHTML(tabs[activeTab])}
                 </div>
             </div>
         </>

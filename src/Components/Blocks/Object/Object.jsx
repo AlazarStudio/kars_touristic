@@ -12,7 +12,7 @@ function Object({ children, pageName, ...props }) {
         return str;
     }
 
-    function toTop(){
+    function toTop() {
         window.scrollTo({
             top: 0,
             behavior: 'auto'
@@ -21,7 +21,7 @@ function Object({ children, pageName, ...props }) {
 
     return (
         <>
-            <div className={classes.objects_item}>
+            <div className={classes.objects_item} style={{width: props.width}}>
                 <div className={classes.objects_item__img}>
                     <img src={`${server}/refs/${props.regionData.photos[0]}`} alt="" />
                 </div>
