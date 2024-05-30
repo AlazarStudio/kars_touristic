@@ -14,7 +14,7 @@ function BlockTopInfo({ children, ...props }) {
                 </div>
 
                 {props.iconImg ? <div className={classes.BlockTopInfo_block}>
-                    <a href="#" target="_blank" className={classes.BlockTopInfo_link}>
+                    <a href={props.link ? props.link : null} target="_blank" className={classes.BlockTopInfo_link}>
                         <img src={props.iconImg} alt="" />
                         <div className={classes.BlockTopInfo_link__text}>{props.linkText}</div>
                     </a>

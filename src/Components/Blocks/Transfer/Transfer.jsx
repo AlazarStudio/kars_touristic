@@ -7,15 +7,16 @@ import BlockTopInfo from "../BlockTopInfo/BlockTopInfo";
 import tg from "/tg.png";
 import transfer_bg from "/transfer_bg.png";
 
-function Transfer({ children, ...props }) {
+function Transfer({ children, data, ...props }) {
     return (
         <>
             <CenterBlock>
                 <WidthBlock>
                     <BlockTopInfo
                         topTitle={"Kars Drive"}
-                        title={"Заказать трансфер из любого города"}
-                        text={"Трансфер прямо из аэропорта. Заберем в указанном месте и с комфортом доставим в любое место назначения. Только опытные водители и безопасные поездки!"}
+                        title={data.title}
+                        text={data.description}
+                        link={data.link}
                         linkText={"НАПИСАТЬ В TELEGRAM"}
                         bgImg={transfer_bg}
                         iconImg={tg}
@@ -28,3 +29,4 @@ function Transfer({ children, ...props }) {
 }
 
 export default Transfer;
+
