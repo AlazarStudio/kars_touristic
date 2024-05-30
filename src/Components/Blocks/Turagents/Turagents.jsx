@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from './Turagents.module.css';
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
@@ -8,7 +8,24 @@ import Form from "../Form/Form";
 
 import turagents_bg from "/turagents_bg.png";
 
+import server from '../../../serverConfig';
+
 function Turagents({ children, ...props }) {
+    const [turagentInfo, setTuragentInfo] = useState("");
+
+    useEffect(() => {
+        async function fetchMissionInfo() {
+            try {
+                const response = await fetch(`${server}/api/turagent`);
+                const data = await response.json();
+                setTuragentInfo(data);
+            } catch (error) {
+                console.error("Error fetching turagent info:", error);
+            }
+        }
+
+        fetchMissionInfo();
+    }, []);
     return (
         <>
             <CenterBlock>
@@ -18,15 +35,10 @@ function Turagents({ children, ...props }) {
                         bgImg={turagents_bg}
                     />
                     <div className={classes.turagentsText}>
-                        <p>Уважаемые представители Туристических Агентств!</p>
-                        <p>Убедительная просьба заполнять договоры печатными буквами.</p>
-                        <p>Просьба не заполнять раздел с номером и датой договора!</p>
-                        <p>Если у Вас срочное бронирование, Вы можете скачать договор, заполнить и подписать его, отсканировать все страницы и послать их нам по электронной почте.</p>
-                        <p>Оригинал договора необходимо послать обычной почтой либо курьером на адрес в разделе Контакты.</p>
-                        <p>Будем рады видеть Вас в числе наших партнеров!</p>
+                        {turagentInfo.description}
                     </div>
                     <div className={classes.turagentsButtons}>
-                        <a href="" className={classes.turagentsButtons_item}>Агентский договор</a>
+                        <a href={`${server}/refs/${turagentInfo.docPath}`} target="_blank" className={classes.turagentsButtons_item}>Агентский договор</a>
                         <a href="" className={classes.turagentsButtons_item}>Отчет Агента</a>
                     </div>
                 </WidthBlock>
