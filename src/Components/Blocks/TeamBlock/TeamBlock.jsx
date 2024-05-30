@@ -1,6 +1,8 @@
 import React from "react";
 import classes from './TeamBlock.module.css';
 
+import server from '../../../serverConfig';
+
 function TeamBlock({ children, ...props }) {
     return ( 
         <>
@@ -8,7 +10,7 @@ function TeamBlock({ children, ...props }) {
                 width: props.width
             }}>
                 <div className={classes.team_img}>
-                    <img src={props.img} alt="" />
+                    <img src={`${server}/refs/${props.img}`} alt="" />
                 </div>
                 <div className={classes.team_title}>{props.title}</div>
                 <div className={classes.team_text}>{props.text}</div>

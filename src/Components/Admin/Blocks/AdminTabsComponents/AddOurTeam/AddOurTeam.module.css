@@ -32,3 +32,56 @@
     line-height: 48px;
     text-transform: uppercase;
 }
+
+.teamList {
+    display: flex;
+    gap: 30px;
+}
+
+.teamMember {
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.teamMember_img {
+    width: 100%;
+    height: 300px;
+}
+
+.teamMember_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.teamMemberInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+.teamMemberDelete {
+    width: 50%;
+    padding: 12px 20px;
+    border: 1px solid var(--black_color);
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: var(--black_color);
+    margin: 0 auto;
+}
+.teamMemberDelete:hover {
+    border: 1px solid #fa1919;
+    background-color: #fa1919;
+    color: #fff;
+}

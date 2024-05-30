@@ -19,28 +19,7 @@ import mission_arnament from "/mission_arnament.png";
 import server from '../../../serverConfig';
 
 function About({ children, ...props }) {
-    let teamData = [
-        {
-            img: team_no_img,
-            title: "Lorem Ipsum",
-            text: "Lorem Ipsum"
-        },
-        {
-            img: team_no_img,
-            title: "Lorem Ipsum",
-            text: "Lorem Ipsum"
-        },
-        {
-            img: team_no_img,
-            title: "Lorem Ipsum",
-            text: "Lorem Ipsum"
-        },
-        {
-            img: team_no_img,
-            title: "Lorem Ipsum",
-            text: "Lorem Ipsum"
-        },
-    ]
+    let teamData = []
 
     const [companyInfo, setCompanyInfo] = useState("");
 
@@ -72,6 +51,22 @@ function About({ children, ...props }) {
         }
 
         fetchMissionInfo();
+    }, []);
+
+    const [teamMembers, setTeamMembers] = useState([]);
+
+    useEffect(() => {
+        async function fetchTeamMembers() {
+            try {
+                const response = await fetch(`${server}/api/getTeam`);
+                const data = await response.json();
+                setTeamMembers(data);
+            } catch (error) {
+                console.error("Error fetching company info:", error);
+            }
+        }
+
+        fetchTeamMembers();
     }, []);
 
     return (
@@ -112,16 +107,17 @@ function About({ children, ...props }) {
                     </CenterBlock>
 
                     <RowBlock>
-                        {
-                            teamData.map((item, index) => (
+                        {teamMembers ?
+                            teamMembers.map((item, index) => (
                                 <TeamBlock
                                     key={index}
                                     width={"23%"}
-                                    img={item.img}
-                                    title={item.title}
-                                    text={item.text}
+                                    img={item.imgPath}
+                                    title={item.name}
+                                    text={item.description}
                                 />
                             ))
+                            : null
                         }
                     </RowBlock>
 

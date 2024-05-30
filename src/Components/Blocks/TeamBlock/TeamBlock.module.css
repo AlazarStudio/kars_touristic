@@ -22,12 +22,12 @@
     font-weight: 700;
     line-height: 29.26px;
     text-align: center;
+    text-transform: uppercase;
 }
 
 .team_text {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     line-height: 24.38px;
     text-align: center;
-    color: #658FB0;
 }
