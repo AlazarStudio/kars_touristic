@@ -3,8 +3,11 @@ import classes from './Accordion.module.css';
 
 import accordion_arrow from '/accordion_arrow.png';
 import accordion_close from '/accordion_close.png';
+import delete_icon from '/delete.png';
 
-const AccordionItem = ({ title, content, isOpen, handleClick }) => {
+import server from '../../../serverConfig';
+
+const AccordionItem = ({ title, content, isOpen, needDelete, handleClick, handleDelete }) => {
   const contentRef = useRef(null);
 
   return (
@@ -17,6 +20,17 @@ const AccordionItem = ({ title, content, isOpen, handleClick }) => {
             src={isOpen ? accordion_close : accordion_arrow}
             alt=""
           />
+          {needDelete ? (
+            <img
+              src={delete_icon}
+              className={classes.delete_icon}
+              alt="Удалить"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDelete();
+              }}
+            />
+          ) : null}
         </div>
         <div
           ref={contentRef}
@@ -31,11 +45,23 @@ const AccordionItem = ({ title, content, isOpen, handleClick }) => {
   );
 };
 
-const Accordion = ({ items }) => {
+const Accordion = ({ items, setItems, onSuccess, needDelete }) => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const handleClick = (index) => {
     setOpenIndex(index === openIndex ? null : index);
+  };
+
+  const handleDelete = async (id, index) => {
+    try {
+      await fetch(`${server}/api/deleteFaq/${id}`, {
+        method: 'DELETE'
+      });
+    } catch (error) {
+      console.error('Ошибка при удалении элемента:', error);
+    }
+
+    onSuccess && onSuccess();
   };
 
   return (
@@ -43,10 +69,12 @@ const Accordion = ({ items }) => {
       {items.map((item, index) => (
         <AccordionItem
           key={index}
-          title={item.title}
-          content={item.content}
+          title={item.question}
+          content={item.answer}
+          needDelete={needDelete}
           isOpen={index === openIndex}
           handleClick={() => handleClick(index)}
+          handleDelete={() => handleDelete(item._id)}
         />
       ))}
     </div>

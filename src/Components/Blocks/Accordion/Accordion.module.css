@@ -5,6 +5,7 @@
     margin-bottom: 40px;
 }
 
+
 .title {
     width: 100%;
     border-radius: 50px;
@@ -15,17 +16,25 @@
 
 .title_name {
     font-family: Montserrat;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
     line-height: 48px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+}
+
+.delete_icon{
+    width: 20px;
+    position: absolute;
+    top: -35px;
+    right: -35px;
 }
 
 .title_content {
     font-family: Montserrat;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 27px;
     width: 95%;

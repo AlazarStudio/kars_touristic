@@ -32,8 +32,6 @@ function AddTransfer({ children, activeTab, ...props }) {
         }
     }
 
-    console.log(transferInfo);
-
     return (
         <div className={classes.addData}>
             
