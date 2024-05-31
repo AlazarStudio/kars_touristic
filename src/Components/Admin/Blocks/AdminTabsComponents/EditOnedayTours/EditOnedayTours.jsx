@@ -119,6 +119,22 @@ function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded,
         }
     };
 
+    const changeMainImg = async (id, photoPath) => {
+        if (confirm("Вы уверены, что хотите сделать эту картинку главной?")) {
+            try {
+                const response = await fetch(`${server}/api/changeMainImgOnedayTour?id=${id}&mainImgPath=${photoPath}`, {
+                    method: 'PUT',
+                });
+
+                setSelectedTour(prevState => ({
+                    ...prevState,
+                    mainPhoto: photoPath
+                }));
+            } catch (error) {
+                console.error('Error updating photos', error);
+            }
+        } 
+    };
 
     return (
         <div className={classes.addData}>
@@ -159,6 +175,9 @@ function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded,
                             <img src={imgUrl + photo} alt="" />
                             <div className={classes.imgBlock_close} onClick={() => handleRemovePhoto(index, photo)}>
                                 <img src="/delete.png" alt="Delete" />
+                            </div>
+                            <div className={`${classes.imgBlock_checked} ${(selectedTour.mainPhoto == photo) ? classes.imgBlock_checked_show : null}`} onClick={() => changeMainImg(idToEdit, photo)}>
+                                <img src="/checked.png" alt="Сделать главной" />
                             </div>
                         </div>
                     ))}

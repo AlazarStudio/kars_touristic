@@ -124,7 +124,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const changeMainImg = async (id, photoPath) => {
         if (confirm("Вы уверены, что хотите сделать эту картинку главной?")) {
             try {
-                const response = await fetch(`${server}/api/changeMainImg?id=${id}&mainImgPath=${photoPath}`, {
+                const response = await fetch(`${server}/api/changeMainImgMultidayTour?id=${id}&mainImgPath=${photoPath}`, {
                     method: 'PUT',
                 });
 

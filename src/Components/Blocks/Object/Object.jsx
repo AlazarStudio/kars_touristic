@@ -23,7 +23,7 @@ function Object({ children, pageName, ...props }) {
         <>
             <div className={classes.objects_item} style={{width: props.width}}>
                 <div className={classes.objects_item__img}>
-                    <img src={`${server}/refs/${props.regionData.photos[0]}`} alt="" />
+                    <img src={`${server}/refs/${props.regionData.mainPhoto ? props.regionData.mainPhoto : props.regionData.photos[0]}`} alt="" />
                 </div>
                 <div className={classes.objects_item__bottom}>
                     <div className={classes.objects_item__title}>
