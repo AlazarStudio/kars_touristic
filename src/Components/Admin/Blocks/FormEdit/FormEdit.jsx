@@ -32,21 +32,24 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
 
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
+        const fieldName = name.endsWith(']') ? name.slice(0, name.indexOf('[')) : name;
+        const index = name.match(/\[(\d+)\]/)?.[1];
+    
         setForm(prev => {
             const newFormState = { ...prev };
-
+    
             if (type === 'file') {
-                newFormState[name] = files.length > 1 ? [...files] : files[0];
-            } else if (name.endsWith('[]')) {
-                const fieldName = name.slice(0, -2);
-                const index = parseInt(event.target.dataset.index, 10);
-                const updatedArray = [...(prev[fieldName] || [])];
-                updatedArray[index] = value;
-                newFormState[fieldName] = updatedArray;
+                newFormState[fieldName] = files.length > 1 ? [...files] : files[0];
+            } else if (index !== undefined) {
+                if (!Array.isArray(newFormState[fieldName])) {
+                    newFormState[fieldName] = [];
+                }
+                const itemFieldName = name.slice(name.indexOf(']') + 2);
+                newFormState[fieldName][index] = { ...newFormState[fieldName][index], [itemFieldName]: value };
             } else {
                 newFormState[name] = value;
             }
-
+    
             return newFormState;
         });
     };
@@ -62,6 +65,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
         displayMessage('Данные успешно добавлены');
         setTimeout(() => setShowMessage(false), 5000);
         resetAll && resetAll();
+        
     };
 
     const handleSubmit = async (event) => {
@@ -70,31 +74,43 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             onSubmit(form);
             return;
         }
-
+    
         let urlAdd = '';
         const formData = new FormData();
-
-        // Добавляем существующие данные из формы
-        Object.entries(form).forEach(([key, value]) => {
-            if (Array.isArray(value)) {
-                value.forEach(item => formData.append(key, item));
-            } else {
-                formData.append(key, value);
-            }
-        });
-
+    
+        const appendFormData = (data, rootName = '') => {
+            Object.entries(data).forEach(([key, value]) => {
+                const formKey = rootName ? `${rootName}[${key}]` : key;
+                if (Array.isArray(value)) {
+                    value.forEach((item, index) => {
+                        if (typeof item === 'object' && item !== null) {
+                            appendFormData(item, `${formKey}[${index}]`);
+                        } else {
+                            formData.append(`${formKey}[${index}]`, item);
+                        }
+                    });
+                } else if (typeof value === 'object' && value !== null) {
+                    appendFormData(value, formKey);
+                } else {
+                    formData.append(formKey, value);
+                }
+            });
+        };
+    
+        appendFormData(form);
+    
         // Добавляем новые фотографии
         newPhotos.forEach(photo => {
             formData.append('photos', photo);
         });
-
+    
         if (type === 'query') {
             urlAdd = '?';
             Object.keys(form).forEach(key => {
                 urlAdd += `${encodeURIComponent(key)}=${encodeURIComponent(form[key])}&`;
             });
         }
-
+    
         try {
             const response = await axios({
                 method: method,
@@ -102,6 +118,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
+    
             fetchRegions?.();
             resetForm();
             displayMessage('Данные успешно добавлены');
@@ -112,6 +129,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             displayMessage('Ошибка при добавлении данных');
         }
     };
+    
 
 
     const childrenWithProps = React.Children.map(children, child =>

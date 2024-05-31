@@ -1,31 +1,30 @@
 import React, { useState } from "react";
 import classes from './AddHotels.module.css';
 import Form from "../../Form/Form";
-
 import server from '../../../../../serverConfig';
 
 function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
-    const [places, setPlaces] = useState(['']);
+    const [items, setItems] = useState([{ title: '', description: '' }]);
     const [checklists, setChecklists] = useState(['']);
     const [days, setDays] = useState(['']);
     const [photos, setPhotos] = useState([]);
 
-    const handleAddPlace = () => setPlaces([...places, '']);
+    const handleAddItem = () => setItems([...items, { title: '', description: '' }]);
     const handleAddChecklist = () => setChecklists([...checklists, '']);
     const handleAddDay = () => setDays([...days, '']);
     const handleFileChange = (event) => setPhotos([...photos, ...Array.from(event.target.files)]);
 
     const resetAll = () => {
-        setPlaces(['']);
+        setItems([{ title: '', description: '' }]);
         setChecklists(['']);
         setDays(['']);
         setPhotos([]);
     };
 
-    const handlePlaceChange = (index, event) => {
-        const newPlaces = [...places];
-        newPlaces[index] = event.target.value;
-        setPlaces(newPlaces);
+    const handleItemChange = (index, field, value) => {
+        const newItems = [...items];
+        newItems[index][field] = value;
+        setItems(newItems);
     };
 
     const handleChecklistChange = (index, event) => {
@@ -44,8 +43,8 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
         return array.filter((item, i) => i !== index);
     }
 
-    const handleRemovePlace = index => {
-        setPlaces(current => removeItemFromArray(current, index));
+    const handleRemoveItem = index => {
+        setItems(current => removeItemFromArray(current, index));
     };
 
     const handleRemoveChecklist = index => {
@@ -62,7 +61,7 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
 
     return (
         <div className={classes.addData}>
-            <div className={classes.addData_title}>ДОБАВИТЬ Отель</div> 
+            <div className={classes.addData_title}>ДОБАВИТЬ Отель</div>
 
             <Form actionUrl={`${server}/api/addHotels`} method="post" needNavigate={true} resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
                 <label className={classes.addData_step}>Шаг 1</label>
@@ -81,42 +80,49 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
                 <label>Дополнительная информация</label>
                 <textarea name="moreInfo" type="text" placeholder="Дополнительная информация" required ></textarea>
 
-
                 <label className={classes.addData_step}>Шаг 2</label>
                 <label>Загрузите фотографии для галереи</label>
                 <input
                     type="file"
                     name="galery"
-                    className={classes.noBorder}
+                    className={classes.noBorder} 
                     multiple
                     onChange={handleFileChange}
                     required
                 />
 
-                {/* Третий этап - Места */}
                 <label className={classes.addData_step}>
                     Шаг 3 (Удобства)
-                    <div className={classes.addData_addButtonElements} type="button" onClick={handleAddPlace}>+</div>
+                    <div className={classes.addData_addButtonElements} type="button" onClick={handleAddItem}>+</div>
                 </label>
-                {places.map((place, index) => (
+                {items.map((item, index) => (
                     <div key={index} className={classes.addData_blockAddData}>
                         <label>Удобство {index + 1}</label>
                         <div className={classes.add_remove_btn}>
-                            <input
-                                type="text"
-                                name={`items[]`}
-                                data-index={index}
-                                placeholder={`Удобство ${index + 1}`}
-                                value={place}
-                                onChange={(event) => handlePlaceChange(index, event)}
-                                required
-                            />
-                            <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemovePlace(index)}>-</div>
+                            <div className={classes.add_moreData}>
+                                <input
+                                    type="text"
+                                    name={`items[${index}][title]`}
+                                    data-index={index}
+                                    placeholder={`Название удобства ${index + 1}`}
+                                    value={item.title}
+                                    onChange={(event) => handleItemChange(index, 'title', event.target.value)}
+                                    required
+                                />
+                                <textarea
+                                    name={`items[${index}][description]`}
+                                    data-index={index}
+                                    placeholder={`Описание удобства ${index + 1}`}
+                                    value={item.description}
+                                    onChange={(event) => handleItemChange(index, 'description', event.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveItem(index)}>-</div>
                         </div>
                     </div>
                 ))}
 
-                {/* Четвертый этап - Чек-листы */}
                 <label className={classes.addData_step}>
                     Шаг 4 (Ссылки на соц сети)
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddChecklist}>+</div>
@@ -127,7 +133,7 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
                         <div className={classes.add_remove_btn}>
                             <input
                                 type="text"
-                                name={`links[]`}
+                                name={`links[${index}]`}
                                 data-index={index}
                                 placeholder={`Ссылка на соц сеть ${index + 1}`}
                                 value={checklist}

@@ -100,6 +100,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
+            
             fetchRegions && fetchRegions();
             onSuccess && onSuccess();
             resetForm();
@@ -129,7 +130,6 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
         }
         return child;
     });
-
 
     return (
         <>
