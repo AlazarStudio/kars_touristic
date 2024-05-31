@@ -18,7 +18,11 @@ function Tabs({ children, regionName, requestType, tableName, pageName, ...props
     const fetchData = () => {
         fetch(`${server}/api/${requestType}`)
             .then(response => response.json())
-            .then(data => setFilteredObjects(data[tableName]))
+            // .then(data => setFilteredObjects(data[tableName]))
+            .then(data => {
+                const sortedTours = data[tableName].sort((a, b) => a.order - b.order);
+                setFilteredObjects(sortedTours);
+            })
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
     };
 
