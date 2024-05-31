@@ -4,7 +4,7 @@ import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import H2 from "../../Standart/H2/H2";
 import Feedback from "../Feedback/Feedback";
-import Slider from "../Slider/Slider";
+import SliderHotel from "../SliderHotel/SliderHotel";
 import HotelNumber from "../HotelNumber/HotelNumber";
 
 function Hotels({ children, ...props }) {
@@ -140,7 +140,7 @@ function Hotels({ children, ...props }) {
                         <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
                     </CenterBlock>
 
-                    <Slider info={info} boxShadow={'none'} loop={true} />
+                    <SliderHotel info={info} boxShadow={'none'} loop={true} />
 
                     <CenterBlock>
                         <H2 text_transform="uppercase" font_size="36px">НОМЕРА</H2>

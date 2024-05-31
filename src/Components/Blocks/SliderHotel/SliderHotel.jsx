@@ -1,9 +1,9 @@
 import React from "react";
-import classes from './Slider.module.css';
+import classes from './SliderHotel.module.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 
-function Slider({ children, ...props }) {
+function SliderHotel({ children, ...props }) {
     function parseHTML(htmlString) {
         const domParser = new DOMParser();
         const parsedDocument = domParser.parseFromString(htmlString, 'text/html');
@@ -40,7 +40,7 @@ function Slider({ children, ...props }) {
                         {props.info.map((item, index) => (
                             <SwiperSlide key={index}>
                                 <div className={classes.tourInfo_slide}>
-                                    {item ? <div className={classes.tourInfo_slide__title}>{item}</div> : null}
+                                    {/* {item ? <div className={classes.tourInfo_slide__title}>{item}</div> : null} */}
                                     {item.text ? <div className={classes.tourInfo_slide__desc}>{parseHTML(item.text)}</div> : null}
                                     {item.img ? <div className={classes.tourInfo_slide__img}><img src={`/${item.img}`} alt="" /></div> : null}
                                 </div>
@@ -53,4 +53,4 @@ function Slider({ children, ...props }) {
     );
 }
 
-export default Slider;
+export default SliderHotel;
