@@ -61,6 +61,32 @@ function Admin_Page({ children, ...props }) {
     const isActive = (sectionName) => boldName === sectionName ? `${classes.boldText}` : '';
     const isActiveEdit = (sectionName) => id === sectionName ? `${classes.boldText}` : '';
 
+    async function handleFormSuccess() {
+        try {
+            const response = await fetch(`${server}/api/getRegions`);
+            const data = await response.json();
+            setRegions(data.regions);
+        } catch (error) {
+            console.error("Error fetching Region info:", error);
+        }
+    }
+
+    const deleteElement = async (id) => {
+        if (confirm("Вы уверены, что хотите удалить регион?")) {
+            try {
+                await fetch(`${server}/api/deleteRegion/${id}`, {
+                    method: 'DELETE'
+                });
+                // Обновим состояние после удаления элемента
+                setRegions(prevMembers => prevMembers.filter(member => member.id !== id));
+            } catch (error) {
+                console.error('Ошибка при удалении сотрудника:', error);
+            }
+
+            handleFormSuccess()
+        }
+    };
+
     return (
         <>
             <div className={classes.admin}>
@@ -87,14 +113,17 @@ function Admin_Page({ children, ...props }) {
                                     <Link to={'/admin/addRegion'} className={`${classes.admin_data__nav___item____subItem} ${isActive('addRegion')}`} onClick={() => setActiveTab('addRegion')}>
                                         + Добавить регион
                                     </Link>
+
                                     {regions.map(region => (
-                                        <Link to={`/admin/edit/${region.link}`}
-                                            className={`${classes.admin_data__nav___item____subItem} ${isActive(region.link)}`}
-                                            key={region._id}
-                                            onClick={() => setActiveTab('editRegion')}
-                                        >
-                                            {region.title}
-                                        </Link>
+                                        <div className={classes.elemBlock} key={region._id}>
+                                            <Link to={`/admin/edit/${region.link}`}
+                                                className={`${classes.admin_data__nav___item____subItem} ${isActive(region.link)}`}
+                                                onClick={() => setActiveTab('editRegion')}
+                                            >
+                                                {region.title}
+                                            </Link>
+                                            <img src="/delete_region.png" alt="" onClick={() => deleteElement(region._id)} />
+                                        </div>
                                     ))}
                                 </div>
                             )}
@@ -142,21 +171,21 @@ function Admin_Page({ children, ...props }) {
                         {activeTab === 'editRegion' && <EditRegion />}
 
                         {/* Добавить О нас */}
-                        {activeTab === 'addAboutCompany' && <AddAboutCompany/>}
+                        {activeTab === 'addAboutCompany' && <AddAboutCompany />}
                         {activeTab === 'addOurTeam' && <AddOurTeam />}
-                        {activeTab === 'addOurMission' && <AddOurMission/>}
+                        {activeTab === 'addOurMission' && <AddOurMission />}
 
                         {/* Добавить Транфер */}
-                        {activeTab === 'addTransfer' && <AddTransfer/>}
+                        {activeTab === 'addTransfer' && <AddTransfer />}
 
                         {/* Добавить FAQ */}
                         {activeTab === 'addFAQ' && <AddFAQ />}
 
                         {/* Добавить Контакты */}
-                        {activeTab === 'addContacts' && <AddContacts/>}
+                        {activeTab === 'addContacts' && <AddContacts />}
 
                         {/* Добавить Турагентам */}
-                        {activeTab === 'addTuragent' && <AddTuragent/>}
+                        {activeTab === 'addTuragent' && <AddTuragent />}
                     </div>
                 </div>
             </div>

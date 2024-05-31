@@ -78,7 +78,8 @@
     box-shadow: 0px 4px 24px 0px #B4B4B440;
     padding: 35px 40px;
     border-radius: 20px;
-    width: 450px;
+    width: 400px;
+    min-width: 400px;
     max-height: 745px;
 }
 
@@ -125,4 +126,15 @@
 
 .boldText{
     font-weight: 600;
+}
+
+.elemBlock{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.elemBlock img{
+    width: 12px;
 }
