@@ -23,7 +23,7 @@ function Main({ children, ...props }) {
         <>
             <div className={classes.main}>
                 <div className={classes.main_title}>Организуем ваш отдых на Кавказе</div>
-                <div className={classes.main_desc}>Подберем индивидуальный тур с учетом ваших пожеланий</div>
+                {/* <div className={classes.main_desc}>Подберем индивидуальный тур с учетом ваших пожеланий</div> */}
                 <div className={classes.main_blocks}>
                     {
                         regions.map((item, index) => (
