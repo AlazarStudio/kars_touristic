@@ -43,8 +43,12 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                 <div className={classes.multidayTours_data__tour___info____title}>{tour.title}</div>
             </div>
             <div className={classes.multidayTours_data__tour___btns}>
-                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(tour._id)}>Удалить</div>
-                <Link to={`editHotel/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</Link>
+                <Link to={`editHotel/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>
+                    <img src="/edit.png" alt="" />
+                </Link>
+                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(tour._id)}>
+                    <img src="/delete.png" alt="" />
+                </div>
             </div>
         </div>
     );

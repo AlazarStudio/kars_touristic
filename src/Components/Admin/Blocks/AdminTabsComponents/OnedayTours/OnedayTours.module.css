@@ -69,6 +69,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    position: relative;
 }
 
 .multidayTours_data__tour___img {
@@ -102,33 +103,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 .multidayTours_data__tour___btns____item {
-    width: 50%;
-    padding: 12px 20px;
-    border: 1px solid var(--black_color);
-    color: var(--black_color);
-    border-radius: 30px;
+    width: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
 }
 
-.multidayTours_data__tour___btns____item:hover{
-    background-color: var(--black_color);
-    color: #fff;
-}
-
-.deleteBtn:hover{
-    border: 1px solid #fa1919;
-    background-color: #fa1919;
-    color: #fff;
+.multidayTours_data__tour___btns____item img{
+    width: 100%;
 }
