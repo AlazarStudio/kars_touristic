@@ -37,7 +37,7 @@ function Tour({ tour, index, moveTour, deleteElement }) {
             style={{ opacity: isDragging ? 0.5 : 1 }}
         >
             <div className={classes.multidayTours_data__tour___img}>
-                <img src={`${server}/refs/${tour.photos[0]}`} alt="" />
+                <img src={`${server}/refs/${tour.mainPhoto ? tour.mainPhoto : tour.photos[0]}`} alt="" />
             </div>
             <div className={classes.multidayTours_data__tour___info}>
                 <div className={classes.multidayTours_data__tour___info____title}>{tour.tourTitle}</div>
@@ -88,7 +88,6 @@ function MultidayTours({ children, title, type, ...props }) {
             .then(response => response.json())
             .catch(error => console.error('Error updating order:', error));
     };
-
 
     const deleteElement = (id) => {
         fetch(`${server}/api/deleteMultidayTour/${id}`, {

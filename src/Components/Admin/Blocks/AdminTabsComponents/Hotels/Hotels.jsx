@@ -32,58 +32,6 @@ function Hotels({ children, title, type, ...props }) {
                                 <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
                             </div>
                         </div>
-
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
-                            </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
-
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
-                            </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
-
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
-                            </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
-
-                        <div className={classes.multidayTours_data__tour}>
-                            <div className={classes.multidayTours_data__tour___img}>
-                                <img src="/object_1.png" alt="" />
-                            </div>
-                            <div className={classes.multidayTours_data__tour___info}>
-                                <div className={classes.multidayTours_data__tour___info____title}>«Нoвогодняя сказка Кавказа»</div>
-                            </div>
-                            <div className={classes.multidayTours_data__tour___btns}>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`}>Удалить</div>
-                                <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>Редактировать</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 :

@@ -117,3 +117,23 @@
     justify-content: center;
     cursor: pointer;
 }
+
+.imgBlock_checked{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.imgBlock__item:hover .imgBlock_checked{
+    opacity: 1;
+}
+
+.imgBlock_checked_show{
+    opacity: 1;
+}

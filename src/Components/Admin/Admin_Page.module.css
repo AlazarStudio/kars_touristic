@@ -63,7 +63,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    gap: 60px;
+    gap: 50px;
     align-items: flex-start; 
 }
 

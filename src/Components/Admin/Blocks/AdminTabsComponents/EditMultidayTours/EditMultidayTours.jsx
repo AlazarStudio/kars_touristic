@@ -83,7 +83,6 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const [photosToDelete, setPhotosToDelete] = useState([]);
 
     const handleRemovePhoto = (index, photo) => {
-
         if (confirm("Вы уверены, что хотите удалить картинку?")) {
             const updatedPhotos = loadedPhotos.filter((_, i) => i !== index);
             setLoadedPhotos(updatedPhotos);
@@ -103,7 +102,6 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         } 
     };
 
-
     const updatePhotosOnServer = async (id, photos, photosToDelete) => {
         const formData = new FormData();
 
@@ -121,6 +119,23 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         } catch (error) {
             console.error('Error updating photos', error);
         }
+    };
+
+    const changeMainImg = async (id, photoPath) => {
+        if (confirm("Вы уверены, что хотите сделать эту картинку главной?")) {
+            try {
+                const response = await fetch(`${server}/api/changeMainImg?id=${id}&mainImgPath=${photoPath}`, {
+                    method: 'PUT',
+                });
+
+                setSelectedTour(prevState => ({
+                    ...prevState,
+                    mainPhoto: photoPath
+                }));
+            } catch (error) {
+                console.error('Error updating photos', error);
+            }
+        } 
     };
 
 
@@ -163,6 +178,9 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                             <img src={imgUrl + photo} alt="" />
                             <div className={classes.imgBlock_close} onClick={() => handleRemovePhoto(index, photo)}>
                                 <img src="/delete.png" alt="Delete" />
+                            </div>
+                            <div className={`${classes.imgBlock_checked} ${(selectedTour.mainPhoto == photo) ? classes.imgBlock_checked_show : null}`} onClick={() => changeMainImg(idToEdit, photo)}>
+                                <img src="/checked.png" alt="Сделать главной" />
                             </div>
                         </div>
                     ))}
