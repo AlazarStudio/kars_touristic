@@ -58,7 +58,10 @@ function MultidayTours({ children, title, type, ...props }) {
     const response = () => {
         fetch(`${server}/api/getMultidayTours?region=${title}&filter='-'`)
             .then(response => response.json())
-            .then(data => setTours(data.multidayTour))
+            .then(data => {
+                const sortedTours = data.multidayTour.sort((a, b) => a.order - b.order);
+                setTours(sortedTours);
+            })
             .catch(error => console.error('Ошибка:', error));
     };
 
@@ -69,7 +72,23 @@ function MultidayTours({ children, title, type, ...props }) {
         const [movedTour] = updatedTours.splice(fromIndex, 1);
         updatedTours.splice(toIndex, 0, movedTour);
         setTours(updatedTours);
+
+        saveOrder(updatedTours);
     };
+
+    const saveOrder = (updatedTours) => {
+        const orderedIds = updatedTours.map(tour => tour._id);
+        fetch(`${server}/api/updateMultidayTourOrder`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ orderedIds }),
+        })
+            .then(response => response.json())
+            .catch(error => console.error('Error updating order:', error));
+    };
+
 
     const deleteElement = (id) => {
         fetch(`${server}/api/deleteMultidayTour/${id}`, {

@@ -58,7 +58,10 @@ function OnedayTours({ children, title, type, ...props }) {
     const response = () => {
         fetch(`${server}/api/getOnedayTours?region=${title}&filter='-'`)
             .then(response => response.json())
-            .then(data => setTours(data.onedayTour))
+            .then(data => {
+                const sortedTours = data.onedayTour.sort((a, b) => a.order - b.order);
+                setTours(sortedTours);
+            })
             .catch(error => console.error('Ошибка:', error));
     };
 
@@ -69,6 +72,21 @@ function OnedayTours({ children, title, type, ...props }) {
         const [movedTour] = updatedTours.splice(fromIndex, 1);
         updatedTours.splice(toIndex, 0, movedTour);
         setTours(updatedTours);
+
+        saveOrder(updatedTours);
+    };
+
+    const saveOrder = (updatedTours) => {
+        const orderedIds = updatedTours.map(tour => tour._id);
+        fetch(`${server}/api/updateOnedayTourOrder`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ orderedIds }),
+        })
+            .then(response => response.json())
+            .catch(error => console.error('Error updating order:', error));
     };
 
     function deleteElement(id) {
