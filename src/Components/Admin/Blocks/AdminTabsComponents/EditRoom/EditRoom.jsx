@@ -14,6 +14,7 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
     const [selectedRoom, setSelectedTour] = useState({
         title: '',
         description: '',
+        places: '',
         square: '',
         bed: '',
         additionally: '',
@@ -24,8 +25,7 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
         inRoom: [],
         accessories: [],
         mainPhoto: '',
-        galery: [],
-        order: 0
+        galery: []
     });
 
     const [loadedPhotos, setLoadedPhotos] = useState([]);
@@ -146,6 +146,9 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
 
                 <label>Название </label>
                 <input name="title" type="text" placeholder="Название" value={selectedRoom.title} />
+                
+                <label>Количество мест</label>
+                <input name="places" type="text" placeholder="Количество мест" value={selectedRoom.places} />
 
                 <label>Описание</label>
                 <textarea name="description" type="text" placeholder="Описание" value={selectedRoom.description} ></textarea>

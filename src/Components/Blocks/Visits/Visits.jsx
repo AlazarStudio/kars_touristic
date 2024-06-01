@@ -79,13 +79,13 @@ function Visits({ children, ...props }) {
                         <H2 text_transform="uppercase" font_size="36px">Туры</H2>
                     </CenterBlock>
 
-                    <div className={classes.similar}>
+                    {/* <div className={classes.similar}>
                         {
                             tours.map((item, index) => (
                                 <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} link={item.link} placeLink={item.placeLink} />
                             ))
                         }
-                    </div>
+                    </div> */}
 
                     <CenterBlock>
                         <H2 text_transform="uppercase" font_size="36px">ГОРА ЭЛЬБРУС</H2>
@@ -126,7 +126,7 @@ function Visits({ children, ...props }) {
                         <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
                     </CenterBlock>
 
-                    <Slider info={info} boxShadow={'none'} loop={true} />
+                    {/* <Slider info={info} boxShadow={'none'} loop={true} /> */}
                 </WidthBlock>
 
                 <Map

@@ -61,6 +61,9 @@ function AddRoom({ children, activeTab, setIsDirty, region, onTourAdded, ...prop
                 <label>Название номера</label>
                 <input name="title" type="text" placeholder="Название номера" required />
 
+                <label>Количество мест</label>
+                <input name="places" type="text" placeholder="Количество мест" required />
+
                 <label>Описание номера</label>
                 <textarea name="description" type="text" placeholder="Описание номера" required ></textarea>
 
