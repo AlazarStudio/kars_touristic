@@ -4,6 +4,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import server from '../../../../../serverConfig';
 import classes from './ShowRooms.module.css';
 import { Link, useParams } from 'react-router-dom';
+import EditRoom from '../EditRoom/EditRoom';
 
 const ItemTypes = {
     ROOM: 'room',
@@ -132,11 +133,11 @@ function ShowRooms({ hotelId, region, type }) {
                 </DndProvider>
                 :
                 <>
-                    <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
+                    <div className={`${classes.multidayTours_back}`}>
                         <Link to={`/admin/edit/${region}/${type}/showRooms/${hotelId}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                     </div>
 
-                    изменить номер
+                    <EditRoom region={region} onTourAdded={response}/>
                 </>
             }
         </>

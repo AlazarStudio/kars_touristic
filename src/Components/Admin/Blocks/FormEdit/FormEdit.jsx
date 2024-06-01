@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FormEdit.module.css';
 
-function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, newPhotos }) {
+function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, newPhotos, hotelId }) {
     let regionName = useParams().title;
     let regionTypeData = useParams().type;
 
@@ -123,7 +123,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             resetForm();
             displayMessage('Данные успешно добавлены');
             onTourAdded?.();
-            needNavigate ? navigate(`/admin/edit/${regionName}/${regionTypeData}/`, { replace: true }) : null;
+            needNavigate ? navigate(`/admin/edit/${regionName}/${regionTypeData}/${hotelId ? 'showRooms/' + hotelId : ''}`, { replace: true }) : null;
         } catch (error) {
             console.error(error);
             displayMessage('Ошибка при добавлении данных');
