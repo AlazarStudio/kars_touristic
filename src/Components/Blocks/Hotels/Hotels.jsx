@@ -27,31 +27,19 @@ function Hotels({ children, ...props }) {
         fetchHotel();
     }, []);
 
-    const numbers = [
-        {
-            img: 'hotel_number_1.png',
-            title: 'Двухместный полулюкс (двуспальный)',
-            places: 'до 2 мест',
-            size: '18 м²',
-            link: "dvuhmestnyj_polulyuks_(dvuspalnyj)"
-        },
-        {
-            img: 'hotel_number_2.png',
-            title: 'Двухместный номер с видом',
-            places: 'до 2 мест',
-            size: '18 м²',
-            link: 'dvuhmestnyj_nomer_s_vidom'
-        },
-        {
-            img: 'hotel_number_3.png',
-            title: 'Двухместный полулюкс 1 (двуспальный)',
-            places: 'до 2 мест',
-            size: '18 м²',
-            link: 'dvuhmestnyj_polulyuks_1_(dvuspalnyj)'
-        },
-    ]
+    const [rooms, setRooms] = useState([]);
 
-    function getStars (number) {
+    useEffect(() => {
+        fetch(`${server}/api/getRooms?hotelId=${id}`)
+            .then(response => response.json())
+            .then(data => {
+                const sortedTours = data.rooms.sort((a, b) => a.order - b.order);
+                setRooms(sortedTours);
+            })
+            .catch(error => console.error('Ошибка:', error));
+    }, [id]);
+
+    function getStars(number) {
         let stars = '';
         for (let i = 0; i < number; i++) {
             stars += `<img src="/star.png" alt="" />`;
@@ -79,16 +67,18 @@ function Hotels({ children, ...props }) {
                     <CenterBlock>
                         <WidthBlock>
                             <div className={classes.hotelItems}>
-                                <div className={classes.hotelItems_elem}>
-                                    <div className={classes.hotelItems_elem__img}>
-                                        <img src="/calendar.png" alt="" />
+                                {hotel.items.map((item, index) => (
+                                    <div key={index} className={classes.hotelItems_elem}>
+                                        <div className={classes.hotelItems_elem__img}>
+                                            <img src="/calendar.png" alt="" />
+                                        </div>
+                                        <div className={classes.hotelItems_elem__title}>{item.title}</div>
+                                        <div className={classes.hotelItems_elem__desc}>{item.description}</div>
                                     </div>
-                                    <div className={classes.hotelItems_elem__title}>365 дней</div>
-                                    <div className={classes.hotelItems_elem__desc}>
-                                        Мы работает для Вас круглый год. Зимой, летом, весной, осенью
-                                    </div>
-                                </div>
-                                <div className={classes.hotelItems_elem}>
+                                ))}
+
+
+                                {/* <div className={classes.hotelItems_elem}>
                                     <div className={classes.hotelItems_elem__img}>
                                         <img src="/nomers.png" alt="" />
                                     </div>
@@ -108,7 +98,7 @@ function Hotels({ children, ...props }) {
                                     </div>
                                     <div className={classes.hotelItems_elem__title}>Отличный завтрак</div>
                                     <div className={classes.hotelItems_elem__desc}>Уже включен в стоимость проживания в нашей гостинице</div>
-                                </div>
+                                </div> */}
                             </div>
                         </WidthBlock>
                     </CenterBlock>
@@ -141,7 +131,7 @@ function Hotels({ children, ...props }) {
                                 <H2 text_transform="uppercase" font_size="36px">НОМЕРА</H2>
                             </CenterBlock>
 
-                            <HotelNumber numbers={numbers} />
+                            <HotelNumber numbers={rooms} />
 
                             <CenterBlock>
                                 <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
@@ -150,15 +140,18 @@ function Hotels({ children, ...props }) {
                             <Feedback />
 
                             <div className={classes.links}>
-                                <a href="#" target="_blank" className={classes.links_item}>
-                                    <img src="/tg_white.png" alt="" />
-                                </a>
+                                {hotel.links.map((item, index) => (
+                                    <a key={index} href={`https://${item}`} target="_blank" className={classes.links_item}>
+                                        <img src="/tg_white.png" alt="" />
+                                    </a>
+                                ))}
+{/* 
                                 <a href="#" target="_blank" className={classes.links_item}>
                                     <img src="/vk_white.png" alt="" />
                                 </a>
                                 <a href="#" target="_blank" className={classes.links_item}>
                                     <img src="/wa_white.png" alt="" />
-                                </a>
+                                </a> */}
                             </div>
                         </WidthBlock>
                     </CenterBlock>

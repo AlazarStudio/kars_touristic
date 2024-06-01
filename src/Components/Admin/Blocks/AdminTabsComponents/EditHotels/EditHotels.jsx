@@ -136,7 +136,7 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...p
 
     return (
         <div className={classes.addData}>
-            <div className={classes.addData_title}>Изменить Многодневный тур</div>
+            <div className={classes.addData_title}>Изменить Отель</div>
 
             <FormEdit actionUrl={`${server}/api/updateOneHotel/${idToEdit}`} method="put" newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
                 <label className={classes.addData_step}>Шаг 1</label>
