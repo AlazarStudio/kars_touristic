@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import server from '../../../serverConfig'
 
 function Object({ children, pageName, titleObject, ...props }) {
-    function truncateString(str, maxLength) {
-        if (str.length > maxLength) {
-            return str.substring(0, maxLength) + '...';
-        }
-        return str;
-    }
+    // function truncateString(str, maxLength) {
+    //     if (str.length > maxLength) {
+    //         return str.substring(0, maxLength) + '...';
+    //     }
+    //     return str;
+    // }
 
     function toTop() {
         window.scrollTo({
@@ -27,7 +27,8 @@ function Object({ children, pageName, titleObject, ...props }) {
                 </div>
                 <div className={classes.objects_item__bottom}>
                     <div className={classes.objects_item__title}>
-                        {truncateString(props.regionData[`${titleObject}`], 33)}
+                        {/* {truncateString(, 33)} */}
+                        {props.regionData[`${titleObject}`]}
                     </div>
                     <div className={classes.objects_item__price}>
                         <img src={`/${props.regionData.priceImg}`} alt="" />

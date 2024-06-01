@@ -81,7 +81,10 @@ function MultidayTours({ children, title, type, ...props }) {
     };
 
     const saveOrder = (updatedTours) => {
+
         const orderedIds = updatedTours.map(tour => tour._id);
+        console.log(orderedIds);
+        
         fetch(`${server}/api/updateMultidayTourOrder`, {
             method: 'POST',
             headers: {
@@ -124,7 +127,7 @@ function MultidayTours({ children, title, type, ...props }) {
                                     index={index}
                                     tour={tour}
                                     moveTour={moveTour}
-                                    deleteElement={deleteElement} 
+                                    deleteElement={deleteElement}
                                 />
                             ))}
                         </div>
