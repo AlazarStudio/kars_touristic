@@ -8,5 +8,5 @@
 .objects {
     display: flex;
     flex-wrap: wrap;
-    gap: 26px;
+    gap: 50px 26px;
 }

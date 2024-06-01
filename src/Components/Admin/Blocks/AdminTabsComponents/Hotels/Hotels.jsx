@@ -5,7 +5,9 @@ import classes from './Hotels.module.css';
 import server from '../../../../../serverConfig';
 import { Link, useParams } from "react-router-dom";
 import AddHotels from "../AddHotels/AddHotels";
+import AddRoom from "../AddRoom/AddRoom";
 import EditHotels from "../EditHotels/EditHotels";
+import ShowRooms from "../ShowRooms/ShowRooms";
 
 const ItemTypes = {
     TOUR: 'tour',
@@ -54,7 +56,7 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                 <Link to={`addRoom/${tour._id}`} className={classes.addRoom}>
                     Добавить номер
                 </Link>
-                <Link to={`showRooms/`} className={classes.addRoom}>
+                <Link to={`showRooms/${tour._id}`} className={classes.addRoom}>
                     Показать все номера
                 </Link>
             </div>
@@ -63,7 +65,8 @@ function Tour({ tour, index, moveTour, deleteElement }) {
 }
 
 function Hotels({ children, title, type, ...props }) {
-    const { add } = useParams();
+    const { add, idToEdit, roomId } = useParams();
+
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState([]);
 
@@ -156,21 +159,20 @@ function Hotels({ children, title, type, ...props }) {
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            Добавление комнаты
+                            <AddRoom region={title} onTourAdded={response} />
                         </>
                         : null
                     }
 
                     {add === 'showRooms' ?
                         <>
-                            <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                            <div className={classes.multidayTours}>
+                                <ShowRooms hotelId={idToEdit} region={title} type={type}/>
                             </div>
-
-                            Все комнаты
                         </>
                         : null
                     }
+
 
                     {add === 'editHotel' ?
                         <>
