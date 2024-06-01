@@ -50,6 +50,14 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                     <img src="/delete.png" alt="" />
                 </div>
             </div>
+            <div className={classes.multidayTours_data__tour___btnsInfo}>
+                <Link to={`addRoom/${tour._id}`} className={classes.addRoom}>
+                    Добавить номер
+                </Link>
+                <Link to={`showRooms/`} className={classes.addRoom}>
+                    Показать все номера
+                </Link>
+            </div>
         </div>
     );
 }
@@ -139,7 +147,32 @@ function Hotels({ children, title, type, ...props }) {
 
                             <AddHotels region={title} onTourAdded={response} />
                         </>
-                        :
+                        : null
+                    }
+
+                    {add === 'addRoom' ?
+                        <>
+                            <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
+                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                            </div>
+
+                            Добавление комнаты
+                        </>
+                        : null
+                    }
+
+                    {add === 'showRooms' ?
+                        <>
+                            <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
+                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                            </div>
+
+                            Все комнаты
+                        </>
+                        : null
+                    }
+
+                    {add === 'editHotel' ?
                         <>
                             <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
@@ -147,6 +180,7 @@ function Hotels({ children, title, type, ...props }) {
 
                             <EditHotels region={title} onTourAdded={response} />
                         </>
+                        : null
                     }
                 </>
             }

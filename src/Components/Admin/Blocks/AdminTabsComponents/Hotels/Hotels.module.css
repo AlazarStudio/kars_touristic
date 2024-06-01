@@ -126,15 +126,18 @@
 }
 
 .addRoom{
-    width: 100%;
-    height: 50px;
+    width: 50%;
+    height: 45px;
     border: 1px solid #000;
-    border-radius: 40px;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    color: #000;
+    text-align: center;
+    font-size: 14px;
 }
 
 .addRoom:hover{
@@ -151,4 +154,11 @@
 
 .newAdded img{
     width: 100%;
+}
+
+.multidayTours_data__tour___btnsInfo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
 }
