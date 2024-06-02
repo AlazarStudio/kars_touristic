@@ -42,14 +42,14 @@
 }
 
 .tour_topInfo__left {
-    width: 40%;
+    width: 42%;
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
 .tour_topInfo__right {
-    width: 60%;
+    width: 57%;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -65,7 +65,7 @@
 
 .tour_topInfo__left___items____element {
     width: 48%;
-    height: 115px;
+    height: 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -130,7 +130,7 @@
 
 .tour_topInfo__right___img {
     width: 100%;
-    height: 455px;
+    height: 516px;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -158,7 +158,6 @@
     backdrop-filter: blur(3px);
     width: 31%;
     padding: 10px;
-    cursor: pointer;
     transition: all 0.3s ease-in-out;
 }
 
@@ -193,6 +192,14 @@
     line-height: 24px;
     color: var(--white_color);
     transition: all 0.3s ease-in-out;
+}
+.tour_topInfo__right___places____place_____title a{
+    color: var(--white_color);
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____title a{
+    color: var(--black_color);
 }
 
 .feedback {

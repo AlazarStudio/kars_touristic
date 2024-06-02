@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import classes from './Tours.module.css';
 
@@ -34,7 +34,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
 
     useEffect(() => {
         fetchTour();
-    }, []);
+    }, [id]);
 
     const [regions, setRegions] = useState([]);
 
@@ -49,6 +49,20 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
         fetchData();
     }, []);
 
+    const [places, setPlaces] = useState([]);
+
+    const fetchPlaces = () => {
+        fetch(`${server}/api/getPlaces`)
+            .then(response => response.json())
+            .then(data => setPlaces(data.places))
+            .catch(error => console.error('Ошибка при загрузке регионов:', error));
+    };
+
+    useEffect(() => {
+        fetchPlaces();
+    }, []);
+
+
     const foundRegion = regions.filter(region => region.region === tour.region);
 
     window.scrollTo({
@@ -60,7 +74,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
         <>
             {tour ?
                 <div className={classes.main}>
-                    <div className={classes.tour} style={{ backgroundImage: `url('/tour_bg.png')` }}>
+                    <div className={classes.tour} style={{ backgroundImage: `url('${server}/refs/${tour.mainPhoto}')` }}>
                         <CenterBlock>
                             <WidthBlock>
                                 <div className={classes.centerPosition}>
@@ -103,9 +117,11 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                             <div className={classes.tour_topInfo__right___img}>
                                                 <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
                                                     {tour.photos.map((item, index) => (
-                                                        <SwiperSlide key={index}>
-                                                            <img src={`${server}/refs/${item}`} alt="" />
-                                                        </SwiperSlide>
+                                                        item != tour.mainPhoto ?
+                                                            <SwiperSlide key={index}>
+                                                                <img src={`${server}/refs/${item}`} alt="" />
+                                                            </SwiperSlide>
+                                                            : null
                                                     ))}
                                                 </Swiper>
                                             </div>
@@ -122,7 +138,27 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                                             </svg>
                                                         </div>
                                                         <div className={classes.tour_topInfo__right___places____place_____title}>
-                                                            {item}
+                                                            {
+                                                                places ?
+                                                                    places.map((place, index) => {
+                                                                        const normalizedTitle = place.title.toLowerCase();
+                                                                        const normalizedItem = item.toLowerCase();
+                                                                        if (normalizedTitle.includes(normalizedItem) || normalizedItem.includes(normalizedTitle)) {
+                                                                            return (
+                                                                                <Link to={`/visits/${place._id}`} key={index}>
+                                                                                    {place.title}
+                                                                                </Link>
+                                                                            );
+                                                                        } else {
+                                                                            return (
+                                                                                <span key={index}>
+                                                                                    {item}
+                                                                                </span>
+                                                                            );
+                                                                        }
+                                                                    })
+                                                                    : null
+                                                            }
                                                         </div>
                                                     </div>
                                                 ))}
@@ -160,9 +196,11 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                         className={'similarTours'}
                                     >
                                         {foundRegion.map((item, index) => (
-                                            <SwiperSlide key={index}>
-                                                <Object width={'100%'} regionData={item} pageName={pageName} />
-                                            </SwiperSlide>
+                                            item._id != id ?
+                                                <SwiperSlide key={index}>
+                                                    <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} />
+                                                </SwiperSlide>
+                                                : null
                                         ))}
                                     </Swiper>
                                 </div>

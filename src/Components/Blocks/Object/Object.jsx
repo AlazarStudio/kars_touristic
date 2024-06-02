@@ -11,6 +11,16 @@ function Object({ children, pageName, titleObject, ...props }) {
     //     }
     //     return str;
     // }
+    let pageNameVisit = '';
+
+    if (props.regionData.days) {
+        if (props.regionData.days.length > 1) {
+            pageNameVisit = 'tours'
+        }
+        if (props.regionData.days.length <= 1) {
+            pageNameVisit = 'excursions'
+        }
+    }
 
     function toTop() {
         window.scrollTo({
@@ -21,7 +31,7 @@ function Object({ children, pageName, titleObject, ...props }) {
 
     return (
         <>
-            <div className={classes.objects_item} style={{width: props.width}}>
+            <div className={classes.objects_item} style={{ width: props.width }}>
                 <div className={classes.objects_item__img}>
                     <img src={`${server}/refs/${props.regionData.mainPhoto ? props.regionData.mainPhoto : props.regionData.photos[0]}`} alt="" />
                 </div>
@@ -34,7 +44,7 @@ function Object({ children, pageName, titleObject, ...props }) {
                         <img src={`/${props.regionData.priceImg}`} alt="" />
                         {props.cost}
                     </div>
-                    <Link to={`/${pageName}/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
+                    <Link to={`/${pageName ? pageName : pageNameVisit}/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
                 </div>
             </div>
         </>
