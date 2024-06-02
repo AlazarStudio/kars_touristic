@@ -145,7 +145,7 @@ function OnedayTours({ children, title, type, ...props }) {
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <EditOnedayTours region={title} onTourAdded={response} />
+                            <EditOnedayTours region={title} onTourAdded={response}  photoMassName={'photos'}/>
                         </>
                     }
                 </>

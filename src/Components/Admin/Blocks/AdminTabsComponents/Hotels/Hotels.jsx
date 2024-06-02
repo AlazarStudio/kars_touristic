@@ -180,7 +180,7 @@ function Hotels({ children, title, type, ...props }) {
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <EditHotels region={title} onTourAdded={response} />
+                            <EditHotels region={title} onTourAdded={response}  photoMassName={'galery'}/>
                         </>
                         : null
                     }

@@ -148,7 +148,7 @@ function MultidayTours({ children, title, type, ...props }) {
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <EditMultidayTours region={title} onTourAdded={response} />
+                            <EditMultidayTours region={title} onTourAdded={response} photoMassName={'photos'}/>
                         </>
                     }
                 </>

@@ -4,7 +4,7 @@ import classes from './EditHotels.module.css';
 import FormEdit from "../../FormEdit/FormEdit";
 import server from '../../../../../serverConfig';
 
-function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
+function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, photoMassName, ...props }) {
     const { idToEdit } = useParams();
 
     let imgUrl = `${server}/refs/`;
@@ -138,7 +138,7 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...p
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Отель</div>
 
-            <FormEdit actionUrl={`${server}/api/updateOneHotel/${idToEdit}`} method="put" newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
+            <FormEdit actionUrl={`${server}/api/updateOneHotel/${idToEdit}`} method="put" photoMassName={photoMassName} newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />

@@ -6,7 +6,7 @@ import FormEdit from "../../FormEdit/FormEdit";
 
 import server from '../../../../../serverConfig';
 
-function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpdated,onTourAdded, ...props }) {
+function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpdated, onTourAdded, photoMassName, ...props }) {
     const { idToEdit, roomId } = useParams();
 
     let imgUrl = `${server}/refs/`;
@@ -39,7 +39,7 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
             .then(data => {
                 if (data && typeof data === 'object') {
                     setSelectedTour(data);
-                    setLoadedPhotos(data.galery || []);
+                    setLoadedPhotos(data.photos || []);
                 } else {
                     console.error('Received data is not an object:', data);
                 }
@@ -86,7 +86,7 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
                 ...prevState,
                 galery: updatedPhotos
             }));
-            
+
             setPhotosToDelete(prevPhotos => {
                 const newPhotosToDelete = [photo];
 
@@ -94,7 +94,7 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
 
                 return newPhotosToDelete;
             });
-        } 
+        }
     };
 
     const updatePhotosOnServer = async (id, photos, photosToDelete) => {
@@ -130,7 +130,7 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
             } catch (error) {
                 console.error('Error updating photos', error);
             }
-        } 
+        }
     };
 
 
@@ -138,15 +138,15 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Номер отеля</div>
 
-            <FormEdit actionUrl={`${server}/api/updateOneRoom/${roomId}`} method="put" onTourAdded={onTourAdded} hotelId={idToEdit} newPhotos={newPhotos} needNavigate={true} initialValues={selectedRoom} onRoomUpdated={onRoomUpdated} setSelectedTour={setSelectedTour}>
+            <FormEdit actionUrl={`${server}/api/updateOneRoom/${roomId}`} method="put" photoMassName={photoMassName} onTourAdded={onTourAdded} hotelId={idToEdit} newPhotos={newPhotos} needNavigate={true} initialValues={selectedRoom} onRoomUpdated={onRoomUpdated} setSelectedTour={setSelectedTour}>
                 <label className={classes.addData_step}>Шаг 1</label>
-                
+
                 <input name="region" type="hidden" value={region} readOnly />
                 <input name="hotelID" type="hidden" value={hotelID} readOnly />
 
                 <label>Название </label>
                 <input name="title" type="text" placeholder="Название" value={selectedRoom.title} />
-                
+
                 <label>Количество мест</label>
                 <input name="places" type="text" placeholder="Количество мест" value={selectedRoom.places} />
 

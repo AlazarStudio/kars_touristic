@@ -70,28 +70,18 @@ function Visits({ children, ...props }) {
     return (
         <>
             <CenterBlock>
+                <div className={classes.visitMain} style={{ backgroundImage: `url(/visitMainImg.png)` }}>
+                    <WidthBlock>
+                        <CenterBlock gap={'40px'}>
+                            <H2 text_transform="uppercase" font_size="60px" color="var(--white_color)" zIndex="1">ГОРА ЭЛЬБРУС</H2>
+
+                            <H2 font_size="24px" font_weight="500" text_align="center" width="100%" margin="35px 0 0 0" color="var(--white_color)" zIndex="1">
+                                Эльбру́с (карач.-балк. Минги-Тау, кабард.-черк. Iуащхьэмахуэ) — стратовулкан на Кавказе (5642 метра над уровнем моря) — самая высокая горная вершина России и Европы при условии проведения границы между Европой и Азией по Главному Кавказскому хребту или южнее (в иных случаях высочайшей вершиной Европы считается альпийская гора Монблан). Эльбрус включён в список высочайших вершин частей света «Семь вершин».</H2>
+                        </CenterBlock>
+                    </WidthBlock>
+                </div>
+
                 <WidthBlock>
-                    <div className={classes.visitMain} style={{ backgroundImage: `url(/visitMainImg.png)` }}>
-                        <H2 text_transform="uppercase" font_size="40px" color="var(--white_color)" zIndex="1">ГОРА ЭЛЬБРУС</H2>
-                    </div>
-
-                    <CenterBlock>
-                        <H2 text_transform="uppercase" font_size="36px">Туры</H2>
-                    </CenterBlock>
-
-                    {/* <div className={classes.similar}>
-                        {
-                            tours.map((item, index) => (
-                                <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} link={item.link} placeLink={item.placeLink} />
-                            ))
-                        }
-                    </div> */}
-
-                    <CenterBlock>
-                        <H2 text_transform="uppercase" font_size="36px">ГОРА ЭЛЬБРУС</H2>
-                        <H2 font_size="16px" font_weight="400" text_align="center" width="80%" margin="35px 0 0 0">Эльбру́с (карач.-балк. Минги-Тау, кабард.-черк. Iуащхьэмахуэ) — стратовулкан на Кавказе (5642 метра над уровнем моря) — самая высокая горная вершина России и Европы при условии проведения границы между Европой и Азией по Главному Кавказскому хребту или южнее (в иных случаях высочайшей вершиной Европы считается альпийская гора Монблан). Эльбрус включён в список высочайших вершин частей света «Семь вершин».</H2>
-                    </CenterBlock>
-
                     <div className={classes.visitBlocks}>
                         <div className={classes.visitBlocks_item}>
                             <div className={classes.visitBlocks_item__img}>
@@ -123,6 +113,19 @@ function Visits({ children, ...props }) {
                     </div>
 
                     <CenterBlock>
+                        <H2 text_transform="uppercase" font_size="36px">Туры</H2>
+                    </CenterBlock>
+
+                    {/* <div className={classes.similar}>
+                        {
+                            tours.map((item, index) => (
+                                <Object key={index} img={item.img} title={item.title} priceImg={item.priceImg} price={item.price} link={item.link} placeLink={item.placeLink} />
+                            ))
+                        }
+                    </div> */}
+
+
+                    <CenterBlock>
                         <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
                     </CenterBlock>
 
@@ -130,7 +133,7 @@ function Visits({ children, ...props }) {
                 </WidthBlock>
 
                 <Map
-                    place = 'https://yandex.ru/map-widget/v1/?ll=42.479291%2C43.342236&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNTUxMjA0ODcwEmPQoNC-0YHRgdC40Y8sINCa0LDQsdCw0YDQtNC40L3Qvi3QkdCw0LvQutCw0YDRgdC60LDRjyDQoNC10YHQv9GD0LHQu9C40LrQsCwg0LPQvtGA0LAg0K3Qu9GM0LHRgNGD0YEiCg0V3SlCFVphLUI%2C&z=12.63'
+                    place='https://yandex.ru/map-widget/v1/?ll=42.479291%2C43.342236&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNTUxMjA0ODcwEmPQoNC-0YHRgdC40Y8sINCa0LDQsdCw0YDQtNC40L3Qvi3QkdCw0LvQutCw0YDRgdC60LDRjyDQoNC10YHQv9GD0LHQu9C40LrQsCwg0LPQvtGA0LAg0K3Qu9GM0LHRgNGD0YEiCg0V3SlCFVphLUI%2C&z=12.63'
                 />
             </CenterBlock>
         </>

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FormEdit.module.css';
 
-function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, newPhotos, hotelId }) {
+function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, hotelId, photoMassName }) {
     let regionName = useParams().title;
     let regionTypeData = useParams().type;
 
@@ -11,6 +11,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
     const [form, setForm] = useState(initialValues || {});
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
+    const [newPhotos, setNewPhotos] = useState([]);
     const formRef = useRef(null);
 
     useMemo(() => {
@@ -30,16 +31,24 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
         setSelectedTour(form);
     }, [form]);
 
+
     const handleChange = (event) => {
         const { name, type, files, value } = event.target;
         const fieldName = name.endsWith(']') ? name.slice(0, name.indexOf('[')) : name;
         const index = name.match(/\[(\d+)\]/)?.[1];
-    
+
         setForm(prev => {
             const newFormState = { ...prev };
-    
+
             if (type === 'file') {
-                newFormState[fieldName] = files.length > 1 ? [...files] : files[0];
+                const fileList = Array.from(files);
+                if (fileList.length > 1) {
+                    newFormState[fieldName] = fileList;
+                    setNewPhotos(prevPhotos => [...prevPhotos, ...fileList]);
+                } else {
+                    newFormState[fieldName] = fileList[0];
+                    setNewPhotos(prevPhotos => [...prevPhotos, fileList[0]]);
+                }
             } else if (index !== undefined) {
                 if (!Array.isArray(newFormState[fieldName])) {
                     newFormState[fieldName] = [];
@@ -49,13 +58,14 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             } else {
                 newFormState[name] = value;
             }
-    
+
             return newFormState;
         });
     };
 
     const resetForm = () => {
         setForm(initialValues || {});
+        setNewPhotos([]);
         if (formRef.current) {
             const fileInputs = formRef.current.querySelectorAll('input[type="file"]');
             fileInputs.forEach(input => {
@@ -65,7 +75,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
         displayMessage('Данные успешно добавлены');
         setTimeout(() => setShowMessage(false), 5000);
         resetAll && resetAll();
-        
+
     };
 
     const handleSubmit = async (event) => {
@@ -74,10 +84,10 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             onSubmit(form);
             return;
         }
-    
+
         let urlAdd = '';
         const formData = new FormData();
-    
+
         const appendFormData = (data, rootName = '') => {
             Object.entries(data).forEach(([key, value]) => {
                 const formKey = rootName ? `${rootName}[${key}]` : key;
@@ -96,21 +106,21 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
                 }
             });
         };
-    
+
         appendFormData(form);
-    
+
         // Добавляем новые фотографии
         newPhotos.forEach(photo => {
-            formData.append('photos', photo);
+            formData.append(photoMassName, photo);
         });
-    
+
         if (type === 'query') {
             urlAdd = '?';
             Object.keys(form).forEach(key => {
                 urlAdd += `${encodeURIComponent(key)}=${encodeURIComponent(form[key])}&`;
             });
         }
-    
+
         try {
             const response = await axios({
                 method: method,
@@ -118,7 +128,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-    
+
             fetchRegions?.();
             resetForm();
             displayMessage('Данные успешно добавлены');
@@ -129,8 +139,6 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             displayMessage('Ошибка при добавлении данных');
         }
     };
-    
-
 
     const childrenWithProps = React.Children.map(children, child =>
         React.isValidElement(child) ? React.cloneElement(child, {

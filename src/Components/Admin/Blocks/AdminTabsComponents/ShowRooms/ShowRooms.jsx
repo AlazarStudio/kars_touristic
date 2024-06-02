@@ -137,7 +137,7 @@ function ShowRooms({ hotelId, region, type }) {
                         <Link to={`/admin/edit/${region}/${type}/showRooms/${hotelId}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
                     </div>
 
-                    <EditRoom region={region} onTourAdded={response}/>
+                    <EditRoom region={region} onTourAdded={response} photoMassName={'photos'}/>
                 </>
             }
         </>

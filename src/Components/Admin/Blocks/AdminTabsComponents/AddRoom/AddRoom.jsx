@@ -96,7 +96,7 @@ function AddRoom({ children, activeTab, setIsDirty, region, onTourAdded, ...prop
                 <label>Загрузите фотографии для галереи</label>
                 <input
                     type="file"
-                    name="galery"
+                    name="photos"
                     className={classes.noBorder}
                     multiple
                     onChange={handleFileChange}
@@ -147,7 +147,7 @@ function AddRoom({ children, activeTab, setIsDirty, region, onTourAdded, ...prop
                     </div>
                 ))}
 
-                <button type="submit">Добавить Отель</button>
+                <button type="submit">Добавить номер отеля</button>
             </Form>
         </div>
     );

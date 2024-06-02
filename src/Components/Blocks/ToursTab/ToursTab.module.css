@@ -26,7 +26,7 @@
     border: 1px solid #8C8C8C;
     background-color: var(--white_color);
     border-radius: 60px;
-    width: 22%;
+    width: 18%;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }

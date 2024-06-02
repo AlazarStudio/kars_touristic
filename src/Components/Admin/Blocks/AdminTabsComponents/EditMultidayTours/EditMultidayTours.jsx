@@ -6,7 +6,7 @@ import FormEdit from "../../FormEdit/FormEdit";
 
 import server from '../../../../../serverConfig';
 
-function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
+function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, photoMassName, ...props }) {
     const { idToEdit } = useParams();
 
     let imgUrl = `${server}/refs/`;
@@ -143,7 +143,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>
 
-            <FormEdit actionUrl={`${server}/api/updateOneMultidayTour/${idToEdit}`} method="put" newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
+            <FormEdit actionUrl={`${server}/api/updateOneMultidayTour/${idToEdit}`} method="put" photoMassName={photoMassName} newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
