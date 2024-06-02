@@ -10,6 +10,13 @@
     font-weight: 600;
     line-height: 48px;
     text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.editTitle img{
+    width: 25px;
+    cursor: pointer;
 }
 
 .editBlocks {
