@@ -5,7 +5,7 @@ import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import Slider from "../Slider/Slider";
 import H2 from "../../Standart/H2/H2";
 import Object from "../Object/Object";
-import Map from "../Map/Map";
+import { Link } from "react-router-dom";
 
 function Visits({ children, ...props }) {
     const info = [
@@ -76,7 +76,10 @@ function Visits({ children, ...props }) {
                             <H2 text_transform="uppercase" font_size="60px" color="var(--white_color)" zIndex="1">ГОРА ЭЛЬБРУС</H2>
 
                             <H2 font_size="24px" font_weight="500" text_align="center" width="100%" margin="35px 0 0 0" color="var(--white_color)" zIndex="1">
-                                Эльбру́с (карач.-балк. Минги-Тау, кабард.-черк. Iуащхьэмахуэ) — стратовулкан на Кавказе (5642 метра над уровнем моря) — самая высокая горная вершина России и Европы при условии проведения границы между Европой и Азией по Главному Кавказскому хребту или южнее (в иных случаях высочайшей вершиной Европы считается альпийская гора Монблан). Эльбрус включён в список высочайших вершин частей света «Семь вершин».</H2>
+                                Эльбру́с (карач.-балк. Минги-Тау, кабард.-черк. Iуащхьэмахуэ) — стратовулкан на Кавказе (5642 метра над уровнем моря) — самая высокая горная вершина России и Европы при условии проведения границы между Европой и Азией по Главному Кавказскому хребту или южнее (в иных случаях высочайшей вершиной Европы считается альпийская гора Монблан). Эльбрус включён в список высочайших вершин частей света «Семь вершин».
+                            </H2>
+
+                            <Link to={'https://yandex.ru/maps/-/CDf0rGY4'} className={classes.visitButton} target="_blank" style={{zIndex: '1'}}>Показать на карте</Link>
                         </CenterBlock>
                     </WidthBlock>
                 </div>
@@ -131,10 +134,6 @@ function Visits({ children, ...props }) {
 
                     {/* <Slider info={info} boxShadow={'none'} loop={true} /> */}
                 </WidthBlock>
-
-                <Map
-                    place='https://yandex.ru/map-widget/v1/?ll=42.479291%2C43.342236&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNTUxMjA0ODcwEmPQoNC-0YHRgdC40Y8sINCa0LDQsdCw0YDQtNC40L3Qvi3QkdCw0LvQutCw0YDRgdC60LDRjyDQoNC10YHQv9GD0LHQu9C40LrQsCwg0LPQvtGA0LAg0K3Qu9GM0LHRgNGD0YEiCg0V3SlCFVphLUI%2C&z=12.63'
-                />
             </CenterBlock>
         </>
     );

@@ -1,91 +1,126 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from './AddVisits.module.css';
 import Form from "../../Form/Form";
+import server from '../../../../../serverConfig';
 
-function AddVisits({ children, activeTab, fetchRegions, setIsDirty, ...props }) {
+function AddVisits({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
+    const [items, setItems] = useState([{ title: '', description: '' }]);
+    const [checklists, setChecklists] = useState(['']);
+    const [days, setDays] = useState(['']);
+    const [photos, setPhotos] = useState([]);
+
+    const handleAddItem = () => setItems([...items, { title: '', description: '' }]);
+    const handleAddChecklist = () => setChecklists([...checklists, '']);
+    const handleAddDay = () => setDays([...days, '']);
+    const handleFileChange = (event) => setPhotos([...photos, ...Array.from(event.target.files)]);
+
+    const resetAll = () => {
+        setItems([{ title: '', description: '' }]);
+        setChecklists(['']);
+        setDays(['']);
+        setPhotos([]);
+    };
+
+    const handleItemChange = (index, field, value) => {
+        const newItems = [...items];
+        newItems[index][field] = value;
+        setItems(newItems);
+    };
+
+    const handleChecklistChange = (index, event) => {
+        const newChecklists = [...checklists];
+        newChecklists[index] = event.target.value;
+        setChecklists(newChecklists);
+    };
+
+    const handleDayChange = (index, event) => {
+        const newDays = [...days];
+        newDays[index] = event.target.value;
+        setDays(newDays);
+    };
+
+    function removeItemFromArray(array, index) {
+        return array.filter((item, i) => i !== index);
+    }
+
+    const handleRemoveItem = index => {
+        setItems(current => removeItemFromArray(current, index));
+    };
+
+    const handleRemoveChecklist = index => {
+        setChecklists(current => removeItemFromArray(current, index));
+    };
+
+    const handleRemoveDay = index => {
+        setDays(current => removeItemFromArray(current, index));
+    };
+
+    const initialValues = {
+        region
+    };
+
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Место</div>
 
-            <Form actionUrl="http://localhost:5002/api/addRegion" method="post" fetchRegions={fetchRegions} setIsDirty={setIsDirty}>
-                
-                <label className={classes.addData_step}>Первый этап</label>
+            <Form actionUrl={`${server}/api/addPlaces`} method="post" needNavigate={true} resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
+                <label className={classes.addData_step}>Шаг 1</label>
 
-                <label>Название тура</label>
-                <input name="title" type="text" placeholder="Название тура" required />
+                <div><input name="region" type="hidden" placeholder="Регион" required value={region} readOnly /></div>
 
-                <label>Cпособ передвижения</label>
-                <input name="title" type="text" placeholder="Cпособ передвижения" required />
+                <label>Название места</label>
+                <input name="title" type="text" placeholder="Название места" required />
 
-                <label>Продолжительность</label>
-                <input name="title" type="text" placeholder="Продолжительность" required />
+                <label>Описание отеля</label>
+                <textarea name="description" type="text" placeholder="Описание места" required ></textarea>
 
-                <label>Время отправления</label>
-                <input name="title" type="text" placeholder="Время отправления" required />
+                <label>Ссылка из яндекс карт на место</label>
+                <input name="mapLink" type="text" placeholder="Ссылка из яндекс карт на место" required />
 
-                <label>Тип экскурсии</label>
-                <input name="title" type="text" placeholder="Тип экскурсии" required />
+                <label className={classes.addData_step}>Шаг 2</label>
+                <label>Загрузите фотографии для галереи</label>
+                <input
+                    type="file"
+                    name="photos"
+                    className={classes.noBorder} 
+                    multiple
+                    onChange={handleFileChange}
+                    required
+                />
 
-                <label>Сложность</label>
-                <input name="title" type="text" placeholder="Сложность" required />
+                <label className={classes.addData_step}>
+                    Шаг 3 (Факты)
+                    <div className={classes.addData_addButtonElements} type="button" onClick={handleAddItem}>+</div>
+                </label>
+                {items.map((item, index) => (
+                    <div key={index} className={classes.addData_blockAddData}>
+                        <label>Факт {index + 1}</label>
+                        <div className={classes.add_remove_btn}>
+                            <div className={classes.add_moreData}>
+                                <input
+                                    type="text"
+                                    name={`placeItems[${index}][title]`}
+                                    data-index={index}
+                                    placeholder={`Название факта ${index + 1}`}
+                                    value={item.title}
+                                    onChange={(event) => handleItemChange(index, 'title', event.target.value)}
+                                    required
+                                />
+                                <textarea
+                                    name={`placeItems[${index}][description]`}
+                                    data-index={index}
+                                    placeholder={`Описание факта ${index + 1}`}
+                                    value={item.description}
+                                    onChange={(event) => handleItemChange(index, 'description', event.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveItem(index)}>-</div>
+                        </div>
+                    </div>
+                ))}
 
-                <label>Стоимость</label>
-                <input name="title" type="text" placeholder="Стоимость" required />
-
-
-
-                <label className={classes.addData_step}>Второй этап</label>
-
-                <label>Загрузите фотографии для слайдера</label>
-                <input type="file" name="iconPath" className={classes.noBorder} required />
-
-
-
-                <label className={classes.addData_step}>Третий этап</label>
-
-                <label>Место 1</label>
-                <input name="title" type="text" placeholder="Место 1" required />
-
-                <label>Место 2</label>
-                <input name="title" type="text" placeholder="Место 2" required />
-
-                <label>Место 3</label>
-                <input name="title" type="text" placeholder="Место 3" required />
-
-                <label>Место 4</label>
-                <input name="title" type="text" placeholder="Место 4" required />
-
-                <label>Место 5</label>
-                <input name="title" type="text" placeholder="Место 5" required />
-
-                <label>Место 6</label>
-                <input name="title" type="text" placeholder="Место 6" required />
-
-
-
-                <label className={classes.addData_step}>Четвертый этап</label>
-
-                <label>Чек-лист 1</label>
-                <input name="title" type="text" placeholder="Чек-лист 1" required />
-
-                <label>Чек-лист 2</label>
-                <input name="title" type="text" placeholder="Чек-лист 2" required />
-
-                <label>Чек-лист 3</label>
-                <input name="title" type="text" placeholder="Чек-лист 3" required />
-
-                <label>Чек-лист 4</label>
-                <input name="title" type="text" placeholder="Чек-лист 4" required />
-
-
-
-                <label className={classes.addData_step}>Пятый этап</label>
-
-                <label>Описание</label>
-                <textarea name="description" placeholder="Описание" required />
-
-                
-                <button type="submit">Добавить Тур</button>
+                <button type="submit">Добавить место</button>
             </Form>
         </div>
     );
