@@ -48,18 +48,18 @@
 
 .visitMain {
     width: 100%;
-    height: 680px;
+    height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    border-radius: 30px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    gap: 30px;
+    gap: 40px;
+    margin-bottom: 80px;
 }
 
 .visitMain::before {
@@ -75,9 +75,13 @@
     margin-top: 60px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    text-align: center;
-    width: 80%;
+    gap: 10px;
+    text-align: justify;
+    width: 100%;
+}
+
+.textEvent p{
+    text-indent: 40px;
 }
 
 .placePoint {

@@ -1,5 +1,5 @@
 import React from "react";
-import Header_black from "../Blocks/Header_black/Header_black";
+import Header_white from "../Blocks/Header_white/Header_white";
 import Events from "../Blocks/Events/Events";
 
 function Event_Page({ children, ...props }) {
@@ -10,7 +10,7 @@ function Event_Page({ children, ...props }) {
     
     return (
         <>
-            <Header_black />
+            <Header_white />
             <Events/>
         </>
     );

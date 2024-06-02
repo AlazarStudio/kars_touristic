@@ -31,15 +31,14 @@ function Visits({ children, ...props }) {
     return (
         <>
             <CenterBlock>
+                <div className={classes.visitMain} style={{ backgroundImage: `url(/airanEvent.jpg)` }}>
+                    <H2 text_transform="uppercase" font_size="40px" color="var(--white_color)" zIndex="1">Праздник айрана</H2>
+                    <a href="#" target="_blank" className={classes.placePoint}>
+                        <img src="/placePoint.png" alt="" />
+                        Медовые водопады
+                    </a>
+                </div>
                 <WidthBlock>
-                    <div className={classes.visitMain} style={{ backgroundImage: `url(/airanEvent.jpg)` }}>
-                        <H2 text_transform="uppercase" font_size="40px" color="var(--white_color)" zIndex="1">Праздник айрана</H2>
-                        <a href="#" target="_blank" className={classes.placePoint}>
-                            <img src="/placePoint.png" alt="" />
-                            Медовые водопады
-                        </a>
-                    </div>
-
                     <CenterBlock>
                         <H2 text_transform="uppercase" font_size="36px">Праздник айрана</H2>
                         <div className={classes.textEvent}>
@@ -67,7 +66,7 @@ function Visits({ children, ...props }) {
                         <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
                     </CenterBlock>
 
-                    <Slider info={info} boxShadow={'none'} loop={true} />
+                    {/* <Slider info={info} boxShadow={'none'} loop={true} /> */}
 
                     <div className={classes.transfer} style={{ backgroundImage: `url(/transfer_bg_low.png)` }} >
                         <div className={classes.transfer_title}>Kars Drive</div>
@@ -78,8 +77,8 @@ function Visits({ children, ...props }) {
                     </div>
                 </WidthBlock>
 
-                <Map 
-                    place = 'https://yandex.ru/map-widget/v1/?ll=42.587183%2C43.884185&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNDk5MDYxMjI4EpgB0KDQvtGB0YHQuNGPLCDQmtCw0YDQsNGH0LDQtdCy0L4t0KfQtdGA0LrQtdGB0YHQutCw0Y8g0KDQtdGB0L_Rg9Cx0LvQuNC60LAsINCc0LDQu9C-0LrQsNGA0LDRh9Cw0LXQstGB0LrQuNC5INGA0LDQudC-0L0sINCc0LXQtNC-0LLRi9C1INCS0L7QtNC-0L_QsNC00YsiCg1TWipCFcGJL0I%2C&z=18.52'
+                <Map
+                    place='https://yandex.ru/map-widget/v1/?ll=42.587183%2C43.884185&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgoxNDk5MDYxMjI4EpgB0KDQvtGB0YHQuNGPLCDQmtCw0YDQsNGH0LDQtdCy0L4t0KfQtdGA0LrQtdGB0YHQutCw0Y8g0KDQtdGB0L_Rg9Cx0LvQuNC60LAsINCc0LDQu9C-0LrQsNGA0LDRh9Cw0LXQstGB0LrQuNC5INGA0LDQudC-0L0sINCc0LXQtNC-0LLRi9C1INCS0L7QtNC-0L_QsNC00YsiCg1TWipCFcGJL0I%2C&z=18.52'
                 />
             </CenterBlock>
         </>
