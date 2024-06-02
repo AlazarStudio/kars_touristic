@@ -70,22 +70,20 @@
 }
 
 .visitButton {
-    background-color: #ffffff;
+    padding: 15px 40px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px 30px;
-    border-radius: 30px;
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 30px;
-    cursor: pointer;
+    background-color: var(--white_color);
+    z-index: 2;
+    gap: 10px;
+    border-radius: 20px;
     color: var(--black_color);
-    transition: all 0.3s ease-in-out;
-}
-
-.visitButton:hover {
-    background-color: var(--black_color);
-    color: #fff;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

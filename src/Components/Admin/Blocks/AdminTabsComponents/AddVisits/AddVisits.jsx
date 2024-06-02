@@ -71,11 +71,11 @@ function AddVisits({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
                 <label>Название места</label>
                 <input name="title" type="text" placeholder="Название места" required />
 
-                <label>Описание отеля</label>
+                <label>Описание места</label>
                 <textarea name="description" type="text" placeholder="Описание места" required ></textarea>
 
-                <label>Ссылка из яндекс карт на место</label>
-                <input name="mapLink" type="text" placeholder="Ссылка из яндекс карт на место" required />
+                <label>Ссылка из карт на место</label>
+                <input name="mapLink" type="text" placeholder="Ссылка из карт на место" required />
 
                 <label className={classes.addData_step}>Шаг 2</label>
                 <label>Загрузите фотографии для галереи</label>

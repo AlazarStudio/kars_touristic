@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import classes from './EditVisit.module.css';
+import classes from './EditEvent.module.css';
 import FormEdit from "../../FormEdit/FormEdit";
 import server from '../../../../../serverConfig';
 
-function EditVisit({ children, activeTab, setIsDirty, region, onTourAdded, photoMassName, ...props }) {
+function EditEvent({ children, activeTab, setIsDirty, region, onTourAdded, photoMassName, ...props }) {
     const { idToEdit } = useParams();
 
     let imgUrl = `${server}/refs/`;
@@ -13,7 +13,6 @@ function EditVisit({ children, activeTab, setIsDirty, region, onTourAdded, photo
         title: '',
         description: '',
         mapLink: '',
-        placeItems: [{ title: '', description: '' }],
         photos: []
     });
 
@@ -23,7 +22,7 @@ function EditVisit({ children, activeTab, setIsDirty, region, onTourAdded, photo
     const { placeItems, photos } = selectedPlace;
 
     const fetchPlaceById = (id) => {
-        fetch(`${server}/api/getOnePlace/${id}`)
+        fetch(`${server}/api/getOneEvent/${id}`)
             .then(response => response.json())
             .then(data => {
                 if (data && typeof data === 'object') {
@@ -90,7 +89,7 @@ function EditVisit({ children, activeTab, setIsDirty, region, onTourAdded, photo
         formData.append('photosToDelete', JSON.stringify(photosToDelete));
 
         try {
-            await fetch(`${server}/api/updateOnePlace/${id}`, {
+            await fetch(`${server}/api/updateOneEvent/${id}`, {
                 method: 'PUT',
                 body: formData
             });
@@ -102,7 +101,7 @@ function EditVisit({ children, activeTab, setIsDirty, region, onTourAdded, photo
     const changeMainImg = async (id, photoPath) => {
         if (confirm("Вы уверены, что хотите сделать эту картинку главной?")) {
             try {
-                await fetch(`${server}/api/changeMainImgPlace?id=${id}&mainImgPath=${photoPath}`, {
+                await fetch(`${server}/api/changeMainImgEvent?id=${id}&mainImgPath=${photoPath}`, {
                     method: 'PUT',
                 });
 
@@ -120,7 +119,7 @@ function EditVisit({ children, activeTab, setIsDirty, region, onTourAdded, photo
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить место</div>
 
-            <FormEdit actionUrl={`${server}/api/updateOnePlace/${idToEdit}`} method="put" photoMassName={photoMassName} newPhotos={newPhotos} needNavigate={true} initialValues={selectedPlace}  onTourAdded={onTourAdded} setSelectedTour={setSelectedPlace}>
+            <FormEdit actionUrl={`${server}/api/updateOneEvent/${idToEdit}`} method="put" photoMassName={photoMassName} newPhotos={newPhotos} needNavigate={true} initialValues={selectedPlace}  onTourAdded={onTourAdded} setSelectedTour={setSelectedPlace}>
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
@@ -131,8 +130,8 @@ function EditVisit({ children, activeTab, setIsDirty, region, onTourAdded, photo
                 <label>Описание места</label>
                 <textarea name="description" type="text" placeholder="Описание места" value={selectedPlace.description} ></textarea>
 
-                <label>Ссылка из карт на место</label>
-                <input name="mapLink" type="text" placeholder="Ссылка из карт на место" value={selectedPlace.mapLink} />
+                <label>Ссылка из карт на место ивента</label>
+                <input name="mapLink" type="text" placeholder="Ссылка из карт на место ивента" value={selectedPlace.mapLink} />
 
                 <label className={classes.addData_step}>Шаг 2</label>
                 <label>Фотографии</label>
@@ -161,40 +160,10 @@ function EditVisit({ children, activeTab, setIsDirty, region, onTourAdded, photo
                     onChange={handleFileChange}
                 />
 
-                <label className={classes.addData_step}>
-                    Шаг 3 (Информация о месте)
-                    <div className={classes.addData_addButtonElements} type="button" onClick={handleAddItem}>+</div>
-                </label>
-                {placeItems.map((item, index) => (
-                    <div key={index} className={classes.addData_blockAddData}>
-                        <label>Информация {index + 1}</label>
-                        <div className={classes.add_remove_btn}>
-                            <div className={classes.add_moreData}>
-                                <input
-                                    type="text"
-                                    name={`placeItems[${index}][title]`}
-                                    data-index={index}
-                                    placeholder={`Название информации ${index + 1}`}
-                                    value={item.title}
-                                    onChange={(event) => handleItemChange(index, 'title', event.target.value)}
-                                />
-                                <textarea
-                                    name={`placeItems[${index}][description]`}
-                                    data-index={index}
-                                    placeholder={`Описание информации ${index + 1}`}
-                                    value={item.description}
-                                    onChange={(event) => handleItemChange(index, 'description', event.target.value)}
-                                />
-                            </div>
-                            <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveItem(index)}>-</div>
-                        </div>
-                    </div>
-                ))}
-
                 <button type="submit">Изменить место</button>
             </FormEdit>
         </div>
     );
 }
 
-export default EditVisit;
+export default EditEvent;

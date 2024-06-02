@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 import server from '../../../serverConfig'
 function Visits({ children, ...props }) {
-    let { id } = useParams();
+    let { id } = useParams(); 
 
     const [place, setPlace] = useState();
     const [multidayTours, setMultidayTours] = useState([]);
@@ -81,11 +81,11 @@ function Visits({ children, ...props }) {
                             <CenterBlock gap={'40px'}>
                                 <H2 text_transform="uppercase" font_size="60px" color="var(--white_color)" zIndex="1">{place.title}</H2>
 
-                                <H2 font_size="24px" font_weight="500" text_align="center" width="100%" margin="35px 0 0 0" color="var(--white_color)" zIndex="1">
+                                <H2 font_size="24px" font_weight="500" text_align="center" width="100%" color="var(--white_color)" zIndex="1">
                                     {place.description}
                                 </H2>
 
-                                <Link to={place.mapLink} className={classes.visitButton} target="_blank" style={{ zIndex: '1' }}>Показать на карте</Link>
+                                <Link to={place.mapLink} className={classes.visitButton} target="_blank" style={{ zIndex: '1' }}> <img src="/placePoint.png" alt="" />Показать на карте</Link>
                             </CenterBlock>
                         </WidthBlock>
                     </div>
@@ -141,6 +141,7 @@ function Visits({ children, ...props }) {
                         </CenterBlock>
 
                         <SliderPlaces info={place.photos} boxShadow={'none'} loop={true} />
+                        <br />
                     </WidthBlock>
                 </CenterBlock>
                 :

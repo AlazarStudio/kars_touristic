@@ -143,13 +143,13 @@ function RegionInfo({ children, ...props }) {
                         <CenterBlock>
                             <WidthBlock>
                                 <div>
-                                    {activeTab === 1 && <Tabs regionName={id} titleObject={'tourTitle'} pageName={'tours'} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'}/>}
+                                    {activeTab === 1 && <Tabs regionName={id} titleObject={'tourTitle'} pageName={'tours'} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'} />}
                                     {activeTab === 2 && <Tabs regionName={id} titleObject={'tourTitle'} pageName={'excursions'} tableName={'onedayTour'} requestType={'getOnedayTours'} title={'Однодневные экскурсии'} />}
-                                    {activeTab === 4 && <Tabs regionName={id} titleObject={'title'} pageName={'hotels'} tableName={'hotels'} requestType={'getHotels'}  title={'Отели'} />}
-                                    {activeTab === 5 && <Tabs regionName={id} titleObject={'title'} pageName={'visits'} tableName={'places'} requestType={'getPlaces'}  title={'Что посетить'} />}
+                                    {activeTab === 4 && <Tabs regionName={id} titleObject={'title'} pageName={'hotels'} tableName={'hotels'} requestType={'getHotels'} title={'Отели'} />}
+                                    {activeTab === 5 && <Tabs regionName={id} titleObject={'title'} pageName={'visits'} tableName={'places'} requestType={'getPlaces'} title={'Что посетить'} />}
+                                    {activeTab === 6 && <Tabs regionName={id} titleObject={'title'} pageName={'events'} tableName={'events'} requestType={'getEvents'} title={'Региональные Mice ивенты'} />}
 
                                     {activeTab === 3 && <Tabs regionName={id} pageName={'gids'} tableName={''} title={'Авторские туры'} />}
-                                    {activeTab === 6 && <Tabs regionName={id} pageName={'events'} tableName={''} title={'Региональные Mice ивенты'} />}
                                 </div>
                             </WidthBlock>
                         </CenterBlock>
