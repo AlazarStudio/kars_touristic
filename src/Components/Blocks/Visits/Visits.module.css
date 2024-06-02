@@ -1,8 +1,9 @@
 .similar {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 50px 26px;
 }
 
 .visitBlocks {

@@ -49,7 +49,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
         fetchData();
     }, []);
 
-    const [places, setPlaces] = useState([]);
+    const [places, setPlaces] = useState();
 
     const fetchPlaces = () => {
         fetch(`${server}/api/getPlaces`)
@@ -117,11 +117,11 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                             <div className={classes.tour_topInfo__right___img}>
                                                 <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
                                                     {tour.photos.map((item, index) => (
-                                                        item != tour.mainPhoto ?
-                                                            <SwiperSlide key={index}>
-                                                                <img src={`${server}/refs/${item}`} alt="" />
-                                                            </SwiperSlide>
-                                                            : null
+                                                        // item != tour.mainPhoto ?
+                                                        <SwiperSlide key={index}>
+                                                            <img src={`${server}/refs/${item}`} alt="" />
+                                                        </SwiperSlide>
+                                                        // : null
                                                     ))}
                                                 </Swiper>
                                             </div>
@@ -140,24 +140,26 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                                         <div className={classes.tour_topInfo__right___places____place_____title}>
                                                             {
                                                                 places ?
-                                                                    places.map((place, index) => {
-                                                                        const normalizedTitle = place.title.toLowerCase();
-                                                                        const normalizedItem = item.toLowerCase();
-                                                                        if (normalizedTitle.includes(normalizedItem) || normalizedItem.includes(normalizedTitle)) {
-                                                                            return (
-                                                                                <Link to={`/visits/${place._id}`} key={index}>
-                                                                                    {place.title}
-                                                                                </Link>
-                                                                            );
-                                                                        } else {
-                                                                            return (
-                                                                                <span key={index}>
-                                                                                    {item}
-                                                                                </span>
-                                                                            );
-                                                                        }
-                                                                    })
-                                                                    : null
+                                                                    places.length != 0 ? 
+                                                                        places.map((place, index) => {
+                                                                            const normalizedTitle = place.title.toLowerCase();
+                                                                            const normalizedItem = item.toLowerCase();
+                                                                            if (normalizedTitle.includes(normalizedItem) || normalizedItem.includes(normalizedTitle)) {
+                                                                                return (
+                                                                                    <Link to={`/visits/${place._id}`} key={index}>
+                                                                                        {place.title}
+                                                                                    </Link>
+                                                                                );
+                                                                            } else {
+                                                                                return (
+                                                                                    <span key={index}>
+                                                                                        {item}
+                                                                                    </span>
+                                                                                );
+                                                                            }
+                                                                        })
+                                                                        : item
+                                                                    : item
                                                             }
                                                         </div>
                                                     </div>

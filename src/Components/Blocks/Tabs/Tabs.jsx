@@ -41,7 +41,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                         <H2 text_transform="uppercase">{props.title}</H2>
                     </CenterBlock>
 
-                    <Filter objects={foundData} updateFilteredObjects={updateFilteredObjects} />
+                    {/* <Filter objects={foundData} updateFilteredObjects={updateFilteredObjects} /> */}
 
                     <div className={classes.objects}>
                         {

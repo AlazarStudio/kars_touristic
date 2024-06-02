@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 15px;
-    width: 32%;
+    width: 23%;
 }
 
 .objects_item__img {
@@ -23,14 +23,15 @@
 .objects_item__bottom {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 15px;
+    height: 125px;
 }
 
 .objects_item__title {
     font-family: Montserrat;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
-    line-height: 30px;
     text-align: center;
 }
 
@@ -49,10 +50,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 15px;
+    padding: 10px;
     border-radius: 30px;
     font-family: Montserrat;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     line-height: 30px;
     cursor: pointer;

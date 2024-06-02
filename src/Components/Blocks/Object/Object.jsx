@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import server from '../../../serverConfig'
 
 function Object({ children, pageName, titleObject, ...props }) {
-    // function truncateString(str, maxLength) {
-    //     if (str.length > maxLength) {
-    //         return str.substring(0, maxLength) + '...';
-    //     }
-    //     return str;
-    // }
+    function truncateString(str, maxLength) {
+        if (str.length > maxLength) {
+            return str.substring(0, maxLength) + '...';
+        }
+        return str;
+    }
+
     let pageNameVisit = '';
 
     if (props.regionData.days) {
@@ -38,7 +39,7 @@ function Object({ children, pageName, titleObject, ...props }) {
                 <div className={classes.objects_item__bottom}>
                     <div className={classes.objects_item__title}>
                         {/* {truncateString(, 33)} */}
-                        {props.regionData[`${titleObject}`]}
+                        {truncateString(props.regionData[`${titleObject}`], 50)}
                     </div>
                     <div className={classes.objects_item__price}>
                         <img src={`/${props.regionData.priceImg}`} alt="" />
