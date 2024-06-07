@@ -47,6 +47,7 @@
 }
 
 
+
 @media (min-width: 0px) and (max-width: 1299px) {
     .header {
         margin: 0;
@@ -80,5 +81,47 @@
     .navigation_btn ul li {
         display: flex;
         align-items: center;
+    }
+
+    .mobileHeader {
+        cursor: pointer;
+    }
+
+    .mobileMenu {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        width: 50%;
+        background-color: white;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        z-index: 99999999;
+        border-radius: 10px 0 0 10px;
+        transform: translateX(0); /* Начальное состояние */
+    }
+
+    .mobileMenuClosed {
+        transform: translateX(100%); /* Закрытое состояние */
+    }
+
+    .mobileMenu ul {
+        list-style: none;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobileMenu li a {
+        color: #000;
+        padding: 10px 20px;
+        display: flex;
+    }
+
+    .mobileMenu li:nth-child(1) a {
+        padding-top: 20px;
+    }
+
+    .mobileMenu li:last-child a {
+        padding-bottom: 20px;
     }
 }

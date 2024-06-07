@@ -92,7 +92,47 @@
     text-align: center;
 }
 
-.region_right__item:hover, .active_region_item{
+.region_right__item:hover,
+.active_region_item {
     backdrop-filter: blur(0px);
     border: 1px solid var(--white_color);
+}
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .main {
+        height: auto;
+        padding: 80px 10px 20px 10px;
+        gap: 20px;
+    }
+
+    .region {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .region_left {
+        width: 100%;
+    }
+
+    .region_right {
+        width: 100%;
+    }
+
+    .region_left__title {
+        font-size: 20px;
+        line-height: normal;
+    }
+
+    .region_right .centerBlock {
+        gap: 10px;
+        justify-content: center;
+    }
+
+    .region_right__item {
+        width: 48%;
+        gap: 10px;
+        padding: 10px;
+        font-size: 14px;
+    }
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from './Header_black.module.css';
 import { Link } from "react-router-dom";
 
@@ -7,9 +7,16 @@ import arnament from '/header_arnament.png';
 import favourite from '/header_favourite_black.png';
 import cart from '/header_cart_black.png';
 import profile from '/header_profile_black.png';
+import burger from '/header_burger_black.png';
 
 function Header_black({ children, ...props }) {
-    return ( 
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
+    return (
         <>
             <header className={classes.header}>
                 <div className={classes.navigation}>
@@ -30,14 +37,23 @@ function Header_black({ children, ...props }) {
                             <li><Link to="/profile"><img src={favourite} alt="" /></Link></li>
                             <li><Link to="/favourites"><img src={profile} alt="" /></Link></li>
                             <li><Link to="/cart"><img src={cart} alt="" /></Link></li>
-                            <li className={classes.mobileHeader}><img src='/header_burger_black.png' alt="" /></li>
+                            <li className={classes.mobileHeader} onClick={toggleMenu}><img src={burger} alt="Menu" /></li>
                         </ul>
                     </div>
-
                 </div>
             </header>
+            <div className={`${classes.mobileMenu} ${!menuOpen ? classes.mobileMenuClosed : ''}`}>
+                <ul>
+                    <li><Link to="/">Главная</Link></li>
+                    <li><Link to="/about">О нас</Link></li>
+                    <li><Link to="/transfer">Трансфер</Link></li>
+                    <li><Link to="/faq">FAQ</Link></li>
+                    <li><Link to="/contacts">Контакты</Link></li>
+                    <li><Link to="/turagents">Турагентам</Link></li>
+                </ul>
+            </div>
         </>
-     );
+    );
 }
 
 export default Header_black;

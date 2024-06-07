@@ -10,3 +10,18 @@
     flex-wrap: wrap;
     gap: 50px 26px;
 }
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .fullBlock{
+        padding: 20px 10px;
+        gap: 20px;
+    }
+    .fullBlock h2{
+        text-align: center;
+    }
+
+    .objects{
+        justify-content: center;
+        gap: 20px 10px;
+    }
+}

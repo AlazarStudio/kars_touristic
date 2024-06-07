@@ -1,4 +1,3 @@
-
 .objects_item {
     display: flex;
     flex-direction: column;
@@ -64,4 +63,33 @@
 .objects_item__button:hover{
     background-color: var(--black_color);
     color: var(--white_color);
+}
+
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .objects_item {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 15px;
+        width: 48%;
+    }
+
+    .objects_item__bottom{
+        height: auto;
+    }
+
+    .objects_item__img{
+        height: 150px;
+    }
+
+    .objects_item__title{
+        font-size: 16px;
+    }
+
+    .objects_item__button{
+        font-size: 16px;
+        line-height: normal;
+    }
 }

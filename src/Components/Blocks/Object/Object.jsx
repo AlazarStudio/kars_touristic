@@ -41,10 +41,10 @@ function Object({ children, pageName, titleObject, ...props }) {
                         {/* {truncateString(, 33)} */}
                         {truncateString(props.regionData[`${titleObject}`], 50)}
                     </div>
-                    <div className={classes.objects_item__price}>
+                    {/* <div className={classes.objects_item__price}>
                         <img src={`/${props.regionData.priceImg}`} alt="" />
                         {props.cost}
-                    </div>
+                    </div> */}
                     <Link to={`/${pageName ? pageName : pageNameVisit}/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
                 </div>
             </div>
