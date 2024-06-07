@@ -61,6 +61,10 @@
 }
 
 @media (min-width: 0px) and (max-width: 1299px) {
+    .tour_slider {
+        border-radius: 0;
+    }
+
     .tour_slider__block {
         width: 90%;
     }
@@ -86,7 +90,7 @@
         width: 50px;
     }
 
-    .feedback_slide__top___name{
+    .feedback_slide__top___name {
         font-size: 14px;
     }
 }
