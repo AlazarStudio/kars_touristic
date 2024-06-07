@@ -34,8 +34,49 @@
     gap: 35px;
 }
 
-.navigation_btn ul li a{
+.navigation_btn ul li a {
     display: flex;
     height: 100%;
     align-items: center;
+}
+
+.mobileHeader {
+    display: none;
+}
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .header {
+        margin: 0;
+        padding: 10px;
+    }
+
+    .navigation_links {
+        display: none;
+    }
+
+    .navigation_logo {
+        width: 55px;
+    }
+
+    .navigation_logo img {
+        width: 100%;
+    }
+
+    .navigation_btn ul {
+        gap: 20px;
+    }
+
+    .navigation_btn ul li img {
+        height: 15px;
+    }
+
+    .mobileHeader {
+        display: block;
+    }
+
+    .navigation_btn ul li {
+        display: flex;
+        align-items: center;
+    }
 }

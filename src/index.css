@@ -13,6 +13,12 @@
     --dark_color: #181818;
 }
 
+@media (min-width: 0px) and (max-width: 1299px) {
+    :root {
+        --blockWidth: 100%;
+    }
+}
+
 a {
     text-decoration: none;
 }

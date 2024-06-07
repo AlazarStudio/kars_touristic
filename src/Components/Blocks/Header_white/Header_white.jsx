@@ -14,7 +14,7 @@ function Header_white({ children, ...props }) {
             <header className={classes.header}>
                 {/* <img src={arnament} alt="" /> */}
                 <div className={classes.navigation}>
-                    <Link to="/" className="navigation_logo">
+                    <Link to="/" className={classes.navigation_logo}>
                         <img src={logo} alt="Logo Kars Touristic" />
                     </Link>
                     <div className={classes.navigation_links}>
@@ -31,6 +31,7 @@ function Header_white({ children, ...props }) {
                             <li><Link to="/profile"><img src={favourite} alt="" /></Link></li>
                             <li><Link to="/favourites"><img src={profile} alt="" /></Link></li>
                             <li><Link to="/cart"><img src={cart} alt="" /></Link></li>
+                            <li className={classes.mobileHeader}><img src='/header_burger.png' alt="" /></li>
                         </ul>
                     </div>
 

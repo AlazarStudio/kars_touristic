@@ -30,6 +30,7 @@ function Header_black({ children, ...props }) {
                             <li><Link to="/profile"><img src={favourite} alt="" /></Link></li>
                             <li><Link to="/favourites"><img src={profile} alt="" /></Link></li>
                             <li><Link to="/cart"><img src={cart} alt="" /></Link></li>
+                            <li className={classes.mobileHeader}><img src='/header_burger_black.png' alt="" /></li>
                         </ul>
                     </div>
 

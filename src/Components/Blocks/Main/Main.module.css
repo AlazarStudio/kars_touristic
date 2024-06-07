@@ -21,7 +21,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #00000029;
+    background-color: #00000073;
     z-index: 0;
 }
 
@@ -51,4 +51,22 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .main{
+        height: auto;
+        padding: 80px 10px 20px 10px;
+        gap: 20px;
+    }
+
+    .main_title{
+        font-size: 20px;
+        line-height: normal;
+        text-align: center;
+    }
+
+    .main_blocks{
+        gap: 10px;
+    }
 }
