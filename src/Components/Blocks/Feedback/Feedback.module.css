@@ -59,3 +59,34 @@
     font-weight: 500;
     line-height: 21px;
 }
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .tour_slider__block {
+        width: 90%;
+    }
+
+    .feedback_slide {
+        padding: 10px;
+    }
+
+    .feedback_slide__bottom {
+        font-size: 12px;
+        line-height: normal
+    }
+
+    .feedback_slide__top {
+        gap: 10px;
+    }
+
+    .feedback_slide__top div:nth-child(1) img {
+        width: 40px;
+    }
+
+    .feedback_slide__top div:last-child img {
+        width: 50px;
+    }
+
+    .feedback_slide__top___name{
+        font-size: 14px;
+    }
+}

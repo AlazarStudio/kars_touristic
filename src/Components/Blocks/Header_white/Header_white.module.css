@@ -46,6 +46,9 @@
     display: none;
 }
 
+.mobileMenu {
+    display: none;
+}
 
 
 @media (min-width: 0px) and (max-width: 1299px) {
@@ -88,6 +91,7 @@
     }
 
     .mobileMenu {
+        display: flex;
         position: fixed;
         top: 70px;
         right: 0;
@@ -97,11 +101,13 @@
         transition: transform 0.3s ease-in-out;
         z-index: 99999999;
         border-radius: 10px 0 0 10px;
-        transform: translateX(0); /* Начальное состояние */
+        transform: translateX(0);
+        /* Начальное состояние */
     }
 
     .mobileMenuClosed {
-        transform: translateX(100%); /* Закрытое состояние */
+        transform: translateX(100%);
+        /* Закрытое состояние */
     }
 
     .mobileMenu ul {

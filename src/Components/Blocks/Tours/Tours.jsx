@@ -140,7 +140,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                                         <div className={classes.tour_topInfo__right___places____place_____title}>
                                                             {
                                                                 places ?
-                                                                    places.length != 0 ? 
+                                                                    places.length != 0 ?
                                                                         places.map((place, index) => {
                                                                             const normalizedTitle = place.title.toLowerCase();
                                                                             const normalizedItem = item.toLowerCase();
@@ -195,7 +195,18 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                         modules={[Navigation]}
                                         slidesPerView={3}
                                         spaceBetween={30}
-                                        className={'similarTours'}
+                                        className={'similarTours'} 
+                                        breakpoints={{
+                                            320: {
+                                                slidesPerView: 1,
+                                            },
+                                            768: {
+                                                slidesPerView: 2,
+                                            },
+                                            1024: {
+                                                slidesPerView: 3,
+                                            },
+                                        }}
                                     >
                                         {foundRegion.map((item, index) => (
                                             item._id != id ?

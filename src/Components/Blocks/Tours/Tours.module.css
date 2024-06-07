@@ -194,12 +194,13 @@
     transition: all 0.3s ease-in-out;
     text-align: center;
 }
-.tour_topInfo__right___places____place_____title a{
+
+.tour_topInfo__right___places____place_____title a {
     color: var(--white_color);
     transition: all 0.3s ease-in-out;
 }
 
-.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____title a{
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____title a {
     color: var(--black_color);
 }
 
@@ -244,13 +245,13 @@
     line-height: 21px;
 }
 
-.similar{
+.similar {
     display: flex;
     justify-content: center;
     overflow: hidden;
 }
 
-.similarBlock{
+.similarBlock {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -260,6 +261,77 @@
     width: 80%;
 }
 
-.similarTours{
+.similarTours {
     width: 100%;
+}
+
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .main {
+        height: auto;
+        gap: 20px;
+    }
+
+    .tour_topInfo {
+        margin: 0;
+        padding: 80px 10px 10px 10px;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .centerPosition {
+        height: auto;
+    }
+
+    .tour_topInfo__left {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .tour_topInfo__right {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .tour_topInfo__left___title{
+        font-size: 22px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__left___items{
+        gap: 10px;
+    }
+
+    .tour_topInfo__left___items____element_____title{
+        font-size: 12px;
+    }
+
+    .tour_topInfo__left___items____element_____info{
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__left___btn{
+        font-size: 16px;
+        padding: 10px 0;
+    }
+
+    .tour_topInfo__right___places____place_____title{
+        font-size: 12px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__right___places{
+        gap: 10px;
+    }
+
+    .tour_topInfo__right___places____place{
+        width: 48%;
+    }
+
+    .similarBlock{
+        width: 90%;
+        margin-bottom: 20px;
+    }
 }

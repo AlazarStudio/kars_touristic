@@ -23,6 +23,17 @@ function Feedback({ children, ...props }) {
                                 slidesPerView={2}
                                 spaceBetween={30}
                                 className={`${classes.mySwiper} feedback`}
+                                breakpoints={{
+                                    320: {
+                                        slidesPerView: 1,
+                                    },
+                                    768: {
+                                        slidesPerView: 2,
+                                    },
+                                    1024: {
+                                        slidesPerView: 3,
+                                    },
+                                }}
                             >
                                 <SwiperSlide>
                                     <div className={classes.feedback_slide}>

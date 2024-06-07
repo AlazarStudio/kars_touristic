@@ -52,3 +52,27 @@
     font-weight: 400;
     line-height: 24px;
 }
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .tabs {
+        gap: 20px;
+    }
+
+    .tabButtons {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .tabButtons div {
+        width: 48%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .tabContent {
+        padding: 20px;
+        margin: 0 10px;
+        width: calc(100% - 20px);
+        font-size: 14px;
+    }
+}
