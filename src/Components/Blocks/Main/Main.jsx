@@ -6,6 +6,8 @@ import Region from "../Region/Region";
 import server from '../../../serverConfig';
 
 function Main({ children, ...props }) {
+    console.log(`${server}/api/getRegions`)
+
     const [regions, setRegions] = useState([]);
 
     const fetchRegions = () => {
