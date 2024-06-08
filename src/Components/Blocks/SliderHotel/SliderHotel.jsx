@@ -36,7 +36,8 @@ function SliderHotel({ children, ...props }) {
                         slidesPerView={3}
                         spaceBetween={30}
                         loop={props.loop}
-                        className={'checklistSlider'}breakpoints={{
+                        className={'checklistSlider'}
+                        breakpoints={{
                             320: {
                                 slidesPerView: 1,
                             },

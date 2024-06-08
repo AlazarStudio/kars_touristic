@@ -37,6 +37,17 @@ function SliderPlaces({ children, ...props }) {
                         spaceBetween={30}
                         loop={props.loop}
                         className={'checklistSlider'}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 1,
+                            },
+                            768: {
+                                slidesPerView: 2,
+                            },
+                            1024: {
+                                slidesPerView: 3,
+                            },
+                        }}
                     >
                         {props.info.map((item, index) => (
                             <SwiperSlide key={index}>

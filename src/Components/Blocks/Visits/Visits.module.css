@@ -88,3 +88,32 @@
     align-items: center;
     gap: 10px;
 }
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .similar{
+        gap: 20px 10px;
+        padding: 10px;
+    }
+
+    .visitMain{
+        margin-bottom: 20px;
+        height: 400px;
+    }
+
+    .visitBlocks{
+        gap: 10px;
+        padding: 10px;
+        flex-wrap: wrap;
+    }
+
+    .visitBlocks_item{
+        width: 48%;
+    }
+
+    .visitButton{
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+}

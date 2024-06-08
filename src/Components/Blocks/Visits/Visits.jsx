@@ -94,9 +94,9 @@ function Visits({ children, ...props }) {
                         <div className={classes.visitBlocks}>
                             {place.placeItems.map((item, index) => (
                                 <div className={classes.visitBlocks_item} key={index}>
-                                    <div className={classes.visitBlocks_item__img}>
+                                    {/* <div className={classes.visitBlocks_item__img}>
                                         <img src="/visit_img_1.webp" alt="" />
-                                    </div>
+                                    </div> */}
                                     <div className={classes.visitBlocks_item__title}>{item.title}</div>
                                     <div className={classes.visitBlocks_item__desc}>{item.description}</div>
                                 </div>
@@ -135,13 +135,11 @@ function Visits({ children, ...props }) {
                         }
                         </div>
 
-
                         <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
                         </CenterBlock>
 
                         <SliderPlaces info={place.photos} boxShadow={'none'} loop={true} />
-                        <br />
                     </WidthBlock>
                 </CenterBlock>
                 :

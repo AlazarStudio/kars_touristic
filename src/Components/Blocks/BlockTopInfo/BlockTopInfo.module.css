@@ -82,3 +82,39 @@
     line-height: 19.5px;
     color: var(--white_color);;
 }
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .BlockTopInfo{
+        padding: 20px;
+        gap: 20px;
+        border-radius: 0;
+        min-height: auto;
+    }
+
+    .BlockTopInfo_text{
+        width: 100%;
+        font-size: 14px;
+        line-height: normal;
+    }
+
+    .BlockTopInfo_block{
+        gap: 20px;
+    }
+
+    .BlockTopInfo_topTitle{
+        font-size: 32px;
+        line-height: normal;
+    }
+    .BlockTopInfo_title{
+        font-size: 24px;
+        line-height: normal;
+    }
+
+    .BlockTopInfo_link{
+        padding: 10px 15px;
+        border-radius: 10px;
+    }
+    .BlockTopInfo_link__text{
+        font-size: 14px;
+    }
+}
