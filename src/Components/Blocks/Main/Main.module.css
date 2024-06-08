@@ -71,6 +71,7 @@
     border-right: none;
     border-radius: 60px 0 0 60px;
     cursor: pointer;
+    color: #000;
 }
 
 .main_desc input {
