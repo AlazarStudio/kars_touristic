@@ -100,3 +100,39 @@
     line-height: 30px;
     cursor: pointer;
 }
+
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .hotelNumbers{
+        gap: 10px;
+        padding: 10px;
+    }
+    .hotelNumbers_item{
+        width: 100%;
+    }
+    .hotelNumbers_item__img{
+        height: 200px;
+    }
+    .hotelNumbers_item__bottom{
+        padding: 20px;
+        gap: 15px;
+        height: auto;
+    }
+    .hotelNumbers_item__bottom___title{
+        width: 100%;
+        text-align: center;
+    }
+    .hotelNumbers_item__bottom___feedback{
+        width: 100%;
+        padding: 5px;
+    }
+    .hotelNumbers_item__bottom___feedback____item{
+        font-size: 12px;
+    }
+    .hotelNumbers_item__bottom___button{
+        font-size: 14px;
+        line-height: normal;
+        padding: 10px;
+    }
+}

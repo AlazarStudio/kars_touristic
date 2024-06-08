@@ -69,9 +69,9 @@ function Hotels({ children, ...props }) {
                             <div className={classes.hotelItems}>
                                 {hotel.items.map((item, index) => (
                                     <div key={index} className={classes.hotelItems_elem}>
-                                        <div className={classes.hotelItems_elem__img}>
+                                        {/* <div className={classes.hotelItems_elem__img}>
                                             <img src="/calendar.webp" alt="" />
-                                        </div>
+                                        </div> */}
                                         <div className={classes.hotelItems_elem__title}>{item.title}</div>
                                         <div className={classes.hotelItems_elem__desc}>{item.description}</div>
                                     </div>

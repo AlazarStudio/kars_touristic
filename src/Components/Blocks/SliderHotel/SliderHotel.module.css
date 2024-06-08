@@ -66,3 +66,15 @@
     height: 100%;
     object-fit: cover;
 }
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .tourInfo_slide{
+        padding: 0;
+    }
+    .tour_slider__block{
+        width: 90%;
+    }
+    .tour_slider{
+        height: 200px;
+    }
+}

@@ -104,8 +104,8 @@ function NumberShow({ children, ...props }) {
                                 </div>
                             </div>
                         </div>
-                        <br />
-                        {/* <CenterBlock>
+                        {/*<br />
+                         <CenterBlock>
                             <H2 text_transform="uppercase" margin="0 0 25px 0">Стоимость</H2>
                             <H2 font_weight="500" margin="0 0 50px 0">Цена меняется в зависимости от сезона. Обратите внимание на даты!</H2>
 

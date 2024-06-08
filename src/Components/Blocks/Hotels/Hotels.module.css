@@ -175,3 +175,70 @@
     height: 30px;
     object-fit: contain;
 }
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .main {
+        height: 400px;
+        padding: 80px 10px 20px 10px;
+        gap: 20px;
+    }
+
+    .main::before {
+        height: 400px;
+    }
+
+    .hotelInfo {
+        width: 100%;
+        align-items: center;
+    }
+
+    .hotelItems {
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .hotelItems_elem {
+        width: 48%;
+        height: auto;
+    }
+
+    .aboutHotel {
+        margin-bottom: 20px;
+    }
+
+    .aboutHotel_info {
+        flex-direction: column;
+        gap: 10px;
+        height: auto;
+    }
+
+    .aboutHotel_info__left {
+        width: 100%;
+    }
+
+    .aboutHotel_info__right {
+        width: 100%;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .aboutHotel_info__right___title {
+        text-align: center;
+        font-size: 22px;
+    }
+
+    .links_item{
+        width: 60px;
+        height: 60px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .links_item img{
+        width: 100%;
+    }
+}
