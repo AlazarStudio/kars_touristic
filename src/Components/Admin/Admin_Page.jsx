@@ -92,13 +92,13 @@ function Admin_Page({ children, ...props }) {
             <div className={classes.admin}>
                 <div className={classes.admin_header}>
                     <a href="/" target="_blank" className={classes.admin_header__logo}>
-                        <img src="/about_title_logo.png" alt="" />
+                        <img src="/about_title_logo.webp" alt="" />
                     </a>
                     <div className={classes.admin_header__items}>
                         <div className={classes.admin_header__items___item}>Отзывы</div>
                         <div className={classes.admin_header__items___item}>Заявки</div>
                         <div className={classes.admin_header__items___item____dashboard}>
-                            <img src="/admin-panel 1.png" alt="" />
+                            <img src="/admin-panel 1.webp" alt="" />
                             Панель Администратора
                         </div>
                     </div>
@@ -122,7 +122,7 @@ function Admin_Page({ children, ...props }) {
                                             >
                                                 {region.title}
                                             </Link>
-                                            <img src="/delete_region.png" alt="" onClick={() => deleteElement(region._id)} />
+                                            <img src="/delete_region.webp" alt="" onClick={() => deleteElement(region._id)} />
                                         </div>
                                     ))}
                                 </div>

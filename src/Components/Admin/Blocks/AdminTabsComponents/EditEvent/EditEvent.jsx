@@ -141,10 +141,10 @@ function EditEvent({ children, activeTab, setIsDirty, region, onTourAdded, photo
                         <div className={classes.imgBlock__item} key={index}>
                             <img src={imgUrl + photo} alt="" />
                             <div className={classes.imgBlock_close} onClick={() => handleRemovePhoto(index, photo)}>
-                                <img src="/delete.png" alt="Delete" />
+                                <img src="/delete.webp" alt="Delete" />
                             </div>
                             <div className={`${classes.imgBlock_checked} ${(selectedPlace.mainPhoto === photo) ? classes.imgBlock_checked_show : null}`} onClick={() => changeMainImg(idToEdit, photo)}>
-                                <img src="/checked.png" alt="Сделать главной" />
+                                <img src="/checked.webp" alt="Сделать главной" />
                             </div>
                         </div>
                     ))}

@@ -5,7 +5,7 @@ import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import BlockTopInfo from "../BlockTopInfo/BlockTopInfo";
 import Accordion from "../Accordion/Accordion";
 
-import faq_bg from "/faq_bg.png";
+import faq_bg from "/faq_bg.webp";
 import server from '../../../serverConfig';
 
 function Faq({ children, ...props }) {

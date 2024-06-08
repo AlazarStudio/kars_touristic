@@ -85,7 +85,7 @@ function Visits({ children, ...props }) {
                                     {place.description}
                                 </H2>
 
-                                <Link to={place.mapLink} className={classes.visitButton} target="_blank" style={{ zIndex: '1' }}> <img src="/placePoint.png" alt="" />Показать на карте</Link>
+                                <Link to={place.mapLink} className={classes.visitButton} target="_blank" style={{ zIndex: '1' }}> <img src="/placePoint.webp" alt="" />Показать на карте</Link>
                             </CenterBlock>
                         </WidthBlock>
                     </div>
@@ -95,7 +95,7 @@ function Visits({ children, ...props }) {
                             {place.placeItems.map((item, index) => (
                                 <div className={classes.visitBlocks_item} key={index}>
                                     <div className={classes.visitBlocks_item__img}>
-                                        <img src="/visit_img_1.png" alt="" />
+                                        <img src="/visit_img_1.webp" alt="" />
                                     </div>
                                     <div className={classes.visitBlocks_item__title}>{item.title}</div>
                                     <div className={classes.visitBlocks_item__desc}>{item.description}</div>
@@ -103,21 +103,21 @@ function Visits({ children, ...props }) {
                             ))}
                             {/* <div className={classes.visitBlocks_item}>
                                 <div className={classes.visitBlocks_item__img}>
-                                    <img src="/visit_img_2.png" alt="" />
+                                    <img src="/visit_img_2.webp" alt="" />
                                 </div>
                                 <div className={classes.visitBlocks_item__title}>Вулкан, спящий более </div>
                                 <div className={classes.visitBlocks_item__desc}><span>5100</span> лет</div>
                             </div>
                             <div className={classes.visitBlocks_item}>
                                 <div className={classes.visitBlocks_item__img}>
-                                    <img src="/visit_img_3.png" alt="" />
+                                    <img src="/visit_img_3.webp" alt="" />
                                 </div>
                                 <div className={classes.visitBlocks_item__title}>Со склонов Эльбруса стекают</div>
                                 <div className={classes.visitBlocks_item__desc}><span>23</span> ледника</div>
                             </div>
                             <div className={classes.visitBlocks_item}>
                                 <div className={classes.visitBlocks_item__img}>
-                                    <img src="/visit_img_4.png" alt="" />
+                                    <img src="/visit_img_4.webp" alt="" />
                                 </div>
                                 <div className={classes.visitBlocks_item__title}>Ледники дают жизнь трем крупным рекам — <b>Кубани, Малку и Баксан</b></div>
                             </div> */}

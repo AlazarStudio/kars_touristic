@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import classes from './Header_white.module.css';
 import { Link } from "react-router-dom";
 
-import logo from '/favicon.png';
-import arnament from '/header_arnament.png';
-import favourite from '/header_favourite.png';
-import cart from '/header_cart.png';
-import profile from '/header_profile.png';
-import burger from '/header_burger.png';
+import logo from '/favicon.webp';
+import arnament from '/header_arnament.webp';
+import favourite from '/header_favourite.webp';
+import cart from '/header_cart.webp';
+import profile from '/header_profile.webp';
+import burger from '/header_burger.webp';
 
 function Header_white({ children, ...props }) {
     const [menuOpen, setMenuOpen] = useState(false);

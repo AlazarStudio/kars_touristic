@@ -8,13 +8,13 @@ import InfoBlock from "../../Standart/InfoBlock/InfoBlock";
 import H2 from "../../Standart/H2/H2";
 import TeamBlock from "../TeamBlock/TeamBlock";
 
-import logo from "/about_title_logo.png";
-import about_certificate from "/about_certificate.png";
-import about_interaction from "/about_interaction.png";
-import about_handshake from "/about_handshake.png";
+import logo from "/about_title_logo.webp";
+import about_certificate from "/about_certificate.webp";
+import about_interaction from "/about_interaction.webp";
+import about_handshake from "/about_handshake.webp";
 
-import team_no_img from "/team_no_img.png";
-import mission_arnament from "/mission_arnament.png";
+import team_no_img from "/team_no_img.webp";
+import mission_arnament from "/mission_arnament.webp";
 
 import server from '../../../serverConfig';
 

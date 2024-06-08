@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import classes from './Accordion.module.css';
 
-import accordion_arrow from '/accordion_arrow.png';
-import accordion_close from '/accordion_close.png';
-import delete_icon from '/delete.png';
+import accordion_arrow from '/accordion_arrow.webp';
+import accordion_close from '/accordion_close.webp';
+import delete_icon from '/delete.webp';
 
 import server from '../../../serverConfig';
 

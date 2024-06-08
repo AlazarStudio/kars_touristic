@@ -6,11 +6,11 @@ import BlockTopInfo from "../BlockTopInfo/BlockTopInfo";
 import H2 from "../../Standart/H2/H2";
 import Form from "../Form/Form";
 
-import contacts_bg from "/contacts_bg.png";
+import contacts_bg from "/contacts_bg.webp";
 
-import contacts_place from "/contacts_place.png";
-import contacts_phone from "/contacts_phone.png";
-import contacts_email from "/contacts_email.png";
+import contacts_place from "/contacts_place.webp";
+import contacts_phone from "/contacts_phone.webp";
+import contacts_email from "/contacts_email.webp";
 
 import server from '../../../serverConfig';
 

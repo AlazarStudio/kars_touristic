@@ -4,8 +4,8 @@ import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import BlockTopInfo from "../BlockTopInfo/BlockTopInfo";
 
-import tg from "/tg.png";
-import transfer_bg from "/transfer_bg.png";
+import tg from "/tg.webp";
+import transfer_bg from "/transfer_bg.webp";
 
 function Transfer({ children, data, ...props }) {
     return (

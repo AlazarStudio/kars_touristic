@@ -94,42 +94,42 @@ function RegionInfo({ children, ...props }) {
                                                     className={`${classes.region_right__item} ${activeTab === 1 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(1)}
                                                 >
-                                                    <img src="/region_tours.png" alt="" />
+                                                    <img src="/region_tours.webp" alt="" />
                                                     Многодневные туры
                                                 </div>
                                                 <div
                                                     className={`${classes.region_right__item} ${activeTab === 2 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(2)}
                                                 >
-                                                    <img src="/region_exkursii.png" alt="" />
+                                                    <img src="/region_exkursii.webp" alt="" />
                                                     Однодневные экскурсии
                                                 </div>
                                                 <div
                                                     className={`${classes.region_right__item} ${activeTab === 3 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(3)}
                                                 >
-                                                    <img src="/region_gidi.png" alt="" />
+                                                    <img src="/region_gidi.webp" alt="" />
                                                     Авторские туры
                                                 </div>
                                                 <div
                                                     className={`${classes.region_right__item} ${activeTab === 4 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(4)}
                                                 >
-                                                    <img src="/region_hotels.png" alt="" />
+                                                    <img src="/region_hotels.webp" alt="" />
                                                     Отели
                                                 </div>
                                                 <div
                                                     className={`${classes.region_right__item} ${activeTab === 5 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(5)}
                                                 >
-                                                    <img src="/region_chro_posetit.png" alt="" />
+                                                    <img src="/region_chro_posetit.webp" alt="" />
                                                     Что посетить
                                                 </div>
                                                 <div
                                                     className={`${classes.region_right__item} ${activeTab === 6 ? `${classes.active_region_item}` : ""}`}
                                                     onClick={() => handleTabClick(6)}
                                                 >
-                                                    <img src="/region_events.png" alt="" />
+                                                    <img src="/region_events.webp" alt="" />
                                                     Региональные Mice ивенты
                                                 </div>
                                             </div>

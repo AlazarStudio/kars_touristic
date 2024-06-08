@@ -44,10 +44,10 @@ function Tour({ tour, index, moveTour, deleteElement }) {
             </div>
             <div className={classes.multidayTours_data__tour___btns}>
                 <Link to={`editEvent/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>
-                    <img src="/edit.png" alt="" />
+                    <img src="/edit.webp" alt="" />
                 </Link>
                 <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(tour._id)}>
-                    <img src="/delete.png" alt="" />
+                    <img src="/delete.webp" alt="" />
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@ function Events({ children, title, type, ...props }) {
                 <DndProvider backend={HTML5Backend}>
                     <div className={classes.multidayTours}>
                         <div className={classes.multidayTours_back}>
-                            <Link to={`/admin/edit/${title}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                            <Link to={`/admin/edit/${title}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                         </div>
 
                         <div className={classes.multidayTours_top}>
@@ -137,7 +137,7 @@ function Events({ children, title, type, ...props }) {
                     {add === 'addEvent' ?
                         <>
                             <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                             </div>
 
                             <AddEvent region={title} onTourAdded={response} />
@@ -145,7 +145,7 @@ function Events({ children, title, type, ...props }) {
                         :
                         <>
                             <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                             </div>
 
                             <EditEvent region={title} onTourAdded={response} photoMassName={'photos'}/>

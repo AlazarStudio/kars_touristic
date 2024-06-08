@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import classes from './Header_black.module.css';
 import { Link } from "react-router-dom";
 
-import logo from '/favicon_black.png';
-import arnament from '/header_arnament.png';
-import favourite from '/header_favourite_black.png';
-import cart from '/header_cart_black.png';
-import profile from '/header_profile_black.png';
-import burger from '/header_burger_black.png';
+import logo from '/favicon_black.webp';
+import arnament from '/header_arnament.webp';
+import favourite from '/header_favourite_black.webp';
+import cart from '/header_cart_black.webp';
+import profile from '/header_profile_black.webp';
+import burger from '/header_burger_black.webp';
 
 function Header_black({ children, ...props }) {
     const [menuOpen, setMenuOpen] = useState(false);

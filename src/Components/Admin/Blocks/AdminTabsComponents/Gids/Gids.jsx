@@ -10,7 +10,7 @@ function Gids({ children, title, type, ...props }) {
             {!add ?
                 <div className={classes.multidayTours}>
                     <div className={classes.multidayTours_back}>
-                        <Link to={`/admin/edit/${title}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                        <Link to={`/admin/edit/${title}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                     </div>
 
                     <div className={classes.multidayTours_top}>
@@ -20,7 +20,7 @@ function Gids({ children, title, type, ...props }) {
                     <div className={classes.gids}>
                         <div className={classes.gids_info}>
                             <div className={classes.gids_info__img}>
-                                <img src="/feedback_photo.png" alt="" />
+                                <img src="/feedback_photo.webp" alt="" />
                             </div>
                             <div className={classes.gids_info__name}>Иванов Иван</div>
                             <div className={classes.gids_info__email}>example@gmail.com</div>
@@ -30,7 +30,7 @@ function Gids({ children, title, type, ...props }) {
 
                         <div className={classes.gids_info}>
                             <div className={classes.gids_info__img}>
-                                <img src="/feedback_photo.png" alt="" />
+                                <img src="/feedback_photo.webp" alt="" />
                             </div>
                             <div className={classes.gids_info__name}>Иванов Иван Иванов Иван</div>
                             <div className={classes.gids_info__email}>exampleexample@gmail.com</div>
@@ -39,7 +39,7 @@ function Gids({ children, title, type, ...props }) {
                         </div>
                         <div className={classes.gids_info}>
                             <div className={classes.gids_info__img}>
-                                <img src="/feedback_photo.png" alt="" />
+                                <img src="/feedback_photo.webp" alt="" />
                             </div>
                             <div className={classes.gids_info__name}>Иванов Иван</div>
                             <div className={classes.gids_info__email}>example@gmail.com</div>
@@ -49,7 +49,7 @@ function Gids({ children, title, type, ...props }) {
 
                         <div className={classes.gids_info}>
                             <div className={classes.gids_info__img}>
-                                <img src="/feedback_photo.png" alt="" />
+                                <img src="/feedback_photo.webp" alt="" />
                             </div>
                             <div className={classes.gids_info__name}>Иванов Иван Иванов Иван</div>
                             <div className={classes.gids_info__email}>exampleexample@gmail.com</div>
@@ -58,7 +58,7 @@ function Gids({ children, title, type, ...props }) {
                         </div>
                         <div className={classes.gids_info}>
                             <div className={classes.gids_info__img}>
-                                <img src="/feedback_photo.png" alt="" />
+                                <img src="/feedback_photo.webp" alt="" />
                             </div>
                             <div className={classes.gids_info__name}>Иванов Иван</div>
                             <div className={classes.gids_info__email}>example@gmail.com</div>
@@ -68,7 +68,7 @@ function Gids({ children, title, type, ...props }) {
 
                         <div className={classes.gids_info}>
                             <div className={classes.gids_info__img}>
-                                <img src="/feedback_photo.png" alt="" />
+                                <img src="/feedback_photo.webp" alt="" />
                             </div>
                             <div className={classes.gids_info__name}>Иванов Иван Иванов Иван</div>
                             <div className={classes.gids_info__email}>exampleexample@gmail.com</div>
@@ -80,7 +80,7 @@ function Gids({ children, title, type, ...props }) {
                 :
                 <>
                     <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                        <Link to={`/admin/edit/${title}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                        <Link to={`/admin/edit/${title}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                     </div>
                 </>
             }

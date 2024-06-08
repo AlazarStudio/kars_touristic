@@ -52,7 +52,7 @@ function Events({ children, ...props }) {
                     <div className={classes.visitMain} style={{ backgroundImage: `url(${server}/refs/${event.mainPhoto})` }}>
                         <H2 text_transform="uppercase" font_size="40px" color="var(--white_color)" zIndex="1">{event.title}</H2>
                         <a href={event.mapLink} target="_blank" className={classes.placePoint}>
-                            <img src="/placePoint.png" alt="" />
+                            <img src="/placePoint.webp" alt="" />
                             Показать на карте
                         </a>
                     </div>

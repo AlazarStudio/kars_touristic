@@ -39,11 +39,11 @@ function Feedback({ children, ...props }) {
                                     <div className={classes.feedback_slide}>
                                         <div className={classes.feedback_slide__top}>
                                             <div className={classes.feedback_slide__top___img}>
-                                                <img src="/feedback_photo.png" alt="" />
+                                                <img src="/feedback_photo.webp" alt="" />
                                             </div>
                                             <div className={classes.feedback_slide__top___name}>Иван Иванов</div>
                                             <div className={classes.feedback_slide__top___stars}>
-                                                <img src="/rating_all.png" alt="" />
+                                                <img src="/rating_all.webp" alt="" />
                                             </div>
                                         </div>
                                         <div className={classes.feedback_slide__bottom}>
@@ -55,11 +55,11 @@ function Feedback({ children, ...props }) {
                                     <div className={classes.feedback_slide}>
                                         <div className={classes.feedback_slide__top}>
                                             <div className={classes.feedback_slide__top___img}>
-                                                <img src="/feedback_photo.png" alt="" />
+                                                <img src="/feedback_photo.webp" alt="" />
                                             </div>
                                             <div className={classes.feedback_slide__top___name}>Иван Иванов</div>
                                             <div className={classes.feedback_slide__top___stars}>
-                                                <img src="/rating_all.png" alt="" />
+                                                <img src="/rating_all.webp" alt="" />
                                             </div>
                                         </div>
                                         <div className={classes.feedback_slide__bottom}>
@@ -71,11 +71,11 @@ function Feedback({ children, ...props }) {
                                     <div className={classes.feedback_slide}>
                                         <div className={classes.feedback_slide__top}>
                                             <div className={classes.feedback_slide__top___img}>
-                                                <img src="/feedback_photo.png" alt="" />
+                                                <img src="/feedback_photo.webp" alt="" />
                                             </div>
                                             <div className={classes.feedback_slide__top___name}>Иван Иванов</div>
                                             <div className={classes.feedback_slide__top___stars}>
-                                                <img src="/rating_all.png" alt="" />
+                                                <img src="/rating_all.webp" alt="" />
                                             </div>
                                         </div>
                                         <div className={classes.feedback_slide__bottom}>

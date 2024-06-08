@@ -43,10 +43,10 @@ function Room({ room, index, moveRoom, deleteElement, region }) {
             </div>
             <div className={classes.multidayTours_data__tour___btns}>
                 <Link to={`${room._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>
-                    <img src="/edit.png" alt="" />
+                    <img src="/edit.webp" alt="" />
                 </Link>
                 <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(room._id)}>
-                    <img src="/delete.png" alt="" />
+                    <img src="/delete.webp" alt="" />
                 </div>
             </div>
         </div>
@@ -114,7 +114,7 @@ function ShowRooms({ hotelId, region, type }) {
             {!roomId ?
                 <DndProvider backend={HTML5Backend}>
                     <div className={`${classes.multidayTours_back}`}>
-                        <Link to={`/admin/edit/${region}/${type}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                        <Link to={`/admin/edit/${region}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                     </div>                    
                     <div className={classes.multidayTours_top__title}>Номера отеля</div>
 
@@ -134,7 +134,7 @@ function ShowRooms({ hotelId, region, type }) {
                 :
                 <>
                     <div className={`${classes.multidayTours_back}`}>
-                        <Link to={`/admin/edit/${region}/${type}/showRooms/${hotelId}`}><img src="/back.png" alt="" /> Вернуться назад</Link>
+                        <Link to={`/admin/edit/${region}/${type}/showRooms/${hotelId}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                     </div>
 
                     <EditRoom region={region} onTourAdded={response} photoMassName={'photos'}/>

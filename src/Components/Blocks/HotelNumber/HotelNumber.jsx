@@ -20,11 +20,11 @@ function HotelNumber({ children, ...props }) {
                         </div>
                         <div className={classes.hotelNumbers_item__bottom___infoBlocks}>
                             <div className={classes.hotelNumbers_item__bottom___infoBlocks____block}>
-                                <img src="/peoples.png" alt="" />
+                                <img src="/peoples.webp" alt="" />
                                 <div className={classes.hotelNumbers_item__bottom___infoBlocks____block_____title}>{item.places}</div>
                             </div>
                             <div className={classes.hotelNumbers_item__bottom___infoBlocks____block}>
-                                <img src="/size.png" alt="" />
+                                <img src="/size.webp" alt="" />
                                 <div className={classes.hotelNumbers_item__bottom___infoBlocks____block_____title}>{item.square}</div>
                             </div>
                         </div>

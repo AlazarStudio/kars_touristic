@@ -10,7 +10,7 @@ import HotelNumber from "../HotelNumber/HotelNumber";
 
 import server from '../../../serverConfig'
 function Hotels({ children, ...props }) {
-    let img = '/hotel_bg.png';
+    let img = '/hotel_bg.webp';
 
     let { id } = useParams();
 
@@ -42,7 +42,7 @@ function Hotels({ children, ...props }) {
     function getStars(number) {
         let stars = '';
         for (let i = 0; i < number; i++) {
-            stars += `<img src="/star.png" alt="" />`;
+            stars += `<img src="/star.webp" alt="" />`;
         }
 
         return stars;
@@ -70,7 +70,7 @@ function Hotels({ children, ...props }) {
                                 {hotel.items.map((item, index) => (
                                     <div key={index} className={classes.hotelItems_elem}>
                                         <div className={classes.hotelItems_elem__img}>
-                                            <img src="/calendar.png" alt="" />
+                                            <img src="/calendar.webp" alt="" />
                                         </div>
                                         <div className={classes.hotelItems_elem__title}>{item.title}</div>
                                         <div className={classes.hotelItems_elem__desc}>{item.description}</div>
@@ -80,21 +80,21 @@ function Hotels({ children, ...props }) {
 
                                 {/* <div className={classes.hotelItems_elem}>
                                     <div className={classes.hotelItems_elem__img}>
-                                        <img src="/nomers.png" alt="" />
+                                        <img src="/nomers.webp" alt="" />
                                     </div>
                                     <div className={classes.hotelItems_elem__title}>50 номеров</div>
                                     <div className={classes.hotelItems_elem__desc}>Разных номеров для разных компаний</div>
                                 </div>
                                 <div className={classes.hotelItems_elem}>
                                     <div className={classes.hotelItems_elem__img}>
-                                        <img src="/dir.png" alt="" />
+                                        <img src="/dir.webp" alt="" />
                                     </div>
                                     <div className={classes.hotelItems_elem__title}>250 метров</div>
                                     <div className={classes.hotelItems_elem__desc}>Ближайший подъемник в шагой доступности для наших гостей</div>
                                 </div>
                                 <div className={classes.hotelItems_elem}>
                                     <div className="hotelItems_elem__img">
-                                        <img src="/food.png" alt="" />
+                                        <img src="/food.webp" alt="" />
                                     </div>
                                     <div className={classes.hotelItems_elem__title}>Отличный завтрак</div>
                                     <div className={classes.hotelItems_elem__desc}>Уже включен в стоимость проживания в нашей гостинице</div>
@@ -142,15 +142,15 @@ function Hotels({ children, ...props }) {
                             <div className={classes.links}>
                                 {hotel.links.map((item, index) => (
                                     <a key={index} href={`https://${item}`} target="_blank" className={classes.links_item}>
-                                        <img src="/tg_white.png" alt="" />
+                                        <img src="/tg_white.webp" alt="" />
                                     </a>
                                 ))}
 {/* 
                                 <a href="#" target="_blank" className={classes.links_item}>
-                                    <img src="/vk_white.png" alt="" />
+                                    <img src="/vk_white.webp" alt="" />
                                 </a>
                                 <a href="#" target="_blank" className={classes.links_item}>
-                                    <img src="/wa_white.png" alt="" />
+                                    <img src="/wa_white.webp" alt="" />
                                 </a> */}
                             </div>
                         </WidthBlock>

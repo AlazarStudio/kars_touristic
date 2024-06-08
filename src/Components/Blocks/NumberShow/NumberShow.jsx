@@ -89,7 +89,7 @@ function NumberShow({ children, ...props }) {
                                         <div className={classes.numberInfo_right__desc___items____block_____title}>В номере:</div>
                                         <div className={classes.numberInfo_right__desc___items____block____elements}>
                                             {room.inRoom.map((item, index) => (
-                                                <div key={index}><p><img src="/yes.png" alt="" /></p><span>{item}</span></div>
+                                                <div key={index}><p><img src="/yes.webp" alt="" /></p><span>{item}</span></div>
                                             ))}
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@ function NumberShow({ children, ...props }) {
                                         <div className={classes.numberInfo_right__desc___items____block_____title}>Принадлежности:</div>
                                         <div className={classes.numberInfo_right__desc___items____block____elements}>
                                             {room.inRoom.map((item, index) => (
-                                                <div key={index}><p><img src="/yes.png" alt="" /></p><span>{item}</span></div>
+                                                <div key={index}><p><img src="/yes.webp" alt="" /></p><span>{item}</span></div>
                                             ))}
                                         </div>
                                     </div>

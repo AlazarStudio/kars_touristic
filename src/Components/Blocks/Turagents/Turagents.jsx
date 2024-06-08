@@ -6,7 +6,7 @@ import BlockTopInfo from "../BlockTopInfo/BlockTopInfo";
 import H2 from "../../Standart/H2/H2";
 import Form from "../Form/Form";
 
-import turagents_bg from "/turagents_bg.png";
+import turagents_bg from "/turagents_bg.webp";
 
 import server from '../../../serverConfig';
 
