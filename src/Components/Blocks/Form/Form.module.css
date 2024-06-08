@@ -68,3 +68,11 @@
     margin-top: 30px;
     cursor: pointer;
 }
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .form {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 10px;
+    }
+}

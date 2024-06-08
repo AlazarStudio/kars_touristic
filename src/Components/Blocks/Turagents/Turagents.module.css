@@ -42,3 +42,27 @@
 .turagentsButtons_item:last-child{
     background-color: var(--white_color);
 }
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .turagentsText{
+        padding: 0 20px;
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .turagentsButtons{
+        padding: 0 20px;
+        gap: 10px;
+        margin-bottom: 20px;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .turagentsButtons_item{
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        padding: 5px;
+        font-size: 16px;
+    }
+}

@@ -31,3 +31,31 @@
     line-height: 24.38px;
     text-align: center;
 }
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .team{
+        width: 48% !important;
+        gap: 10px;
+    }
+
+    .team_img{
+        height: 200px;
+        border-radius: 0;
+    }
+
+    .team_img img{
+        border-radius: 20px;
+    }
+
+    .team_title{
+        font-size: 18px;
+        line-height: normal;
+    }
+
+    .team_text{
+        width: 100%;
+        font-size: 14px;
+        line-height: normal;
+    }
+}

@@ -79,3 +79,58 @@
     width: 80%;
     margin: 0 auto;
 }
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .about_title {
+        flex-direction: column;
+        border-radius: 0;
+        background-size: auto;
+        background-position: top;
+    }
+
+    .about_title__left {
+        width: 100%;
+        height: 200px;
+    }
+
+    .about_title__left img{
+        width: 150px;
+    }
+
+    .about_title__right {
+        width: 100%;
+        border-radius: 0;
+        padding: 20px;
+        gap: 20px;
+        border: none;
+    }
+
+    .about_title__right___text {
+        font-size: 14px;
+        line-height: normal;
+        text-align: justify;
+    }
+
+    .about_title__right___name {
+        text-align: center;
+    }
+
+    .mission_line{
+        display: none;
+    }
+
+    .mission{
+        border-radius: 0;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .mission_text{
+        margin: 0;
+        width: 100%;
+        font-size: 14px;
+        line-height: normal;
+        text-align: justify;
+    }
+}

@@ -8,7 +8,7 @@ import InfoBlock from "../../Standart/InfoBlock/InfoBlock";
 import H2 from "../../Standart/H2/H2";
 import TeamBlock from "../TeamBlock/TeamBlock";
 
-import logo from "/about_title_logo.webp";
+import logo from "/logo_about.png";
 import about_certificate from "/about_certificate.webp";
 import about_interaction from "/about_interaction.webp";
 import about_handshake from "/about_handshake.webp";

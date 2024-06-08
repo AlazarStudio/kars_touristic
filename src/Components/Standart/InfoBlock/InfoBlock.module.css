@@ -11,3 +11,20 @@
     padding: 30px;
     backdrop-filter: blur(3px);
 }
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .InfoBlock{
+        width: 100% !important;
+        height: auto !important;
+        gap: 20px;
+        font-size: 14px;
+        line-height: normal;
+        padding: 20px;
+        justify-content: flex-start;
+    }
+
+    .InfoBlock img{
+        height: auto;
+    }
+}
