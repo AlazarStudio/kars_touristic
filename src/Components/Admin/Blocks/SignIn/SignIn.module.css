@@ -84,3 +84,18 @@
         transform: rotate(360deg);
     }
 }
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .registerForm{
+        height: auto;
+        margin-top: 0px;
+        width: 100%;
+        margin-bottom: 0;
+        padding: 20px;
+    }
+
+    .registerForm form{
+        width: 100%;
+    }
+}

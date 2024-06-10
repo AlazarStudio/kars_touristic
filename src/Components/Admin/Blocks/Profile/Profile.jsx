@@ -12,7 +12,7 @@ function Profile({ children, ...props }) {
     const [user, setUser] = useState();
 
     let token = localStorage.getItem('token');
-    
+
     const navigate = useNavigate();
 
     const getUserInfo = async (token) => {
@@ -51,11 +51,46 @@ function Profile({ children, ...props }) {
 
             {user ?
                 <CenterBlock>
-                    <H2 text_transform={"uppercase"} text_align={'center'}>Информация о пользователе</H2>
+                    <WidthBlock>
+                        <div className={classes.blockUser}>
+                            <img src="/logout.png" alt="" onClick={logout} className={classes.logout} />
+                            
+                            <div className={classes.blockUser_img}>
+                                <img src="/noPhoto.png" alt="" />
+                            </div>
+                            <div className={classes.blockUser_info}>
+                                {user.name}
+                            </div>
+                        </div>
 
-                    {user.name}
+                        <div className={classes.blockUser}>
+                            <div className={classes.contacts}>
+                                <H2 text_transform={'uppercase'}>Контакты</H2>
 
-                    <button onClick={logout}>Выход</button>
+                                <div className={classes.contacts_elem}>
+                                    <div className={classes.contacts_elem__item}>
+                                        <div className={classes.contacts_elem__item___img}>
+                                            <img src="/phone.png" alt="" />
+                                        </div>
+                                        <div className={classes.contacts_elem__item___data}>
+                                            <div className={classes.contacts_elem__item___data____title}>{user.phone}</div>
+                                            <div className={classes.contacts_elem__item___data____desc}>Телефон</div>
+                                        </div>
+                                    </div>
+                                    <div className={classes.contacts_elem__item}>
+                                        <div className={classes.contacts_elem__item___img}>
+                                            <img src="/email.png" alt="" />
+                                        </div>
+                                        <div className={classes.contacts_elem__item___data}>
+                                            <div className={classes.contacts_elem__item___data____title}>{user.email}</div>
+                                            <div className={classes.contacts_elem__item___data____desc}>Почта</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </WidthBlock>
+
                 </CenterBlock>
                 : null
             }

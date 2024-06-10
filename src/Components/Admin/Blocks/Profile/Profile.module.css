@@ -1,11 +1,12 @@
-.registerForm{
+.registerForm {
     display: flex;
     flex-direction: column;
     width: 500px;
     gap: 20px;
     margin-bottom: 80px;
 }
-.registerForm form{
+
+.registerForm form {
     display: flex;
     flex-direction: column;
     width: 500px;
@@ -36,7 +37,157 @@
     font-weight: 600;
 }
 
-.registerForm h2{
+.registerForm h2 {
     margin-bottom: 20px;
     font-size: 36px;
+}
+
+.blockUser {
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    padding: 30px 50px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+}
+
+.blockUser:last-child {
+    margin-bottom: 40px;
+}
+
+.logout {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 25px;
+    cursor: pointer;
+}
+
+.blockUser_img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.blockUser_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.blockUser_info {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.26px;
+    text-align: left;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.contacts h2 {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+}
+
+.contacts_elem {
+    display: flex;
+    gap: 40px;
+}
+
+.contacts_elem__item {
+    border: 1px solid #000;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.contacts_elem__item___data {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.contacts_elem__item___data____title {
+    font-family: Montserrat;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.contacts_elem__item___data____desc {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.contacts_elem__item___img {
+    width: 40px;
+    height: 40px;
+}
+
+.contacts_elem__item___img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .contacts_elem {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .contacts {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .blockUser {
+        padding: 10px 40px 10px 10px;
+        gap: 10px;
+        margin: 10px;
+        width: calc(100% - 20px);
+        border-radius: 20px;
+    }
+
+    .blockUser:last-child {
+        padding: 10px 10px;
+    }
+
+    .blockUser_img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .blockUser_info {
+        width: calc(100% - 60px);
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .contacts_elem__item___data____title {
+        font-size: 16px;
+    }
+
+    .contacts_elem__item___data____desc {
+        font-size: 14px;
+    }
+
+    .logout {
+        top: 15px;
+        right: 15px;
+        width: 20px;
+    }
 }
