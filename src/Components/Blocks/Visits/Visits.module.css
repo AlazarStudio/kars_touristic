@@ -21,11 +21,26 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    width: 25%;
+    width: 100%;
     font-family: Montserrat;
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
+}
+
+.visitBlocks_item_forText {
+    border: 1px solid var(--black_color);
+    border-radius: 20px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: justify;
+    width: 100%;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 500;
 }
 
 .visitBlocks_item__desc span {
@@ -91,29 +106,39 @@
 
 
 @media (min-width: 0px) and (max-width: 1299px) {
-    .similar{
+    .similar {
         gap: 20px 10px;
         padding: 10px;
     }
 
-    .visitMain{
+    .visitMain {
         margin-bottom: 20px;
         height: 400px;
     }
 
-    .visitBlocks{
+    .visitBlocks {
         gap: 10px;
         padding: 10px;
         flex-wrap: wrap;
     }
 
-    .visitBlocks_item{
+    .visitBlocks_item {
         width: 48%;
+        gap: 10px;
     }
 
-    .visitButton{
+    .visitButton {
         padding: 10px 20px;
         font-size: 14px;
         border-radius: 10px;
     }
+
+    .visitBlocks_item_forText{
+        padding: 20px;
+        font-size: 14px;
+        text-align: justify;
+        width: calc(100% - 20px);
+        margin: 10px;
+    }
+
 }

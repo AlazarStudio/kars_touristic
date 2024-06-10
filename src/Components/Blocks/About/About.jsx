@@ -88,7 +88,10 @@ function About({ children, ...props }) {
                     <RowBlock justifyContent={"space-between"}>
                         <InfoBlock width={"32%"} height={"150px"}>
                             <img src={about_certificate} alt="" />
-                            Сертифицированный туроператор
+                            <div>
+                                <p>Сертифицированный туроператор</p>
+                                <a href="tel:+78005500488" style={{ 'color': '#000' }}>+7 (800) 550-04-88</a>
+                            </div>
                         </InfoBlock>
                         <InfoBlock width={"32%"} height={"150px"}>
                             <img src={about_interaction} alt="" />
@@ -106,20 +109,20 @@ function About({ children, ...props }) {
                         <H2 text_transform={"uppercase"}>Наша команда</H2>
                     </CenterBlock>
 
-                    <RowBlock>
-                        {teamMembers ?
-                            teamMembers.map((item, index) => (
-                                <TeamBlock
-                                    key={index}
-                                    width={"23%"}
-                                    img={item.imgPath}
-                                    title={item.name}
-                                    text={item.description}
-                                />
-                            ))
-                            : null
-                        }
-                    </RowBlock>
+                    {teamMembers.length > 0 ?
+                        <RowBlock>
+                            {teamMembers.map((item, index) => (
+                            <TeamBlock
+                                key={index}
+                                width={"23%"}
+                                img={item.imgPath}
+                                title={item.name}
+                                text={item.description}
+                            />
+                            ))}
+                        </RowBlock>
+                        : null
+                    }
 
                     <div className={classes.mission}>
                         <div className={classes.mission_title}>

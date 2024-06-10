@@ -41,7 +41,7 @@ function Footer({ children, ...props }) {
                     </div>
                     <div className={classes.footer_data__column}>
                         <div className={classes.footer_data__column___phone}>
-                            <a href="tel:+78782250227">8 (8782) 25-02-27</a>
+                            <a href="tel:+78005500488">+7 (800) 550-04-88</a>
                         </div>
                         <div className={classes.footer_data__column___text}>
                             <div>Телефон поддержки</div>

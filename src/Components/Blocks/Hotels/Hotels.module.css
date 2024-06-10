@@ -50,14 +50,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     width: 100%;
     padding: 80px 0;
-    gap: 70px;
+    gap: 20px;
 }
 
 .hotelItems_elem {
     width: 25%;
-    height: 275px;
+    height: 150px;
     display: flex;
     flex-direction: column;
     justify-content: center;

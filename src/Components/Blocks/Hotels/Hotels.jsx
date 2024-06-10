@@ -127,25 +127,31 @@ function Hotels({ children, ...props }) {
 
                             <SliderHotel info={hotel.galery} boxShadow={'none'} loop={true} />
 
-                            <CenterBlock>
-                                <H2 text_transform="uppercase" font_size="36px">НОМЕРА</H2>
-                            </CenterBlock>
+                            {rooms.length > 0 ?
+                                <>
+                                    <CenterBlock>
+                                        <H2 text_transform="uppercase" font_size="36px">НОМЕРА</H2>
+                                    </CenterBlock>
 
-                            <HotelNumber numbers={rooms} />
+                                    <HotelNumber numbers={rooms} />
+                                </>
+                                :
+                                null
+                            }
 
-                            <CenterBlock>
+                            {/* <CenterBlock>
                                 <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                             </CenterBlock>
 
-                            <Feedback />
+                            <Feedback /> */}
 
                             <div className={classes.links}>
                                 {hotel.links.map((item, index) => (
-                                    <a key={index} href={`https://${item}`} target="_blank" className={classes.links_item}>
+                                    <a key={index} href={`${item}`} target="_blank" className={classes.links_item}>
                                         <img src="/tg_white.webp" alt="" />
                                     </a>
                                 ))}
-{/* 
+                                {/* 
                                 <a href="#" target="_blank" className={classes.links_item}>
                                     <img src="/vk_white.webp" alt="" />
                                 </a>

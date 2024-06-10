@@ -63,12 +63,27 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
     }, []);
 
 
-    const foundRegion = regions.filter(region => region.region === tour.region);
+    const foundRegion = regions.filter(region => region.region === tour?.region);
 
     window.scrollTo({
         top: 0,
         behavior: 'auto'
     });
+
+    const renderPlaces = (item) => {
+        if (!places || places.length === 0) {
+            return <span key={item}>{item}</span>;
+        }
+        const normalizedItem = item.toLowerCase();
+        const matchedPlace = places.find(place => place.title.toLowerCase().includes(normalizedItem) || normalizedItem.includes(place.title.toLowerCase()));
+        return matchedPlace ? (
+            <Link to={`/visits/${matchedPlace._id}`} key={matchedPlace._id}>
+                {item}
+            </Link>
+        ) : (
+            <span key={normalizedItem}>{item}</span>
+        );
+    };
 
     return (
         <>
@@ -139,29 +154,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                                                 </svg>
                                                             </div>
                                                             <div className={classes.tour_topInfo__right___places____place_____title}>
-                                                                {
-                                                                    places ?
-                                                                        places.length != 0 ?
-                                                                            places.map((place, index) => {
-                                                                                const normalizedTitle = place.title.toLowerCase();
-                                                                                const normalizedItem = item.toLowerCase();
-                                                                                if (normalizedTitle.includes(normalizedItem) || normalizedItem.includes(normalizedTitle)) {
-                                                                                    return (
-                                                                                        <Link to={`/visits/${place._id}`} key={index}>
-                                                                                            {place.title}
-                                                                                        </Link>
-                                                                                    );
-                                                                                } else {
-                                                                                    return (
-                                                                                        <span key={index}>
-                                                                                            {item}
-                                                                                        </span>
-                                                                                    );
-                                                                                }
-                                                                            })
-                                                                            : item
-                                                                        : item
-                                                                }
+                                                                {renderPlaces(item)}
                                                             </div>
                                                         </div>
                                                     ))}
@@ -175,54 +168,61 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                     </div>
 
                     <WidthBlock>
+                        <CenterBlock>
+                            <H2 text_transform="uppercase" font_size="36px">Чек-Лист</H2>
+                        </CenterBlock>
+                        
                         <Slider info={tour.checklists} boxShadow={'0px 4px 46.4px 0px #B4B4B440'} loop={false} />
 
                         <ToursTab tabs={tour.days} />
 
-                        <CenterBlock>
+                        {/* <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                         </CenterBlock>
 
-                        <Feedback />
+                        <Feedback /> */}
 
-                        <CenterBlock>
-                            <H2 text_transform="uppercase" font_size="36px">Похожие туры</H2>
-                        </CenterBlock>
+                        {foundRegion.length > 1 ?
+                            <>
+                                <CenterBlock>
+                                    <H2 text_transform="uppercase" font_size="36px">Похожие туры</H2>
+                                </CenterBlock>
 
-                        {foundRegion ?
-                            <div className={classes.similar}>
-                                <div className={classes.similarBlock}>
-                                    <Swiper
-                                        navigation={true}
-                                        modules={[Navigation]}
-                                        slidesPerView={3}
-                                        spaceBetween={30}
-                                        className={'similarTours'}
-                                        breakpoints={{
-                                            320: {
-                                                slidesPerView: 1,
-                                            },
-                                            768: {
-                                                slidesPerView: 2,
-                                            },
-                                            1024: {
-                                                slidesPerView: 3,
-                                            },
-                                        }}
-                                    >
-                                        {foundRegion.map((item, index) => (
-                                            item._id != id ?
-                                                <SwiperSlide key={index}>
-                                                    <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} />
-                                                </SwiperSlide>
-                                                : null
-                                        ))}
-                                    </Swiper>
+                                <div className={classes.similar}>
+                                    <div className={classes.similarBlock}>
+                                        <Swiper
+                                            navigation={true}
+                                            modules={[Navigation]}
+                                            slidesPerView={3}
+                                            spaceBetween={30}
+                                            className={'similarTours'}
+                                            breakpoints={{
+                                                320: {
+                                                    slidesPerView: 1,
+                                                },
+                                                768: {
+                                                    slidesPerView: 2,
+                                                },
+                                                1024: {
+                                                    slidesPerView: 3,
+                                                },
+                                            }}
+                                        >
+                                            {foundRegion.map((item, index) => (
+                                                item._id != id ?
+                                                    <SwiperSlide key={index}>
+                                                        <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} />
+                                                    </SwiperSlide>
+                                                    : null
+                                            ))}
+                                        </Swiper>
+                                    </div>
                                 </div>
-                            </div>
+                            </>
                             : null
                         }
 
+                        <br />
                     </WidthBlock>
                 </div>
                 :
