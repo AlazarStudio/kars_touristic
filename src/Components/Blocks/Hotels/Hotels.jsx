@@ -59,6 +59,7 @@ function Hotels({ children, ...props }) {
                                     <div className={classes.hotelTitle}>{hotel.title}</div>
                                     <div className={classes.hotelDesc}>{hotel.description}</div>
                                     <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
+                                    <div className={classes.hotelBron}>Забронировать</div>
                                 </div>
                             </WidthBlock>
                         </CenterBlock>

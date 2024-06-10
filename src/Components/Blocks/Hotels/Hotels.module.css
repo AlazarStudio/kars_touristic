@@ -16,8 +16,7 @@
     top: 0;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 100%);
+    background: #00000069;
     z-index: 1;
 }
 
@@ -177,21 +176,34 @@
     object-fit: contain;
 }
 
+.hotelBron{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
 
 @media (min-width: 0px) and (max-width: 1299px) {
     .main {
-        height: 400px;
+        height: auto;
         padding: 80px 10px 20px 10px;
         gap: 20px;
     }
 
     .main::before {
-        height: 400px;
+        height: 100%;
     }
 
     .hotelInfo {
         width: 100%;
         align-items: center;
+        margin-top: 0;
     }
 
     .hotelItems {
@@ -203,7 +215,10 @@
 
     .hotelItems_elem {
         width: 48%;
-        height: auto;
+        height: 150px;
+    }
+    .hotelItems_elem__title{
+        font-size: 14px;
     }
 
     .aboutHotel {
@@ -241,5 +256,11 @@
 
     .links_item img{
         width: 100%;
+    }
+
+    .hotelDesc{
+        font-size: 16px;
+        line-height: normal;
+        text-align: justify;
     }
 }
