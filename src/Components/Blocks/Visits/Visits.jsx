@@ -81,15 +81,17 @@ function Visits({ children, ...props }) {
                             <CenterBlock gap={'40px'}>
                                 <H2 text_transform="uppercase" text_align={'center'} font_size="60px" color="var(--white_color)" zIndex="1">{place.title}</H2>
 
+                                <div className={classes.visitBlocks_item_forText}>
+                                    {place.description}
+                                </div>
+
                                 <Link to={place.mapLink} className={classes.visitButton} target="_blank" style={{ zIndex: '1' }}> <img src="/placePoint.webp" alt="" />Показать на карте</Link>
                             </CenterBlock>
                         </WidthBlock>
                     </div>
 
                     <WidthBlock>
-                        <div className={classes.visitBlocks_item_forText}>
-                            {place.description}
-                        </div>
+
 
 
                         <CenterBlock>
