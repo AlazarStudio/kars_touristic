@@ -5,7 +5,7 @@ import CenterBlock from "../../../Standart/CenterBlock/CenterBlock";
 import H2 from "../../../Standart/H2/H2";
 
 import server from '../../../../serverConfig';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignIn({ children, ...props }) {
     const [formData, setFormData] = useState({
@@ -55,7 +55,7 @@ function SignIn({ children, ...props }) {
 
             <CenterBlock>
                 <div className={classes.registerForm}>
-                    <H2 text_transform={"uppercase"} text_align={'center'}>Авторизация</H2>
+                    <H2 text_transform={"uppercase"} text_align={'center'}>Войти</H2>
 
                     <form onSubmit={handleSubmit}>
                         <input
@@ -75,6 +75,7 @@ function SignIn({ children, ...props }) {
                             onChange={handleChange}
                         />
                         <button type="submit" disabled={loading}>Войти</button>
+                        <Link to={'/signUp'} style={{'text-align': 'center', 'color': '#4872F2', 'font-weight': '600'}}>Зарегистрироваться</Link>
                     </form>
                     {loading && <div className={classes.loaderWrapper}><div className={classes.loader}></div></div>} {/* Прелоудер */}
                 </div>

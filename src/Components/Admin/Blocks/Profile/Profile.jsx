@@ -6,12 +6,14 @@ import WidthBlock from "../../../Standart/WidthBlock/WidthBlock";
 import H2 from "../../../Standart/H2/H2";
 
 import server from '../../../../serverConfig';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Profile({ children, ...props }) {
     const [user, setUser] = useState();
 
     let token = localStorage.getItem('token');
+    
+    const navigate = useNavigate();
 
     const getUserInfo = async (token) => {
         const response = await fetch(`${server}/api/user`, {
@@ -33,6 +35,8 @@ function Profile({ children, ...props }) {
     useEffect(() => {
         if (token) {
             getUserInfo(token);
+        } else {
+            navigate('/signIn');
         }
     }, [token])
 
@@ -53,13 +57,7 @@ function Profile({ children, ...props }) {
 
                     <button onClick={logout}>Выход</button>
                 </CenterBlock>
-                :
-                <CenterBlock>
-                    <div>
-                        <Link to={'/signUp'}>Регистрация</Link> /
-                        <Link to={'/signIn'}>Авторизация</Link>
-                    </div>
-                </CenterBlock>
+                : null
             }
         </>
     );

@@ -6,7 +6,7 @@ import WidthBlock from "../../../Standart/WidthBlock/WidthBlock";
 import H2 from "../../../Standart/H2/H2";
 
 import server from '../../../../serverConfig';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignUp({ children, ...props }) {
     const [formData, setFormData] = useState({
@@ -103,6 +103,7 @@ function SignUp({ children, ...props }) {
                             onChange={handleChange}
                         />
                         <button type="submit" disabled={loading}>Зарегистрироваться</button>
+                        <Link to={'/signIn'} style={{'text-align': 'center', 'color': '#4872F2', 'font-weight': '600'}}>Войти</Link>
                     </form>
                     {loading && <div className={classes.loaderWrapper}><div className={classes.loader}></div></div>} {/* Прелоудер */}
                 </div>
