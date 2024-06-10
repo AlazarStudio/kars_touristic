@@ -17,6 +17,9 @@ import Number_Page from "./Components/Pages/Number_Page";
 import Visit_Page from "./Components/Pages/Visit_Page";
 import Event_Page from "./Components/Pages/Event_Page";
 import Admin_Page from "./Components/Admin/Admin_Page";
+import SignUp from "./Components/Admin/Blocks/SignUp/SignUp";
+import SignIn from "./Components/Admin/Blocks/SignIn/SignIn";
+import Profile from "./Components/Admin/Blocks/Profile/Profile";
 
 function App() {
   return (
@@ -38,6 +41,10 @@ function App() {
           <Route path="/hotels/:id/:numID" element={<Number_Page />} />
           <Route path="/visits/:id" element={<Visit_Page />} />
           <Route path="/events/:id" element={<Event_Page />} />
+
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/signIn" element={<SignIn />} />
+          <Route path="/profile" element={<Profile />} />
 
           <Route path="*" element={<Non_Found_Page />} />
         </Route>

@@ -16,7 +16,7 @@ function Header_white({ children, ...props }) {
         setMenuOpen(!menuOpen);
     };
 
-    return ( 
+    return (
         <>
             <header className={classes.header}>
                 <div className={classes.navigation}>
@@ -34,8 +34,8 @@ function Header_white({ children, ...props }) {
                     </div>
                     <div className={classes.navigation_btn}>
                         <ul>
-                            <li><Link to="/profile"><img src={favourite} alt="" /></Link></li>
-                            <li><Link to="/favourites"><img src={profile} alt="" /></Link></li>
+                            <li><Link to="/profile"><img src={profile} alt="" /></Link></li>
+                            <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li>
                             <li><Link to="/cart"><img src={cart} alt="" /></Link></li>
                             <li className={classes.mobileHeader} onClick={toggleMenu}><img src={burger} alt="Menu" /></li>
                         </ul>
