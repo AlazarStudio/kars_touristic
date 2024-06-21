@@ -1,5 +1,5 @@
 import React from "react";
-import Header_white from "../Blocks/Header_white/Header_white";
+import Header_black from "../Blocks/Header_black/Header_black";
 
 function Non_Found_Page({ children, ...props }) {
     window.scrollTo({
@@ -9,9 +9,9 @@ function Non_Found_Page({ children, ...props }) {
     
     return (
         <>
-            <Header_white />
+            <Header_black />
             <div className="nonFoundPage">
-                Страница не найдена
+                Загрузка ...
             </div>
         </>
     );

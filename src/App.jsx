@@ -35,7 +35,7 @@ function App() {
           <Route path="/region/:id" element={<Region_Page />} />
 
           <Route path="/tours/:id" element={<Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} />} />
-          <Route path="/excursions/:id" element={<Tours_Page tableName={'onedayTour'} requestType={'getOneOnedayTour'} similar={'getOnedayTours'} pageName={'excursions'}/>} />
+          <Route path="/excursions/:id" element={<Tours_Page tableName={'onedayTour'} requestType={'getOneOnedayTour'} similar={'getOnedayTours'} pageName={'excursions'} />} />
           <Route path="/gids/:id" element={<Tours_Page />} />
           <Route path="/hotels/:id" element={<Hotels_Page />} />
           <Route path="/hotels/:id/:numID" element={<Number_Page />} />
@@ -46,16 +46,16 @@ function App() {
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/profile" element={<Profile />} />
 
+          <Route path="/admin" element={<Admin_Page />} />
+          <Route path="/admin/:id" element={<Admin_Page />} />
+          <Route path="/admin/:id/:title" element={<Admin_Page />} />
+          <Route path="/admin/:id/:title/:type" element={<Admin_Page />} />
+          <Route path="/admin/:id/:title/:type/:add" element={<Admin_Page />} />
+          <Route path="/admin/:id/:title/:type/:add/:idToEdit" element={<Admin_Page />} />
+          <Route path="/admin/:id/:title/:type/:add/:idToEdit/:roomId" element={<Admin_Page />} />
+
           <Route path="*" element={<Non_Found_Page />} />
         </Route>
-        
-        <Route path="/admin" element={<Admin_Page />} />
-        <Route path="/admin/:id" element={<Admin_Page />} />
-        <Route path="/admin/:id/:title" element={<Admin_Page />} />
-        <Route path="/admin/:id/:title/:type" element={<Admin_Page />} />
-        <Route path="/admin/:id/:title/:type/:add" element={<Admin_Page />} />
-        <Route path="/admin/:id/:title/:type/:add/:idToEdit" element={<Admin_Page />} />
-        <Route path="/admin/:id/:title/:type/:add/:idToEdit/:roomId" element={<Admin_Page />} />
       </Routes>
     </>
   )
