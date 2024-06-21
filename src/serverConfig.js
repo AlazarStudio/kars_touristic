@@ -1,6 +1,6 @@
 function serverConfig() {
     // const server = 'https://localhost:443';
-    const server = 'https://karstouristic.ru';
+    const server = 'https://backend.karstouristic.ru';
     return server;
 }
 
