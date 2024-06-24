@@ -92,7 +92,11 @@ function Visits({ children, ...props }) {
 
                     <WidthBlock>
 
+                        <CenterBlock>
+                            <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
+                        </CenterBlock>
 
+                        <SliderPlaces info={place.photos} boxShadow={'none'} loop={true} />
 
                         <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">Чек-лист</H2>
@@ -147,11 +151,7 @@ function Visits({ children, ...props }) {
                             </>
                             : null}
 
-                        <CenterBlock>
-                            <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
-                        </CenterBlock>
 
-                        <SliderPlaces info={place.photos} boxShadow={'none'} loop={true} />
                         <br />
                     </WidthBlock>
                 </CenterBlock>
