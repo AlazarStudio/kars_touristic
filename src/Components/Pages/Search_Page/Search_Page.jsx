@@ -95,7 +95,7 @@ function Search_Page({ children, ...props }) {
                     <div className={classes.findElements}>
                         {filteredResults.length > 0 ? (
                             filteredResults.map((result, index) => (
-                                <Object key={index} regionData={result} pageName={result.tourTitle ? 'tours' : result.rooms ? 'hotels' : result.mapLink ? 'visits' : null} titleObject={result.title ? 'title' : 'tourTitle'} />
+                                <Object key={index} regionData={result} pageName={result.days.length == 1 ? 'excursions' : result.days.length > 1 ? 'tours' : result.rooms ? 'hotels' : result.mapLink ? 'visits' : null} titleObject={result.title ? 'title' : 'tourTitle'} />
                             ))
                         ) : (
                             <p>Ничего не найдено</p>
