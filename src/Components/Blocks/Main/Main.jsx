@@ -24,18 +24,10 @@ function Main({ children, ...props }) {
         <>
             <div className={classes.main}>
                 <div className={classes.main_title}>Организуем ваш отдых на Кавказе</div>
-                {/* <div className={classes.main_desc}>
-                    <select name="" id="">
-                        <option value="1">Многодневные туры</option>
-                        <option value="1">Однодневные туры</option>
-                        <option value="1">Авторские туры</option>
-                        <option value="1">Отели</option>
-                        <option value="1">Что посетить</option>
-                        <option value="1">Региональные ивенты</option>
-                    </select>
+                <div className={classes.main_desc}>
                     <input type="search" placeholder="Поиск" />
                     <button>Найти</button>
-                </div> */}
+                </div>
                 <div className={classes.main_blocks}>
                     {
                         regions.map((item, index) => (
