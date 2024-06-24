@@ -20,6 +20,7 @@ import Admin_Page from "./Components/Admin/Admin_Page";
 import SignUp from "./Components/Admin/Blocks/SignUp/SignUp";
 import SignIn from "./Components/Admin/Blocks/SignIn/SignIn";
 import Profile from "./Components/Admin/Blocks/Profile/Profile";
+import Search_Page from "./Components/Pages/Search_Page/Search_Page";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
           <Route path="/region/:id" element={<Region_Page />} />
+          <Route path="/search" element={<Search_Page />} />
 
           <Route path="/tours/:id" element={<Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} />} />
           <Route path="/excursions/:id" element={<Tours_Page tableName={'onedayTour'} requestType={'getOneOnedayTour'} similar={'getOnedayTours'} pageName={'excursions'} />} />

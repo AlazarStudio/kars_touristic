@@ -159,11 +159,12 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 15px;
-        width: 48%;
+        width: 100%;
     }
 
     .objects_item__bottom {
         height: auto;
+        padding: 10px 10px 20px 10px;
     }
 
     .objects_item__img {
@@ -172,10 +173,15 @@
 
     .objects_item__title {
         font-size: 16px;
+        padding: 10px 15px;
     }
 
     .objects_item__button {
-        font-size: 16px;
+        font-size: 14px;
         line-height: normal;
+    }
+    
+    .objects_item__desc div{
+        font-size: 12px;
     }
 }
