@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import server from '../../../serverConfig'
 
 function Object({ children, pageName, titleObject, ...props }) {
-    console.log(props.regionData);
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
             return str.substring(0, maxLength) + '...';
@@ -31,8 +30,6 @@ function Object({ children, pageName, titleObject, ...props }) {
         });
     }
 
-
-
     return (
         <>
             <div className={classes.objects_item} style={{ width: props.width }}>
@@ -40,25 +37,46 @@ function Object({ children, pageName, titleObject, ...props }) {
                     <img src={`${server}/refs/${props.regionData.mainPhoto ? props.regionData.mainPhoto : props.regionData.photos[0]}`} alt="" />
                 </div>
                 <div className={classes.objects_item__bottom}>
-                    <div className={classes.objects_item__title}>
-                        {truncateString(props.regionData[`${titleObject}`], 50)}
-                    </div>
-                    <div className={classes.objects_item__desc}>
-                        <div>Cпособ передвижения: <span>{truncateString(props.regionData[`travelMethod`], 50)}</span></div>
-                        <div>Продолжительность: <span>{truncateString(props.regionData[`duration`], 50)}</span></div>
-                        <div>Время отправления: <span>{truncateString(props.regionData[`departureTime`], 50)}</span></div>
-                        <div>Тип экскурсии: <span>{truncateString(props.regionData[`tourType`], 50)}</span></div>
-                        <div>Сложность: <span>{truncateString(props.regionData[`difficulty`], 50)}</span></div>
-                        {/* <div>Цена: <span>{truncateString(props.regionData[`cost`], 50)}</span></div> */}
-                    </div>
-                    <div className={classes.objects_item__price}>
-                        <div>Стоимость: <span>от 20 000</span></div>
-                    </div>
 
-                    <div className={classes.buttons}>
-                        <Link to={`/${pageName ? pageName : pageNameVisit}/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
-                        <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} >Забронировать</Link>
-                    </div>
+                    {titleObject != 'title' ?
+                        <>
+                            <div className={classes.objects_item__title}>
+                                {truncateString(props.regionData[`${titleObject}`], 50)}
+                            </div>
+                            <div className={classes.objects_item__desc}>
+                                <div>Cпособ передвижения: <span>{props.regionData[`travelMethod`]}</span></div>
+                                <div>Продолжительность: <span>{props.regionData[`duration`]}</span></div>
+                                <div>Время отправления: <span>{props.regionData[`departureTime`]}</span></div>
+                                <div>Тип экскурсии: <span>{props.regionData[`tourType`]}</span></div>
+                                <div>Сложность: <span>{props.regionData[`difficulty`]}</span></div>
+                            </div>
+                            
+                            {props.regionData[`optional`] ?
+                                <div className={classes.objects_item__optional}>
+                                    <img src="/optional.png" alt="" /> {props.regionData[`optional`]}
+                                </div>
+                                : null
+                            }
+
+                            <div className={classes.objects_item__price}>
+                                <div>Стоимость: <span>от 20 000*</span></div>
+                            </div>
+
+                            <div className={classes.buttons}>
+                                <Link to={`/${pageName ? pageName : pageNameVisit}/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
+                                <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} >Забронировать</Link>
+                            </div>
+                        </>
+                        :
+                        <>
+                            <div className={classes.objects_item__title} style={{ textAlign: 'center' }}>
+                                {truncateString(props.regionData[`${titleObject}`], 50)}
+                            </div>
+                            <Link to={`/${pageName ? pageName : pageNameVisit}/${props.regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
+                        </>
+                    }
+
+
                 </div>
             </div>
         </>

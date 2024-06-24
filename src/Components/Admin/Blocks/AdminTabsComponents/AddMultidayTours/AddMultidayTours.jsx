@@ -90,6 +90,9 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
                 <label>Стоимость</label>
                 <input name="cost" type="text" placeholder="Стоимость" required />
 
+                <label>Дополнительная информация (не обязательно)</label>
+                <input name="optional" type="text" placeholder="Дополнительная информация" />
+
                 <label className={classes.addData_step}>Шаг 2</label>
                 <label>Загрузите фотографии для слайдера</label>
                 <input

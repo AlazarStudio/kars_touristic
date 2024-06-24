@@ -19,6 +19,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         tourType: '',
         difficulty: '',
         cost: '',
+        optional: '',
         places: [],
         checklists: [],
         days: [],
@@ -138,6 +139,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         } 
     };
 
+    console.log(selectedTour);
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>
@@ -167,6 +169,9 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
 
                 <label>Стоимость</label>
                 <input name="cost" type="text" placeholder="Стоимость" value={selectedTour.cost} />
+
+                <label>Дополнительная информация (не обязательно)</label>
+                <input name="optional" type="text" placeholder="Дополнительная информация"  value={selectedTour.optional}  />
 
                 <label className={classes.addData_step}>Шаг 2</label>
                 <label>Фотографии</label>

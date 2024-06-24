@@ -193,7 +193,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                         <Swiper
                                             navigation={true}
                                             modules={[Navigation]}
-                                            slidesPerView={3}
+                                            slidesPerView={2}
                                             spaceBetween={30}
                                             className={'similarTours'}
                                             breakpoints={{
@@ -204,7 +204,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                                     slidesPerView: 2,
                                                 },
                                                 1024: {
-                                                    slidesPerView: 3,
+                                                    slidesPerView: 2,
                                                 },
                                             }}
                                         >
