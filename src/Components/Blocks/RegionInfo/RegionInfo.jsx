@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import Tabs from "../../Blocks/Tabs/Tabs";
-import Non_Found_Page from "../../Pages/Non_Found_Page";
+import Preloader from "../../Blocks/Preloader/Preloader";
 
 import server from '../../../serverConfig'
 
@@ -154,7 +154,7 @@ function RegionInfo({ children, ...props }) {
                         </CenterBlock>
                     </>
                     :
-                    <Non_Found_Page />
+                    <Preloader/>
             }
 
         </>

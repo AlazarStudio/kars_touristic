@@ -43,6 +43,7 @@
     font-weight: 500;
     z-index: 1;
     color: #fff;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .visitBlocks_item__desc span {
