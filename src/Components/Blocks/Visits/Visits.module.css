@@ -117,7 +117,8 @@
 
     .visitMain {
         margin-bottom: 20px;
-        height: 400px;
+        min-height: 100vh;
+        padding: 80px 0px 20px;
     }
 
     .visitBlocks {

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from './SliderPlaces.module.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import server from '../../../serverConfig'
 
 function SliderPlaces({ children, ...props }) {
+    const [modalImage, setModalImage] = useState(null);
+
     function parseHTML(htmlString) {
         const domParser = new DOMParser();
         const parsedDocument = domParser.parseFromString(htmlString, 'text/html');
@@ -25,7 +27,15 @@ function SliderPlaces({ children, ...props }) {
 
         return Array.from(parsedDocument.body.childNodes).map(parseNode);
     }
-    
+
+    const handleImageClick = (src) => {
+        setModalImage(src);
+    };
+
+    const closeModal = () => {
+        setModalImage(null);
+    };
+
     return (
         <>
             <div className={classes.tour_slider} style={{ boxShadow: props.boxShadow }}>
@@ -52,15 +62,29 @@ function SliderPlaces({ children, ...props }) {
                         {props.info.map((item, index) => (
                             <SwiperSlide key={index}>
                                 <div className={classes.tourInfo_slide}>
-                                    {/* {item ? <div className={classes.tourInfo_slide__title}>{item}</div> : null} */}
-                                    {/* {item.text ? <div className={classes.tourInfo_slide__desc}>{parseHTML(item.text)}</div> : null} */}
-                                    {item? <div className={classes.tourInfo_slide__img}><img src={`${server}/refs/${item}`} alt="" /></div> : null}
+                                    {item ? (
+                                        <div className={classes.tourInfo_slide__img}>
+                                            <img 
+                                                src={`${server}/refs/${item}`} 
+                                                alt="" 
+                                                onClick={() => handleImageClick(`${server}/refs/${item}`)} 
+                                            />
+                                        </div>
+                                    ) : null}
                                 </div>
                             </SwiperSlide>
                         ))}
                     </Swiper>
                 </div>
             </div>
+            {modalImage && (
+                <div className={classes.modal} onClick={closeModal}>
+                    <div className={classes.modal_content} onClick={(e) => e.stopPropagation()}>
+                        <span className={classes.modal_close} onClick={closeModal}>&times;</span>
+                        <img src={modalImage} alt="" className={classes.modal_img} />
+                    </div>
+                </div>
+            )}
         </>
     );
 }
