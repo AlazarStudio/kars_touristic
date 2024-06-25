@@ -59,7 +59,7 @@ function Object({ children, pageName, titleObject, ...props }) {
                             }
 
                             <div className={classes.objects_item__price}>
-                                <div>Стоимость: <span>от 20 000*</span></div>
+                                <div>Стоимость: <span>{props.regionData[`cost`]} ₽ *</span></div>
                             </div>
 
                             <div className={classes.buttons}>

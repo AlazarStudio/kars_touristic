@@ -91,11 +91,21 @@ function Search_Page({ children, ...props }) {
                         {searchQuery && (
                             <p className={classes.clearButton} onClick={handleClearClick}>×</p>
                         )}
-                    </div> 
+                    </div>
                     <div className={classes.findElements}>
                         {filteredResults.length > 0 ? (
                             filteredResults.map((result, index) => (
-                                <Object key={index} regionData={result} pageName={result.days.length == 1 ? 'excursions' : result.days.length > 1 ? 'tours' : result.rooms ? 'hotels' : result.mapLink ? 'visits' : null} titleObject={result.title ? 'title' : 'tourTitle'} />
+                                <Object key={index} regionData={result} pageName={
+                                    result.mapLink ?
+                                        'visits' :
+                                        result.rooms ?
+                                            'hotels' :
+                                            result.days.length > 1 ?
+                                                'tours' :
+                                                result.days.length === 1 ?
+                                                    'excursions' :
+                                                    null
+                                } titleObject={result.title ? 'title' : 'tourTitle'} />
                             ))
                         ) : (
                             <p>Ничего не найдено</p>
