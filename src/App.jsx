@@ -56,7 +56,7 @@ function App() {
           <Route path="/admin/:id/:title/:type/:add/:idToEdit" element={<Admin_Page />} />
           <Route path="/admin/:id/:title/:type/:add/:idToEdit/:roomId" element={<Admin_Page />} />
 
-          <Route path="*" element={<Non_Found_Page />} />
+          {/* <Route path="*" element={<Non_Found_Page />} /> */}
         </Route>
       </Routes>
     </>
