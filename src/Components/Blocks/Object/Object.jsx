@@ -44,11 +44,11 @@ function Object({ pageName, titleObject, regionData, width }) {
             if (!response.ok) {
                 throw new Error('Failed to update user.');
             }
-            // Возвращаем обновленные данные пользователя
+
             return await response.json();
         } catch (error) {
             console.error('Error updating user:', error);
-            throw error; // Передаем ошибку выше для обработки в компоненте
+            throw error; 
         }
     };
 
@@ -62,20 +62,19 @@ function Object({ pageName, titleObject, regionData, width }) {
             });
 
             if (response.ok) {
-                return await response.json(); // Возвращаем данные пользователя
+                return await response.json();
             } else {
                 throw new Error('Failed to fetch user data.');
             }
         } catch (error) {
             console.error('Error fetching user info:', error);
-            throw error; // Передаем ошибку выше для обработки в компоненте
+            throw error;
         }
     };
 
-    const [user, setUser] = useState(null); // Используем null в качестве начального значения
+    const [user, setUser] = useState(null); 
 
     useEffect(() => {
-        // Загружаем информацию о пользователе при монтировании компонента
         getUserInfo(token)
             .then(userData => setUser(userData))
             .catch(error => console.error('Error initializing user:', error));
