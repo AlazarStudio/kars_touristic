@@ -27,6 +27,7 @@ function Profile({ children, ...props }) {
             const userData = await response.json();
             setUser(userData)
         } else {
+            localStorage.removeItem('token');
             console.error('Ошибка получения информации о пользователе');
         }
     };
