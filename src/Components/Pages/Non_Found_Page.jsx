@@ -11,7 +11,7 @@ function Non_Found_Page({ children, ...props }) {
         <>
             <Header_black />
             <div className="nonFoundPage">
-                Загрузка ...
+                Страница не найдена
             </div>
         </>
     );

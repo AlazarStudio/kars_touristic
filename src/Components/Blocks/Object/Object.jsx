@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classes from './Object.module.css';
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import server from '../../../serverConfig';
 
 function Object({ pageName, titleObject, regionData, width }) {
@@ -82,7 +82,7 @@ function Object({ pageName, titleObject, regionData, width }) {
     }, [token]);
 
     const navigate = useNavigate();
-    
+
     const handleLikeClick = async () => {
         if (token) {
             const updates = {
@@ -91,7 +91,7 @@ function Object({ pageName, titleObject, regionData, width }) {
 
             try {
                 const updatedUser = await updateUser(token, updates);
-                setUser(updatedUser); 
+                setUser(updatedUser);
             } catch (error) {
                 console.error('Error updating user:', error);
             }
@@ -140,9 +140,12 @@ function Object({ pageName, titleObject, regionData, width }) {
                         </>
                     )
                     : (
-                        <div className={classes.objects_item__title} style={{ textAlign: 'center' }}>
-                            {truncateString(regionData[titleObject], 50)}
-                        </div>
+                        <>
+                            <div className={classes.objects_item__title} style={{ textAlign: 'center' }}>
+                                {truncateString(regionData[titleObject], 50)}
+                            </div>
+                            <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
+                        </>
                     )
                 }
             </div>
