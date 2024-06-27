@@ -84,6 +84,10 @@ function Admin_Page({ children, ...props }) {
         }
     };
 
+    window.scrollTo({
+        top: 0,
+        behavior: 'auto'
+    });
     return (
         <>
             <div className={classes.admin}>

@@ -70,7 +70,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
             return <span key={item}>{item}</span>;
         }
         const normalizedItem = item.toLowerCase();
-        const matchedPlace = places.find(place => place.title.toLowerCase().includes(normalizedItem) || normalizedItem.includes(place.title.toLowerCase()));
+        const matchedPlace = places.find(place => place.title.toLowerCase().includes(normalizedItem));
         return matchedPlace ? (
             <Link to={`/visits/${matchedPlace._id}`} key={matchedPlace._id}>
                 {item}
