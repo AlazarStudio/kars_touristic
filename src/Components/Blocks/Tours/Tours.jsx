@@ -65,11 +65,6 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
 
     const foundRegion = regions.filter(region => region.region === tour?.region);
 
-    window.scrollTo({
-        top: 0,
-        behavior: 'auto'
-    });
-
     const renderPlaces = (item) => {
         if (!places || places.length === 0) {
             return <span key={item}>{item}</span>;

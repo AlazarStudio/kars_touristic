@@ -16,6 +16,11 @@ function Header_black({ children, ...props }) {
         setMenuOpen(!menuOpen);
     };
 
+    window.scrollTo({
+        top: 0,
+        behavior: 'auto'
+    });
+
     return (
         <>
             <header className={classes.header}>

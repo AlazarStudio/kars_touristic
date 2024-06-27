@@ -20,10 +20,6 @@ function Transfer_Page({ children, ...props }) {
         fetchMissionInfo();
     }, []);
     
-    window.scrollTo({
-        top: 0,
-        behavior: 'auto'
-    });
     return (
         <>
             <Header_black />

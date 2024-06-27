@@ -15,7 +15,11 @@ function Header_white({ children, ...props }) {
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-
+    
+    window.scrollTo({
+        top: 0,
+        behavior: 'auto'
+    });
     return (
         <>
             <header className={classes.header}>

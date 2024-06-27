@@ -53,10 +53,7 @@ function Admin_Page({ children, ...props }) {
         fetchRegions();
     }, []);
 
-    window.scrollTo({
-        top: 0,
-        behavior: 'auto'
-    });
+
 
     const isActive = (sectionName) => boldName === sectionName ? `${classes.boldText}` : '';
     const isActiveEdit = (sectionName) => id === sectionName ? `${classes.boldText}` : '';
