@@ -99,6 +99,24 @@ function Object({ pageName, titleObject, regionData, width }) {
         }
     };
 
+    const handleAddCartClick = async () => {
+        if (token) {
+            const updates = {
+                cart: [regionData._id]
+            };
+
+            try {
+                const updatedUser = await updateUser(token, updates);
+                setUser(updatedUser);
+                alert(updatedUser.message ? updatedUser.message : updatedUser);
+            } catch (error) {
+                console.error('Error updating user:', error);
+            }
+        } else {
+            navigate('/signIn');
+        }
+    };
+
     return (
         <div className={classes.objects_item} style={{ width: width }}>
             <div className={classes.objects_item__like} onClick={handleLikeClick}>
@@ -134,7 +152,7 @@ function Object({ pageName, titleObject, regionData, width }) {
                             </div>
                             <div className={classes.buttons}>
                                 <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
-                                <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} >Забронировать</Link>
+                                <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>Добавить в корзину</Link>
                             </div>
                         </>
                     )
