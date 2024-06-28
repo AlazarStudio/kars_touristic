@@ -22,6 +22,7 @@ import SignIn from "./Components/Admin/Blocks/SignIn/SignIn";
 import Profile from "./Components/Admin/Blocks/Profile/Profile";
 import Search_Page from "./Components/Pages/Search_Page/Search_Page";
 import Favorites_Page from "./Components/Pages/Favorites_Page/Favorites_Page";
+import Cart_Page from "./Components/Pages/Cart_Page/Cart_Page";
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/favourites" element={<Favorites_Page />} />
+          <Route path="/cart" element={<Cart_Page />} />
 
           <Route path="/admin" element={<Admin_Page />} />
           <Route path="/admin/:id" element={<Admin_Page />} />
