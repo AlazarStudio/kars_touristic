@@ -131,7 +131,7 @@ function Cart_Page({ children, ...props }) {
                                                         </div>
                                                     </div>
                                                     <div className={classes.objectData_price}>
-                                                        <div className={classes.objectData_price__num}>{item.cost} ₽</div>
+                                                        <div className={classes.objectData_price__num}>{formatNumber(item.cost)} ₽</div>
                                                         <div className={classes.objectData_price__delete} onClick={() => handleDeleteItem(item._id)}>Удалить</div>
                                                     </div>
                                                 </div>
