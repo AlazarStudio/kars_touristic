@@ -115,8 +115,14 @@ function Object({ pageName, titleObject, regionData, width }) {
             navigate('/signIn');
         }
     };
-    
-    const photos = [regionData.mainPhoto, ...regionData.photos.filter(photo => photo !== regionData.mainPhoto)];
+
+    let photos = []
+
+    if (pageName == 'hotels') {
+        photos = [regionData.mainPhoto, ...regionData.galery.filter(photo => photo !== regionData.mainPhoto)];
+    } else {
+        photos = [regionData.mainPhoto, ...regionData.photos.filter(photo => photo !== regionData.mainPhoto)];
+    }
 
     return (
         <div className={classes.objects_item} style={{ width: width }}>
