@@ -184,7 +184,7 @@
     }
 
     .objects_item__img {
-        height: 150px;
+        height: 250px;
     }
 
     .objects_item__title {
@@ -195,6 +195,7 @@
     .objects_item__button {
         font-size: 14px;
         line-height: normal;
+        padding: 15px;
     }
     
     .objects_item__desc div{

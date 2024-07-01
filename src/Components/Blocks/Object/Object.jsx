@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import classes from './Object.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import server from '../../../serverConfig';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 function Object({ pageName, titleObject, regionData, width }) {
+    
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
             return str.substring(0, maxLength) + '...';
@@ -20,13 +25,6 @@ function Object({ pageName, titleObject, regionData, width }) {
         if (regionData.days.length <= 1) {
             pageNameVisit = 'excursions';
         }
-    }
-
-    function toTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'auto'
-        });
     }
 
     const token = localStorage.getItem('token');
@@ -48,7 +46,7 @@ function Object({ pageName, titleObject, regionData, width }) {
             return await response.json();
         } catch (error) {
             console.error('Error updating user:', error);
-            throw error; 
+            throw error;
         }
     };
 
@@ -72,7 +70,7 @@ function Object({ pageName, titleObject, regionData, width }) {
         }
     };
 
-    const [user, setUser] = useState(null); 
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         getUserInfo(token)
@@ -109,6 +107,7 @@ function Object({ pageName, titleObject, regionData, width }) {
                 const updatedUser = await updateUser(token, updates);
                 setUser(updatedUser);
                 alert(updatedUser.message ? updatedUser.message : updatedUser);
+                window.location.reload();
             } catch (error) {
                 console.error('Error updating user:', error);
             }
@@ -116,6 +115,8 @@ function Object({ pageName, titleObject, regionData, width }) {
             navigate('/signIn');
         }
     };
+    
+    const photos = [regionData.mainPhoto, ...regionData.photos.filter(photo => photo !== regionData.mainPhoto)];
 
     return (
         <div className={classes.objects_item} style={{ width: width }}>
@@ -126,7 +127,13 @@ function Object({ pageName, titleObject, regionData, width }) {
                 }
             </div>
             <div className={classes.objects_item__img}>
-                <img src={`${server}/refs/${regionData.mainPhoto ? regionData.mainPhoto : regionData.photos[0]}`} alt="" />
+                <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
+                    {photos.map((item, index) => (
+                        <SwiperSlide key={index}>
+                            <img src={`${server}/refs/${item}`} alt="" />
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
             </div>
             <div className={classes.objects_item__bottom}>
                 {titleObject !== 'title'
@@ -151,8 +158,10 @@ function Object({ pageName, titleObject, regionData, width }) {
                                 <div>Стоимость: <span>{regionData.cost} ₽ *</span></div>
                             </div>
                             <div className={classes.buttons}>
-                                <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
-                                <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>Добавить в корзину</Link>
+                                <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
+                                <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>
+                                    {user && user.cart && user.cart.includes(regionData._id) ? 'В корзине' : 'Добавить в корзину'}
+                                </Link>
                             </div>
                         </>
                     )
@@ -161,7 +170,7 @@ function Object({ pageName, titleObject, regionData, width }) {
                             <div className={classes.objects_item__title} style={{ textAlign: 'center' }}>
                                 {truncateString(regionData[titleObject], 50)}
                             </div>
-                            <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} onClick={toTop}>Подробнее</Link>
+                            <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
                         </>
                     )
                 }
