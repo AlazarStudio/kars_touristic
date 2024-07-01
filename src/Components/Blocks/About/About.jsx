@@ -11,7 +11,7 @@ import TeamBlock from "../TeamBlock/TeamBlock";
 import logo from "/logo_about.png";
 import about_certificate from "/about_certificate.webp";
 import about_interaction from "/about_interaction.webp";
-import about_handshake from "/about_handshake.webp";
+import about_handshake from "/about_handshake.webp"; 
 
 import team_no_img from "/team_no_img.webp";
 import mission_arnament from "/mission_arnament.webp";
