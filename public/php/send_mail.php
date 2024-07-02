@@ -6,8 +6,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $subject = $_POST['subject'];
     $comment = $_POST['comment'];
 
-    // $to = 'kars-touristic@mail.ru';
-    $to = 'alimdzhatdoev@mail.ru';
+    $to = 'kars-touristic@mail.ru';
     $subject = "Новое сообщение: $subject";
     $message = "ФИО: $fio\nТелефон: $phone\nEmail: $email\nСообщение: $comment";
     $headers = "From: $email";
