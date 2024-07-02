@@ -54,8 +54,16 @@ function Profile({ children, ...props }) {
                 <CenterBlock>
                     <WidthBlock>
                         <div className={classes.blockUser}>
-                            <img src="/logout.png" alt="" onClick={logout} className={classes.logout} />
-                            
+                            <div className={classes.logout}>
+                                {user && user.role && user.role == 'admin' ?
+                                    <Link to={'/admin'}>
+                                        <img src="/admin-panel 1.webp" alt="" />
+                                        Перейти в Панель Администратора
+                                    </Link>
+                                    : null}
+                                <img src="/logout.png" alt="" onClick={logout} />
+                            </div>
+
                             <div className={classes.blockUser_img}>
                                 <img src="/noPhoto.png" alt="" />
                             </div>
