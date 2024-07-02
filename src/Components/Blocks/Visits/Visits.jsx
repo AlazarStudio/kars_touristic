@@ -72,6 +72,29 @@ function Visits({ children, ...props }) {
         }
     }, [multidayTours, onedayTours])
 
+    const [regionsName, setRegionsName] = useState();
+
+    const fetchRegionsName = () => {
+        fetch(`${server}/api/getRegions`)
+            .then(response => response.json())
+            .then(data => setRegionsName(data.regions))
+            .catch(error => console.error('Ошибка при загрузке регионов:', error));
+    };
+
+    useEffect(() => {
+        fetchRegionsName();
+    }, []);
+
+
+    function getTitleByLink(regions, targetLink) {
+        const region = regions.find(region => region.link === targetLink);
+        return region ? region.title : null;
+    }
+
+    let regionNameData = '';
+
+    regionsName && place ? regionNameData = getTitleByLink(regionsName, place.region) : null
+
     return (
         <>
             {place ?
@@ -79,6 +102,9 @@ function Visits({ children, ...props }) {
                     <div className={classes.visitMain} style={{ backgroundImage: `url(${server}/refs/${place.mainPhoto})` }}>
                         <WidthBlock>
                             <CenterBlock gap={'40px'}>
+                                <div className={classes.tour_topInfo__bread}>
+                                    <Link to={'/'}>Главная</Link> / <Link to={`/region/${place.region}`}>{regionNameData}</Link> / {place.title}
+                                </div>
                                 <H2 text_transform="uppercase" text_align={'center'} font_size="60px" color="var(--white_color)" zIndex="1">{place.title}</H2>
 
                                 <div className={classes.visitBlocks_item_forText}>

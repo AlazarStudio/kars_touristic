@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import classes from './Hotels.module.css';
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
@@ -48,6 +48,29 @@ function Hotels({ children, ...props }) {
         return stars;
     }
 
+    const [regionsName, setRegionsName] = useState();
+
+    const fetchRegionsName = () => {
+        fetch(`${server}/api/getRegions`)
+            .then(response => response.json())
+            .then(data => setRegionsName(data.regions))
+            .catch(error => console.error('Ошибка при загрузке регионов:', error));
+    };
+
+    useEffect(() => {
+        fetchRegionsName();
+    }, []);
+
+
+    function getTitleByLink(regions, targetLink) {
+        const region = regions.find(region => region.link === targetLink);
+        return region ? region.title : null;
+    }
+    
+    let regionNameData = '';
+
+    regionsName && hotel ? regionNameData = getTitleByLink(regionsName, hotel.region) : null
+
     return (
         <>
             {hotel ?
@@ -56,6 +79,9 @@ function Hotels({ children, ...props }) {
                         <CenterBlock>
                             <WidthBlock>
                                 <div className={classes.hotelInfo}>
+                                    <div className={classes.tour_topInfo__bread}>
+                                        <Link to={'/'}>Главная</Link> / <Link to={`/region/${hotel.region}`}>{regionNameData}</Link> / {hotel.title}
+                                    </div>
                                     <div className={classes.hotelTitle}>{hotel.title}</div>
                                     <div className={classes.hotelDesc}>{hotel.description}</div>
                                     <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>

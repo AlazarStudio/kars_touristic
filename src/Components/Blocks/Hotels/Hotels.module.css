@@ -188,6 +188,17 @@
     cursor: pointer;
 }
 
+.tour_topInfo__bread {
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+}
+
+.tour_topInfo__bread a {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
 
 @media (min-width: 0px) and (max-width: 1299px) {
     .main {

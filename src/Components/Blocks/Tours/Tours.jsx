@@ -62,7 +62,6 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
         fetchPlaces();
     }, []);
 
-
     const foundRegion = regions.filter(region => region.region === tour?.region);
 
     const renderPlaces = (item) => {
@@ -80,6 +79,28 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
         );
     };
 
+
+    const [regionsName, setRegionsName] = useState();
+
+    const fetchRegionsName = () => {
+        fetch(`${server}/api/getRegions`)
+            .then(response => response.json())
+            .then(data => setRegionsName(data.regions))
+            .catch(error => console.error('Ошибка при загрузке регионов:', error));
+    };
+
+    useEffect(() => {
+        fetchRegionsName();
+    }, []);
+
+    function getTitleByLink(regions, targetLink) {
+        const region = regions.find(region => region.link === targetLink);
+        return region ? region.title : null;
+    }
+    
+    let regionNameData = '';
+    regionsName && tour ? regionNameData = getTitleByLink(regionsName, tour.region) : null
+
     return (
         <>
             {tour ?
@@ -88,6 +109,10 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                         <CenterBlock>
                             <WidthBlock>
                                 <div className={classes.centerPosition}>
+                                    <div className={classes.tour_topInfo__bread}>
+                                        <Link to={'/'}>Главная</Link> / <Link to={`/region/${tour.region}`}>{regionNameData}</Link> / {tour.tourTitle}
+                                    </div>
+
                                     <div className={classes.tour_topInfo__left___title}>
                                         {tour.tourTitle}
                                     </div>
@@ -166,7 +191,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                         <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">Чек-Лист</H2>
                         </CenterBlock>
-                        
+
                         <Slider info={tour.checklists} boxShadow={'0px 4px 46.4px 0px #B4B4B440'} loop={false} />
 
                         <ToursTab tabs={tour.days} />
