@@ -20,7 +20,8 @@
     margin-bottom: 10px;
 }
 
-.form input {
+.form input,
+.form select  {
     width: 100%;
     height: 40px;
     border: none;
