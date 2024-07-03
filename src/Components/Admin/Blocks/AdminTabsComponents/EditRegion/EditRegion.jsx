@@ -1,16 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import classes from './EditRegion.module.css';
 import EditingPlace from "../EditingPlace/EditingPlace";
+import serverConfig from "../../../../../serverConfig";
 
 function EditRegion({ children, ...props }) {
     const { id, title, type } = useParams();
+
+    const [regions, setRegions] = useState([]);
+
+    const fetchRegions = () => {
+        fetch(`${serverConfig}/api/getRegions`)
+            .then(response => response.json())
+            .then(data => setRegions(data.regions))
+            .catch(error => console.error('Ошибка при загрузке регионов:', error));
+    };
+
+    useEffect(() => {
+        fetchRegions();
+    }, []);
+
+    let region = regions ? regions.filter(region => region.link == title) : '';
+
     return (
         <>
             {!type ?
                 <div className={classes.edit}>
                     <div className={classes.editTitle}>
-                        Редактировать РЕГИОН: «{title}»
+                        Редактировать РЕГИОН: «{region[0] ? region[0].title : ''}»
                         <Link to={`/admin/${id}/${title}/editRegionData`}><img src="/edit.webp" alt="" /></Link>
                     </div>
                     <div className={classes.editBlocks}>

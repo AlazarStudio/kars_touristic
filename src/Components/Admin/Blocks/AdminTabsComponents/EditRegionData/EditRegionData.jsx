@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import classes from './EditRegionData.module.css';
 import FormEdit from "../../FormEdit/FormEdit";
 import server from '../../../../../serverConfig';
@@ -50,6 +50,10 @@ function EditRegionData({ photoMassName, title, onTourAdded }) {
         <>
             {selectedPlace && (
                 <div className={classes.addData}>
+                    <div className={classes.multidayTours_back}>
+                        <Link to={`/admin/edit/${title}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
+                    </div>
+
                     <div className={classes.addData_title}>Изменить место</div>
                     <FormEdit
                         actionUrl={`${server}/api/updateRegion/${selectedPlace._id}`}
@@ -114,11 +118,9 @@ function EditRegionData({ photoMassName, title, onTourAdded }) {
                         <label>Фотография для фона в регионе</label>
                         <div className={classes.imgBlock}>
                             {Array.isArray(selectedPlace.backgroundImgPath) && selectedPlace.backgroundImgPath.map((photo, index) => (
-                                <>
-                                    <div className={classes.imgBlock__item} key={index}>
-                                        <img src={imgUrl + photo} alt="" />
-                                    </div>
-                                </>
+                                <div className={classes.imgBlock__item} key={index}>
+                                    <img src={imgUrl + photo} alt="" />
+                                </div>
                             ))}
                         </div>
                         {/* <label>Загрузите фотографию для фона в регионе</label>
