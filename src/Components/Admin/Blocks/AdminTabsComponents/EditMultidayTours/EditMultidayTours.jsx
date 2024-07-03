@@ -139,7 +139,6 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         } 
     };
 
-    console.log(selectedTour);
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>

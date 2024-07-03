@@ -11,7 +11,7 @@ function EditRegion({ children, ...props }) {
                 <div className={classes.edit}>
                     <div className={classes.editTitle}>
                         Редактировать РЕГИОН: «{title}»
-                        {/* <Link to={`/admin/${id}/${title}/editRegionData`}><img src="/edit.webp" alt="" /></Link> */}
+                        <Link to={`/admin/${id}/${title}/editRegionData`}><img src="/edit.webp" alt="" /></Link>
                     </div>
                     <div className={classes.editBlocks}>
                         <Link to={`/admin/${id}/${title}/multiday_tours`} className={classes.editBlocks_item}>

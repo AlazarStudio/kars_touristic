@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import classes from './EditRegionData.module.css';
 import FormEdit from "../../FormEdit/FormEdit";
 import server from '../../../../../serverConfig';
 
-function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, photoMassName, title, ...props }) {
+function EditRegionData({ photoMassName, title, onTourAdded }) {
     const { idToEdit } = useParams();
-
-    let imgUrl = `${server}/refs/`;
+    const imgUrl = `${server}/refs/`;
 
     const [selectedPlace, setSelectedPlace] = useState({
         title: '',
@@ -17,9 +16,7 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
         backgroundImgPath: [],
     });
 
-    const [loadedPhotos, setLoadedPhotos] = useState([]);
     const [newPhotos, setNewPhotos] = useState([]);
-    const [photosToDelete, setPhotosToDelete] = useState([]);
 
     const fetchPlaceById = (id) => {
         fetch(`${server}/api/getOneRegion/${id}`)
@@ -27,11 +24,10 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
             .then(data => {
                 setSelectedPlace({
                     ...data,
-                    iconPath: data.iconPath || [],
-                    coverImgPath: data.coverImgPath || [],
-                    backgroundImgPath: data.backgroundImgPath || [],
+                    iconPath: Array.isArray(data.iconPath) ? data.iconPath : [],
+                    coverImgPath: Array.isArray(data.coverImgPath) ? data.coverImgPath : [],
+                    backgroundImgPath: Array.isArray(data.backgroundImgPath) ? data.backgroundImgPath : [],
                 });
-                setLoadedPhotos(data.photos || []);
             })
             .catch(error => console.error('Ошибка:', error));
     };
@@ -42,96 +38,21 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
         }
     }, [title]);
 
-    const handleAddItem = useCallback(() => {
-        setSelectedPlace(prevState => ({
-            ...prevState,
-            placeItems: [...prevState.placeItems, { title: '', description: '' }]
-        }));
-    }, []);
-
     const handleFileChange = (event) => {
-        const files = Array.from(event.target.files);
-        setNewPhotos(files);
-    };
-
-    const handleItemChange = (index, field, value) => {
-        setSelectedPlace(prevState => {
-            const newItems = [...prevState.placeItems];
-            newItems[index][field] = value;
-            return { ...prevState, placeItems: newItems };
-        });
-    };
-
-    const handleRemoveItem = (index) => {
-        setSelectedPlace(prevState => ({
+        const { name, files } = event.target;
+        setNewPhotos(prevState => ({
             ...prevState,
-            placeItems: prevState.placeItems.filter((_, i) => i !== index)
+            [name]: Array.from(files)
         }));
-    };
-
-    const handleRemovePhoto = (index, photo) => {
-        if (confirm("Вы уверены, что хотите удалить картинку?")) {
-            const updatedPhotos = loadedPhotos.filter((_, i) => i !== index);
-            setLoadedPhotos(updatedPhotos);
-
-            setSelectedPlace(prevState => ({
-                ...prevState,
-                photos: updatedPhotos
-            }));
-
-            setPhotosToDelete(prevPhotos => {
-                const newPhotosToDelete = [...prevPhotos, photo];
-                updatePhotosOnServer(idToEdit, updatedPhotos, newPhotosToDelete);
-                return newPhotosToDelete;
-            });
-        }
-    };
-
-    const updatePhotosOnServer = async (id, photos, photosToDelete) => {
-        const formData = new FormData();
-
-        photos.forEach(photo => {
-            formData.append('photos', photo);
-        });
-
-        formData.append('photosToDelete', JSON.stringify(photosToDelete));
-
-        try {
-            await fetch(`${server}/api/updateOneEvent/${id}`, {
-                method: 'PUT',
-                body: formData
-            });
-        } catch (error) {
-            console.error('Error updating photos', error);
-        }
-    };
-
-    const changeMainImg = async (id, photoPath) => {
-        if (confirm("Вы уверены, что хотите сделать эту картинку главной?")) {
-            try {
-                await fetch(`${server}/api/changeMainImgEvent?id=${id}&mainImgPath=${photoPath}`, {
-                    method: 'PUT',
-                });
-
-                setSelectedPlace(prevState => ({
-                    ...prevState,
-                    mainPhoto: photoPath
-                }));
-            } catch (error) {
-                console.error('Error updating photos', error);
-            }
-        }
     };
 
     return (
         <>
-            Починить
-            {/* {selectedPlace ? (
+            {selectedPlace && (
                 <div className={classes.addData}>
                     <div className={classes.addData_title}>Изменить место</div>
-
                     <FormEdit 
-                        actionUrl={`${server}/api/updateRegion/${title}`} 
+                        actionUrl={`${server}/api/updateRegion/${selectedPlace._id}`} 
                         method="put" 
                         photoMassName={photoMassName} 
                         newPhotos={newPhotos} 
@@ -141,7 +62,6 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
                         setSelectedTour={setSelectedPlace}
                     >
                         <label className={classes.addData_step}>Шаг 1</label>
-
                         <label>Название места</label>
                         <input 
                             name="title" 
@@ -150,7 +70,6 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
                             value={selectedPlace.title} 
                             onChange={e => setSelectedPlace(prevState => ({ ...prevState, title: e.target.value }))}
                         />
-
                         <label>Описание места</label>
                         <textarea 
                             name="description" 
@@ -161,17 +80,14 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
 
                         <label className={classes.addData_step}>Шаг 2</label>
                         <label>Фотографии</label>
-
                         <div className={classes.imgBlock}>
-                            {selectedPlace.iconPath.map((photo, index) => (
+                            {Array.isArray(selectedPlace.iconPath) && selectedPlace.iconPath.map((photo, index) => (
                                 <div className={classes.imgBlock__item} key={index}>
                                     <img src={imgUrl + photo} alt="" />
                                 </div>
                             ))}
                         </div>
-
-                        <br />
-                        <label>Загрузите фотографии для слайдера</label>
+                        <label>Загрузите иконку</label>
                         <input
                             type="file"
                             name="iconPath"
@@ -181,15 +97,13 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
                         />
 
                         <div className={classes.imgBlock}>
-                            {selectedPlace.coverImgPath.map((photo, index) => (
+                            {Array.isArray(selectedPlace.coverImgPath) && selectedPlace.coverImgPath.map((photo, index) => (
                                 <div className={classes.imgBlock__item} key={index}>
                                     <img src={imgUrl + photo} alt="" />
                                 </div>
                             ))}
                         </div>
-
-                        <br />
-                        <label>Загрузите фотографии для слайдера</label>
+                        <label>Загрузите фотографию для фона на главной</label>
                         <input
                             type="file"
                             name="coverImgPath"
@@ -199,15 +113,13 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
                         />
 
                         <div className={classes.imgBlock}>
-                            {selectedPlace.backgroundImgPath.map((photo, index) => (
+                            {Array.isArray(selectedPlace.backgroundImgPath) && selectedPlace.backgroundImgPath.map((photo, index) => (
                                 <div className={classes.imgBlock__item} key={index}>
                                     <img src={imgUrl + photo} alt="" />
                                 </div>
                             ))}
                         </div>
-
-                        <br />
-                        <label>Загрузите фотографии для слайдера</label>
+                        <label>Загрузите фотографию для фона в регионе</label>
                         <input
                             type="file"
                             name="backgroundImgPath"
@@ -215,11 +127,10 @@ function EditRegionData({ children, activeTab, setIsDirty, region, onTourAdded, 
                             multiple
                             onChange={handleFileChange}
                         />
-
                         <button type="submit">Изменить место</button>
                     </FormEdit>
                 </div>
-            ) : null} */}
+            )}
         </>
     );
 }

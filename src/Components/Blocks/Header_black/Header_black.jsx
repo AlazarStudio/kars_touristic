@@ -16,10 +16,10 @@ function Header_black({ children, ...props }) {
         setMenuOpen(!menuOpen);
     };
 
-    window.scrollTo({
-        top: 0,
-        behavior: 'auto'
-    });
+    // window.scrollTo({
+    //     top: 0,
+    //     behavior: 'auto'
+    // });
 
     return (
         <>
