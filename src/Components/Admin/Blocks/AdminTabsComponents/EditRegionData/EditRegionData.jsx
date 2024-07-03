@@ -51,35 +51,35 @@ function EditRegionData({ photoMassName, title, onTourAdded }) {
             {selectedPlace && (
                 <div className={classes.addData}>
                     <div className={classes.addData_title}>Изменить место</div>
-                    <FormEdit 
-                        actionUrl={`${server}/api/updateRegion/${selectedPlace._id}`} 
-                        method="put" 
-                        photoMassName={photoMassName} 
-                        newPhotos={newPhotos} 
-                        needNavigate={true} 
-                        initialValues={selectedPlace} 
-                        onTourAdded={onTourAdded} 
+                    <FormEdit
+                        actionUrl={`${server}/api/updateRegion/${selectedPlace._id}`}
+                        method="put"
+                        photoMassName={photoMassName}
+                        newPhotos={newPhotos}
+                        needNavigate={true}
+                        initialValues={selectedPlace}
+                        onTourAdded={onTourAdded}
                         setSelectedTour={setSelectedPlace}
                     >
                         <label className={classes.addData_step}>Шаг 1</label>
                         <label>Название места</label>
-                        <input 
-                            name="title" 
-                            type="text" 
-                            placeholder="Название места" 
-                            value={selectedPlace.title} 
+                        <input
+                            name="title"
+                            type="text"
+                            placeholder="Название места"
+                            value={selectedPlace.title}
                             onChange={e => setSelectedPlace(prevState => ({ ...prevState, title: e.target.value }))}
                         />
                         <label>Описание места</label>
-                        <textarea 
-                            name="description" 
-                            placeholder="Описание места" 
-                            value={selectedPlace.description} 
+                        <textarea
+                            name="description"
+                            placeholder="Описание места"
+                            value={selectedPlace.description}
                             onChange={e => setSelectedPlace(prevState => ({ ...prevState, description: e.target.value }))}
                         ></textarea>
 
                         <label className={classes.addData_step}>Шаг 2</label>
-                        <label>Фотографии</label>
+                        <label>Фотография иконки</label>
                         <div className={classes.imgBlock}>
                             {Array.isArray(selectedPlace.iconPath) && selectedPlace.iconPath.map((photo, index) => (
                                 <div className={classes.imgBlock__item} key={index}>
@@ -87,15 +87,15 @@ function EditRegionData({ photoMassName, title, onTourAdded }) {
                                 </div>
                             ))}
                         </div>
-                        <label>Загрузите иконку</label>
+                        {/* <label>Загрузите иконку</label>
                         <input
                             type="file"
                             name="iconPath"
                             className={classes.noBorder}
-                            multiple
                             onChange={handleFileChange}
-                        />
+                        /> */}
 
+                        <label>Фотография для фона на главной</label>
                         <div className={classes.imgBlock}>
                             {Array.isArray(selectedPlace.coverImgPath) && selectedPlace.coverImgPath.map((photo, index) => (
                                 <div className={classes.imgBlock__item} key={index}>
@@ -103,30 +103,31 @@ function EditRegionData({ photoMassName, title, onTourAdded }) {
                                 </div>
                             ))}
                         </div>
-                        <label>Загрузите фотографию для фона на главной</label>
+                        {/* <label>Загрузите фотографию для фона на главной</label>
                         <input
                             type="file"
                             name="coverImgPath"
                             className={classes.noBorder}
-                            multiple
                             onChange={handleFileChange}
-                        />
+                        /> */}
 
+                        <label>Фотография для фона в регионе</label>
                         <div className={classes.imgBlock}>
                             {Array.isArray(selectedPlace.backgroundImgPath) && selectedPlace.backgroundImgPath.map((photo, index) => (
-                                <div className={classes.imgBlock__item} key={index}>
-                                    <img src={imgUrl + photo} alt="" />
-                                </div>
+                                <>
+                                    <div className={classes.imgBlock__item} key={index}>
+                                        <img src={imgUrl + photo} alt="" />
+                                    </div>
+                                </>
                             ))}
                         </div>
-                        <label>Загрузите фотографию для фона в регионе</label>
+                        {/* <label>Загрузите фотографию для фона в регионе</label>
                         <input
                             type="file"
                             name="backgroundImgPath"
                             className={classes.noBorder}
-                            multiple
                             onChange={handleFileChange}
-                        />
+                        /> */}
                         <button type="submit">Изменить место</button>
                     </FormEdit>
                 </div>
