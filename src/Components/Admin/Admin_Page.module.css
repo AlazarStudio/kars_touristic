@@ -139,3 +139,7 @@
 .elemBlock img{
     width: 12px;
 }
+
+.boldText, .dragging {
+    font-weight: 600;    
+}

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import { DndProvider, useDrag, useDrop } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import classes from './Admin_Page.module.css';
 
 import server from '../../serverConfig';
@@ -13,13 +15,44 @@ import AddFAQ from "./Blocks/AdminTabsComponents/AddFAQ/AddFAQ";
 import AddContacts from "./Blocks/AdminTabsComponents/AddContacts/AddContacts";
 import AddTuragent from "./Blocks/AdminTabsComponents/AddTuragent/AddTuragent";
 import EditRegion from "./Blocks/AdminTabsComponents/EditRegion/EditRegion";
-import { Link } from "react-router-dom";
 import CenterBlock from "../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../Standart/WidthBlock/WidthBlock";
 
+const ItemType = {
+    REGION: 'region',
+};
+
+function DraggableRegion({ region, index, moveRegion, activeTab }) {
+    const [, ref] = useDrag({
+        type: ItemType.REGION,
+        item: { index },
+    });
+
+    const [, drop] = useDrop({
+        accept: ItemType.REGION,
+        hover: (draggedItem) => {
+            if (draggedItem.index !== index) {
+                moveRegion(draggedItem.index, index);
+                draggedItem.index = index;
+            }
+        },
+    });
+
+    let activeShow = region.link == activeTab ? classes.boldText : '';
+
+    return (
+        <div ref={(node) => ref(drop(node))} className={`${classes.elemBlock} ${activeShow}`}>
+            <Link to={`/admin/edit/${region.link}`} className={classes.admin_data__nav___item____subItem}>
+                {region.title}
+            </Link>
+            <img src="/delete_region.webp" alt="" onClick={() => deleteElement(region._id)} />
+        </div>
+    );
+}
+
 function Admin_Page({ children, ...props }) {
     const { id, title } = useParams();
-
+    
     let block = id;
     let boldName = id;
 
@@ -122,8 +155,16 @@ function Admin_Page({ children, ...props }) {
         }
     }, [user]);
 
+    const moveRegion = (fromIndex, toIndex) => {
+        const updatedRegions = [...regions];
+        const [movedRegion] = updatedRegions.splice(fromIndex, 1);
+        updatedRegions.splice(toIndex, 0, movedRegion);
+        setRegions(updatedRegions);
+    };
+    
+
     return (
-        <>
+        <DndProvider backend={HTML5Backend}>
             {user && user.role && user.role == 'admin' ?
                 <div className={classes.admin}>
                     <div className={classes.admin_header}>
@@ -150,16 +191,15 @@ function Admin_Page({ children, ...props }) {
                                             + Добавить регион
                                         </Link>
 
-                                        {regions.map(region => (
-                                            <div className={classes.elemBlock} key={region._id}>
-                                                <Link to={`/admin/edit/${region.link}`}
-                                                    className={`${classes.admin_data__nav___item____subItem} ${isActive(region.link)}`}
-                                                    onClick={() => setActiveTab('editRegion')}
-                                                >
-                                                    {region.title}
-                                                </Link>
-                                                <img src="/delete_region.webp" alt="" onClick={() => deleteElement(region._id)} />
-                                            </div>
+                                        {regions.map((region, index) => (
+                                            <DraggableRegion
+                                                key={region._id}
+                                                region={region}
+                                                index={index}
+                                                moveRegion={moveRegion}
+                                                deleteElement={deleteElement}
+                                                activeTab={title}
+                                            />
                                         ))}
                                     </div>
                                 )}
@@ -227,7 +267,7 @@ function Admin_Page({ children, ...props }) {
                 </div>
                 : null
             }
-        </>
+        </DndProvider>
     );
 }
 
