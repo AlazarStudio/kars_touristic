@@ -37,6 +37,7 @@ function SignIn({ children, ...props }) {
 
         if (response.ok) {
             const data = await response.json();
+
             localStorage.setItem('token', data.token);
 
             setTimeout(() => {
@@ -75,7 +76,8 @@ function SignIn({ children, ...props }) {
                             onChange={handleChange}
                         />
                         <button type="submit" disabled={loading}>Войти</button>
-                        <Link to={'/signUp'} style={{'text-align': 'center', 'color': '#4872F2', 'font-weight': '600'}}>Зарегистрироваться</Link>
+                        <Link to={'/signUp'} style={{ 'text-align': 'center', 'color': '#4872F2', 'font-weight': '600' }}>Зарегистрироваться как пользователь</Link>
+                        <Link to={'/signUpTouragent'} style={{ 'text-align': 'center', 'color': '#4872F2', 'font-weight': '600' }}>Зарегистрироваться как турагент</Link>
                     </form>
                     {loading && <div className={classes.loaderWrapper}><div className={classes.loader}></div></div>} {/* Прелоудер */}
                 </div>

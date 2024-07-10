@@ -46,6 +46,8 @@ function Profile({ children, ...props }) {
         setUser(null);
     }
 
+    console.log(user)
+
     return (
         <>
             <Header_black />

@@ -23,6 +23,7 @@ import Profile from "./Components/Admin/Blocks/Profile/Profile";
 import Search_Page from "./Components/Pages/Search_Page/Search_Page";
 import Favorites_Page from "./Components/Pages/Favorites_Page/Favorites_Page";
 import Cart_Page from "./Components/Pages/Cart_Page/Cart_Page";
+import SignUpTouragent from "./Components/Admin/Blocks/SignUpTouragent/SignUpTouragent";
 
 function App() {
   return (
@@ -48,6 +49,9 @@ function App() {
 
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/signIn" element={<SignIn />} />
+
+          <Route path="/signUpTouragent" element={<SignUpTouragent />} />
+
           <Route path="/profile" element={<Profile />} />
           <Route path="/favourites" element={<Favorites_Page />} />
           <Route path="/cart" element={<Cart_Page />} />

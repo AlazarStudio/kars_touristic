@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import classes from './SignUp.module.css';
+import classes from './SignUpTouragent.module.css';
 import Header_black from "../../../Blocks/Header_black/Header_black";
 import CenterBlock from "../../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../../Standart/WidthBlock/WidthBlock";
@@ -8,13 +8,14 @@ import H2 from "../../../Standart/H2/H2";
 import server from '../../../../serverConfig';
 import { Link, useNavigate } from "react-router-dom";
 
-function SignUp({ children, ...props }) {
+function SignUpTouragent({ children, ...props }) {
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
         email: "",
         username: "",
-        password: ""
+        password: "",
+        role: "touragent"
     });
 
     const [loading, setLoading] = useState(false);
@@ -59,7 +60,7 @@ function SignUp({ children, ...props }) {
 
             <CenterBlock>
                 <div className={classes.registerForm}>
-                    <H2 text_transform={"uppercase"} text_align={'center'}>Регистрация пользователя</H2>
+                    <H2 text_transform={"uppercase"} text_align={'center'}>Регистрация турагента</H2>
 
                     <form onSubmit={handleSubmit}>
                         <input
@@ -112,4 +113,4 @@ function SignUp({ children, ...props }) {
     );
 }
 
-export default SignUp;
+export default SignUpTouragent;
