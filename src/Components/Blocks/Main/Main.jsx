@@ -13,7 +13,10 @@ function Main({ children, ...props }) {
     const fetchRegions = () => {
         fetch(`${server}/api/getRegions`)
             .then(response => response.json())
-            .then(data => setRegions(data.regions.reverse()))
+            .then(data => {
+                const sortedRegions = data.regions.sort((a, b) => a.order - b.order);
+                setRegions(sortedRegions);
+            })
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
     };
 

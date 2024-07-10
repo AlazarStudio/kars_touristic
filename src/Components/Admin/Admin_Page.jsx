@@ -22,7 +22,7 @@ const ItemType = {
     REGION: 'region',
 };
 
-function DraggableRegion({ region, index, moveRegion, activeTab }) {
+function DraggableRegion({ region, index, moveRegion, activeTab, deleteElement }) {
     const [, ref] = useDrag({
         type: ItemType.REGION,
         item: { index },
@@ -38,7 +38,7 @@ function DraggableRegion({ region, index, moveRegion, activeTab }) {
         },
     });
 
-    let activeShow = region.link == activeTab ? classes.boldText : '';
+    let activeShow = region.link === activeTab ? classes.boldText : '';
 
     return (
         <div ref={(node) => ref(drop(node))} className={`${classes.elemBlock} ${activeShow}`}>
@@ -56,17 +56,17 @@ function Admin_Page({ children, ...props }) {
     let block = id;
     let boldName = id;
 
-    let section = ''
+    let section = '';
 
     if (title) {
-        boldName = title
+        boldName = title;
         block = 'editRegion';
         section = 'regions';
     }
-    if (block == 'addRegion') {
+    if (block === 'addRegion') {
         section = 'regions';
     }
-    if (block == 'addAboutCompany' || block == 'addOurTeam' || block == 'addOurMission') {
+    if (block === 'addAboutCompany' || block === 'addOurTeam' || block === 'addOurMission') {
         section = 'about';
     }
 
@@ -77,7 +77,10 @@ function Admin_Page({ children, ...props }) {
     const fetchRegions = () => {
         fetch(`${server}/api/getRegions`)
             .then(response => response.json())
-            .then(data => setRegions(data.regions))
+            .then(data => {
+                const sortedRegions = data.regions.sort((a, b) => a.order - b.order);
+                setRegions(sortedRegions);
+            })
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
     };
 
@@ -109,7 +112,7 @@ function Admin_Page({ children, ...props }) {
                 console.error('Ошибка при удалении сотрудника:', error);
             }
 
-            handleFormSuccess()
+            handleFormSuccess();
         }
     };
 
@@ -134,7 +137,7 @@ function Admin_Page({ children, ...props }) {
 
         if (response.ok) {
             const userData = await response.json();
-            setUser(userData)
+            setUser(userData);
         } else {
             localStorage.removeItem('token');
             console.error('Ошибка получения информации о пользователе');
@@ -161,11 +164,32 @@ function Admin_Page({ children, ...props }) {
         updatedRegions.splice(toIndex, 0, movedRegion);
         setRegions(updatedRegions);
     };
-    
+
+    useEffect(() => {
+        const saveOrder = async () => {
+            try {
+                await fetch(`${server}/api/saveRegionsOrder`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ regions }),
+                });
+            } catch (error) {
+                console.error('Ошибка при сохранении порядка регионов:', error);
+            }
+        };
+
+        if (regions.length > 0) {
+            saveOrder();
+        }
+    }, [regions]);
+
+    console.log(regions)
 
     return (
         <DndProvider backend={HTML5Backend}>
-            {user && user.role && user.role == 'admin' ?
+            {user && user.role && user.role === 'admin' ?
                 <div className={classes.admin}>
                     <div className={classes.admin_header}>
                         <a href="/" target="_blank" className={classes.admin_header__logo}>
