@@ -125,7 +125,7 @@ function Visits({ children, ...props }) {
                         <SliderPlaces info={place.photos} boxShadow={'none'} loop={true} />
 
                         <CenterBlock>
-                            <H2 text_transform="uppercase" font_size="36px">Информация для туриста</H2>
+                            <H2 text_transform="uppercase" font_size="36px">Интересные факты</H2>
                         </CenterBlock>
 
                         <div className={classes.visitBlocks}>

@@ -172,7 +172,7 @@ function Admin_Page({ children, ...props }) {
                             <img src="/about_title_logo.webp" alt="" />
                         </a>
                         <div className={classes.admin_header__items}>
-                            <div className={classes.admin_header__items___item}>Отзывы</div>
+                            <div className={classes.admin_header__items___item}>История заказов</div>
                             <div className={classes.admin_header__items___item}>Заявки</div>
                             <div className={classes.admin_header__items___item____dashboard}>
                                 <img src="/admin-panel 1.webp" alt="" />
