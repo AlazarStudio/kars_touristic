@@ -39,7 +39,7 @@ function Turagents({ children, ...props }) {
                     </div>
                     <div className={classes.turagentsButtons}>
                         <a href={`${server}/refs/${turagentInfo.docPath}`} target="_blank" className={classes.turagentsButtons_item}>Агентский договор</a>
-                        <a href="" className={classes.turagentsButtons_item}>Отчет Агента</a>
+                        {/* <a href="" className={classes.turagentsButtons_item}>Отчет Агента</a> */}
                     </div>
                 </WidthBlock>
             </CenterBlock>
