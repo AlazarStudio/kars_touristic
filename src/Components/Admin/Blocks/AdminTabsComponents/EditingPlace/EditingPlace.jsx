@@ -8,11 +8,11 @@ import Visits from "../Visits/Visits";
 import Events from "../Events/Events";
 import EditRegionData from "../EditRegionData/EditRegionData";
 
-function EditingPlace({ children, type, title, ...props }) {
+function EditingPlace({ children, type, title, role, ...props }) {
     return ( 
         <>
-            {type == 'multiday_tours' ? <MultidayTours title={title} type={type}/> : ''}            
-            {type == 'oneday_tours' ? <OnedayTours title={title} type={type}/> : ''}            
+            {type == 'multiday_tours' ? <MultidayTours role={role} title={title} type={type}/> : ''}            
+            {type == 'oneday_tours' ? <OnedayTours role={role} title={title} type={type}/> : ''}            
             {/* {type == 'gids' ? <Gids title={title} type={type}/> : ''}             */}
             {type == 'hotels' ? <Hotels title={title} type={type}/> : ''}            
             {type == 'visit' ? <Visits title={title} type={type}/> : ''}            

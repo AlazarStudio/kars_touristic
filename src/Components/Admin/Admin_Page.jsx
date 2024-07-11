@@ -23,7 +23,7 @@ const ItemType = {
     REGION: 'region',
 };
 
-function DraggableRegion({ region, index, moveRegion, activeTab, deleteElement, setActiveTab }) {
+function DraggableRegion({ region, index, moveRegion, activeTab, deleteElement, setActiveTab, role }) {
     const [, ref] = useDrag({
         type: ItemType.REGION,
         item: { index },
@@ -46,7 +46,7 @@ function DraggableRegion({ region, index, moveRegion, activeTab, deleteElement, 
             <Link to={`/admin/edit/${region.link}`} className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('editRegion')}>
                 {region.title}
             </Link>
-            <img src="/delete_region.webp" alt="" onClick={() => deleteElement(region._id)} />
+            {role === 'admin' ? <img src="/delete_region.webp" alt="" onClick={() => deleteElement(region._id)} /> : null}
         </div>
     );
 }
@@ -212,15 +212,18 @@ function Admin_Page({ children, ...props }) {
                             <img src="/about_title_logo.webp" alt="" />
                         </a>
                         <div className={classes.admin_header__items}>
-                            <Link to={'/admin/touragents'} className={classes.admin_header__items___item} onClick={() => setActiveTab('touragents')}>
-                                Турагенты
-                                {touragents && touragents.length > 0 ? <div className={classes.admin_header__nonAccessData}>{touragents.length}</div> : null}
-                            </Link>
-                            <div className={classes.admin_header__items___item}>Заявки</div>
-                            <div className={classes.admin_header__items___item}>История заказов</div>
+                            {user.role === 'admin' ?
+                                <>
+                                    <Link to={'/admin/touragents'} className={classes.admin_header__items___item} onClick={() => setActiveTab('touragents')}>
+                                        Турагенты
+                                        {touragents && touragents.length > 0 ? <div className={classes.admin_header__nonAccessData}>{touragents.length}</div> : null}
+                                    </Link>
+                                    <div className={classes.admin_header__items___item}>Заявки</div>
+                                    <div className={classes.admin_header__items___item}>История заказов</div>
+                                </> : null}
                             <div className={classes.admin_header__items___item____dashboard}>
                                 <img src="/admin-panel 1.webp" alt="" />
-                                Панель Администратора
+                                {user.role === 'admin' ? 'Панель Администратора' : 'Панель Турагента'}
                             </div>
                         </div>
                     </div>
@@ -231,9 +234,12 @@ function Admin_Page({ children, ...props }) {
                                 <div className={`${isActive('addRegion')} ${isActiveEdit('edit')} ${classes.hoverBlock}`} onClick={() => setOpenSection('regions')}>Регион</div>
                                 {openSection === 'regions' && (
                                     <div className={classes.admin_data__nav___item____desc}>
-                                        <Link to={'/admin/addRegion'} className={`${classes.admin_data__nav___item____subItem} ${isActive('addRegion')}`} onClick={() => setActiveTab('addRegion')}>
-                                            + Добавить регион
-                                        </Link>
+                                        {user.role === 'admin' ?
+                                            <Link to={'/admin/addRegion'} className={`${classes.admin_data__nav___item____subItem} ${isActive('addRegion')}`} onClick={() => setActiveTab('addRegion')}>
+                                                + Добавить регион
+                                            </Link>
+                                            : null
+                                        }
 
                                         {regions.map((region, index) => (
                                             <DraggableRegion
@@ -244,52 +250,57 @@ function Admin_Page({ children, ...props }) {
                                                 deleteElement={deleteElement}
                                                 activeTab={title}
                                                 setActiveTab={setActiveTab}
+                                                role={user.role}
                                             />
                                         ))}
                                     </div>
                                 )}
                             </div>
-                            <div className={`${classes.admin_data__nav___item}`}>
-                                <div className={`${isActive('addAboutCompany')} ${isActive('addOurTeam')} ${isActive('addOurMission')} ${classes.hoverBlock}`} onClick={() => setOpenSection('about')}>О нас</div>
-                                {openSection === 'about' && (
-                                    <div className={classes.admin_data__nav___item____desc}>
-                                        <Link to={`/admin/addAboutCompany`} className={`${classes.admin_data__nav___item____subItem} ${isActive('addAboutCompany')}`} onClick={() => setActiveTab('addAboutCompany')}>О компании</Link>
-                                        <Link to={`/admin/addOurTeam`} className={`${classes.admin_data__nav___item____subItem} ${isActive('addOurTeam')}`} onClick={() => setActiveTab('addOurTeam')}>Наша команда</Link>
-                                        <Link to={`/admin/addOurMission`} className={`${classes.admin_data__nav___item____subItem} ${isActive('addOurMission')}`} onClick={() => setActiveTab('addOurMission')}>Наша миссия</Link>
+                            {user.role === 'admin' ?
+                                <>
+                                    <div className={`${classes.admin_data__nav___item}`}>
+                                        <div className={`${isActive('addAboutCompany')} ${isActive('addOurTeam')} ${isActive('addOurMission')} ${classes.hoverBlock}`} onClick={() => setOpenSection('about')}>О нас</div>
+                                        {openSection === 'about' && (
+                                            <div className={classes.admin_data__nav___item____desc}>
+                                                <Link to={`/admin/addAboutCompany`} className={`${classes.admin_data__nav___item____subItem} ${isActive('addAboutCompany')}`} onClick={() => setActiveTab('addAboutCompany')}>О компании</Link>
+                                                <Link to={`/admin/addOurTeam`} className={`${classes.admin_data__nav___item____subItem} ${isActive('addOurTeam')}`} onClick={() => setActiveTab('addOurTeam')}>Наша команда</Link>
+                                                <Link to={`/admin/addOurMission`} className={`${classes.admin_data__nav___item____subItem} ${isActive('addOurMission')}`} onClick={() => setActiveTab('addOurMission')}>Наша миссия</Link>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
 
-                            <Link to={`/admin/addTransfer`}
-                                className={`${classes.admin_data__nav___item} ${isActive('addTransfer')} ${classes.hoverBlock}`}
-                                onClick={() => { setActiveTab('addTransfer'); setOpenSection('addTransfer'); }}>
-                                Трансфер
-                            </Link>
+                                    <Link to={`/admin/addTransfer`}
+                                        className={`${classes.admin_data__nav___item} ${isActive('addTransfer')} ${classes.hoverBlock}`}
+                                        onClick={() => { setActiveTab('addTransfer'); setOpenSection('addTransfer'); }}>
+                                        Трансфер
+                                    </Link>
 
-                            <Link to={`/admin/addFAQ`}
-                                className={`${classes.admin_data__nav___item} ${isActive('addFAQ')} ${classes.hoverBlock}`}
-                                onClick={() => { setActiveTab('addFAQ'); setOpenSection('addFAQ'); }}>
-                                FAQ
-                            </Link>
+                                    <Link to={`/admin/addFAQ`}
+                                        className={`${classes.admin_data__nav___item} ${isActive('addFAQ')} ${classes.hoverBlock}`}
+                                        onClick={() => { setActiveTab('addFAQ'); setOpenSection('addFAQ'); }}>
+                                        FAQ
+                                    </Link>
 
-                            <Link to={`/admin/addContacts`}
-                                className={`${classes.admin_data__nav___item} ${isActive('addContacts')} ${classes.hoverBlock}`}
-                                onClick={() => { setActiveTab('addContacts'); setOpenSection('addContacts'); }}>
-                                Контакты
-                            </Link>
+                                    <Link to={`/admin/addContacts`}
+                                        className={`${classes.admin_data__nav___item} ${isActive('addContacts')} ${classes.hoverBlock}`}
+                                        onClick={() => { setActiveTab('addContacts'); setOpenSection('addContacts'); }}>
+                                        Контакты
+                                    </Link>
 
-                            <Link to={`/admin/addTuragent`}
-                                className={`${classes.admin_data__nav___item} ${isActive('addTuragent')} ${classes.hoverBlock}`}
-                                onClick={() => { setActiveTab('addTuragent'); setOpenSection('addTuragent'); }}>
-                                Турагентам
-                            </Link>
+                                    <Link to={`/admin/addTuragent`}
+                                        className={`${classes.admin_data__nav___item} ${isActive('addTuragent')} ${classes.hoverBlock}`}
+                                        onClick={() => { setActiveTab('addTuragent'); setOpenSection('addTuragent'); }}>
+                                        Турагентам
+                                    </Link>
+                                </> : null}
+
                         </div>
                         <div className={classes.admin_data__info}>
                             {/* Добавить регион */}
                             {activeTab === 'addRegion' && <AddRegion fetchRegions={fetchRegions} />}
 
                             {/* Редактировать регион */}
-                            {activeTab === 'editRegion' && <EditRegion />}
+                            {activeTab === 'editRegion' && <EditRegion role={user.role}/>}
 
                             {/* Редактировать турагенты */}
                             {activeTab === 'touragents' && <Gids />}

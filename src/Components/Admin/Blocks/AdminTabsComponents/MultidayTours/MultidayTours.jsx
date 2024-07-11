@@ -54,19 +54,21 @@ function Tour({ tour, index, moveTour, deleteElement }) {
     );
 }
 
-function MultidayTours({ children, title, type, ...props }) {
+function MultidayTours({ children, title, type, role, ...props }) {
     const { add } = useParams();
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState([]);
 
     const response = () => {
-        fetch(`${server}/api/getMultidayTours?region=${title}&filter='-'`)
-            .then(response => response.json())
-            .then(data => {
-                const sortedTours = data.multidayTour.sort((a, b) => a.order - b.order);
-                setTours(sortedTours);
-            })
-            .catch(error => console.error('Ошибка:', error));
+        if (role == 'admin') {
+            fetch(`${server}/api/getMultidayTours?region=${title}&filter='-'`)
+                .then(response => response.json())
+                .then(data => {
+                    const sortedTours = data.multidayTour.sort((a, b) => a.order - b.order);
+                    setTours(sortedTours);
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
     };
 
     useEffect(() => { response() }, [title]);
@@ -84,7 +86,7 @@ function MultidayTours({ children, title, type, ...props }) {
 
         const orderedIds = updatedTours.map(tour => tour._id);
         console.log(orderedIds);
-        
+
         fetch(`${server}/api/updateMultidayTourOrder`, {
             method: 'POST',
             headers: {
@@ -148,7 +150,7 @@ function MultidayTours({ children, title, type, ...props }) {
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <EditMultidayTours region={title} onTourAdded={response} photoMassName={'photos'}/>
+                            <EditMultidayTours region={title} onTourAdded={response} photoMassName={'photos'} />
                         </>
                     }
                 </>

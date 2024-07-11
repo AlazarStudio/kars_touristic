@@ -54,19 +54,21 @@ function Tour({ tour, index, moveTour, deleteElement }) { // добавляем 
     );
 }
 
-function OnedayTours({ children, title, type, ...props }) {
+function OnedayTours({ children, title, type, role, ...props }) {
     const { add } = useParams();
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState([]);
 
     const response = () => {
-        fetch(`${server}/api/getOnedayTours?region=${title}&filter='-'`)
-            .then(response => response.json())
-            .then(data => {
-                const sortedTours = data.onedayTour.sort((a, b) => a.order - b.order);
-                setTours(sortedTours);
-            })
-            .catch(error => console.error('Ошибка:', error));
+        if (role == 'admin') {
+            fetch(`${server}/api/getOnedayTours?region=${title}&filter='-'`)
+                .then(response => response.json())
+                .then(data => {
+                    const sortedTours = data.onedayTour.sort((a, b) => a.order - b.order);
+                    setTours(sortedTours);
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
     };
 
     useEffect(() => { response() }, [title]);
@@ -145,7 +147,7 @@ function OnedayTours({ children, title, type, ...props }) {
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <EditOnedayTours region={title} onTourAdded={response}  photoMassName={'photos'}/>
+                            <EditOnedayTours region={title} onTourAdded={response} photoMassName={'photos'} />
                         </>
                     }
                 </>

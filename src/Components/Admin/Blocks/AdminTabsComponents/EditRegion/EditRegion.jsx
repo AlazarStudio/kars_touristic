@@ -4,7 +4,7 @@ import classes from './EditRegion.module.css';
 import EditingPlace from "../EditingPlace/EditingPlace";
 import serverConfig from "../../../../../serverConfig";
 
-function EditRegion({ children, ...props }) {
+function EditRegion({ children, role, ...props }) {
     const { id, title, type } = useParams();
 
     const [regions, setRegions] = useState([]);
@@ -28,8 +28,9 @@ function EditRegion({ children, ...props }) {
                 <div className={classes.edit}>
                     <div className={classes.editTitle}>
                         Редактировать РЕГИОН: «{region[0] ? region[0].title : ''}»
-                        <Link to={`/admin/${id}/${title}/editRegionData`}><img src="/edit.webp" alt="" /></Link>
+                        {role === 'admin' ? <Link to={`/admin/${id}/${title}/editRegionData`}><img src="/edit.webp" alt="" /></Link> : null}
                     </div>
+
                     <div className={classes.editBlocks}>
                         <Link to={`/admin/${id}/${title}/multiday_tours`} className={classes.editBlocks_item}>
                             <div className={classes.editBlocks_item__img}>
@@ -49,27 +50,32 @@ function EditRegion({ children, ...props }) {
                             </div>
                             <div className={classes.editBlocks_item__title}>Гиды</div>
                         </Link> */}
-                        <Link to={`/admin/${id}/${title}/hotels`} className={classes.editBlocks_item}>
-                            <div className={classes.editBlocks_item__img}>
-                                <img src="/admin_oteli.webp" alt="" />
-                            </div>
-                            <div className={classes.editBlocks_item__title}>Отели</div>
-                        </Link>
-                        <Link to={`/admin/${id}/${title}/visit`} className={classes.editBlocks_item}>
-                            <div className={classes.editBlocks_item__img}>
-                                <img src="/admin_visit.webp" alt="" />
-                            </div>
-                            <div className={classes.editBlocks_item__title}>Что посетить</div>
-                        </Link>
-                        <Link to={`/admin/${id}/${title}/events`} className={classes.editBlocks_item}>
-                            <div className={classes.editBlocks_item__img}>
-                                <img src="/admin_events.webp" alt="" />
-                            </div>
-                            <div className={classes.editBlocks_item__title}>Региональные Mice ивенты</div>
-                        </Link>
+                        {role === 'admin' ?
+                            <>
+                                <Link to={`/admin/${id}/${title}/hotels`} className={classes.editBlocks_item}>
+                                    <div className={classes.editBlocks_item__img}>
+                                        <img src="/admin_oteli.webp" alt="" />
+                                    </div>
+                                    <div className={classes.editBlocks_item__title}>Отели</div>
+                                </Link>
+                                <Link to={`/admin/${id}/${title}/visit`} className={classes.editBlocks_item}>
+                                    <div className={classes.editBlocks_item__img}>
+                                        <img src="/admin_visit.webp" alt="" />
+                                    </div>
+                                    <div className={classes.editBlocks_item__title}>Что посетить</div>
+                                </Link>
+                                <Link to={`/admin/${id}/${title}/events`} className={classes.editBlocks_item}>
+                                    <div className={classes.editBlocks_item__img}>
+                                        <img src="/admin_events.webp" alt="" />
+                                    </div>
+                                    <div className={classes.editBlocks_item__title}>Региональные Mice ивенты</div>
+                                </Link>
+                            </>
+                            : null
+                        }
                     </div>
                 </div> :
-                <EditingPlace type={type} title={title} />
+                <EditingPlace type={type} title={title} role={role}/>
             }
         </>
     );
