@@ -10,7 +10,6 @@ import server from '../../../serverConfig'
 function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, ...props }) {
     const [filteredObjects, setFilteredObjects] = useState([]);
 
-
     const updateFilteredObjects = (filteredObjects) => {
         setFilteredObjects(filteredObjects);
     };

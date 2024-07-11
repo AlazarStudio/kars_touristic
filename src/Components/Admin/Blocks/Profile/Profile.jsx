@@ -65,7 +65,7 @@ function Profile({ children, ...props }) {
                                             <img src="/admin-panel 1.webp" alt="" />
                                             Перейти в Панель Турагента
                                         </Link>
-                                        : 'Ожидается подтверждение аккаунта администратором'}
+                                        : user.role == 'user' ? null :'Ожидается подтверждение аккаунта администратором'}
                                 <img src="/logout.png" alt="" onClick={logout} />
                             </div>
 

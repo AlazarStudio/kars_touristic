@@ -8,7 +8,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 
 function Object({ pageName, titleObject, regionData, width }) {
-    
+
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
             return str.substring(0, maxLength) + '...';
@@ -51,22 +51,24 @@ function Object({ pageName, titleObject, regionData, width }) {
     };
 
     const getUserInfo = async (token) => {
-        try {
-            const response = await fetch(`${server}/api/user`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+        if (token) {
+            try {
+                const response = await fetch(`${server}/api/user`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
 
-            if (response.ok) {
-                return await response.json();
-            } else {
-                throw new Error('Failed to fetch user data.');
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    throw new Error('Failed to fetch user data.');
+                }
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+                throw error;
             }
-        } catch (error) {
-            console.error('Error fetching user info:', error);
-            throw error;
         }
     };
 
@@ -88,11 +90,12 @@ function Object({ pageName, titleObject, regionData, width }) {
 
             try {
                 const updatedUser = await updateUser(token, updates);
-                setUser(updatedUser);
+                setUser(updatedUser.user);
             } catch (error) {
                 console.error('Error updating user:', error);
             }
         } else {
+            alert('Вы не авторизованы');
             navigate('/signIn');
         }
     };
@@ -112,6 +115,7 @@ function Object({ pageName, titleObject, regionData, width }) {
                 console.error('Error updating user:', error);
             }
         } else {
+            alert('Вы не авторизованы');
             navigate('/signIn');
         }
     };
