@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classes from './Gids.module.css';
 
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 import server from '../../../../../serverConfig';
 function Gids({ children, ...props }) {
@@ -62,7 +62,7 @@ function Gids({ children, ...props }) {
                                         <div className={classes.gids_info__elem}>{item.email}</div>
                                         <div className={classes.gids_info__elem}>{item.phone}</div>
                                     </div>
-                                    <div className={classes.gids_info__changeBTN}>Посмотреть профиль</div>
+                                    <Link to={`/profileTouragent/${item._id}`} target="_blank" className={classes.gids_info__changeBTN}>Посмотреть профиль</Link>
                                 </div>
                             ))
                             :

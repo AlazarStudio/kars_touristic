@@ -20,6 +20,7 @@ import Admin_Page from "./Components/Admin/Admin_Page";
 import SignUp from "./Components/Admin/Blocks/SignUp/SignUp";
 import SignIn from "./Components/Admin/Blocks/SignIn/SignIn";
 import Profile from "./Components/Admin/Blocks/Profile/Profile";
+import ProfileTouragent from "./Components/Admin/Blocks/ProfileTouragent/ProfileTouragent";
 import Search_Page from "./Components/Pages/Search_Page/Search_Page";
 import Favorites_Page from "./Components/Pages/Favorites_Page/Favorites_Page";
 import Cart_Page from "./Components/Pages/Cart_Page/Cart_Page";
@@ -53,6 +54,8 @@ function App() {
           <Route path="/signUpTouragent" element={<SignUpTouragent />} />
 
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profileTouragent/:id" element={<ProfileTouragent />} />
+
           <Route path="/favourites" element={<Favorites_Page />} />
           <Route path="/cart" element={<Cart_Page />} />
 
