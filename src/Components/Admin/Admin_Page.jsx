@@ -292,7 +292,7 @@ function Admin_Page({ children, ...props }) {
                             {activeTab === 'editRegion' && <EditRegion />}
 
                             {/* Редактировать турагенты */}
-                            {activeTab === 'touragents' && <Gids setActiveTab={setActiveTab} activeTab={activeTab} />}
+                            {activeTab === 'touragents' && <Gids />}
 
                             {/* Добавить О нас */}
                             {activeTab === 'addAboutCompany' && <AddAboutCompany />}
