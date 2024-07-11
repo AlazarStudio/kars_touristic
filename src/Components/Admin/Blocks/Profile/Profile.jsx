@@ -46,8 +46,6 @@ function Profile({ children, ...props }) {
         setUser(null);
     }
 
-    console.log(user)
-
     return (
         <>
             <Header_black />
@@ -62,7 +60,12 @@ function Profile({ children, ...props }) {
                                         <img src="/admin-panel 1.webp" alt="" />
                                         Перейти в Панель Администратора
                                     </Link>
-                                    : null}
+                                    : user && user.role && user.adminPanelAccess && user.role == 'touragent' ?
+                                        <Link to={'/admin'}>
+                                            <img src="/admin-panel 1.webp" alt="" />
+                                            Перейти в Панель Турагента
+                                        </Link>
+                                        : 'Ожидается подтверждение аккаунта администратором'}
                                 <img src="/logout.png" alt="" onClick={logout} />
                             </div>
 

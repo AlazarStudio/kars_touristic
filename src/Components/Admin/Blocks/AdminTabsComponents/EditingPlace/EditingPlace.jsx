@@ -13,7 +13,7 @@ function EditingPlace({ children, type, title, ...props }) {
         <>
             {type == 'multiday_tours' ? <MultidayTours title={title} type={type}/> : ''}            
             {type == 'oneday_tours' ? <OnedayTours title={title} type={type}/> : ''}            
-            {type == 'gids' ? <Gids title={title} type={type}/> : ''}            
+            {/* {type == 'gids' ? <Gids title={title} type={type}/> : ''}             */}
             {type == 'hotels' ? <Hotels title={title} type={type}/> : ''}            
             {type == 'visit' ? <Visits title={title} type={type}/> : ''}            
             {type == 'events' ? <Events title={title} type={type}/> : ''}            

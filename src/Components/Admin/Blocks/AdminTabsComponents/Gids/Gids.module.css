@@ -40,16 +40,20 @@
     background-color: var(--black_color);
 }
 
-.multidayTours_back a {
+.multidayTours_back button {
     color: var(--black_color);
     font-size: 16px;
     display: flex;
     align-items: center;
     gap: 10px;
     width: 170px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
 }
 
-.multidayTours_back a img {
+.multidayTours_back button img {
     width: 14px;
 }
 
@@ -67,9 +71,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 25px 0;
+    padding: 15px 0;
     border-bottom: 1px solid var(--black_color);
-    gap: 50px;
 }
 
 .gids_info:last-child {
@@ -89,50 +92,50 @@
     object-fit: cover;
 }
 
-.gids_info__name {
+.gids_info__elem {
     font-family: Montserrat;
     font-size: 18px;
     font-weight: 500;
     line-height: 24.38px;
-    width: 310px;
-}
-
-.gids_info__email {
-    font-family: Montserrat;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 24.38px;
-    width: 300px;
-}
-
-.gids_info__activeBTN {
-    background: #169A4C;
-    border-radius: 30px;
-    padding: 15px 0px;
-    color: var(--white_color);
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 24px;
-    cursor: pointer;
-    width: 200px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 10px;
+}
+
+.gids_info__access {
+    color: #169A4C;
+    border-radius: 30px;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.gids_info__noAccess {
+    color: #9a2516;
+    border-radius: 30px;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .gids_info__changeBTN {
     background: var(--black_color);
     border-radius: 30px;
-    padding: 15px 0px;
+    padding: 10px 15px;
     color: var(--white_color);
     font-family: Montserrat;
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
     cursor: pointer;
-    width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.gids_info_data {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 210px);
+    gap: 50px;
 }

@@ -17,12 +17,13 @@ import AddTuragent from "./Blocks/AdminTabsComponents/AddTuragent/AddTuragent";
 import EditRegion from "./Blocks/AdminTabsComponents/EditRegion/EditRegion";
 import CenterBlock from "../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../Standart/WidthBlock/WidthBlock";
+import Gids from "./Blocks/AdminTabsComponents/Gids/Gids";
 
 const ItemType = {
     REGION: 'region',
 };
 
-function DraggableRegion({ region, index, moveRegion, activeTab, deleteElement }) {
+function DraggableRegion({ region, index, moveRegion, activeTab, deleteElement, setActiveTab }) {
     const [, ref] = useDrag({
         type: ItemType.REGION,
         item: { index },
@@ -42,7 +43,7 @@ function DraggableRegion({ region, index, moveRegion, activeTab, deleteElement }
 
     return (
         <div ref={(node) => ref(drop(node))} className={`${classes.elemBlock} ${activeShow}`}>
-            <Link to={`/admin/edit/${region.link}`} className={classes.admin_data__nav___item____subItem}>
+            <Link to={`/admin/edit/${region.link}`} className={classes.admin_data__nav___item____subItem} onClick={() => setActiveTab('editRegion')}>
                 {region.title}
             </Link>
             <img src="/delete_region.webp" alt="" onClick={() => deleteElement(region._id)} />
@@ -52,7 +53,7 @@ function DraggableRegion({ region, index, moveRegion, activeTab, deleteElement }
 
 function Admin_Page({ children, ...props }) {
     const { id, title } = useParams();
-    
+
     let block = id;
     let boldName = id;
 
@@ -153,7 +154,7 @@ function Admin_Page({ children, ...props }) {
     }, [token]);
 
     useEffect(() => {
-        if (user && user.role !== 'admin') {
+        if (user && user.adminPanelAccess == false && (user.role !== 'admin' || user.role !== 'touragent')) {
             navigate('/profile');
         }
     }, [user]);
@@ -185,19 +186,38 @@ function Admin_Page({ children, ...props }) {
         }
     }, [regions]);
 
-    console.log(regions)
+
+    const [touragents, setTouragents] = useState([]);
+
+    useEffect(() => {
+        async function fetchTouragents() {
+            try {
+                const response = await fetch(`${server}/api/getTouragents`);
+                const data = await response.json();
+                const filteredTouragents = data.users.filter(agent => !agent.adminPanelAccess);
+                setTouragents(filteredTouragents);
+            } catch (error) {
+                console.error("Error fetching mission info:", error);
+            }
+        }
+        fetchTouragents();
+    }, []);
 
     return (
         <DndProvider backend={HTML5Backend}>
-            {user && user.role && user.role === 'admin' ?
+            {user && user.role && user.adminPanelAccess && (user.role === 'admin' || user.role === 'touragent') ?
                 <div className={classes.admin}>
                     <div className={classes.admin_header}>
                         <a href="/" target="_blank" className={classes.admin_header__logo}>
                             <img src="/about_title_logo.webp" alt="" />
                         </a>
                         <div className={classes.admin_header__items}>
-                            <div className={classes.admin_header__items___item}>История заказов</div>
+                            <Link to={'/admin/touragents'} className={classes.admin_header__items___item} onClick={() => setActiveTab('touragents')}>
+                                Турагенты
+                                {touragents && touragents.length > 0 ? <div className={classes.admin_header__nonAccessData}>{touragents.length}</div> : null}
+                            </Link>
                             <div className={classes.admin_header__items___item}>Заявки</div>
+                            <div className={classes.admin_header__items___item}>История заказов</div>
                             <div className={classes.admin_header__items___item____dashboard}>
                                 <img src="/admin-panel 1.webp" alt="" />
                                 Панель Администратора
@@ -223,6 +243,7 @@ function Admin_Page({ children, ...props }) {
                                                 moveRegion={moveRegion}
                                                 deleteElement={deleteElement}
                                                 activeTab={title}
+                                                setActiveTab={setActiveTab}
                                             />
                                         ))}
                                     </div>
@@ -269,6 +290,9 @@ function Admin_Page({ children, ...props }) {
 
                             {/* Редактировать регион */}
                             {activeTab === 'editRegion' && <EditRegion />}
+
+                            {/* Редактировать турагенты */}
+                            {activeTab === 'touragents' && <Gids setActiveTab={setActiveTab} activeTab={activeTab} />}
 
                             {/* Добавить О нас */}
                             {activeTab === 'addAboutCompany' && <AddAboutCompany />}
