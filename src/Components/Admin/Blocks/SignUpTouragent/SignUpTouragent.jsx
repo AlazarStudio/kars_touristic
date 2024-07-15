@@ -60,7 +60,7 @@ function SignUpTouragent({ children, ...props }) {
 
             <CenterBlock>
                 <div className={classes.registerForm}>
-                    <H2 text_transform={"uppercase"} text_align={'center'}>Регистрация турагента</H2>
+                    <H2 text_transform={"uppercase"} text_align={'center'}>Регистрация автора туров</H2>
 
                     <form onSubmit={handleSubmit}>
                         <input

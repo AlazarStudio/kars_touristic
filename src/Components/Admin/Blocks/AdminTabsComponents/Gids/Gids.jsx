@@ -43,7 +43,7 @@ function Gids({ children, ...props }) {
                     </div>
 
                     <div className={classes.multidayTours_top}>
-                        <div className={classes.multidayTours_top__title}>Турагенты</div>
+                        <div className={classes.multidayTours_top__title}>Авторы туров</div>
                     </div>
 
                     <div className={classes.gids}>

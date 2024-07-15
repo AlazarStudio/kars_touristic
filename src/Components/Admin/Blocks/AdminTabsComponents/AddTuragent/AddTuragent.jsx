@@ -33,13 +33,13 @@ function AddTuragent({ children, activeTab, ...props }) {
 
     return (
         <div className={classes.addData}>
-            <div className={classes.addData_title}>Турагентам</div>
+            <div className={classes.addData_title}>Авторам туров</div>
             {turagentInfo && (
                 <div className={classes.turagentInfo}>
-                    <h3>Описание турагентам:</h3>
+                    <h3>Описание для авторов туров:</h3>
                     <p>{turagentInfo.description}</p>
                     <br />
-                    <h3>Файл турагентам: <a href={`${server}/refs/${turagentInfo.docPath}`} target="_blank"> Скачать файл</a>
+                    <h3>Файл авторам туров: <a href={`${server}/refs/${turagentInfo.docPath}`} target="_blank"> Скачать файл</a>
                     </h3>
                 </div>
             )}

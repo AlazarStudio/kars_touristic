@@ -53,7 +53,7 @@ function ProfileTouragent({ children, ...props }) {
 
         if (response.ok) {
             const userData = await response.json();
-            alert('Турагент подтвержден');
+            alert('Автор туров подтвержден');
         } else {
             console.error('Ошибка получения информации о пользователе');
         }

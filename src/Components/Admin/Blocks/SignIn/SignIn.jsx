@@ -77,7 +77,7 @@ function SignIn({ children, ...props }) {
                         />
                         <button type="submit" disabled={loading}>Войти</button>
                         <Link to={'/signUp'} style={{ 'text-align': 'center', 'color': '#4872F2', 'font-weight': '600' }}>Зарегистрироваться как пользователь</Link>
-                        <Link to={'/signUpTouragent'} style={{ 'text-align': 'center', 'color': '#4872F2', 'font-weight': '600' }}>Зарегистрироваться как турагент</Link>
+                        <Link to={'/signUpTouragent'} style={{ 'text-align': 'center', 'color': '#4872F2', 'font-weight': '600' }}>Зарегистрироваться как автор тура</Link>
                     </form>
                     {loading && <div className={classes.loaderWrapper}><div className={classes.loader}></div></div>} {/* Прелоудер */}
                 </div>

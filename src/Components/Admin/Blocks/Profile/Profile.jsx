@@ -63,7 +63,7 @@ function Profile({ children, ...props }) {
                                     : user && user.role && user.adminPanelAccess && user.role == 'touragent' ?
                                         <Link to={'/admin'}>
                                             <img src="/admin-panel 1.webp" alt="" />
-                                            Перейти в Панель Турагента
+                                            Перейти в Панель Автора туров
                                         </Link>
                                         : user.role == 'user' ? null :'Ожидается подтверждение аккаунта администратором'}
                                 <img src="/logout.png" alt="" onClick={logout} />

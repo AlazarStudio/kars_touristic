@@ -215,7 +215,7 @@ function Admin_Page({ children, ...props }) {
                             {user.role === 'admin' ?
                                 <>
                                     <Link to={'/admin/touragents'} className={classes.admin_header__items___item} onClick={() => setActiveTab('touragents')}>
-                                        Турагенты
+                                        Авторы туров
                                         {touragents && touragents.length > 0 ? <div className={classes.admin_header__nonAccessData}>{touragents.length}</div> : null}
                                     </Link>
                                     <div className={classes.admin_header__items___item}>Заявки</div>
@@ -223,7 +223,7 @@ function Admin_Page({ children, ...props }) {
                                 </> : null}
                             <div className={classes.admin_header__items___item____dashboard}>
                                 <img src="/admin-panel 1.webp" alt="" />
-                                {user.role === 'admin' ? 'Панель Администратора' : 'Панель Турагента'}
+                                {user.role === 'admin' ? 'Панель Администратора' : 'Панель Автора туров'}
                             </div>
                         </div>
                     </div>
@@ -290,7 +290,7 @@ function Admin_Page({ children, ...props }) {
                                     <Link to={`/admin/addTuragent`}
                                         className={`${classes.admin_data__nav___item} ${isActive('addTuragent')} ${classes.hoverBlock}`}
                                         onClick={() => { setActiveTab('addTuragent'); setOpenSection('addTuragent'); }}>
-                                        Турагентам
+                                        Авторам туров
                                     </Link>
                                 </> : null}
 
@@ -302,7 +302,7 @@ function Admin_Page({ children, ...props }) {
                             {/* Редактировать регион */}
                             {activeTab === 'editRegion' && <EditRegion role={user.role}/>}
 
-                            {/* Редактировать турагенты */}
+                            {/* Редактировать авторов туров */}
                             {activeTab === 'touragents' && <Gids />}
 
                             {/* Добавить О нас */}
@@ -319,7 +319,7 @@ function Admin_Page({ children, ...props }) {
                             {/* Добавить Контакты */}
                             {activeTab === 'addContacts' && <AddContacts />}
 
-                            {/* Добавить Турагентам */}
+                            {/* Добавить автора туров */}
                             {activeTab === 'addTuragent' && <AddTuragent />}
                         </div>
                     </div>
