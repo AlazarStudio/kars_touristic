@@ -202,7 +202,7 @@ function Admin_Page({ children, ...props }) {
         }
         fetchTouragents();
     }, []);
-    
+
     return (
         <DndProvider backend={HTML5Backend}>
             {user && user.role && user.adminPanelAccess && (user.role === 'admin' || user.role === 'touragent') ?
@@ -216,14 +216,26 @@ function Admin_Page({ children, ...props }) {
                                 <>
                                     <Link to={'/admin/touragents'} className={classes.admin_header__items___item} onClick={() => setActiveTab('touragents')}>
                                         Авторы туров
-                                        {touragents && touragents.length > 0 ? <div className={classes.admin_header__nonAccessData}>{touragents.length}</div> : null}
+                                        {
+                                            touragents && touragents.length > 0 ?
+                                                <div className={classes.admin_header__nonAccessData}>{touragents.length}</div> :
+                                                <div className={classes.admin_header__nonAccessData}>0</div>
+                                        }
                                     </Link>
-                                    <div className={classes.admin_header__items___item}>Заявки</div>
-                                    <div className={classes.admin_header__items___item}>История заказов</div>
+
+                                    <Link to={'/admin/moderedAuthorTours'} className={classes.admin_header__items___item} onClick={() => setActiveTab('moderedAuthorTours')}>
+                                        Неподтвержденные туры
+                                        {
+                                            touragents && touragents.length > 0 ?
+                                                <div className={classes.admin_header__nonAccessData}>0</div> :
+                                                <div className={classes.admin_header__nonAccessData}>0</div>
+                                        }
+                                    </Link>
+                                    {/* <div className={classes.admin_header__items___item}>История заказов</div> */}
                                 </> : null}
                             <div className={classes.admin_header__items___item____dashboard}>
                                 <img src="/admin-panel 1.webp" alt="" />
-                                {user.role === 'admin' ? 'Панель Администратора' : 'Панель Автора туров'}
+                                <Link to={'/profile'} target="_blank">{user.role === 'admin' ? 'Панель Администратора' : 'Панель Автора туров'}</Link>
                             </div>
                         </div>
                     </div>
@@ -300,7 +312,7 @@ function Admin_Page({ children, ...props }) {
                             {activeTab === 'addRegion' && <AddRegion fetchRegions={fetchRegions} />}
 
                             {/* Редактировать регион */}
-                            {activeTab === 'editRegion' && <EditRegion role={user.role} userName={user.name} userID={user._id}/>}
+                            {activeTab === 'editRegion' && <EditRegion role={user.role} userName={user.name} userID={user._id} />}
 
                             {/* Редактировать авторов туров */}
                             {activeTab === 'touragents' && <Gids />}
