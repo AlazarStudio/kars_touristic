@@ -202,7 +202,7 @@ function Admin_Page({ children, ...props }) {
         }
         fetchTouragents();
     }, []);
-
+    
     return (
         <DndProvider backend={HTML5Backend}>
             {user && user.role && user.adminPanelAccess && (user.role === 'admin' || user.role === 'touragent') ?
@@ -300,7 +300,7 @@ function Admin_Page({ children, ...props }) {
                             {activeTab === 'addRegion' && <AddRegion fetchRegions={fetchRegions} />}
 
                             {/* Редактировать регион */}
-                            {activeTab === 'editRegion' && <EditRegion role={user.role}/>}
+                            {activeTab === 'editRegion' && <EditRegion role={user.role} userName={user.name} userID={user._id}/>}
 
                             {/* Редактировать авторов туров */}
                             {activeTab === 'touragents' && <Gids />}

@@ -3,9 +3,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import classes from './FormEdit.module.css';
 
-function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, hotelId, photoMassName }) {
+function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, setSelectedTour, hotelId, photoMassName, editAuthorTours }) {
     let regionName = useParams().title;
     let regionTypeData = useParams().type;
+
+    editAuthorTours && (initialValues.modered = 'false');
 
     const navigate = useNavigate();
     const [form, setForm] = useState(initialValues || {});
@@ -133,7 +135,11 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
             resetForm();
             displayMessage('Данные успешно добавлены');
             onTourAdded?.();
-            needNavigate ? navigate(`/admin/edit/${regionName}/${regionTypeData}/${hotelId ? 'showRooms/' + hotelId : ''}`, { replace: true }) : null;
+            needNavigate 
+            ? 
+            editAuthorTours ? navigate(`/admin/edit/${regionName}`, { replace: true }) : navigate(`/admin/edit/${regionName}/${regionTypeData}/${hotelId ? 'showRooms/' + hotelId : ''}`, { replace: true }) 
+            : 
+            null;
         } catch (error) {
             console.error(error);
             displayMessage('Ошибка при добавлении данных');

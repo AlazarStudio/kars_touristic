@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import classes from './Form.module.css';
 
-function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, onSuccess }) {
+function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, type, resetAll, initialValues, onTourAdded, needNavigate, onSuccess, authorTours }) {
     let regionName = useParams().title;
     let regionTypeData = useParams().type;
 
@@ -62,7 +62,7 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
         }
         displayMessage('Данные успешно добавлены');
         setTimeout(() => setShowMessage(false), 5000);
-        resetAll && resetAll(); 
+        resetAll && resetAll();
     };
 
     const handleSubmit = async (event) => {
@@ -100,13 +100,17 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-            
+
             fetchRegions && fetchRegions();
             onSuccess && onSuccess();
             resetForm();
             onTourAdded ? onTourAdded() : null
-            
-            needNavigate ? navigate(`/admin/edit/${regionName}/${regionTypeData}/`, { replace: true }) : null;
+
+            needNavigate
+                ?
+                authorTours ? navigate(`/admin/edit/${regionName}`, { replace: true }) : navigate(`/admin/edit/${regionName}/${regionTypeData}/`, { replace: true })
+                :
+                null;
         } catch (error) {
             console.error(error);
             displayMessage('Ошибка при добавлении. Пожалуйста попробуйте заново');

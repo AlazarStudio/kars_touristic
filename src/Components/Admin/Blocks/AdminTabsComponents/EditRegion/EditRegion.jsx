@@ -3,8 +3,9 @@ import { Link, useParams } from 'react-router-dom';
 import classes from './EditRegion.module.css';
 import EditingPlace from "../EditingPlace/EditingPlace";
 import serverConfig from "../../../../../serverConfig";
+import AuthorTours from "../AuthorTours/AuthorTours";
 
-function EditRegion({ children, role, ...props }) {
+function EditRegion({ children, role, userName, userID, ...props }) {
     const { id, title, type } = useParams();
 
     const [regions, setRegions] = useState([]);
@@ -20,62 +21,69 @@ function EditRegion({ children, role, ...props }) {
         fetchRegions();
     }, []);
 
-    let region = regions ? regions.filter(region => region.link == title) : '';
+    // Ensure regions array is populated before accessing
+    let region = regions.length ? regions.filter(region => region.link === title) : [];
 
     return (
         <>
             {!type ?
                 <div className={classes.edit}>
-                    <div className={classes.editTitle}>
-                        Редактировать РЕГИОН: «{region[0] ? region[0].title : ''}»
-                        {role === 'admin' ? <Link to={`/admin/${id}/${title}/editRegionData`}><img src="/edit.webp" alt="" /></Link> : null}
-                    </div>
+                    {role === 'admin' && region.length > 0 ?
+                        <div className={classes.editTitle}>
+                            Редактировать РЕГИОН: «{region[0].title}»
+                            <Link to={`/admin/${id}/${title}/editRegionData`}><img src="/edit.webp" alt="" /></Link>
+                        </div>
+                        : null
+                    }
 
-                    <div className={classes.editBlocks}>
-                        <Link to={`/admin/${id}/${title}/multiday_tours`} className={classes.editBlocks_item}>
-                            <div className={classes.editBlocks_item__img}>
-                                <img src="/admin_turi.webp" alt="" />
-                            </div>
-                            <div className={classes.editBlocks_item__title}>Многодневные туры</div>
-                        </Link>
-                        <Link to={`/admin/${id}/${title}/oneday_tours`} className={classes.editBlocks_item}>
-                            <div className={classes.editBlocks_item__img}>
-                                <img src="/admin_exkursii.webp" alt="" />
-                            </div>
-                            <div className={classes.editBlocks_item__title}>Однодневные экскурсии</div>
-                        </Link>
-                        {/* <Link to={`/admin/${id}/${title}/gids`} className={classes.editBlocks_item}>
-                            <div className={classes.editBlocks_item__img}>
-                                <img src="/admin_gidi.webp" alt="" />
-                            </div>
-                            <div className={classes.editBlocks_item__title}>Гиды</div>
-                        </Link> */}
-                        {role === 'admin' ?
-                            <>
-                                <Link to={`/admin/${id}/${title}/hotels`} className={classes.editBlocks_item}>
-                                    <div className={classes.editBlocks_item__img}>
-                                        <img src="/admin_oteli.webp" alt="" />
-                                    </div>
-                                    <div className={classes.editBlocks_item__title}>Отели</div>
-                                </Link>
-                                <Link to={`/admin/${id}/${title}/visit`} className={classes.editBlocks_item}>
-                                    <div className={classes.editBlocks_item__img}>
-                                        <img src="/admin_visit.webp" alt="" />
-                                    </div>
-                                    <div className={classes.editBlocks_item__title}>Что посетить</div>
-                                </Link>
-                                <Link to={`/admin/${id}/${title}/events`} className={classes.editBlocks_item}>
-                                    <div className={classes.editBlocks_item__img}>
-                                        <img src="/admin_events.webp" alt="" />
-                                    </div>
-                                    <div className={classes.editBlocks_item__title}>Региональные Mice ивенты</div>
-                                </Link>
-                            </>
-                            : null
-                        }
-                    </div>
+                    {role === 'touragent' && region.length > 0 ?
+                        <AuthorTours regionName={region[0].title} type={type} title={title} role={role} userName={userName} userID={userID}/>
+                        : null
+                    }
+
+                    {role === 'admin' ?
+                        <div className={classes.editBlocks}>
+                            <Link to={`/admin/${id}/${title}/multiday_tours`} className={classes.editBlocks_item}>
+                                <div className={classes.editBlocks_item__img}>
+                                    <img src="/admin_turi.webp" alt="" />
+                                </div>
+                                <div className={classes.editBlocks_item__title}>Многодневные туры</div>
+                            </Link>
+                            <Link to={`/admin/${id}/${title}/oneday_tours`} className={classes.editBlocks_item}>
+                                <div className={classes.editBlocks_item__img}>
+                                    <img src="/admin_exkursii.webp" alt="" />
+                                </div>
+                                <div className={classes.editBlocks_item__title}>Однодневные экскурсии</div>
+                            </Link>
+                            <Link to={`/admin/${id}/${title}/hotels`} className={classes.editBlocks_item}>
+                                <div className={classes.editBlocks_item__img}>
+                                    <img src="/admin_oteli.webp" alt="" />
+                                </div>
+                                <div className={classes.editBlocks_item__title}>Отели</div>
+                            </Link>
+                            <Link to={`/admin/${id}/${title}/visit`} className={classes.editBlocks_item}>
+                                <div className={classes.editBlocks_item__img}>
+                                    <img src="/admin_visit.webp" alt="" />
+                                </div>
+                                <div className={classes.editBlocks_item__title}>Что посетить</div>
+                            </Link>
+                            <Link to={`/admin/${id}/${title}/events`} className={classes.editBlocks_item}>
+                                <div className={classes.editBlocks_item__img}>
+                                    <img src="/admin_events.webp" alt="" />
+                                </div>
+                                <div className={classes.editBlocks_item__title}>Региональные Mice ивенты</div>
+                            </Link>
+                            {/* <Link to={`/admin/${id}/${title}/gids`} className={classes.editBlocks_item}>
+                                <div className={classes.editBlocks_item__img}>
+                                    <img src="/admin_gidi.webp" alt="" />
+                                </div>
+                                <div className={classes.editBlocks_item__title}>Гиды</div>
+                            </Link> */}
+                        </div>
+                        : null
+                    }
                 </div> :
-                <EditingPlace type={type} title={title} role={role}/>
+                <EditingPlace type={type} title={title} role={role} userName={userName} userID={userID}/>
             }
         </>
     );

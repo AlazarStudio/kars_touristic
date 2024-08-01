@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import classes from './MultidayTours.module.css';
+import classes from './AuthorTours.module.css';
 import server from '../../../../../serverConfig';
 import { Link, useParams } from "react-router-dom";
 import AddMultidayTours from "../AddMultidayTours/AddMultidayTours";
 import EditMultidayTours from "../EditMultidayTours/EditMultidayTours";
+import AddAuthorTours from "../AddAuthorTours/AddAuthorTours";
+import EditAuthorTours from "../EditAuthorTours/EditAuthorTours";
 
 const ItemTypes = {
     TOUR: 'tour',
@@ -43,7 +45,7 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                 <div className={classes.multidayTours_data__tour___info____title}>{tour.tourTitle}</div>
             </div>
             <div className={classes.multidayTours_data__tour___btns}>
-                <Link to={`editHotel/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>
+                <Link to={`author_tours/editAuthorTours/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>
                     <img src="/edit.webp" alt="" />
                 </Link>
                 <div className={`${classes.multidayTours_data__tour___btns____item} ${classes.deleteBtn}`} onClick={() => deleteElement(tour._id)}>
@@ -54,20 +56,22 @@ function Tour({ tour, index, moveTour, deleteElement }) {
     );
 }
 
-function MultidayTours({ children, title, type, role, ...props }) {
+
+function AuthorTours({ children, title, type, role, regionName, userName, userID, ...props }) {
     const { add } = useParams();
+
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState([]);
 
     const response = () => {
-        if (role == 'admin') {
-            fetch(`${server}/api/getMultidayTours?region=${title}&filter='-'`)
-                .then(response => response.json())
-                .then(data => {
-                    const sortedTours = data.multidayTour.sort((a, b) => a.order - b.order);
-                    setTours(sortedTours);
-                })
-                .catch(error => console.error('Ошибка:', error));
+        if (role == 'touragent') {
+            fetch(`${server}/api/getAuthorTours?region=${title}&userID=${userID}`)
+            .then(response => response.json())
+            .then(data => {
+                const sortedTours = data.authorTour.sort((a, b) => a.order - b.order);
+                setTours(sortedTours);
+            })
+            .catch(error => console.error('Ошибка:', error));
         }
     };
 
@@ -87,7 +91,7 @@ function MultidayTours({ children, title, type, role, ...props }) {
         const orderedIds = updatedTours.map(tour => tour._id);
         // console.log(orderedIds);
 
-        fetch(`${server}/api/updateMultidayTourOrder`, {
+        fetch(`${server}/api/updateAuthorTourOrder`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -99,7 +103,7 @@ function MultidayTours({ children, title, type, role, ...props }) {
     };
 
     const deleteElement = (id) => {
-        fetch(`${server}/api/deleteMultidayTour/${id}`, {
+        fetch(`${server}/api/deleteAuthorTour/${id}`, {
             method: 'DELETE'
         })
             .then(() => {
@@ -113,13 +117,9 @@ function MultidayTours({ children, title, type, role, ...props }) {
             {!add ?
                 <DndProvider backend={HTML5Backend}>
                     <div className={classes.multidayTours}>
-                        <div className={classes.multidayTours_back}>
-                            <Link to={`/admin/edit/${title}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
-                        </div>
-
                         <div className={classes.multidayTours_top}>
-                            <div className={classes.multidayTours_top__title}>Многодневные туры региона</div>
-                            <Link to={'addMultiday_tour'} className={classes.multidayTours_top__add}>Добавить многодневный тур</Link>
+                            <div className={classes.multidayTours_top__title}>Авторские туры региона "{regionName}"</div>
+                            <Link to={'author_tours/addAuthor_tour'} className={classes.multidayTours_top__add}>Добавить авторский тур</Link>
                         </div>
 
                         <div className={classes.multidayTours_data}>
@@ -136,21 +136,21 @@ function MultidayTours({ children, title, type, role, ...props }) {
                     </div>
                 </DndProvider>
                 : <>
-                    {add === 'addMultiday_tour' ?
+                    {add === 'addAuthor_tour' ?
                         <>
                             <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
+                                <Link to={`/admin/edit/${title}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <AddMultidayTours region={title} onTourAdded={response} />
+                            <AddAuthorTours region={title} onTourAdded={response} userName={userName} userID={userID}/>
                         </>
                         :
                         <>
                             <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                                <Link to={`/admin/edit/${title}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
+                                <Link to={`/admin/edit/${title}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <EditMultidayTours region={title} onTourAdded={response} photoMassName={'photos'} />
+                            <EditAuthorTours region={title} onTourAdded={response} photoMassName={'photos'} />
                         </>
                     }
                 </>
@@ -159,4 +159,4 @@ function MultidayTours({ children, title, type, role, ...props }) {
     );
 }
 
-export default MultidayTours;
+export default AuthorTours;
