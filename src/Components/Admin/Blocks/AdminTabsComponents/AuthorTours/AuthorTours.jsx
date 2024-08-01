@@ -36,12 +36,12 @@ function Tour({ tour, index, moveTour, deleteElement }) {
         <div
             ref={(node) => drag(drop(node))}
             className={`${classes.multidayTours_data__tour} ${isDragging ? classes.dragging : ''}`}
-            style={{ opacity: isDragging ? 0.5 : 1 }}
+            style={{ opacity: isDragging ? 0.5 : 1, }}
         >
-            <div className={classes.multidayTours_data__tour___img}>
+            <div className={classes.multidayTours_data__tour___img} style={{ opacity: tour.modered == "false" ? 0.3 : 1, }}>
                 <img src={`${server}/refs/${tour.mainPhoto ? tour.mainPhoto : tour.photos[0]}`} alt="" />
             </div>
-            <div className={classes.multidayTours_data__tour___info}>
+            <div className={classes.multidayTours_data__tour___info} style={{ opacity: tour.modered == "false" ? 0.3 : 1, }}>
                 <div className={classes.multidayTours_data__tour___info____title}>{tour.tourTitle}</div>
             </div>
             <div className={classes.multidayTours_data__tour___btns}>
@@ -52,6 +52,7 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                     <img src="/delete.webp" alt="" />
                 </div>
             </div>
+            {tour.modered == 'false' && <div className={classes.multidayTours_data__tour___modered}>Ожидается подтверждение администратором!</div>}
         </div>
     );
 }
@@ -66,12 +67,12 @@ function AuthorTours({ children, title, type, role, regionName, userName, userID
     const response = () => {
         if (role == 'touragent') {
             fetch(`${server}/api/getAuthorTours?region=${title}&userID=${userID}`)
-            .then(response => response.json())
-            .then(data => {
-                const sortedTours = data.authorTour.sort((a, b) => a.order - b.order);
-                setTours(sortedTours);
-            })
-            .catch(error => console.error('Ошибка:', error));
+                .then(response => response.json())
+                .then(data => {
+                    const sortedTours = data.authorTour.sort((a, b) => a.order - b.order);
+                    setTours(sortedTours);
+                })
+                .catch(error => console.error('Ошибка:', error));
         }
     };
 
@@ -142,7 +143,7 @@ function AuthorTours({ children, title, type, role, regionName, userName, userID
                                 <Link to={`/admin/edit/${title}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <AddAuthorTours region={title} onTourAdded={response} userName={userName} userID={userID}/>
+                            <AddAuthorTours region={title} onTourAdded={response} userName={userName} userID={userID} />
                         </>
                         :
                         <>
