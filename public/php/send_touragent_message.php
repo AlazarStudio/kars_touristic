@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $headers = "From: kars-touristic@mail.ru";
 
     if (mail($to, $subject, $message, $headers)) {
-        echo "Сообщение отправлено успешно!";
+        print_r($_POST);
     } else {
         echo "Ошибка при отправке сообщения.";
     }
