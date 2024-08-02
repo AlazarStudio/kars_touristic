@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $touragent = $_POST['touragent'];
-    $text = $_POST['phone'];
+    $text = $_POST['text'];
 
     $to = $touragent;
     $subject = "Новое сообщение с сайта karstouristic.ru";
