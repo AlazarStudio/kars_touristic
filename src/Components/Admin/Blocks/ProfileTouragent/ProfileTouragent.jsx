@@ -119,7 +119,6 @@ function ProfileTouragent({ children, ...props }) {
                                     :
                                     <>
                                         Аккаунт подтвержден
-                                        <div className={classes.buttonNonAccess} onClick={() => setModalIsOpen(true)}>Отклонить</div>
                                     </>
                                 }
                             </div>
