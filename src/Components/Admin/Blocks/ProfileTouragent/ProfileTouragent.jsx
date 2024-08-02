@@ -7,6 +7,7 @@ import H2 from "../../../Standart/H2/H2";
 
 import server from '../../../../serverConfig';
 import { Link, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 function ProfileTouragent({ children, ...props }) {
     let { id } = useParams();
@@ -59,6 +60,56 @@ function ProfileTouragent({ children, ...props }) {
         }
     };
 
+    const [form, setForm] = useState({
+        touragent: 'alimdzhatdoev@mail.ru',
+        text: 'Ваша учетная запись не соответсвует необходимым требованиям и была удалена. Пройдите повторную регистрацию исправив описанные проблемы.',
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
+
+    const deleteElement = async (e) => {
+        if (confirm("Вы уверены, что хотите отклонить автора туров?")) {
+            // try {
+            //     await fetch(`${server}/api/deleteUser/${id}`, {
+            //         method: 'DELETE'
+            //     });
+            // } catch (error) {
+            //     console.error('Ошибка при удалении автора туров:', error);
+            // }
+            // navigate('/admin/touragents');
+
+            try {
+                const response = await axios.post('/php/send_touragent_message.php', new URLSearchParams(form));
+                alert(response.data);
+
+            } catch (error) {
+                console.error('Ошибка при отправке сообщения:', error);
+                alert('Произошла ошибка при отправке сообщения.');
+            }
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/php/send_mail.php', new URLSearchParams(form));
+            alert(response.data);
+            setForm({
+                fio: '',
+                phone: '',
+                email: '',
+                subject: '',
+                comment: ''
+            });
+        } catch (error) {
+            console.error('Ошибка при отправке сообщения:', error);
+            alert('Произошла ошибка при отправке сообщения.');
+        }
+    };
+
     return (
         <>
             <Header_black />
@@ -72,11 +123,13 @@ function ProfileTouragent({ children, ...props }) {
                                 {user && !user.adminPanelAccess ?
                                     <>
                                         <div className={classes.buttonAccess} onClick={() => updateTouragent(token)}>Подтвердить</div>
-                                        {/* <div className={classes.buttonNonAccess}>Отклонить</div> */}
+                                        <div className={classes.buttonNonAccess} onClick={deleteElement}>Отклонить</div>
                                     </>
                                     :
-                                    // <div className={classes.buttonNonAccess}>Удалить</div>
-                                    "Аккаунт подтвержден"
+                                    <>
+                                        Аккаунт подтвержден
+                                        {/* <div className={classes.buttonNonAccess} onClick={deleteElement}>Отклонить</div> */}
+                                    </>
                                 }
                             </div>
 

@@ -24,11 +24,15 @@ function ToursModered({ children, requestType, pageName, tableName, similar, ...
     let { id } = useParams();
 
     const [tour, setTour] = useState();
+    const [isConfirmed, setIsConfirmed] = useState(false);
 
     const fetchTour = () => {
         fetch(`${server}/api/${requestType}/${id}`)
             .then(response => response.json())
-            .then(data => setTour(data))
+            .then(data => {
+                setTour(data);
+                setIsConfirmed(data.modered === 'true');
+            })
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
     };
 
@@ -108,6 +112,7 @@ function ToursModered({ children, requestType, pageName, tableName, similar, ...
             body: JSON.stringify({ modered: 'true' }),
         })
             .then(response => response.json())
+            .then(() => setIsConfirmed(true))
             .catch(error => console.error('Error updating tour:', error));
     }
 
@@ -121,7 +126,7 @@ function ToursModered({ children, requestType, pageName, tableName, similar, ...
                                 <div className={classes.centerPosition}>
                                     <div className={classes.tour_topInfo__bread}>
                                         <Link to={'/'}>Главная</Link> / <Link to={`/region/${tour.region}`}>{regionNameData}</Link> / {tour.tourTitle}
-                                        {tour.modered == 'false' ?
+                                         {!isConfirmed ?
                                             <div className={classes.tour_topInfo__bread___btns}>
                                                 <div className={classes.tour_topInfo__bread___btns____accept} onClick={acceptAuthorTour}>Подтвердить</div>
                                                 <div className={classes.tour_topInfo__bread___btns____cancel}>Отклонить</div>

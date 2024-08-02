@@ -104,13 +104,15 @@ function AuthorTours({ children, title, type, role, regionName, userName, userID
     };
 
     const deleteElement = (id) => {
-        fetch(`${server}/api/deleteAuthorTour/${id}`, {
-            method: 'DELETE'
-        })
-            .then(() => {
-                response();
+        if (confirm("Вы уверены, что хотите удалить тур?")) {
+            fetch(`${server}/api/deleteAuthorTour/${id}`, {
+                method: 'DELETE'
             })
-            .catch(error => console.error('Ошибка при удалении тура:', error));
+                .then(() => {
+                    response();
+                })
+                .catch(error => console.error('Ошибка при удалении тура:', error));
+        }
     };
 
     return (

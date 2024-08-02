@@ -204,6 +204,25 @@ function Admin_Page({ children, ...props }) {
         fetchTouragents();
     }, []);
 
+    const [tours, setTours] = useState([]);
+    const [unmoderatedTourCount, setUnmoderatedTourCount] = useState(0);
+
+    useEffect(() => {
+        async function fetchTours() {
+            try {
+                const response = await fetch(`${server}/api/getAuthorTours`);
+                const data = await response.json();
+                setTours(data.authorTour);
+                const unmoderatedCount = data.authorTour.filter(tour => tour.modered === 'false').length;
+                setUnmoderatedTourCount(unmoderatedCount);
+            } catch (error) {
+                console.error("Error fetching mission info:", error);
+            }
+        }
+
+        fetchTours();
+    }, []);
+
     return (
         <DndProvider backend={HTML5Backend}>
             {user && user.role && user.adminPanelAccess && (user.role === 'admin' || user.role === 'touragent') ?
@@ -227,8 +246,8 @@ function Admin_Page({ children, ...props }) {
                                     <Link to={'/admin/moderedAuthorTours'} className={classes.admin_header__items___item} onClick={() => setActiveTab('moderedAuthorTours')}>
                                         Неподтвержденные туры
                                         {
-                                            touragents && touragents.length > 0 ?
-                                                <div className={classes.admin_header__nonAccessData}>0</div> :
+                                            unmoderatedTourCount ?
+                                                <div className={classes.admin_header__nonAccessData}>{unmoderatedTourCount}</div> :
                                                 <div className={classes.admin_header__nonAccessData}>0</div>
                                         }
                                     </Link>

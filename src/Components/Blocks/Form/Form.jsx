@@ -35,7 +35,7 @@ function Form({ children, ...props }) {
     };
     return (
         <>
-            <form  onSubmit={handleSubmit}  className={classes.form}>
+            <form onSubmit={handleSubmit} className={classes.form}>
                 <input type="text" placeholder="ФИО*" name="fio" value={form.fio} onChange={handleChange} required />
 
                 <input type="tel" placeholder="Телефон*" name="phone" value={form.phone} onChange={handleChange} required />
