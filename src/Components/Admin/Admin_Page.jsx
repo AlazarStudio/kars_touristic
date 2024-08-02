@@ -18,6 +18,7 @@ import EditRegion from "./Blocks/AdminTabsComponents/EditRegion/EditRegion";
 import CenterBlock from "../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../Standart/WidthBlock/WidthBlock";
 import Gids from "./Blocks/AdminTabsComponents/Gids/Gids";
+import ModeredAuthorTours from "./Blocks/AdminTabsComponents/ModeredAuthorTours/ModeredAuthorTours";
 
 const ItemType = {
     REGION: 'region',
@@ -316,6 +317,7 @@ function Admin_Page({ children, ...props }) {
 
                             {/* Редактировать авторов туров */}
                             {activeTab === 'touragents' && <Gids />}
+                            {activeTab === 'moderedAuthorTours' && <ModeredAuthorTours />}
 
                             {/* Добавить О нас */}
                             {activeTab === 'addAboutCompany' && <AddAboutCompany />}

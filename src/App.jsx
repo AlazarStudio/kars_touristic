@@ -25,6 +25,7 @@ import Search_Page from "./Components/Pages/Search_Page/Search_Page";
 import Favorites_Page from "./Components/Pages/Favorites_Page/Favorites_Page";
 import Cart_Page from "./Components/Pages/Cart_Page/Cart_Page";
 import SignUpTouragent from "./Components/Admin/Blocks/SignUpTouragent/SignUpTouragent";
+import ToursModered_Page from "./Components/Pages/ToursModered_Page";
 
 function App() {
   return (
@@ -58,6 +59,8 @@ function App() {
 
           <Route path="/favourites" element={<Favorites_Page />} />
           <Route path="/cart" element={<Cart_Page />} />
+
+          <Route path="/toursModered/:id" element={<ToursModered_Page tableName={'AuthorTour'} requestType={'getOneAuthorTours'} similar={'getAuthorTours'} pageName={'tours'} />} />
 
           <Route path="/admin" element={<Admin_Page />} />
           <Route path="/admin/:id" element={<Admin_Page />} />

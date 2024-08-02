@@ -1,0 +1,427 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    align-items: center;
+}
+
+.tour {
+    width: 100%;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tour:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+}
+
+.centerPosition {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 2;
+    margin-top: 40px;
+    gap: 40px;
+}
+
+.tour_topInfo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 1;
+    gap: 55px;
+}
+
+.tour_topInfo__left {
+    width: 42%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.tour_topInfo__right {
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+}
+
+.tour_topInfo__left___items {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.tour_topInfo__left___items____element {
+    width: 48%;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF26;
+    border-radius: 20px;
+    backdrop-filter: blur(3px);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: var(--white_color);
+    text-align: center;
+    border: 1px solid var(--white_color);
+    gap: 10px;
+}
+
+.tour_topInfo__left___items____elementAuthor {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF26;
+    border-radius: 20px;
+    backdrop-filter: blur(3px);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: var(--white_color);
+    text-align: center;
+    border: 1px solid var(--white_color);
+    gap: 10px;
+}
+
+.tour_topInfo__left___items____element_____title {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    color: #ffffffb6;
+}
+
+.tour_topInfo__left___items____element_____info {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+}
+
+.tour_topInfo__left___title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-align: center;
+    color: var(--white_color);
+    text-transform: uppercase;
+}
+
+.tour_topInfo__left___btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    color: var(--white_color);
+    background-color: var(--black_color);
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__left___btn:hover {
+    background-color: var(--white_color);
+    color: var(--black_color);
+}
+
+.tour_topInfo__right___img {
+    width: 100%;
+    height: 390px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.tour_topInfo__right___img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tour_topInfo__right___places_gradient {
+    /* position: absolute;
+    z-index: 2;
+    bottom: 0px;
+    left: 0px; */
+    width: 100%;
+    /* padding: 15px; */
+    /* background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 30%, transparent 100%); */
+    /* border-radius: 0 0 20px 20px; */
+    display: flex;
+    align-items: flex-end;
+}
+
+.tour_topInfo__right___places {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+}
+
+.tour_topInfo__right___places____place {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 10px 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__right___places____place:hover {
+    background-color: var(--white_color);
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____title {
+    color: var(--black_color);
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____img svg path {
+    fill: var(--black_color)
+}
+
+.tour_topInfo__right___places____place_____img {
+    height: 100%;
+}
+
+.tour_topInfo__right___places____place_____img svg {
+    height: 100%;
+}
+
+.tour_topInfo__right___places____place_____img svg path {
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__right___places____place_____title {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: normal;
+    color: var(--black_color);
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+.tour_topInfo__right___places____place_____title a {
+    color: var(--black_color);
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____title a {
+    color: var(--black_color);
+}
+
+.feedback {
+    box-shadow: none;
+    height: 200px;
+}
+
+.feedback_slide {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #8A8EA3;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 35px;
+    gap: 10px;
+}
+
+.feedback_slide__top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.feedback_slide__top___name {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.38px;
+    width: 100%;
+}
+
+.feedback_slide__bottom {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+}
+
+.similar {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.similarBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 80px;
+    width: 80%;
+}
+
+.similarTours {
+    width: 100%;
+}
+
+.tour_topInfo__bread {
+    width: 100%;
+    color: #fff;
+    margin-top: 40px;
+    font-size: 14px;
+    position: relative;
+}
+
+.tour_topInfo__bread a {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+.tour_topInfo__bread___btns {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.tour_topInfo__bread___btns____accept {
+    width: 150px;
+    background-color: green;
+    padding: 10px 30px;
+    border-radius: 10px;
+    opacity: 0.8;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.tour_topInfo__bread___btns____cancel {
+    width: 150px;
+    background-color: red;
+    padding: 10px 30px;
+    border-radius: 10px;
+    opacity: 0.8;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.tour_topInfo__bread___btns____accept:hover,
+.tour_topInfo__bread___btns____cancel:hover {
+    opacity: 1;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .main {
+        height: auto;
+        gap: 20px;
+    }
+
+    .tour_topInfo {
+        margin: 0;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .centerPosition {
+        height: auto;
+        padding: 80px 10px 10px 10px;
+        margin: 0;
+        gap: 20px;
+    }
+
+    .tour_topInfo__left {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .tour_topInfo__right {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .tour_topInfo__left___title {
+        font-size: 22px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__left___items {
+        gap: 10px;
+    }
+
+    .tour_topInfo__left___items____element_____title {
+        font-size: 12px;
+    }
+
+    .tour_topInfo__left___items____element_____info {
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__left___btn {
+        font-size: 16px;
+        padding: 10px 0;
+        width: 100%;
+    }
+
+    .tour_topInfo__right___places____place_____title {
+        font-size: 12px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__right___places {
+        gap: 10px;
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+    }
+
+    .tour_topInfo__right___places____place {
+        width: 48%;
+        padding: 15px;
+        border-radius: 15px;
+    }
+
+    .similarBlock {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+}
