@@ -213,7 +213,7 @@ function Admin_Page({ children, ...props }) {
                 const response = await fetch(`${server}/api/getAuthorTours`);
                 const data = await response.json();
                 setTours(data.authorTour);
-                const unmoderatedCount = data.authorTour.filter(tour => tour.modered === 'false').length;
+                const unmoderatedCount = data.authorTour.filter(tour => tour.modered === 'false' && tour.comment == '').length;
                 setUnmoderatedTourCount(unmoderatedCount);
             } catch (error) {
                 console.error("Error fetching mission info:", error);

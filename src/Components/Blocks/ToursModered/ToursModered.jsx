@@ -8,23 +8,46 @@ import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import ToursTab from "../ToursTab/ToursTab";
 import H2 from "../../Standart/H2/H2";
 
-import Object from "../Object/Object";
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import Feedback from "../Feedback/Feedback";
 import Slider from "../Slider/Slider";
 
-import server from '../../../serverConfig'
+import server from '../../../serverConfig';
+
+import Modal from 'react-modal';
+
+const customStyles = {
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        zIndex: '99999999'
+    },
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        width: '50%',
+        padding: '20px',
+        borderRadius: '10px',
+        backgroundColor: '#fff',
+    }
+};
 
 function ToursModered({ children, requestType, pageName, tableName, similar, ...props }) {
     let { id } = useParams();
 
     const [tour, setTour] = useState();
     const [isConfirmed, setIsConfirmed] = useState(false);
+    const [isCommited, setIsCommited] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [form, setForm] = useState({
+        text: '',
+    });
 
     const fetchTour = () => {
         fetch(`${server}/api/${requestType}/${id}`)
@@ -32,6 +55,7 @@ function ToursModered({ children, requestType, pageName, tableName, similar, ...
             .then(data => {
                 setTour(data);
                 setIsConfirmed(data.modered === 'true');
+                setIsCommited(data.comment != '' ? true : false);
             })
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
     };
@@ -116,6 +140,33 @@ function ToursModered({ children, requestType, pageName, tableName, similar, ...
             .catch(error => console.error('Error updating tour:', error));
     }
 
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+    };
+
+    const deleteTour = async (e) => {
+        setModalIsOpen(false);
+
+        fetch(`${server}/api/updateOneAuthorTour/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ comment: form.text }),
+        })
+            .then(response => response.json())
+            .then(() => {
+                setIsCommited(true);
+                setIsConfirmed(true)
+            })
+            .catch(error => console.error('Error updating tour:', error));
+
+        navigate('/admin/tours');
+    };
+
+    console.log(isCommited);
     return (
         <>
             {tour ?
@@ -126,16 +177,26 @@ function ToursModered({ children, requestType, pageName, tableName, similar, ...
                                 <div className={classes.centerPosition}>
                                     <div className={classes.tour_topInfo__bread}>
                                         <Link to={'/'}>Главная</Link> / <Link to={`/region/${tour.region}`}>{regionNameData}</Link> / {tour.tourTitle}
-                                         {!isConfirmed ?
+                                        {isCommited ?
                                             <div className={classes.tour_topInfo__bread___btns}>
-                                                <div className={classes.tour_topInfo__bread___btns____accept} onClick={acceptAuthorTour}>Подтвердить</div>
-                                                <div className={classes.tour_topInfo__bread___btns____cancel}>Отклонить</div>
-                                            </div>
-                                            :
-                                            <div className={classes.tour_topInfo__bread___btns}>
-                                                Подтверждено
+                                                Отклонено
                                                 <Link to={`/admin/moderedAuthorTours`} target="_blank">Вернуться назад</Link>
                                             </div>
+                                            :
+                                            <>
+                                                {
+                                                    !isConfirmed ?
+                                                        <div className={classes.tour_topInfo__bread___btns}>
+                                                            <div className={classes.tour_topInfo__bread___btns____accept} onClick={acceptAuthorTour}>Подтвердить</div>
+                                                            <div className={classes.tour_topInfo__bread___btns____cancel} onClick={() => setModalIsOpen(true)}>Отклонить</div>
+                                                        </div>
+                                                        :
+                                                        <div className={classes.tour_topInfo__bread___btns}>
+                                                            Подтверждено
+                                                            <Link to={`/admin/moderedAuthorTours`} target="_blank">Вернуться назад</Link>
+                                                        </div>
+                                                }
+                                            </>
                                         }
                                     </div>
 
@@ -232,6 +293,34 @@ function ToursModered({ children, requestType, pageName, tableName, similar, ...
                 :
                 null
             }
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                style={customStyles}
+                contentLabel="Причина отказа"
+            >
+                <h2>Причина отказа</h2>
+                <textarea
+                    name="text"
+                    value={form.text}
+                    onChange={handleChange}
+                    style={{
+                        width: '100%',
+                        height: '100px',
+                        padding: '10px',
+                        borderRadius: '5px',
+                        border: '1px solid #ccc',
+                        marginTop: '20px',
+                        outline: 'none',
+                        resize: 'vertical',
+                        maxHeight: '500px'
+                    }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', gap: '20px' }}>
+                    <button onClick={deleteTour} style={{ padding: '10px 20px', borderRadius: '5px', border: 'none', backgroundColor: '#f44336', color: '#fff', cursor: 'pointer' }}>Отправить</button>
+                    <button onClick={() => setModalIsOpen(false)} style={{ padding: '10px 20px', borderRadius: '5px', border: '1px solid #ccc', backgroundColor: '#fff', cursor: 'pointer' }}>Отмена</button>
+                </div>
+            </Modal>
         </>
     );
 }

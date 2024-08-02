@@ -51,7 +51,7 @@ function ModeredAuthorTours({ children, ...props }) {
                         {touragents.length > 0 ?
                             touragents.map((item, index) => (
                                 <>
-                                    {item.modered == 'false' &&
+                                    {item.modered == 'false' && item.comment == '' &&
                                         <div className={classes.gids_info} key={index}>
                                             <div className={classes.gids_info_data}>
                                                 <div className={classes.gids_info__elem}>

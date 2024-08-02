@@ -52,7 +52,9 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                     <img src="/delete.webp" alt="" />
                 </div>
             </div>
-            {tour.modered == 'false' && <div className={classes.multidayTours_data__tour___modered}>Ожидается подтверждение администратором!</div>}
+            {tour.modered == 'false' && <div className={classes.multidayTours_data__tour___modered}>
+                {tour.comment ? tour.comment : 'Ожидается подтверждение администратором!'}
+            </div>}
         </div>
     );
 }

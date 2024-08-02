@@ -8,6 +8,7 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
     let regionTypeData = useParams().type;
 
     editAuthorTours && (initialValues.modered = 'false');
+    editAuthorTours && (initialValues.comment = '');
 
     const navigate = useNavigate();
     const [form, setForm] = useState(initialValues || {});
