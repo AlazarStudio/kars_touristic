@@ -4,19 +4,51 @@ import Header_black from "../../../Blocks/Header_black/Header_black";
 import CenterBlock from "../../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../../Standart/WidthBlock/WidthBlock";
 import H2 from "../../../Standart/H2/H2";
-
+import Modal from 'react-modal';
 import server from '../../../../serverConfig';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
+Modal.setAppElement('#root'); // Укажите ваш корневой элемент
+
+const customStyles = {
+    overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.75)'
+    },
+    content: {
+        top: '50%',
+        left: '50%',
+        right: 'auto',
+        bottom: 'auto',
+        marginRight: '-50%',
+        transform: 'translate(-50%, -50%)',
+        width: '50%',
+        padding: '20px',
+        borderRadius: '10px',
+        backgroundColor: '#fff',
+    }
+};
 
 function ProfileTouragent({ children, ...props }) {
     let { id } = useParams();
 
     const [user, setUser] = useState();
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [form, setForm] = useState({
+        touragent: '',
+        text: '',
+    });
 
     let token = localStorage.getItem('token');
-
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (token) {
+            getUserInfo(token);
+        } else {
+            navigate('/signIn');
+        }
+    }, [token]);
 
     const getUserInfo = async (token) => {
         const response = await fetch(`${server}/api/getOneTouragent/${id}`, {
@@ -28,21 +60,13 @@ function ProfileTouragent({ children, ...props }) {
 
         if (response.ok) {
             const userData = await response.json();
-            setUser(userData)
+            setUser(userData);
+            setForm({ ...form, touragent: userData.email });
         } else {
             localStorage.removeItem('token');
             console.error('Ошибка получения информации о пользователе');
         }
     };
-
-    useEffect(() => {
-        if (token) {
-            getUserInfo(token);
-        } else {
-            navigate('/signIn');
-        }
-    }, [token])
-
 
     const updateTouragent = async (token) => {
         const response = await fetch(`${server}/api/userUpdateAccess/${id}`, {
@@ -53,17 +77,11 @@ function ProfileTouragent({ children, ...props }) {
         });
 
         if (response.ok) {
-            const userData = await response.json();
             alert('Автор туров подтвержден');
         } else {
             console.error('Ошибка получения информации о пользователе');
         }
     };
-
-    const [form, setForm] = useState({
-        touragent: 'alimdzhatdoev@mail.ru',
-        text: 'Ваша учетная запись не соответсвует необходимым требованиям и была удалена. Пройдите повторную регистрацию исправив описанные проблемы.',
-    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -71,31 +89,22 @@ function ProfileTouragent({ children, ...props }) {
     };
 
     const deleteElement = async (e) => {
-        if (confirm("Вы уверены, что хотите отклонить автора туров?")) {
-            // try {
-            //     await fetch(`${server}/api/deleteUser/${id}`, {
-            //         method: 'DELETE'
-            //     });
-            // } catch (error) {
-            //     console.error('Ошибка при удалении автора туров:', error);
-            // }
-            // navigate('/admin/touragents');
-
-            try {
-                const response = await axios.post('/php/send_touragent_message.php', new URLSearchParams(form));
-                alert(response.data);
-
-            } catch (error) {
-                console.error('Ошибка при отправке сообщения:', error);
-                alert('Произошла ошибка при отправке сообщения.');
-            }
+        setModalIsOpen(false);
+        try {
+            await fetch(`${server}/api/deleteUser/${id}`, {
+                method: 'DELETE'
+            });
+            const response = await axios.post('/php/send_touragent_message.php', new URLSearchParams(form));
+            alert(response.data);
+        } catch (error) {
+            console.error('Ошибка:', error);
         }
+        navigate('/admin/touragents');
     };
 
     return (
         <>
             <Header_black />
-
             {user ?
                 <CenterBlock>
                     <WidthBlock>
@@ -105,16 +114,15 @@ function ProfileTouragent({ children, ...props }) {
                                 {user && !user.adminPanelAccess ?
                                     <>
                                         <div className={classes.buttonAccess} onClick={() => updateTouragent(token)}>Подтвердить</div>
-                                        <div className={classes.buttonNonAccess} onClick={deleteElement}>Отклонить</div>
+                                        <div className={classes.buttonNonAccess} onClick={() => setModalIsOpen(true)}>Отклонить</div>
                                     </>
                                     :
                                     <>
                                         Аккаунт подтвержден
-                                        {/* <div className={classes.buttonNonAccess} onClick={deleteElement}>Отклонить</div> */}
+                                        <div className={classes.buttonNonAccess} onClick={() => setModalIsOpen(true)}>Отклонить</div>
                                     </>
                                 }
                             </div>
-
                             <div className={classes.blockUser_img}>
                                 <img src="/noPhoto.png" alt="" />
                             </div>
@@ -122,11 +130,9 @@ function ProfileTouragent({ children, ...props }) {
                                 {user.name}
                             </div>
                         </div>
-
                         <div className={classes.blockUser}>
                             <div className={classes.contacts}>
                                 <H2 text_transform={'uppercase'}>Контакты</H2>
-
                                 <div className={classes.contacts_elem}>
                                     <div className={classes.contacts_elem__item}>
                                         <div className={classes.contacts_elem__item___img}>
@@ -150,10 +156,38 @@ function ProfileTouragent({ children, ...props }) {
                             </div>
                         </div>
                     </WidthBlock>
-
                 </CenterBlock>
                 : null
             }
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                style={customStyles}
+                contentLabel="Причина отказа"
+            >
+                <h2>Причина отказа</h2>
+                <textarea
+                    name="text"
+                    value={form.text}
+                    onChange={handleChange}
+                    placeholder="Напишите причину отказа"
+                    style={{ 
+                        width: '100%', 
+                        height: '100px', 
+                        padding: '10px', 
+                        borderRadius: '5px', 
+                        border: '1px solid #ccc', 
+                        marginTop: '20px', 
+                        outline: 'none',
+                        resize: 'vertical',
+                        maxHeight: '500px'
+                    }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px', gap: '20px' }}>
+                    <button onClick={deleteElement} style={{ padding: '10px 20px', borderRadius: '5px', border: 'none', backgroundColor: '#f44336', color: '#fff', cursor: 'pointer' }}>Отправить</button>
+                    <button onClick={() => setModalIsOpen(false)} style={{ padding: '10px 20px', borderRadius: '5px', border: '1px solid #ccc', backgroundColor: '#fff', cursor: 'pointer' }}>Отмена</button>
+                </div>
+            </Modal>
         </>
     );
 }
