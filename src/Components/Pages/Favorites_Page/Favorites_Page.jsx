@@ -42,6 +42,7 @@ function Favorites_Page({ children, ...props }) {
     const [onedayTours, setOnedayTours] = useState([]);
     const [hotels, setHotels] = useState([]);
     const [places, setPlaces] = useState([]);
+    const [author, setAuthor] = useState([]);
 
     function fetchRequest(endPoint, type, setFunction) {
         fetch(`${server}/api/${endPoint}`)
@@ -57,6 +58,7 @@ function Favorites_Page({ children, ...props }) {
         fetchRequest('getOnedayTours', 'onedayTour', setOnedayTours);
         fetchRequest('getHotels', 'hotels', setHotels);
         fetchRequest('getPlaces', 'places', setPlaces);
+        fetchRequest('getAuthorTours', 'authorTour', setAuthor);
     }, []);
 
 
@@ -66,6 +68,7 @@ function Favorites_Page({ children, ...props }) {
     const filteredOnedayTours = onedayTours.length > 0 ? onedayTours.filter(tour => likesMass.includes(tour._id)) : [];
     const filteredHotels = hotels.length > 0 ? hotels.filter(hotel => likesMass.includes(hotel._id)) : [];
     const filteredPlaces = places.length > 0 ? places.filter(place => likesMass.includes(place._id)) : [];
+    const filteredAuthor = author.length > 0 ? author.filter(author => likesMass.includes(author._id)) : [];
 
     return (
         <>
@@ -124,11 +127,25 @@ function Favorites_Page({ children, ...props }) {
                         </>
                         : null}
 
+                    {filteredAuthor.length > 0 ?
+                        <>
+                            <H2 text_transform={'uppercase'} text_align={'center'}>Избранные места для посещения</H2>
+                            <div className={classes.objects}>
+                                {
+                                    filteredAuthor.map((item, index) => (
+                                        <Object key={index} regionData={item} pageName={'authorTour'} titleObject={'tourTitle'} />
+                                    ))
+                                }
+                            </div>
+                        </>
+                        : null}
+
                     {filteredMultidayTours.length == 0 && filteredOnedayTours.length == 0 && filteredHotels.length == 0 && filteredPlaces.length == 0 ?
                         <div className={classes.nonFoundFavorites}>
                             <H2 text_transform={'uppercase'} text_align={'center'} margin={'0 0 40px 0'}>В избранном еще ничего нет</H2>
                         </div>
-                        : <br />}
+                        : <br />
+                    }
                 </WidthBlock>
             </CenterBlock>
         </>

@@ -7,23 +7,25 @@ import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 
 import server from '../../../serverConfig'
 
-function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, ...props }) {
+function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, ...props }) {
     const [filteredObjects, setFilteredObjects] = useState([]);
 
     const updateFilteredObjects = (filteredObjects) => {
         setFilteredObjects(filteredObjects);
     };
-
     const fetchData = () => {
         fetch(`${server}/api/${requestType}`)
             .then(response => response.json())
-            // .then(data => setFilteredObjects(data[tableName]))
             .then(data => {
-                const sortedTours = data[tableName].sort((a, b) => a.order - b.order);
+                let sortedTours = data[tableName].sort((a, b) => a.order - b.order);
+                if (checkModered) {
+                    sortedTours = sortedTours.filter(tour => tour.modered !== 'false');
+                }
                 setFilteredObjects(sortedTours);
             })
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
     };
+    
 
     useEffect(() => {
         fetchData();
@@ -45,7 +47,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     <div className={classes.objects}>
                         {
                             foundData.map((item, index) => (
-                                <Object key={index} regionData={item} pageName={pageName} titleObject={titleObject}/>
+                                <Object key={index} regionData={item} pageName={pageName} titleObject={titleObject} />
                             ))
                         }
                     </div>

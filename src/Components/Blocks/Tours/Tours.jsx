@@ -97,7 +97,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
         const region = regions.find(region => region.link === targetLink);
         return region ? region.title : null;
     }
-    
+
     let regionNameData = '';
     regionsName && tour ? regionNameData = getTitleByLink(regionsName, tour.region) : null
 
@@ -119,6 +119,12 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                     <div className={classes.tour_topInfo}>
                                         <div className={classes.tour_topInfo__left}>
                                             <div className={classes.tour_topInfo__left___items}>
+                                                {tour.author &&
+                                                    <div className={classes.tour_topInfo__left___items____elementAuthor}>
+                                                        <div className={classes.tour_topInfo__left___items____element_____info}>Автор тура: {tour.author}</div>
+                                                    </div>
+                                                }
+
                                                 <div className={classes.tour_topInfo__left___items____element}>
                                                     <div className={classes.tour_topInfo__left___items____element_____title}>Cпособ передвижения:</div>
                                                     <div className={classes.tour_topInfo__left___items____element_____info}>{tour.travelMethod}</div>

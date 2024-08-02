@@ -43,7 +43,7 @@ function App() {
 
           <Route path="/tours/:id" element={<Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} />} />
           <Route path="/excursions/:id" element={<Tours_Page tableName={'onedayTour'} requestType={'getOneOnedayTour'} similar={'getOnedayTours'} pageName={'excursions'} />} />
-          <Route path="/gids/:id" element={<Tours_Page />} />
+          <Route path="/gids/:id" element={<Tours_Page tableName={'authorTour'} requestType={'getOneAuthorTours'} similar={'getAuthorTours'} pageName={'gids'} />} />
           <Route path="/hotels/:id" element={<Hotels_Page />} />
           <Route path="/hotels/:id/:numID" element={<Number_Page />} />
           <Route path="/visits/:id" element={<Visit_Page />} />
