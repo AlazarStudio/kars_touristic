@@ -5,35 +5,14 @@ import { Navigation } from 'swiper/modules';
 import server from '../../../serverConfig';
 
 function SliderHotel({ children, ...props }) {
-    const [modalImage, setModalImage] = useState(null);
+    const [modalImageIndex, setModalImageIndex] = useState(null);
 
-    function parseHTML(htmlString) {
-        const domParser = new DOMParser();
-        const parsedDocument = domParser.parseFromString(htmlString, 'text/html');
-
-        function parseNode(node, index) {
-            if (node.nodeType === Node.TEXT_NODE) {
-                return node.textContent;
-            } else if (node.nodeType === Node.ELEMENT_NODE) {
-                const props = {};
-                for (let i = 0; i < node.attributes.length; i++) {
-                    const { name, value } = node.attributes[i];
-                    props[name] = value;
-                }
-                const children = Array.from(node.childNodes).map(parseNode);
-                return React.createElement(node.tagName.toLowerCase(), { key: index, ...props }, ...children);
-            }
-        }
-
-        return Array.from(parsedDocument.body.childNodes).map(parseNode);
-    }
-
-    const handleImageClick = (src) => {
-        setModalImage(src);
+    const handleImageClick = (index) => {
+        setModalImageIndex(index);
     };
 
     const closeModal = () => {
-        setModalImage(null);
+        setModalImageIndex(null);
     };
 
     return (
@@ -67,7 +46,7 @@ function SliderHotel({ children, ...props }) {
                                             <img 
                                                 src={`${server}/refs/${item}`} 
                                                 alt="" 
-                                                onClick={() => handleImageClick(`${server}/refs/${item}`)} 
+                                                onClick={() => handleImageClick(index)} 
                                             />
                                         </div>
                                     ) : null}
@@ -77,11 +56,27 @@ function SliderHotel({ children, ...props }) {
                     </Swiper>
                 </div>
             </div>
-            {modalImage && (
+            {modalImageIndex !== null && (
                 <div className={classes.modal} onClick={closeModal}>
                     <div className={classes.modal_content} onClick={(e) => e.stopPropagation()}>
                         <span className={classes.modal_close} onClick={closeModal}>&times;</span>
-                        <img src={modalImage} alt="" className={classes.modal_img} />
+                        <Swiper
+                            navigation={true}
+                            modules={[Navigation]}
+                            initialSlide={modalImageIndex}
+                            className={`${classes.modal_swiper} modal-swiper-show-img`}
+                            loop={props.loop}
+                        >
+                            {props.info.map((item, index) => (
+                                <SwiperSlide key={index}>
+                                    <img 
+                                        src={`${server}/refs/${item}`} 
+                                        alt="" 
+                                        className={classes.modal_img} 
+                                    />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
                     </div>
                 </div>
             )}

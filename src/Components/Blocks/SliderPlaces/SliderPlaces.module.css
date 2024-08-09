@@ -97,6 +97,7 @@
     font-size: 38px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 999999999999;
     transition: all 0.3s ease-in-out;
 }
 

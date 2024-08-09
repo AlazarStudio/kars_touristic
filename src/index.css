@@ -52,6 +52,24 @@ main {
     font-size: 28px;
 }
 
+.modal-swiper-show-img .swiper-button-prev {
+    color: var(--white_color);
+    border: 1px solid var(--white_color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    left: 10px;
+}
+
+.modal-swiper-show-img .swiper-button-next {
+    color: var(--white_color);
+    border: 1px solid var(--white_color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    right: 10px;
+}
+
 .swiper-button-prev {
     color: var(--black_color);
     border: 1px solid var(--black_color);
