@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import classes from './AddMultidayTours.module.css';
 import Form from "../../Form/Form";
-
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import server from '../../../../../serverConfig';
 
 function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
@@ -10,6 +11,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
     const [days, setDays] = useState(['']);
     const [photos, setPhotos] = useState([]);
 
+    // Функции для добавления и изменения данных
     const handleAddPlace = () => setPlaces([...places, '']);
     const handleAddChecklist = () => setChecklists([...checklists, '']);
     const handleAddDay = () => setDays([...days, '']);
@@ -34,9 +36,9 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
         setChecklists(newChecklists);
     };
 
-    const handleDayChange = (index, event) => {
+    const handleDayChange = (index, value) => {
         const newDays = [...days];
-        newDays[index] = event.target.value;
+        newDays[index] = value; // Здесь принимаем значение напрямую из ReactQuill
         setDays(newDays);
     };
 
@@ -57,14 +59,25 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
     };
 
     const initialValues = {
-        region
+        region,
+        places,
+        checklists,
+        days,
+        photos
     };
 
     return (
         <div className={classes.addData}>
-            <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div> 
+            <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
-            <Form actionUrl={`${server}/api/addMultidayTour`} method="post" needNavigate={true} resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
+            <Form 
+                actionUrl={`${server}/api/addMultidayTour`} 
+                method="post" 
+                needNavigate={true} 
+                resetAll={resetAll} 
+                initialValues={initialValues} 
+                onTourAdded={onTourAdded}
+            >
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <div><input name="region" type="hidden" placeholder="Регион" required value={region} readOnly /></div>
@@ -155,16 +168,17 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
                     Шаг 5
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div>
                 </label>
+
                 {days.map((day, index) => (
                     <div key={index} className={classes.addData_blockAddData}>
                         <label>День {index + 1}</label>
                         <div className={classes.add_remove_btn}>
-                            <textarea
-                                name={`days[]`}
-                                data-index={index}
-                                placeholder={`День ${index + 1}`}
+                            <ReactQuill
+                                theme="snow"
                                 value={day}
-                                onChange={(event) => handleDayChange(index, event)}
+                                onChange={(value) => handleDayChange(index, value)} // Правильно обрабатываем изменение
+                                placeholder={`День ${index + 1}`}
+                                style={{ width: '100%', height: '400px', marginBottom: '80px' }}
                                 required
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDay(index)}>-</div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,6 +15,14 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
     const [submissionMessage, setSubmissionMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
     const formRef = useRef(null);
+
+
+    useEffect(() => {
+        if (initialValues && initialValues.days) {
+            setForm(prevForm => ({ ...prevForm, days: initialValues.days }));
+        }
+    }, [initialValues]);
+
 
     const displayMessage = (message) => {
         setSubmissionMessage(message);
@@ -92,6 +100,8 @@ function Form({ onSubmit, actionUrl, method = 'post', children, fetchRegions, ty
                 formData.append(key, form[key]);
             }
         });
+
+        console.log(form)
 
         try {
             const response = await axios({

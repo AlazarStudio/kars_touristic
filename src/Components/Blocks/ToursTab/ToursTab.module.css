@@ -47,7 +47,7 @@
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    /* gap: 20px; */
     text-align: justify;
     font-family: Montserrat;
     font-size: 16px;

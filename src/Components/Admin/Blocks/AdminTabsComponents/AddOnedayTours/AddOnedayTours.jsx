@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import classes from './AddOnedayTours.module.css';
 import Form from "../../Form/Form";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import server from '../../../../../serverConfig';
 
@@ -34,9 +36,9 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
         setChecklists(newChecklists);
     };
 
-    const handleDayChange = (index, event) => {
+    const handleDayChange = (index, value) => {
         const newDays = [...days];
-        newDays[index] = event.target.value;
+        newDays[index] = value; // Здесь принимаем значение напрямую из ReactQuill
         setDays(newDays);
     };
 
@@ -57,8 +59,13 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
     };
 
     const initialValues = {
-        region
+        region,
+        places,
+        checklists,
+        days,
+        photos
     };
+
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Однодневный тур</div>
@@ -155,12 +162,12 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
                     <div key={index} className={classes.addData_blockAddData}>
                         <label>День {index + 1}</label>
                         <div className={classes.add_remove_btn}>
-                            <textarea
-                                name={`days[]`}
-                                data-index={index}
-                                placeholder={`День ${index + 1}`}
+                            <ReactQuill
+                                theme="snow"
                                 value={day}
-                                onChange={(event) => handleDayChange(index, event)}
+                                onChange={(value) => handleDayChange(index, value)} // Правильно обрабатываем изменение
+                                placeholder={`День ${index + 1}`}
+                                style={{ width: '100%', height: '400px', marginBottom: '80px' }}
                                 required
                             />
                             {/* <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDay(index)}>-</div> */}

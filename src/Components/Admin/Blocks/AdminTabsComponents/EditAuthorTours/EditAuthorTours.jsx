@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import classes from './EditAuthorTours.module.css';
 import FormEdit from "../../FormEdit/FormEdit";
@@ -71,9 +73,9 @@ function EditAuthorTours({ children, activeTab, setIsDirty, region, onTourAdded,
         setSelectedTour(prevState => ({ ...prevState, checklists: newChecklists }));
     };
 
-    const handleDayChange = (index, event) => {
+    const handleDayChange = (index, value) => { // Добавляем value как аргумент
         const newDays = [...days];
-        newDays[index] = event.target.value;
+        newDays[index] = value; // Используем переданный value
         setSelectedTour(prevState => ({ ...prevState, days: newDays }));
     };
 
@@ -255,13 +257,13 @@ function EditAuthorTours({ children, activeTab, setIsDirty, region, onTourAdded,
                     <div key={index} className={classes.addData_blockAddData}>
                         <label>День {index + 1}</label>
                         <div className={classes.add_remove_btn}>
-                            <textarea
-                                name={`days[]`}
-                                data-index={index}
-                                placeholder={`День ${index + 1}`}
+                            <ReactQuill
+                                theme="snow"
                                 value={day}
-                                onChange={(event) => handleDayChange(index, event)}
-
+                                onChange={(value) => handleDayChange(index, value)} // Правильно обрабатываем изменение
+                                placeholder={`День ${index + 1}`}
+                                style={{ width: '100%', height: '400px', marginBottom: '80px' }}
+                                required
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDay(index)}>-</div>
                         </div>

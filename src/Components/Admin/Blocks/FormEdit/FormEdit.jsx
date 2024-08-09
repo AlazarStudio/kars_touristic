@@ -23,7 +23,6 @@ function FormEdit({ onSubmit, actionUrl, method = 'post', children, fetchRegions
         }
     }, [initialValues]);
 
-
     const displayMessage = (message) => {
         setSubmissionMessage(message);
         setShowMessage(true);

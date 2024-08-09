@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useParams } from "react-router-dom";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import classes from './EditMultidayTours.module.css';
 import FormEdit from "../../FormEdit/FormEdit";
@@ -71,11 +73,12 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         setSelectedTour(prevState => ({ ...prevState, checklists: newChecklists }));
     };
 
-    const handleDayChange = (index, event) => {
+    const handleDayChange = (index, value) => { // Добавляем value как аргумент
         const newDays = [...days];
-        newDays[index] = event.target.value;
+        newDays[index] = value; // Используем переданный value
         setSelectedTour(prevState => ({ ...prevState, days: newDays }));
     };
+
 
     const handleRemovePlace = index => setSelectedTour(prevState => ({ ...prevState, places: prevState.places.filter((_, i) => i !== index) }));
     const handleRemoveChecklist = index => setSelectedTour(prevState => ({ ...prevState, checklists: prevState.checklists.filter((_, i) => i !== index) }));
@@ -92,7 +95,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                 ...prevState,
                 photos: updatedPhotos
             }));
-            
+
             setPhotosToDelete(prevPhotos => {
                 const newPhotosToDelete = [photo];
 
@@ -100,7 +103,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
 
                 return newPhotosToDelete;
             });
-        } 
+        }
     };
 
     const updatePhotosOnServer = async (id, photos, photosToDelete) => {
@@ -136,7 +139,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
             } catch (error) {
                 console.error('Error updating photos', error);
             }
-        } 
+        }
     };
 
     return (
@@ -170,7 +173,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                 <input name="cost" type="text" placeholder="Стоимость" value={selectedTour.cost} />
 
                 <label>Дополнительная информация (не обязательно)</label>
-                <input name="optional" type="text" placeholder="Дополнительная информация"  value={selectedTour.optional}  />
+                <input name="optional" type="text" placeholder="Дополнительная информация" value={selectedTour.optional} />
 
                 <label className={classes.addData_step}>Шаг 2</label>
                 <label>Фотографии</label>
@@ -251,17 +254,18 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                     Шаг 5
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div>
                 </label>
+
                 {days.map((day, index) => (
                     <div key={index} className={classes.addData_blockAddData}>
                         <label>День {index + 1}</label>
                         <div className={classes.add_remove_btn}>
-                            <textarea
-                                name={`days[]`}
-                                data-index={index}
-                                placeholder={`День ${index + 1}`}
+                            <ReactQuill
+                                theme="snow"
                                 value={day}
-                                onChange={(event) => handleDayChange(index, event)}
-
+                                onChange={(value) => handleDayChange(index, value)} // Правильно обрабатываем изменение
+                                placeholder={`День ${index + 1}`}
+                                style={{ width: '100%', height: '400px', marginBottom: '80px' }}
+                                required
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDay(index)}>-</div>
                         </div>
