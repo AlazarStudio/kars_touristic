@@ -14,6 +14,8 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, phot
         description: '',
         moreInfo: '',
         stars: '',
+        city: '',
+        adress: '',
         galery: [],
         items: [{ title: '', description: '' }],
         links: []
@@ -144,7 +146,13 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, phot
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
                 <label>Название отеля </label>
-                <input name="title" type="text" placeholder="Название отеля" value={selectedTour.title} />
+                <input name="title" type="text" placeholder="Название отеля" required value={selectedTour.title} />
+
+                <label>Город отеля</label>
+                <input name="city" type="text" placeholder="Город отеля" required  value={selectedTour.city} />
+
+                <label>Адрес отеля</label>
+                <input name="adress" type="text" placeholder="Адрес отеля" required  value={selectedTour.adress} />
 
                 <label>Количество звезд у отеля</label>
                 <input name="stars" type="number" placeholder="Количество звезд у отеля" value={selectedTour.stars} />

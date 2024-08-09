@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import classes from './Tabs.module.css';
 import Object from "../Object/Object";
 import Filter from "../Filter/Filter";
+import FilterHotels from "../FilterHotels/FilterHotels";
+import FilterPlaces from "../FilterPlaces/FilterPlaces";
 import H2 from "../../Standart/H2/H2";
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 
@@ -30,19 +32,23 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
     }, []);
 
     const foundData = filteredObjects ? filteredObjects.filter(filteredObject => filteredObject.region === regionName) : [];
-
-    console.log(foundData);
-
+    
     return (
         <>
             {foundData ?
                 <div className={classes.fullBlock}>
                     <CenterBlock>
-                        <H2 text_transform="uppercase">{props.title}</H2>
+                        <H2 text_transform="uppercase">{props.title}</H2> <span style={{marginTop: '10px'}}>(Найдено: {foundData.length})</span>
                     </CenterBlock>
 
-                    <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />
+                    {requestType == 'getMultidayTours' && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {requestType == 'getOnedayTours' && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {requestType == 'getAuthorTours' && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {requestType == 'getHotels' && <FilterHotels objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {requestType == 'getPlaces' && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {requestType == 'getEvents' && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
 
+                    
                     <div className={classes.objects}>
                         {
                             foundData.map((item, index) => (

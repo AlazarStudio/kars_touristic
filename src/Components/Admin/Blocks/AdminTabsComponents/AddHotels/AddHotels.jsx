@@ -70,6 +70,12 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
 
                 <label>Название отеля</label>
                 <input name="title" type="text" placeholder="Название отеля" required />
+                
+                <label>Город отеля</label>
+                <input name="city" type="text" placeholder="Город отеля" required />
+                
+                <label>Адрес отеля</label>
+                <input name="adress" type="text" placeholder="Адрес отеля" required />
 
                 <label>Количество звезд у отеля</label>
                 <input name="stars" type="number" placeholder="Количество звезд у отеля" required />

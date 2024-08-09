@@ -82,7 +82,7 @@ function Hotels({ children, ...props }) {
                                     <div className={classes.tour_topInfo__bread}>
                                         <Link to={'/'}>Главная</Link> / <Link to={`/region/${hotel.region}`}>{regionNameData}</Link> / {hotel.title}
                                     </div>
-                                    <div className={classes.hotelTitle}>{hotel.title}</div>
+                                    <div className={classes.hotelTitle}>{hotel.title} ({hotel.city})</div>
                                     <div className={classes.hotelDesc}>{hotel.description}</div>
                                     <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
                                     <div className={classes.hotelBron}>Забронировать</div>

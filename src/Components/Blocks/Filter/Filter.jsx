@@ -30,24 +30,23 @@ function Filter({ objects, updateFilteredObjects }) {
 
     const applyFilters = () => {
         const filteredObjects = objects.filter((item) => {
-            const places = filters.places === "" || item.places.toLocaleLowerCase().includes(filters.places.toLocaleLowerCase());
+            const places = 
+                filters.places === "" || 
+                item.places.some(place => place.toLowerCase().includes(filters.places.toLowerCase()) ||
+                item.tourTitle.toLocaleLowerCase().includes(filters.places.toLocaleLowerCase())
+            );
             const travelMethod = filters.travelMethod === "" || item.travelMethod.toLocaleLowerCase().includes(filters.travelMethod.toLocaleLowerCase());
             const tourType = filters.tourType === "" || item.tourType.toLocaleLowerCase().includes(filters.tourType.toLocaleLowerCase());
-            const difficulty = filters.difficulty === "" || item.difficulty.toLocaleLowerCase().includes(filters.difficulty);
+            const difficulty = filters.difficulty === "" || item.difficulty.toLocaleLowerCase().includes(filters.difficulty.toLocaleLowerCase());
             return places && travelMethod && tourType && difficulty;
         });
         updateFilteredObjects(filteredObjects);
     };
 
+
     return (
         <div className={classes.filter}>
-            <select name="places" value={filters.places} onChange={handleFilterChange}>
-                <option value='' disabled>Место пребывания</option>
-                <option value="АП Минеральные Воды">АП Минеральные Воды</option>
-                <option value="Термальный комплекс Жемчужина Кавказа">Термальный комплекс Жемчужина Кавказа</option>
-                <option value="Архыз">Архыз</option>
-                <option value="" >Показать все</option>
-            </select>
+            <input type="text" placeholder="Поиск по названию или месту пребывания" name="places" value={filters.places} onChange={handleFilterChange}/>
 
             <select name="travelMethod" value={filters.travelMethod} onChange={handleFilterChange}>
                 <option value="" disabled>Способ передвижения</option>
@@ -75,6 +74,7 @@ function Filter({ objects, updateFilteredObjects }) {
                 <option value="" disabled>Сложность поездки</option>
                 <option value="Высокая">Высокая</option>
                 <option value="Средняя">Средняя</option>
+                <option value="Базовая">Базовая</option>
                 <option value="" >Показать все</option>
             </select>
         </div>

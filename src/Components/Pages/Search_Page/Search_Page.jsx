@@ -68,7 +68,17 @@ function Search_Page({ children, ...props }) {
     // Фильтрация результатов на основе searchQuery
     const filteredResults = searchResults.filter(result =>
         (result.title && result.title.toLowerCase().includes(searchQuery.toLowerCase())) ||
-        (result.tourTitle && result.tourTitle.toLowerCase().includes(searchQuery.toLowerCase()))
+        (result.tourTitle && result.tourTitle.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (result.travelMethod && result.travelMethod.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (result.duration && result.duration.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (result.departureTime && result.departureTime.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (result.tourType && result.tourType.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (result.difficulty && result.difficulty.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (result.cost && result.cost.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (result.optional && result.optional.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (result.places &&  result.places.some(place => place.toLowerCase().includes(searchQuery.toLowerCase()))) ||     
+        (result.checklists &&  result.checklists.some(checklist => checklist.toLowerCase().includes(searchQuery.toLowerCase()))) ||     
+        (result.days &&  result.days.some(day => day.toLowerCase().includes(searchQuery.toLowerCase())))   
     );
 
     const handleClearClick = () => {
