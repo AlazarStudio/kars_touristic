@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import classes from './Tours.module.css';
 
@@ -101,6 +101,82 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
     let regionNameData = '';
     regionsName && tour ? regionNameData = getTitleByLink(regionsName, tour.region) : null
 
+    
+    const [user, setUser] = useState(null);
+
+    const token = localStorage.getItem('token');
+
+    useEffect(() => {
+        getUserInfo(token)
+            .then(userData => setUser(userData))
+            .catch(error => console.error('Error initializing user:', error));
+    }, [token]);
+
+    const navigate = useNavigate();
+
+    const getUserInfo = async (token) => {
+        if (token) {
+            try {
+                const response = await fetch(`${server}/api/user`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    throw new Error('Failed to fetch user data.');
+                }
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+                throw error;
+            }
+        }
+    };
+
+    const updateUser = async (token, updates) => {
+        try {
+            const response = await fetch(`${server}/api/userUpdate`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(updates)
+            });
+            if (!response.ok) {
+                throw new Error('Failed to update user.');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error updating user:', error);
+            throw error;
+        }
+    };
+
+    const handleAddCartClick = async () => {
+        if (token) {
+            const updates = {
+                cart: [id]
+            };
+
+            try {
+                const updatedUser = await updateUser(token, updates);
+                setUser(updatedUser);
+                alert(updatedUser.message ? updatedUser.message : updatedUser);
+                window.location.reload();
+            } catch (error) {
+                console.error('Error updating user:', error);
+            }
+        } else {
+            alert('Вы не авторизованы');
+            navigate('/signIn');
+        }
+    };
+
     return (
         <>
             {tour ?
@@ -150,8 +226,8 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                                     <div className={classes.tour_topInfo__left___items____element_____info}>{tour.cost}</div>
                                                 </div>
                                             </div>
-                                            <div className={classes.tour_topInfo__left___btn}>
-                                                Добавить в корзину
+                                            <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
+                                                {user && user.cart && user.cart.includes(id) ? 'В корзине' : 'Добавить в корзину'}
                                             </div>
                                         </div>
                                         <div className={classes.tour_topInfo__right}>
