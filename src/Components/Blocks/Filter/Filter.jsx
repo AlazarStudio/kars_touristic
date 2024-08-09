@@ -1,13 +1,13 @@
-import React, { useState, useEffect }  from "react";
+import React, { useState, useEffect } from "react";
 import classes from './Filter.module.css';
 
-function Filter({ children, objects, updateFilteredObjects, ...props }) {
-    
+function Filter({ objects, updateFilteredObjects }) {
+
     const [filters, setFilters] = useState({
-        city: "",
-        category: "",
-        date: "",
-        tripType: ""
+        places: "",
+        travelMethod: "",
+        tourType: "",
+        difficulty: ""
     });
 
     useEffect(() => {
@@ -16,59 +16,68 @@ function Filter({ children, objects, updateFilteredObjects, ...props }) {
 
     const handleFilterChange = (event) => {
         const { name, value } = event.target;
-        setFilters(prevFilters => ({
-            ...prevFilters,
-            [name]: value === "Показать все" ? "" : value
-        }));
+        // Обновляем состояние только если значение действительно изменилось
+        setFilters(prevFilters => {
+            if (prevFilters[name] !== value) {
+                return {
+                    ...prevFilters,
+                    [name]: value
+                };
+            }
+            return prevFilters;
+        });
     };
 
     const applyFilters = () => {
         const filteredObjects = objects.filter((item) => {
-            const cityMatch = filters.city === "" || item.city === filters.city;
-            const categoryMatch = filters.category === "" || item.category === filters.category;
-            const dateMatch = filters.date === "" || item.date === filters.date;
-            const tripTypeMatch = filters.tripType === "" || item.tripType === filters.tripType;
-            return cityMatch && categoryMatch && dateMatch && tripTypeMatch;
+            const places = filters.places === "" || item.places.toLocaleLowerCase().includes(filters.places.toLocaleLowerCase());
+            const travelMethod = filters.travelMethod === "" || item.travelMethod.toLocaleLowerCase().includes(filters.travelMethod.toLocaleLowerCase());
+            const tourType = filters.tourType === "" || item.tourType.toLocaleLowerCase().includes(filters.tourType.toLocaleLowerCase());
+            const difficulty = filters.difficulty === "" || item.difficulty.toLocaleLowerCase().includes(filters.difficulty);
+            return places && travelMethod && tourType && difficulty;
         });
         updateFilteredObjects(filteredObjects);
     };
 
     return (
-        <>
-            <div className={classes.filter}>
-                <select name="city" value={filters.city} onChange={handleFilterChange}>
-                    <option value="" disabled>Город</option>
-                    <option value="Черкесск">Черкесск</option>
-                    <option value="Карачаевск">Карачаевск</option>
-                    <option value="Архыз">Архыз</option>
-                    <option value="Домбай">Домбай</option>
-                    <option value="Теберда">Теберда</option>
-                    <option value="Показать все">Показать все</option>
-                </select>
+        <div className={classes.filter}>
+            <select name="places" value={filters.places} onChange={handleFilterChange}>
+                <option value='' disabled>Место пребывания</option>
+                <option value="АП Минеральные Воды">АП Минеральные Воды</option>
+                <option value="Термальный комплекс Жемчужина Кавказа">Термальный комплекс Жемчужина Кавказа</option>
+                <option value="Архыз">Архыз</option>
+                <option value="" >Показать все</option>
+            </select>
 
-                <select name="category" value={filters.category} onChange={handleFilterChange}>
-                    <option value="" disabled>Категория</option>
-                    <option value="Активные">Активные</option>
-                    <option value="Промышленные">Промышленные</option>
-                    <option value="Детские">Детские</option>
-                    <option value="Семейные">Семейные</option>
-                    <option value="Конные">Конные</option>
-                    <option value="Познавательные">Познавательные</option>
-                    <option value="Фото туры">Фото туры</option>
-                    <option value="Показать все">Показать все</option>
-                </select>
+            <select name="travelMethod" value={filters.travelMethod} onChange={handleFilterChange}>
+                <option value="" disabled>Способ передвижения</option>
+                <option value="Квадроцикл">Квадроцикл</option>
+                <option value="Пеший">Пеший</option>
+                <option value="Конный">Конный</option>
+                <option value="Конно-пеший">Конно-пеший</option>
+                <option value="Трансфер">Трансфер</option>
+                <option value="Внедорожник">Внедорожник</option>
+                <option value="" >Показать все</option>
+            </select>
 
-                <input type="date" name="date" value={filters.date} onChange={handleFilterChange} />
+            <select name="tourType" value={filters.tourType} onChange={handleFilterChange}>
+                <option value="" disabled>Тип поездки</option>
+                <option value="Экстримальный">Экстримальный</option>
+                <option value="Динамичный">Динамичный</option>
+                <option value="Тематический">Тематический</option>
+                <option value="Семейный">Семейный</option>
+                <option value="Конные экскурсии">Конные экскурсии</option>
+                <option value="Познавательный Туризм">Познавательный Туризм</option>
+                <option value="" >Показать все</option>
+            </select>
 
-                <select name="tripType" value={filters.tripType} onChange={handleFilterChange}>
-                    <option value="" disabled>Тип поездки</option>
-                    <option value="Групповая поездка">Групповая поездка</option>
-                    <option value="Индивидуальная поездка">Индивидуальная поездка</option>
-                    <option value="VIP">VIP</option>
-                    <option value="Показать все">Показать все</option>
-                </select>
-            </div>
-        </>
+            <select name="difficulty" value={filters.difficulty} onChange={handleFilterChange}>
+                <option value="" disabled>Сложность поездки</option>
+                <option value="Высокая">Высокая</option>
+                <option value="Средняя">Средняя</option>
+                <option value="" >Показать все</option>
+            </select>
+        </div>
     );
 }
 

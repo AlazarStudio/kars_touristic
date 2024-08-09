@@ -8,11 +8,9 @@ import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import server from '../../../serverConfig'
 
 function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, ...props }) {
+    const [objects, setObjects] = useState([]);
     const [filteredObjects, setFilteredObjects] = useState([]);
 
-    const updateFilteredObjects = (filteredObjects) => {
-        setFilteredObjects(filteredObjects);
-    };
     const fetchData = () => {
         fetch(`${server}/api/${requestType}`)
             .then(response => response.json())
@@ -21,18 +19,19 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                 if (checkModered) {
                     sortedTours = sortedTours.filter(tour => tour.modered !== 'false');
                 }
-                setFilteredObjects(sortedTours);
+                setObjects(sortedTours);
+                setFilteredObjects(sortedTours); // Изначально все объекты доступны
             })
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
     };
-    
 
     useEffect(() => {
         fetchData();
     }, []);
 
-
     const foundData = filteredObjects ? filteredObjects.filter(filteredObject => filteredObject.region === regionName) : [];
+
+    console.log(foundData);
 
     return (
         <>
@@ -42,7 +41,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                         <H2 text_transform="uppercase">{props.title}</H2>
                     </CenterBlock>
 
-                    {/* <Filter objects={foundData} updateFilteredObjects={updateFilteredObjects} /> */}
+                    <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />
 
                     <div className={classes.objects}>
                         {
