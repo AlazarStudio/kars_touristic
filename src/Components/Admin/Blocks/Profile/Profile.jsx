@@ -32,12 +32,12 @@ function Profile({ children, ...props }) {
         }
     };
 
-
     useEffect(() => {
         if (token) {
             getUserInfo(token);
         } else {
-            navigate('/signIn');
+            navigate('/signIn');            
+            localStorage.removeItem('token');
         }
     }, [token])
 
