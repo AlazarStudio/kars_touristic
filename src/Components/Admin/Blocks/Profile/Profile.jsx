@@ -9,68 +9,86 @@ import server from '../../../../serverConfig';
 import { Link, useNavigate } from "react-router-dom";
 
 function Profile({ children, ...props }) {
-    const [user, setUser] = useState();
-
-    let token = localStorage.getItem('token');
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
-    const getUserInfo = async (token) => {
-        const response = await fetch(`${server}/api/user`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+    const checkTokenValidity = (token) => {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const expirationTime = payload.exp * 1000; // Время истечения в миллисекундах
+        return Date.now() < expirationTime;
+    };
 
-        if (response.ok) {
-            const userData = await response.json();
-            setUser(userData)
-        } else {
+    const getUserInfo = async (token) => {
+        try {
+            const response = await fetch(`${server}/api/user`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                const userData = await response.json();
+                setUser(userData);
+            } else {
+                localStorage.removeItem('token');
+                navigate('/signIn');
+            }
+        } catch (error) {
+            console.error('Ошибка получения информации о пользователе', error);
             localStorage.removeItem('token');
-            console.error('Ошибка получения информации о пользователе');
+            navigate('/signIn');
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (token) {
+        const token = localStorage.getItem('token');
+        if (token && checkTokenValidity(token)) {
             getUserInfo(token);
         } else {
-            navigate('/signIn');            
             localStorage.removeItem('token');
+            navigate('/signIn');
         }
-    }, [token])
+    }, []);
 
-    function logout() {
+    const logout = () => {
         localStorage.clear();
         setUser(null);
+        navigate('/signIn');
+    };
+
+    if (loading) {
+        return <div>Загрузка...</div>;
     }
 
     return (
         <>
             <Header_black />
-
-            {user ?
+            {user ? (
                 <CenterBlock>
                     <WidthBlock>
                         <div className={classes.blockUser}>
                             <div className={classes.logout}>
-                                {user && user.role && user.role == 'admin' ?
+                                {user.role === 'admin' ? (
                                     <Link to={'/admin'}>
-                                        <img src="/admin-panel 1.webp" alt="" />
+                                        <img src="/admin-panel 1.webp" alt="Перейти в Панель Администратора" />
                                         Перейти в Панель Администратора
                                     </Link>
-                                    : user && user.role && user.adminPanelAccess && user.role == 'touragent' ?
-                                        <Link to={'/admin'}>
-                                            <img src="/admin-panel 1.webp" alt="" />
-                                            Перейти в Панель Автора туров
-                                        </Link>
-                                        : user.role == 'user' ? null :'Ожидается подтверждение аккаунта администратором'}
-                                <img src="/logout.png" alt="" onClick={logout} />
+                                ) : user.role === 'touragent' && user.adminPanelAccess ? (
+                                    <Link to={'/admin'}>
+                                        <img src="/admin-panel 1.webp" alt="Перейти в Панель Автора туров" />
+                                        Перейти в Панель Автора туров
+                                    </Link>
+                                ) : user.role === 'user' ? null : 'Ожидается подтверждение аккаунта администратором'}
+                                <img src="/logout.png" alt="Выйти" onClick={logout} />
                             </div>
 
                             <div className={classes.blockUser_img}>
-                                <img src="/noPhoto.png" alt="" />
+                                <img src="/noPhoto.png" alt="Фото профиля" />
                             </div>
                             <div className={classes.blockUser_info}>
                                 {user.name}
@@ -84,7 +102,7 @@ function Profile({ children, ...props }) {
                                 <div className={classes.contacts_elem}>
                                     <div className={classes.contacts_elem__item}>
                                         <div className={classes.contacts_elem__item___img}>
-                                            <img src="/phone.png" alt="" />
+                                            <img src="/phone.png" alt="Телефон" />
                                         </div>
                                         <div className={classes.contacts_elem__item___data}>
                                             <div className={classes.contacts_elem__item___data____title}>{user.phone}</div>
@@ -93,7 +111,7 @@ function Profile({ children, ...props }) {
                                     </div>
                                     <div className={classes.contacts_elem__item}>
                                         <div className={classes.contacts_elem__item___img}>
-                                            <img src="/email.png" alt="" />
+                                            <img src="/email.png" alt="Почта" />
                                         </div>
                                         <div className={classes.contacts_elem__item___data}>
                                             <div className={classes.contacts_elem__item___data____title}>{user.email}</div>
@@ -104,10 +122,8 @@ function Profile({ children, ...props }) {
                             </div>
                         </div>
                     </WidthBlock>
-
                 </CenterBlock>
-                : null
-            }
+            ) : null}
         </>
     );
 }
