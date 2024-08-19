@@ -117,7 +117,7 @@ function Cart_Page({ children, ...props }) {
 
     async function updateState (state) {
         await fetch(`${server}/api/updateOneAgent`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
@@ -132,13 +132,16 @@ function Cart_Page({ children, ...props }) {
         const totalSum = totalCost * passengerCount;
         let debtUser = user.debt + totalSum;
 
+        let confirmData = paymentMethod == 'cash' ? false : true;
+
         let formData = {
             price: totalSum,
             agent: user._id,
             paymentType: paymentMethod,
             tours: selectedTours,
             passengers: passengerInfo,
-            paymanetState: paymentMethod == 'cash' ? 'done' : 'processing'
+            paymanetState: paymentMethod == 'cash' ? 'done' : 'processing',
+            confirm: confirmData
         }
 
 

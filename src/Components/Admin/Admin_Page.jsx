@@ -20,6 +20,7 @@ import WidthBlock from "../Standart/WidthBlock/WidthBlock";
 import Gids from "./Blocks/AdminTabsComponents/Gids/Gids";
 import ModeredAuthorTours from "./Blocks/AdminTabsComponents/ModeredAuthorTours/ModeredAuthorTours";
 import AddAgent from "./Blocks/AdminTabsComponents/AddAgent/AddAgent";
+import Brons from "./Blocks/AdminTabsComponents/Brons/Brons";
 
 const ItemType = {
     REGION: 'region',
@@ -235,6 +236,15 @@ function Admin_Page({ children, ...props }) {
                         <div className={classes.admin_header__items}>
                             {user.role === 'admin' ?
                                 <>
+                                    <Link to={'/admin/brons'} className={classes.admin_header__items___item} onClick={() => setActiveTab('brons')}>
+                                        Брони
+                                        {/* {
+                                            touragents && touragents.length > 0 ?
+                                                <div className={classes.admin_header__nonAccessData}>{touragents.length}</div> :
+                                                <div className={classes.admin_header__nonAccessData}>0</div>
+                                        } */}
+                                    </Link>
+                                    
                                     <Link to={'/admin/touragents'} className={classes.admin_header__items___item} onClick={() => setActiveTab('touragents')}>
                                         Авторы туров
                                         {
@@ -342,6 +352,7 @@ function Admin_Page({ children, ...props }) {
                             {activeTab === 'editRegion' && <EditRegion role={user.role} userName={user.name} userID={user._id} />}
 
                             {/* Редактировать авторов туров */}
+                            {activeTab === 'brons' && <Brons />}
                             {activeTab === 'touragents' && <Gids />}
                             {activeTab === 'moderedAuthorTours' && <ModeredAuthorTours />}
 
