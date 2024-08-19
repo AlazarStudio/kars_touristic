@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Profile({ children, ...props }) {
     const [user, setUser] = useState(null);
+    const [agents, setAgents] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
@@ -25,7 +26,8 @@ function Profile({ children, ...props }) {
             const response = await fetch(`${server}/api/user`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 }
             });
 
@@ -38,10 +40,28 @@ function Profile({ children, ...props }) {
             }
         } catch (error) {
             console.error('Ошибка получения информации о пользователе', error);
-            localStorage.removeItem('token');
+            // localStorage.removeItem('token');
             navigate('/signIn');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const getAgentsInfo = async () => {
+        try {
+            const response = await fetch(`${server}/api/getAgents`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                const agentsData = await response.json();
+                setAgents(agentsData.agent);
+            }
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -49,8 +69,9 @@ function Profile({ children, ...props }) {
         const token = localStorage.getItem('token');
         if (token && checkTokenValidity(token)) {
             getUserInfo(token);
+            getAgentsInfo(); // Получаем список агентов после проверки токена
         } else {
-            localStorage.removeItem('token');
+            // localStorage.removeItem('token');
             navigate('/signIn');
         }
     }, []);
@@ -65,6 +86,7 @@ function Profile({ children, ...props }) {
         return <div>Загрузка...</div>;
     }
 
+    const filteredAgents = agents.filter(agent => agent.agent === user._id);
     return (
         <>
             <Header_black />
@@ -83,7 +105,7 @@ function Profile({ children, ...props }) {
                                         <img src="/admin-panel 1.webp" alt="Перейти в Панель Автора туров" />
                                         Перейти в Панель Автора туров
                                     </Link>
-                                ) : user.role === 'user' ? null : 'Ожидается подтверждение аккаунта администратором'}
+                                ) : user.role === 'user' || user.role === 'agent' ? null : 'Ожидается подтверждение аккаунта администратором'}
                                 <img src="/logout.png" alt="Выйти" onClick={logout} />
                             </div>
 
@@ -121,6 +143,34 @@ function Profile({ children, ...props }) {
                                 </div>
                             </div>
                         </div>
+
+                        {user.role != 'admin' &&
+                            <div className={classes.blockUser}>
+                                <div className={classes.contacts}>
+                                    <div className={classes.titleBlock}>
+                                        <H2 text_transform={'uppercase'}>Брони</H2>
+                                        <div className={classes.titleBlockPrice}>Принято наличными: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>
+                                    </div>
+
+                                    <ul className={classes.listBron}>
+                                        <li>
+                                            <div className={classes.listBronItem}><b>Название тура</b></div>
+                                            <div className={classes.listBronItem}><b>Пассажиры</b></div>
+                                            <div className={classes.listBronItem}><b>Полная цена</b></div>
+                                            <div className={classes.listBronItem}><b>Способ оплаты</b></div>
+                                        </li>
+                                        {filteredAgents.map((agent) => (
+                                            <li key={agent.id}>
+                                                <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
+                                                <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.fullName).join(', ')}</div>
+                                                <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>
+                                                <div className={classes.listBronItem}>Оплата {agent.paymentType == 'cash' ? 'наличными' : 'картой'}</div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        }
                     </WidthBlock>
                 </CenterBlock>
             ) : null}

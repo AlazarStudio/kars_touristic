@@ -295,7 +295,7 @@
     margin-right: 10px;
 }
 
-button {
+.cartPage_right__oferta button {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
@@ -306,7 +306,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.cartPage_right__oferta button:hover {
     background-color: #0056b3;
 }
 

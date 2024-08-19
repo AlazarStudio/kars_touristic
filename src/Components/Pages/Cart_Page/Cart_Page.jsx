@@ -4,6 +4,7 @@ import Header_black from "../../Blocks/Header_black/Header_black";
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import server from '../../../serverConfig';
+import axios from "axios";
 
 function Cart_Page({ children, ...props }) {
     const [user, setUser] = useState(null);
@@ -11,7 +12,7 @@ function Cart_Page({ children, ...props }) {
     const [onedayTours, setOnedayTours] = useState([]);
     const [selectedTours, setSelectedTours] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [passengerCount, setPassengerCount] = useState(1);
+    const [passengerCount, setPassengerCount] = useState(0);
     const [passengerInfo, setPassengerInfo] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState("card");
     const [isAgreed, setIsAgreed] = useState(false);
@@ -69,7 +70,7 @@ function Cart_Page({ children, ...props }) {
             if (response.ok) {
                 const updatedUser = await response.json();
                 setUser(updatedUser);
-                alert('Тур удален из корзины');
+                // alert('Тур удален из корзины');
             } else {
                 throw new Error('Failed to delete item from cart.');
             }
@@ -114,12 +115,73 @@ function Cart_Page({ children, ...props }) {
         setPassengerInfo(updatedPassengerInfo);
     };
 
-    const handleBooking = () => {
-        const totalSum = totalCost * passengerCount;
-        console.log("Total sum:", totalSum);
-        console.log("Passenger info:", passengerInfo);
-        console.log("Payment method:", paymentMethod);
+    async function updateState (state) {
+        await fetch(`${server}/api/updateOneAgent`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                paymanetState: state,
+            })
+        });
+    }
 
+    const handleBooking = async () => {
+        const totalSum = totalCost * passengerCount;
+        let debtUser = user.debt + totalSum;
+
+        let formData = {
+            price: totalSum,
+            agent: user._id,
+            paymentType: paymentMethod,
+            tours: selectedTours,
+            passengers: passengerInfo,
+            paymanetState: paymentMethod == 'cash' ? 'done' : 'processing'
+        }
+
+
+        try {
+            const response = await fetch(`${server}/api/addAgent`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (paymentMethod == 'cash') {
+                const responseUpdate = await fetch(`${server}/api/userUpdate`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        debt: debtUser
+                    })
+                });
+            }
+
+            if (response.ok) {
+                const data = await response.json();
+                setIsModalOpen(false);
+                selectedTours.map((tour) => {
+                    handleDeleteItem(tour._id)
+                })
+                setPassengerCount(0)
+                setSelectedTours([])
+            } else {
+                throw new Error('Failed to delete item from cart.');
+            }
+        } catch (error) {
+            console.error('Error deleting item from cart:', error);
+        }
+
+        // updateState('done') - изменение состояния после успешной оплаты
+        
         // Далее можно отправить данные на сервер для завершения бронирования
     };
 
@@ -143,7 +205,7 @@ function Cart_Page({ children, ...props }) {
             document.body.classList.remove('no-scroll');
         }
     }, [isModalOpen]);
-    
+
     return (
         <>
             <Header_black />

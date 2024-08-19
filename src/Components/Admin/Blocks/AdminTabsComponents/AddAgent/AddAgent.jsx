@@ -94,17 +94,23 @@ function AddAgent() {
             </div>
 
             <div className={classes.gids}>
+                <div className={classes.gids_info}>
+                    <div className={classes.gids_info_data}>
+                        <div className={classes.gids_info__elem}><b>ФИО</b></div>
+                        <div className={classes.gids_info__elem}><b>Почта</b></div>
+                        <div className={classes.gids_info__elem}><b>Телефон</b></div>
+                        <div className={classes.gids_info__elem}><b>Принято наличными</b></div>
+                    </div>
+                </div>
                 {agents.length > 0 ?
                     agents.map((item, index) => (
                         <div className={classes.gids_info} key={index}>
                             <div className={classes.gids_info_data}>
-                                <div className={classes.gids_info__elem}>
-                                    {item.name}
-                                </div>
+                                <div className={classes.gids_info__elem}>{item.name}</div>
                                 <div className={classes.gids_info__elem}>{item.email}</div>
                                 <div className={classes.gids_info__elem}>{item.phone}</div>
+                                <div className={classes.gids_info__elem}>{item.debt.toLocaleString('ru-RU')} ₽</div>
                             </div>
-                            <Link to={`/profileAgent/${item._id}`} className={classes.gids_info__changeBTN}>Посмотреть профиль</Link>
                         </div>
                     ))
                     :
