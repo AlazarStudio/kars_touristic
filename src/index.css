@@ -290,3 +290,7 @@ main {
     width: 11%;
     z-index: 2;
 }
+
+.no-scroll {
+    overflow: hidden;
+}
