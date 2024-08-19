@@ -19,6 +19,7 @@ import CenterBlock from "../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../Standart/WidthBlock/WidthBlock";
 import Gids from "./Blocks/AdminTabsComponents/Gids/Gids";
 import ModeredAuthorTours from "./Blocks/AdminTabsComponents/ModeredAuthorTours/ModeredAuthorTours";
+import AddAgent from "./Blocks/AdminTabsComponents/AddAgent/AddAgent";
 
 const ItemType = {
     REGION: 'region',
@@ -324,6 +325,12 @@ function Admin_Page({ children, ...props }) {
                                         onClick={() => { setActiveTab('addTuragent'); setOpenSection('addTuragent'); }}>
                                         Авторам туров
                                     </Link>
+
+                                    <Link to={`/admin/addAgent`}
+                                        className={`${classes.admin_data__nav___item} ${isActive('addAgent')} ${classes.hoverBlock}`}
+                                        onClick={() => { setActiveTab('addAgent'); setOpenSection('addAgent'); }}>
+                                        Представители
+                                    </Link>
                                 </> : null}
 
                         </div>
@@ -354,6 +361,9 @@ function Admin_Page({ children, ...props }) {
 
                             {/* Добавить автора туров */}
                             {activeTab === 'addTuragent' && <AddTuragent />}
+
+                            {/* Добавить Представителей */}
+                            {activeTab === 'addAgent' && <AddAgent />}
                         </div>
                     </div>
                 </div>

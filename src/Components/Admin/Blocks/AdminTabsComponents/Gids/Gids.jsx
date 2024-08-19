@@ -4,6 +4,7 @@ import classes from './Gids.module.css';
 import { useParams, useNavigate, Link } from "react-router-dom";
 
 import server from '../../../../../serverConfig';
+
 function Gids({ children, ...props }) {
     const { add } = useParams();
     const navigate = useNavigate();
