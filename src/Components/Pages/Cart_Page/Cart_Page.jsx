@@ -4,6 +4,8 @@ import Header_black from "../../Blocks/Header_black/Header_black";
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import server from '../../../serverConfig';
+import { v4 as uuidv4 } from 'uuid';
+import PaymentButton from '../../PaymentButton/PaymentButton'
 
 function Cart_Page({ children, ...props }) {
     const [user, setUser] = useState(null);
@@ -62,6 +64,7 @@ function Cart_Page({ children, ...props }) {
 
     const handleDeleteItem = async (tourId) => {
         try {
+            console.log(`Attempting to delete tour with ID: ${tourId}`);
             const response = await fetch(`${server}/api/userCart/${tourId}`, {
                 method: 'DELETE',
                 headers: {
@@ -78,7 +81,10 @@ function Cart_Page({ children, ...props }) {
                     prevSelectedTours.filter(tour => tour._id !== tourId)
                 );
                 // alert('Тур удален из корзины');
+                console.log(`Tour with ID: ${tourId} deleted successfully.`);
             } else {
+                const errorText = await response.text();
+                console.error(`Failed to delete tour. Server response: ${errorText}`);
                 throw new Error('Failed to delete item from cart.');
             }
         } catch (error) {
@@ -146,7 +152,8 @@ function Cart_Page({ children, ...props }) {
     };
 
     async function updateState(state) {
-        await fetch(`${server}/api/updateOneAgent`, {
+        const agentId = user._id;
+        await fetch(`${server}/api/updateOneAgent/${agentId}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -236,6 +243,20 @@ function Cart_Page({ children, ...props }) {
         }
     }, [isModalOpen]);
 
+    const handlePaymentSuccess = async () => {
+        await handleBooking();  // Обработка бронирования
+        await updateState('done');  // Обновление состояния
+    };
+
+    const handleUserPayment = async () => {
+        await Promise.all(selectedTours.map(async (tour) => {
+            await handleDeleteItem(tour._id);
+        }));
+    }
+
+    const selectedTourTitles = selectedTours.map(tour => tour.tourTitle).join(', ').substring(0, 128).trim();
+
+    const uniqueOrderId = uuidv4();
 
     return (
         <>
@@ -297,14 +318,28 @@ function Cart_Page({ children, ...props }) {
                                         <div className={classes.cartPage_right__info___lower___num}>{data.length}</div>
                                     </div>
                                 </div>
-                                <div className={classes.cartPage_right__button}
-                                    onClick={selectedTours.length > 0 ? handlePlaceOrder : null}
-                                    style={{
-                                        backgroundColor: selectedTours.length > 0 ? '#007bff' : '#ccc',
-                                        cursor: selectedTours.length > 0 ? 'pointer' : 'not-allowed'
-                                    }}>
-                                    Оформить заказ
-                                </div>
+
+                                {(user && user.role) === 'user' ?
+                                    selectedTours.length === 0 ? null :
+                                        <PaymentButton
+                                            style={{}}
+                                            order_name={selectedTourTitles}
+                                            order_cost={totalCost}
+                                            order_id={uniqueOrderId}
+                                            onPaymentSuccess={handleUserPayment}
+                                        ></PaymentButton>
+                                    :
+                                    ((user && user.role) === 'agent' || (user && user.role === 'admin')) &&
+                                    <div className={classes.cartPage_right__button}
+                                        onClick={selectedTours.length > 0 ? handlePlaceOrder : null}
+                                        style={{
+                                            backgroundColor: selectedTours.length > 0 ? '#007bff' : '#ccc',
+                                            cursor: selectedTours.length > 0 ? 'pointer' : 'not-allowed'
+                                        }}>
+                                        Оформить заказ
+                                    </div>
+                                }
+
                                 {selectedTours.length === 0 && (
                                     <div className={classes.errorMessage}>
                                         Пожалуйста, выберите тур перед оформлением заказа.
@@ -402,18 +437,29 @@ function Cart_Page({ children, ...props }) {
                                 />
                                 <p>Согласен с условиями Правил пользования торговой площадкой и правилами возврата</p>
                             </label>
-                            <button
-                                onClick={isAgreed ? handleBooking : null}
-                                disabled={!isAgreed}
-                                style={{
-                                    backgroundColor: isAgreed ? '#007bff' : '#ccc',
-                                    cursor: isAgreed ? 'pointer' : 'not-allowed'
-                                }}
-                            >
-                                Забронировать тур
-                            </button>
+                            {(paymentMethod === 'cash') ?
+                                <button
+                                    onClick={isAgreed ? handleBooking : null}
+                                    disabled={!isAgreed}
+                                    style={{
+                                        backgroundColor: isAgreed ? '#007bff' : '#ccc',
+                                        cursor: isAgreed ? 'pointer' : 'not-allowed'
+                                    }}
+                                >
+                                    Забронировать тур
+                                </button>
+                                :
+                                (isAgreed) ?
+                                    <PaymentButton
+                                        style={{}}
+                                        order_name={selectedTourTitles}
+                                        order_cost={totalCost * passengerCount}
+                                        order_id={uniqueOrderId}
+                                        onPaymentSuccess={handlePaymentSuccess}
+                                    ></PaymentButton>
+                                    :
+                                    null}
                         </div>
-
                     </div>
                 </div>
             )}
