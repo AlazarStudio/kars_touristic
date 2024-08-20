@@ -145,7 +145,7 @@ function Profile({ children, ...props }) {
                             </div>
                         </div>
 
-                        {user.role != 'admin' &&
+                        {(user.role != 'admin' && filteredAgents.length > 0) &&
                             <div className={classes.blockUser}>
                                 <div className={classes.contacts}>
                                     <div className={classes.titleBlock}>
@@ -156,7 +156,7 @@ function Profile({ children, ...props }) {
                                     <ul className={classes.listBron}>
                                         <li>
                                             <div className={classes.listBronItem}><b>Название тура</b></div>
-                                            <div className={classes.listBronItem}><b>Пассажиры</b></div>
+                                            <div className={classes.listBronItem}><b>Участники</b></div>
                                             <div className={classes.listBronItem}><b>Полная цена</b></div>
                                             <div className={classes.listBronItem}><b>Способ оплаты</b></div>
                                             <div className={classes.listBronItem}><b>Состояние</b></div>

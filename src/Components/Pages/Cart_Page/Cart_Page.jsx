@@ -339,19 +339,19 @@ function Cart_Page({ children, ...props }) {
                         <div className={classes.passengerBlock}>
                             {Array.from({ length: passengerCount }, (_, i) => (
                                 <div key={i} className={classes.passengerInfo}>
-                                    <h3>Пассажир {i + 1}</h3>
+                                    <h3>Участник {i + 1}</h3>
                                     <input
                                         type="text"
                                         placeholder="ФИО"
                                         value={passengerInfo[i]?.fullName || ""}
                                         onChange={(e) => handlePassengerInfoChange(i, "fullName", e.target.value)}
                                     />
-                                    <input
+                                    {/* <input
                                         type="email"
                                         placeholder="Почта"
                                         value={passengerInfo[i]?.email || ""}
                                         onChange={(e) => handlePassengerInfoChange(i, "email", e.target.value)}
-                                    />
+                                    /> */}
                                     <input
                                         type="text"
                                         placeholder="Номер телефона"
