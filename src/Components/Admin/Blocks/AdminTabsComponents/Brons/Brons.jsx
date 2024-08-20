@@ -27,7 +27,7 @@ function Brons({ children, ...props }) {
                 const response = await fetch(`${server}/api/getAgents`);
                 const data = await response.json();
                 setTouragents(data.agent);
-                setFilteredAgents(data.agent); // Инициализация отфильтрованного списка
+                setFilteredAgents(data.agent); 
             } catch (error) {
                 console.error("Error fetching mission info:", error);
             }
@@ -189,7 +189,7 @@ function Brons({ children, ...props }) {
                                 <div className={classes.listBronItem}><b>Подтвердить получение</b></div>
                             </li>
                             {filteredAgents.length > 0 ?
-                                filteredAgents.reverse().map((agent, index) => (
+                                filteredAgents.map((agent, index) => (
                                     <li key={index}>
                                         <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
                                         <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.fullName).join(', ')}</div>

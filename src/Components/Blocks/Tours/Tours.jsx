@@ -156,6 +156,8 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
             throw error;
         }
     };
+    
+    const [isInCart, setIsInCart] = useState(false);
 
     const handleAddCartClick = async () => {
         if (token) {
@@ -167,7 +169,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                 const updatedUser = await updateUser(token, updates);
                 setUser(updatedUser);
                 alert(updatedUser.message ? updatedUser.message : updatedUser);
-                window.location.reload();
+                setIsInCart(true);
             } catch (error) {
                 console.error('Error updating user:', error);
             }
@@ -176,6 +178,8 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
             navigate('/signIn');
         }
     };
+
+
 
     return (
         <>
@@ -227,7 +231,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                                 </div>
                                             </div>
                                             <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
-                                                {user && user.cart && user.cart.includes(id) ? 'В корзине' : 'Добавить в корзину'}
+                                                {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
                                             </div>
                                         </div>
                                         <div className={classes.tour_topInfo__right}>

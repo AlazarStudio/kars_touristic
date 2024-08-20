@@ -7,7 +7,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-function Object({ pageName, titleObject, regionData, width }) {
+function Object({ pageName, titleObject, regionData, width, inCart }) {
 
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
@@ -99,6 +99,7 @@ function Object({ pageName, titleObject, regionData, width }) {
             navigate('/signIn');
         }
     };
+    const [isInCart, setIsInCart] = useState(false);
 
     const handleAddCartClick = async () => {
         if (token) {
@@ -110,7 +111,8 @@ function Object({ pageName, titleObject, regionData, width }) {
                 const updatedUser = await updateUser(token, updates);
                 setUser(updatedUser);
                 alert(updatedUser.message ? updatedUser.message : updatedUser);
-                window.location.reload();
+                setIsInCart(true);
+                // window.location.reload();
             } catch (error) {
                 console.error('Error updating user:', error);
             }
@@ -129,6 +131,7 @@ function Object({ pageName, titleObject, regionData, width }) {
     }
 
     return (
+        user &&
         <div className={classes.objects_item} style={{ width: width }}>
             <div className={classes.objects_item__like} onClick={handleLikeClick}>
                 {user && user.likes && user.likes.includes(regionData._id)
@@ -170,7 +173,7 @@ function Object({ pageName, titleObject, regionData, width }) {
                             <div className={classes.buttons}>
                                 <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
                                 <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>
-                                    {user && user.cart && user.cart.includes(regionData._id) ? 'В корзине' : 'Добавить в корзину'}
+                                    {isInCart ? 'В корзине' : inCart}
                                 </Link>
                             </div>
                         </>

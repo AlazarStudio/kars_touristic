@@ -33,6 +33,37 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
 
     const foundData = filteredObjects ? filteredObjects.filter(filteredObject => filteredObject.region === regionName) : [];
     
+    const [user, setUser] = useState(null);
+
+    const token = localStorage.getItem('token');
+    const getUserInfo = async (token) => {
+        if (token) {
+            try {
+                const response = await fetch(`${server}/api/user`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    throw new Error('Failed to fetch user data.');
+                }
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+                throw error;
+            }
+        }
+    };
+    
+    useEffect(() => {
+        getUserInfo(token)
+            .then(userData => setUser(userData))
+            .catch(error => console.error('Error initializing user:', error));
+    }, [token]);
+
     return (
         <>
             {foundData ?
@@ -52,7 +83,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     <div className={classes.objects}>
                         {
                             foundData.map((item, index) => (
-                                <Object key={index} regionData={item} pageName={pageName} titleObject={titleObject} />
+                                <Object key={index} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')}/>
                             ))
                         }
                     </div>
