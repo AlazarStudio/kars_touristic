@@ -15,6 +15,7 @@ function Cart_Page({ children, ...props }) {
     const [selectedTours, setSelectedTours] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [passengerCount, setPassengerCount] = useState(1);
+    const [passengerDate, setPassengerDate] = useState('');
     const [passengerInfo, setPassengerInfo] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState("card");
     const [isAgreed, setIsAgreed] = useState(false);
@@ -131,6 +132,10 @@ function Cart_Page({ children, ...props }) {
         setPassengerCount(count);
     };
 
+    const handlePassengerDateChange = (e) => {
+        setPassengerDate(e.target.value);
+    };
+
     const handlePassengerInfoChange = (index, field, value) => {
         setPassengerInfo(prevPassengerInfo => {
             const updatedPassengerInfo = [...prevPassengerInfo];
@@ -172,7 +177,9 @@ function Cart_Page({ children, ...props }) {
             tours: selectedTours,
             passengers: passengerInfo,
             paymanetState: paymentMethod === 'cash' ? 'done' : 'processing',
-            confirm: confirmData
+            confirm: confirmData,
+            bookingDate: passengerDate,
+            bookingTime: selectedTours[0].departureTime,
         }
 
         try {
@@ -355,6 +362,15 @@ function Cart_Page({ children, ...props }) {
                         }}>
                             &times;
                         </div>
+                        
+                        <h2>Выберите дату</h2>
+                        <input
+                            type="date"
+                            value={passengerDate}
+                            onChange={handlePassengerDateChange}
+                            className={classes.passangerCount}
+                        />
+
                         <h2>Введите количество людей</h2>
 
                         <input
