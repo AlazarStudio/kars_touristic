@@ -64,7 +64,6 @@ function Cart_Page({ children, ...props }) {
 
     const handleDeleteItem = async (tourId) => {
         try {
-            console.log(`Attempting to delete tour with ID: ${tourId}`);
             const response = await fetch(`${server}/api/userCart/${tourId}`, {
                 method: 'DELETE',
                 headers: {
@@ -81,7 +80,6 @@ function Cart_Page({ children, ...props }) {
                     prevSelectedTours.filter(tour => tour._id !== tourId)
                 );
                 // alert('Тур удален из корзины');
-                console.log(`Tour with ID: ${tourId} deleted successfully.`);
             } else {
                 const errorText = await response.text();
                 console.error(`Failed to delete tour. Server response: ${errorText}`);
@@ -94,11 +92,7 @@ function Cart_Page({ children, ...props }) {
 
     const handleSelectTour = (tour) => {
         setSelectedTours(prevSelectedTours => {
-            if (prevSelectedTours.some(selectedTour => selectedTour._id === tour._id)) {
-                return prevSelectedTours.filter(selectedTour => selectedTour._id !== tour._id);
-            } else {
-                return [...prevSelectedTours, tour];
-            }
+            return [tour];
         });
     };
 
@@ -309,10 +303,10 @@ function Cart_Page({ children, ...props }) {
                                     <div className={classes.cartPage_right__info___num}>{formatNumber(totalCost)} ₽</div>
                                 </div>
                                 <div className={classes.cartPage_right__infoBlock}>
-                                    <div className={classes.cartPage_right__info___lower}>
+                                    {/* <div className={classes.cartPage_right__info___lower}>
                                         <div className={classes.cartPage_right__info___lower___title}>Выбрано товаров</div>
                                         <div className={classes.cartPage_right__info___lower___num}>{selectedTours.length}</div>
-                                    </div>
+                                    </div> */}
                                     <div className={classes.cartPage_right__info___lower}>
                                         <div className={classes.cartPage_right__info___lower___title}>Всего товаров в корзине</div>
                                         <div className={classes.cartPage_right__info___lower___num}>{data.length}</div>
