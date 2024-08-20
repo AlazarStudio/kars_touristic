@@ -9,7 +9,7 @@ import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 
 import server from '../../../serverConfig'
 
-function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, ...props }) {
+function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, ...props }) {
     const [objects, setObjects] = useState([]);
     const [filteredObjects, setFilteredObjects] = useState([]);
 
@@ -83,7 +83,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     <div className={classes.objects}>
                         {
                             foundData.map((item, index) => (
-                                <Object key={index} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')}/>
+                                <Object key={index} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')}/>
                             ))
                         }
                     </div>

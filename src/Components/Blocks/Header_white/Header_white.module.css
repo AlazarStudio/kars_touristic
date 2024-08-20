@@ -40,6 +40,7 @@
     display: flex;
     height: 100%;
     align-items: center;
+    position: relative;
 }
 
 .mobileHeader {
@@ -48,6 +49,21 @@
 
 .mobileMenu {
     display: none;
+}
+
+.cartCount{
+    color: red;
+    background-color: #fff;
+    font-weight: 600;
+    width: fit-content;
+    height: fit-conten;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    padding: 2px 7px;
+    margin-left: 5px;
 }
 
 

@@ -9,7 +9,7 @@ import Preloader from "../../Blocks/Preloader/Preloader";
 
 import server from '../../../serverConfig'
 
-function RegionInfo({ children, ...props }) {
+function RegionInfo({ children, setCartCount, ...props }) {
     const { id } = useParams();
 
     const [regions, setRegions] = useState([]);
@@ -143,12 +143,12 @@ function RegionInfo({ children, ...props }) {
                         <CenterBlock>
                             <WidthBlock>
                                 <div>
-                                    {activeTab === 1 && <Tabs regionName={id} titleObject={'tourTitle'} pageName={'tours'} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'} />}
-                                    {activeTab === 2 && <Tabs regionName={id} titleObject={'tourTitle'} pageName={'excursions'} tableName={'onedayTour'} requestType={'getOnedayTours'} title={'Однодневные экскурсии'} />}
-                                    {activeTab === 3 && <Tabs regionName={id} titleObject={'tourTitle'} pageName={'gids'} tableName={'authorTour'} requestType={'getAuthorTours'} title={'Авторские туры'} checkModered={true}/>}
-                                    {activeTab === 4 && <Tabs regionName={id} titleObject={'title'} pageName={'hotels'} tableName={'hotels'} requestType={'getHotels'} title={'Отели'} />}
-                                    {activeTab === 5 && <Tabs regionName={id} titleObject={'title'} pageName={'visits'} tableName={'places'} requestType={'getPlaces'} title={'Что посетить'} />}
-                                    {activeTab === 6 && <Tabs regionName={id} titleObject={'title'} pageName={'events'} tableName={'events'} requestType={'getEvents'} title={'Региональные Mice ивенты'} />}
+                                    {activeTab === 1 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'tours'} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'} />}
+                                    {activeTab === 2 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'excursions'} tableName={'onedayTour'} requestType={'getOnedayTours'} title={'Однодневные экскурсии'} />}
+                                    {activeTab === 3 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'gids'} tableName={'authorTour'} requestType={'getAuthorTours'} title={'Авторские туры'} checkModered={true}/>}
+                                    {activeTab === 4 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'hotels'} tableName={'hotels'} requestType={'getHotels'} title={'Отели'} />}
+                                    {activeTab === 5 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'visits'} tableName={'places'} requestType={'getPlaces'} title={'Что посетить'} />}
+                                    {activeTab === 6 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'events'} tableName={'events'} requestType={'getEvents'} title={'Региональные Mice ивенты'} />}
                                 </div>
                             </WidthBlock>
                         </CenterBlock>

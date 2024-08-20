@@ -48,6 +48,21 @@
     display: none;
 }
 
+.cartCount{
+    color: #fff;
+    background-color: #000;
+    font-weight: 600;
+    width: fit-content;
+    height: fit-conten;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    padding: 2px 7px;
+    margin-left: 5px;
+}
+
 @media (min-width: 0px) and (max-width: 1299px) {
     .header {
         margin: 0;

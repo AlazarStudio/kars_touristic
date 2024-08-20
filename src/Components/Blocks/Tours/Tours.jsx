@@ -20,7 +20,7 @@ import Slider from "../Slider/Slider";
 
 import server from '../../../serverConfig'
 
-function Tours({ children, requestType, pageName, tableName, similar, ...props }) {
+function Tours({ children, requestType, pageName, tableName, similar, setCartCount, ...props }) {
     let { id } = useParams();
 
     const [tour, setTour] = useState();
@@ -101,7 +101,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
     let regionNameData = '';
     regionsName && tour ? regionNameData = getTitleByLink(regionsName, tour.region) : null
 
-    
+
     const [user, setUser] = useState(null);
 
     const token = localStorage.getItem('token');
@@ -156,7 +156,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
             throw error;
         }
     };
-    
+
     const [isInCart, setIsInCart] = useState(false);
 
     const handleAddCartClick = async () => {
@@ -170,6 +170,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                 setUser(updatedUser);
                 alert(updatedUser.message ? updatedUser.message : updatedUser);
                 setIsInCart(true);
+                setCartCount(updatedUser.user.cart.length)
             } catch (error) {
                 console.error('Error updating user:', error);
             }
@@ -317,7 +318,7 @@ function Tours({ children, requestType, pageName, tableName, similar, ...props }
                                             {foundRegion.map((item, index) => (
                                                 item._id != id ?
                                                     <SwiperSlide key={index}>
-                                                        <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} />
+                                                        <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')}/>
                                                     </SwiperSlide>
                                                     : null
                                             ))}

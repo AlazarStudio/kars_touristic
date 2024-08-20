@@ -4,10 +4,10 @@ import Header_black from "../../Blocks/Header_black/Header_black";
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import server from '../../../serverConfig';
-import axios from "axios";
 
 function Cart_Page({ children, ...props }) {
     const [user, setUser] = useState(null);
+    const [cartLength, setCartLength] = useState(0);
     const [multidayTours, setMultidayTours] = useState([]);
     const [onedayTours, setOnedayTours] = useState([]);
     const [selectedTours, setSelectedTours] = useState([]);
@@ -41,7 +41,10 @@ function Cart_Page({ children, ...props }) {
 
     useEffect(() => {
         getUserInfo(token)
-            .then(userData => setUser(userData))
+            .then(userData => {
+                setUser(userData)
+                setCartLength(userData.cart.length)
+            })
             .catch(error => console.error('Error initializing user:', error));
     }, [token]);
 
@@ -70,6 +73,7 @@ function Cart_Page({ children, ...props }) {
             if (response.ok) {
                 const updatedUser = await response.json();
                 setUser(updatedUser);
+                setCartLength(user && user.cart.length - 1)
                 // alert('Тур удален из корзины');
             } else {
                 throw new Error('Failed to delete item from cart.');
@@ -179,6 +183,8 @@ function Cart_Page({ children, ...props }) {
             } else {
                 throw new Error('Failed to delete item from cart.');
             }
+
+            location.reload()
         } catch (error) {
             console.error('Error deleting item from cart:', error);
         }
@@ -209,9 +215,10 @@ function Cart_Page({ children, ...props }) {
         }
     }, [isModalOpen]);
 
+
     return (
         <>
-            <Header_black />
+            <Header_black cartCount={cartLength}/>
 
             <CenterBlock>
                 <WidthBlock>

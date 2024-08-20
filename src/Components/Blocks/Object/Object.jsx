@@ -7,7 +7,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-function Object({ pageName, titleObject, regionData, width, inCart }) {
+function Object({ pageName, titleObject, regionData, width, inCart, setCartCount }) {
 
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
@@ -112,6 +112,7 @@ function Object({ pageName, titleObject, regionData, width, inCart }) {
                 setUser(updatedUser);
                 alert(updatedUser.message ? updatedUser.message : updatedUser);
                 setIsInCart(true);
+                setCartCount(updatedUser.user.cart.length)
                 // window.location.reload();
             } catch (error) {
                 console.error('Error updating user:', error);

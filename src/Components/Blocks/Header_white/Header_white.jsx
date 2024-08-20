@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from './Header_white.module.css';
 import { Link } from "react-router-dom";
+
+import server from '../../../serverConfig';
 
 import logo from '/favicon.webp';
 import arnament from '/header_arnament.webp';
@@ -9,13 +11,47 @@ import cart from '/header_cart.webp';
 import profile from '/header_profile.webp';
 import burger from '/header_burger.webp';
 
-function Header_white({ children, ...props }) {
+function Header_white({ children, cartCount, ...props }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-    
+
+    const [user, setUser] = useState(null);
+
+    const token = localStorage.getItem('token');
+
+    const getUserInfo = async (token) => {
+        if (token) {
+            try {
+                const response = await fetch(`${server}/api/user`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    return await response.json();
+                } else {
+                    throw new Error('Failed to fetch user data.');
+                }
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+                throw error;
+            }
+        }
+    };
+
+    useEffect(() => {
+        getUserInfo(token)
+            .then(userData => {
+                setUser(userData);
+            })
+            .catch(error => console.error('Error initializing user:', error));
+    }, [token])
+
     // window.scrollTo({
     //     top: 0,
     //     behavior: 'auto'
@@ -40,7 +76,12 @@ function Header_white({ children, ...props }) {
                         <ul>
                             <li><Link to="/profile"><img src={profile} alt="" /></Link></li>
                             <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li>
-                            <li><Link to="/cart"><img src={cart} alt="" /></Link></li>
+                            <li>
+                                <Link to="/cart">
+                                    <img src={cart} alt="" />
+                                    <div className={classes.cartCount}>{cartCount ? cartCount : user && user.cart.length}</div>
+                                </Link>
+                            </li>
                             <li className={classes.mobileHeader} onClick={toggleMenu}><img src={burger} alt="Menu" /></li>
                         </ul>
                     </div>
