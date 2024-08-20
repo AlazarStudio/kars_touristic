@@ -180,11 +180,11 @@
 }
 
 .listBronItem:nth-child(1){
-    width: 35%;
+    width: 30%;
 }
 
 .listBronItem:nth-child(2){
-    width: 25%;
+    width: 20%;
 }
 
 .titleBlock {

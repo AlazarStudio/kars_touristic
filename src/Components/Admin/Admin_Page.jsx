@@ -374,7 +374,7 @@ function Admin_Page({ children, ...props }) {
                             {activeTab === 'addTuragent' && <AddTuragent />}
 
                             {/* Добавить Представителей */}
-                            {activeTab === 'addAgent' && <AddAgent />}
+                            {activeTab === 'addAgent' && <AddAgent setActiveTab={setActiveTab}/>}
                         </div>
                     </div>
                 </div>

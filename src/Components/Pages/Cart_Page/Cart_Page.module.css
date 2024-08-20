@@ -257,6 +257,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    outline: none;
 }
 
 .passengerBlock input{
@@ -266,6 +267,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+    outline: none;
 }
 
 .totalSum {
@@ -293,6 +295,7 @@
 
 .paymentMethod input[type="radio"] {
     margin-right: 10px;
+    outline: none;
 }
 
 .cartPage_right__oferta button {

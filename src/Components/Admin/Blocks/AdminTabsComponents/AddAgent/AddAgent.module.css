@@ -244,6 +244,7 @@
     font-weight: 500;
     line-height: 24.38px;
     display: flex;
+    align-items: center;
     gap: 10px;
     width: 20%;
 }
@@ -293,6 +294,7 @@
     align-items: center;
     width: 100%;
     gap: 50px;
+    color: #000;
 }
 
 .multidayTours {

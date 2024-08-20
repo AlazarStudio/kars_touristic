@@ -14,7 +14,7 @@ function Modal({ isActive, onClose, children }) {
     );
 }
 
-function AddAgent() {
+function AddAgent({ setActiveTab }) {
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
@@ -83,7 +83,6 @@ function AddAgent() {
         fetchAgents();
     }, []);
 
-    console.log(agents)
 
 
     return (
@@ -99,18 +98,28 @@ function AddAgent() {
                         <div className={classes.gids_info__elem}><b>ФИО</b></div>
                         <div className={classes.gids_info__elem}><b>Почта</b></div>
                         <div className={classes.gids_info__elem}><b>Телефон</b></div>
-                        <div className={classes.gids_info__elem}><b>Принято наличными</b></div>
+                        <div className={classes.gids_info__elem}><b>Логин / Пароль</b></div>
+                        <div className={classes.gids_info__elem}><b>Задолженность</b></div>
                     </div>
                 </div>
                 {agents.length > 0 ?
                     agents.map((item, index) => (
-                        <div className={classes.gids_info} key={index}>
-                            <div className={classes.gids_info_data}>
+                        <div className={classes.gids_info} key={index} onClick={() => setActiveTab('brons')}>
+                            <Link
+                                to="/admin/brons"
+                                state={{
+                                    name: item.name,
+                                    paymentType: 'cash',
+                                    paymentState: 'false'
+                                }}
+                                className={classes.gids_info_data}
+                            >
                                 <div className={classes.gids_info__elem}>{item.name}</div>
                                 <div className={classes.gids_info__elem}>{item.email}</div>
                                 <div className={classes.gids_info__elem}>{item.phone}</div>
+                                <div className={classes.gids_info__elem}>{item.username}</div>
                                 <div className={classes.gids_info__elem}>{item.debt.toLocaleString('ru-RU')} ₽</div>
-                            </div>
+                            </Link>
                         </div>
                     ))
                     :

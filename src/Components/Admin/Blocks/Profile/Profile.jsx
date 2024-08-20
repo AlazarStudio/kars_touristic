@@ -58,7 +58,8 @@ function Profile({ children, ...props }) {
 
             if (response.ok) {
                 const agentsData = await response.json();
-                setAgents(agentsData.agent);
+                console.log(agentsData)
+                setAgents(agentsData.agent.reverse());
             }
         } catch (error) {
             console.log(error);
@@ -149,7 +150,7 @@ function Profile({ children, ...props }) {
                                 <div className={classes.contacts}>
                                     <div className={classes.titleBlock}>
                                         <H2 text_transform={'uppercase'}>Брони</H2>
-                                        <div className={classes.titleBlockPrice}>Принято наличными: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>
+                                        <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>
                                     </div>
 
                                     <ul className={classes.listBron}>
@@ -158,13 +159,19 @@ function Profile({ children, ...props }) {
                                             <div className={classes.listBronItem}><b>Пассажиры</b></div>
                                             <div className={classes.listBronItem}><b>Полная цена</b></div>
                                             <div className={classes.listBronItem}><b>Способ оплаты</b></div>
+                                            <div className={classes.listBronItem}><b>Состояние</b></div>
                                         </li>
                                         {filteredAgents.map((agent) => (
                                             <li key={agent.id}>
                                                 <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
                                                 <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.fullName).join(', ')}</div>
                                                 <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>
-                                                <div className={classes.listBronItem}>Оплата {agent.paymentType == 'cash' ? 'наличными' : 'картой'}</div>
+                                                <div className={classes.listBronItem}>Оплата {agent.paymentType == 'cash' ? 'наличными' : 'картой'}</div><div className={classes.listBronItem}>{
+                                                    (agent.paymentType === 'cash' && agent.confirm == false) ?
+                                                        'Не подтверждено' :
+                                                        'Подтверждено'
+                                                }
+                                                </div>
                                             </li>
                                         ))}
                                     </ul>

@@ -12,7 +12,7 @@ function Cart_Page({ children, ...props }) {
     const [onedayTours, setOnedayTours] = useState([]);
     const [selectedTours, setSelectedTours] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [passengerCount, setPassengerCount] = useState(0);
+    const [passengerCount, setPassengerCount] = useState(1);
     const [passengerInfo, setPassengerInfo] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState("card");
     const [isAgreed, setIsAgreed] = useState(false);
@@ -74,6 +74,9 @@ function Cart_Page({ children, ...props }) {
                 const updatedUser = await response.json();
                 setUser(updatedUser);
                 setCartLength(user && user.cart.length - 1)
+                setSelectedTours(prevSelectedTours =>
+                    prevSelectedTours.filter(tour => tour._id !== tourId)
+                );
                 // alert('Тур удален из корзины');
             } else {
                 throw new Error('Failed to delete item from cart.');
@@ -85,8 +88,8 @@ function Cart_Page({ children, ...props }) {
 
     const handleSelectTour = (tour) => {
         setSelectedTours(prevSelectedTours => {
-            if (prevSelectedTours.includes(tour)) {
-                return prevSelectedTours.filter(item => item._id !== tour._id);
+            if (prevSelectedTours.some(selectedTour => selectedTour._id === tour._id)) {
+                return prevSelectedTours.filter(selectedTour => selectedTour._id !== tour._id);
             } else {
                 return [...prevSelectedTours, tour];
             }
@@ -103,23 +106,46 @@ function Cart_Page({ children, ...props }) {
 
     const handlePassengerCountChange = (e) => {
         const count = parseInt(e.target.value);
-        setPassengerCount(count);
 
-        const newPassengerInfo = Array.from({ length: count }, (_, i) => ({
-            fullName: "",
-            email: "",
-            phone: "",
-        }));
-        setPassengerInfo(newPassengerInfo);
+        setPassengerInfo(prevPassengerInfo => {
+            const newPassengerInfo = [...prevPassengerInfo];
+
+            // Если увеличиваем количество пассажиров, добавляем новые объекты
+            if (count > prevPassengerInfo.length) {
+                for (let i = prevPassengerInfo.length; i < count; i++) {
+                    newPassengerInfo.push({
+                        fullName: "",
+                        email: "",
+                        phone: "",
+                    });
+                }
+            }
+            // Если уменьшаем количество пассажиров, удаляем лишние объекты
+            else if (count < prevPassengerInfo.length) {
+                newPassengerInfo.splice(count);
+            }
+
+            return newPassengerInfo;
+        });
+
+        setPassengerCount(count);
     };
 
     const handlePassengerInfoChange = (index, field, value) => {
-        const updatedPassengerInfo = [...passengerInfo];
-        updatedPassengerInfo[index][field] = value;
-        setPassengerInfo(updatedPassengerInfo);
+        setPassengerInfo(prevPassengerInfo => {
+            const updatedPassengerInfo = [...prevPassengerInfo];
+
+            // Убедитесь, что объект на нужном индексе существует
+            if (!updatedPassengerInfo[index]) {
+                updatedPassengerInfo[index] = { fullName: "", email: "", phone: "" };
+            }
+
+            updatedPassengerInfo[index][field] = value;
+            return updatedPassengerInfo;
+        });
     };
 
-    async function updateState (state) {
+    async function updateState(state) {
         await fetch(`${server}/api/updateOneAgent`, {
             method: 'PUT',
             headers: {
@@ -136,7 +162,7 @@ function Cart_Page({ children, ...props }) {
         const totalSum = totalCost * passengerCount;
         let debtUser = user.debt + totalSum;
 
-        let confirmData = paymentMethod == 'cash' ? false : true;
+        let confirmData = paymentMethod === 'cash' ? false : true;
 
         let formData = {
             price: totalSum,
@@ -144,10 +170,9 @@ function Cart_Page({ children, ...props }) {
             paymentType: paymentMethod,
             tours: selectedTours,
             passengers: passengerInfo,
-            paymanetState: paymentMethod == 'cash' ? 'done' : 'processing',
+            paymanetState: paymentMethod === 'cash' ? 'done' : 'processing',
             confirm: confirmData
         }
-
 
         try {
             const response = await fetch(`${server}/api/addAgent`, {
@@ -159,40 +184,36 @@ function Cart_Page({ children, ...props }) {
                 body: JSON.stringify(formData)
             });
 
-            if (paymentMethod == 'cash') {
-                const responseUpdate = await fetch(`${server}/api/userUpdate`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        debt: debtUser
-                    })
-                });
-            }
-
             if (response.ok) {
-                const data = await response.json();
+                // Удаление туров после успешного бронирования
+                await Promise.all(selectedTours.map(async (tour) => {
+                    await handleDeleteItem(tour._id);
+                }));
+
+                if (paymentMethod === 'cash') {
+                    await fetch(`${server}/api/userUpdate`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ debt: debtUser })
+                    });
+                }
+
                 setIsModalOpen(false);
-                selectedTours.map((tour) => {
-                    handleDeleteItem(tour._id)
-                })
-                setPassengerCount(0)
-                setSelectedTours([])
+                setPassengerCount(0);
+                setSelectedTours([]);
+                // location.reload();
+                alert('Заказ успешно оформлен')
             } else {
-                throw new Error('Failed to delete item from cart.');
+                throw new Error('Failed to complete booking.');
             }
-
-            location.reload()
         } catch (error) {
-            console.error('Error deleting item from cart:', error);
+            console.error('Error during booking:', error);
         }
-
-        // updateState('done') - изменение состояния после успешной оплаты
-        
-        // Далее можно отправить данные на сервер для завершения бронирования
     };
+
 
     let cartMass = user ? user.cart : [];
 
@@ -218,7 +239,7 @@ function Cart_Page({ children, ...props }) {
 
     return (
         <>
-            <Header_black cartCount={cartLength}/>
+            <Header_black cartCount={cartLength} />
 
             <CenterBlock>
                 <WidthBlock>
@@ -228,12 +249,13 @@ function Cart_Page({ children, ...props }) {
                                 <div className={classes.cartPage_left__title}>Корзина</div>
                                 <div className={classes.cartPage_left__data}>
                                     {data && data.length > 0 ?
-                                        data.map((item, index) => (
-                                            <div className={classes.cartPage_left__data___elem} key={index}>
+                                        data.map((item) => (
+                                            <div className={classes.cartPage_left__data___elem} key={item._id}>
                                                 <input
                                                     type="checkbox"
                                                     className={classes.cartPage_left__data___elem____objectChoose}
                                                     onChange={() => handleSelectTour(item)}
+                                                    checked={selectedTours.some(tour => tour._id === item._id)}  // проверка, выбран ли тур
                                                 />
                                                 <div className={classes.cartPage_left__data___elem____objectData}>
                                                     <div className={classes.objectData_img}>

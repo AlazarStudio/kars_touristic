@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import classes from './Brons.module.css';
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import server from '../../../../../serverConfig';
 
 function Brons({ children, ...props }) {
+    const location = useLocation();
+    const receivedData = location.state;
+
     const { add } = useParams();
     const navigate = useNavigate();
 
@@ -18,15 +21,16 @@ function Brons({ children, ...props }) {
     const [touragents, setTouragents] = useState([]);
     const [filteredAgents, setFilteredAgents] = useState([]);
     const [users, setUsers] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [paymentType, setPaymentType] = useState('');
+    const [searchQuery, setSearchQuery] = useState(receivedData?.name || '');
+    const [paymentType, setPaymentType] = useState(receivedData?.paymentType || '');
+    const [paymentState, setPaymentState] = useState(receivedData?.paymentState || '');    
 
     useEffect(() => {
         async function fetchTouragents() {
             try {
                 const response = await fetch(`${server}/api/getAgents`);
                 const data = await response.json();
-                setTouragents(data.agent);
+                setTouragents(data.agent.reverse());
                 setFilteredAgents(data.agent); 
             } catch (error) {
                 console.error("Error fetching mission info:", error);
@@ -66,26 +70,31 @@ function Brons({ children, ...props }) {
             const passangerTitles = agent.passengers.map((passenger) => passenger.fullName.toLowerCase()).join(', ');
             const agentName = getUserNameById(agent.agent).toLowerCase();
             const price = Number(agent.price);
-
             const textMatch = searchQuery.toLowerCase();
+    
             const matchesTourTitleOrAgent =
                 tourTitles.includes(textMatch) ||
                 agentName.includes(textMatch) ||
                 passangerTitles.includes(textMatch) ||
                 String(price).includes(textMatch);
-
+    
+            // Приведение `paymentState` к правильному типу и фильтрация по состоянию подтверждения
+            const matchesPaymentState = paymentState === '' || agent.confirm === (paymentState === 'true');
+            const matchesPaymentType = paymentType === '' || agent.paymentType === paymentType;
+    
             return (
                 matchesTourTitleOrAgent &&
-                (!paymentType || agent.paymentType === paymentType)
+                matchesPaymentType &&
+                matchesPaymentState
             );
         });
-
+    
         setFilteredAgents(filtered);
     };
 
     useEffect(() => {
         applyFilters();
-    }, [searchQuery, paymentType]);
+    }, [searchQuery, paymentType, paymentState, touragents, users]);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -93,6 +102,10 @@ function Brons({ children, ...props }) {
 
     const handlePaymentTypeChange = (e) => {
         setPaymentType(e.target.value);
+    };
+
+    const handlePaymentStateChange = (e) => {
+        setPaymentState(e.target.value);
     };
 
     async function updateConfirm(id, price, agentID) {
@@ -128,6 +141,11 @@ function Brons({ children, ...props }) {
                 if (debtResponse.ok) {
                     // Обновление состояния filteredAgents после успешного ответа сервера
                     setFilteredAgents(prevAgents =>
+                        prevAgents.map(agent =>
+                            agent._id === id ? { ...agent, confirm: true } : agent
+                        )
+                    );
+                    setTouragents(prevAgents =>
                         prevAgents.map(agent =>
                             agent._id === id ? { ...agent, confirm: true } : agent
                         )
@@ -176,6 +194,16 @@ function Brons({ children, ...props }) {
                             <option value="cash">Наличные</option>
                             <option value="card">Карта</option>
                         </select>
+                        <select
+                            name="paymentState"
+                            value={paymentState}
+                            onChange={handlePaymentStateChange}
+                            className={classes.filterSelect}
+                        >
+                            <option value="">Все состояния</option>
+                            <option value={'true'}>Подтверждено</option>
+                            <option value={'false'}>Не подтверждено</option>
+                        </select>
                     </div>
 
                     <div className={classes.gids}>
@@ -186,7 +214,7 @@ function Brons({ children, ...props }) {
                                 <div className={classes.listBronItem}><b>Представитель</b></div>
                                 <div className={classes.listBronItem}><b>Полная цена</b></div>
                                 <div className={classes.listBronItem}><b>Способ оплаты</b></div>
-                                <div className={classes.listBronItem}><b>Подтвердить получение</b></div>
+                                <div className={classes.listBronItem}><b>Состояние</b></div>
                             </li>
                             {filteredAgents.length > 0 ?
                                 filteredAgents.map((agent, index) => (
