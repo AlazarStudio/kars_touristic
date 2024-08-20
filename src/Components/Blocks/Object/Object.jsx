@@ -75,9 +75,11 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        getUserInfo(token)
-            .then(userData => setUser(userData))
-            .catch(error => console.error('Error initializing user:', error));
+        if (token) {
+            getUserInfo(token)
+                .then(userData => setUser(userData))
+                .catch(error => console.error('Error initializing user:', error));
+        }
     }, [token]);
 
     const navigate = useNavigate();
@@ -132,7 +134,6 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
     }
 
     return (
-        user &&
         <div className={classes.objects_item} style={{ width: width }}>
             <div className={classes.objects_item__like} onClick={handleLikeClick}>
                 {user && user.likes && user.likes.includes(regionData._id)

@@ -5,10 +5,10 @@ import server from '../../serverConfig';
 
 
 function RegionInfo_Page({ children, ...props }) {
-    
+
     const [user, setUser] = useState(null);
     const [cartCount, setCartCount] = useState(0);
-    
+
     const token = localStorage.getItem('token');
 
     const getUserInfo = async (token) => {
@@ -34,20 +34,22 @@ function RegionInfo_Page({ children, ...props }) {
     };
 
     useEffect(() => {
-        getUserInfo(token)
-            .then(userData => {
-                setUser(userData);
-                setCartCount(userData.cart.length)
-            })
-            .catch(error => console.error('Error initializing user:', error));
+        if (token) {
+            getUserInfo(token)
+                .then(userData => {
+                    setUser(userData);
+                    setCartCount(userData.cart.length)
+                })
+                .catch(error => console.error('Error initializing user:', error));
+        }
     }, [token])
 
 
 
     return (
         <>
-            <Header_white cartCount={cartCount}/>
-            <RegionInfo setCartCount={setCartCount}/>
+            <Header_white cartCount={cartCount} />
+            <RegionInfo setCartCount={setCartCount} />
         </>
     );
 }

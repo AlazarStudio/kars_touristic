@@ -17,7 +17,7 @@ function Header_black({ children, cartCount, ...props }) {
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
     };
-    
+
     const [user, setUser] = useState(null);
 
     const token = localStorage.getItem('token');
@@ -80,7 +80,7 @@ function Header_black({ children, cartCount, ...props }) {
                             <li>
                                 <Link to="/cart">
                                     <img src={cart} alt="" />
-                                    <div className={classes.cartCount}>{cartCount == 0 || cartCount ? cartCount : user && user.cart.length}</div>
+                                    {user && <div className={classes.cartCount}>{cartCount == 0 || cartCount ? cartCount : user && user.cart.length}</div>}
                                 </Link>
                             </li>
                             <li className={classes.mobileHeader} onClick={toggleMenu}><img src={burger} alt="Menu" /></li>

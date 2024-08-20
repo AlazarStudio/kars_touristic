@@ -32,7 +32,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
     }, []);
 
     const foundData = filteredObjects ? filteredObjects.filter(filteredObject => filteredObject.region === regionName) : [];
-    
+
     const [user, setUser] = useState(null);
 
     const token = localStorage.getItem('token');
@@ -57,19 +57,23 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
             }
         }
     };
-    
+
     useEffect(() => {
-        getUserInfo(token)
-            .then(userData => setUser(userData))
-            .catch(error => console.error('Error initializing user:', error));
+        if (token) {
+            getUserInfo(token)
+                .then(userData => setUser(userData))
+                .catch(error => console.error('Error initializing user:', error));
+        }
     }, [token]);
+
+    console.log(foundData);
 
     return (
         <>
             {foundData ?
                 <div className={classes.fullBlock}>
                     <CenterBlock>
-                        <H2 text_transform="uppercase">{props.title}</H2> <span style={{marginTop: '10px'}}>(Найдено: {foundData.length})</span>
+                        <H2 text_transform="uppercase">{props.title}</H2> <span style={{ marginTop: '10px' }}>(Найдено: {foundData.length})</span>
                     </CenterBlock>
 
                     {requestType == 'getMultidayTours' && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
@@ -79,11 +83,11 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     {requestType == 'getPlaces' && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
                     {requestType == 'getEvents' && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
 
-                    
+
                     <div className={classes.objects}>
                         {
                             foundData.map((item, index) => (
-                                <Object key={index} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')}/>
+                                <Object key={index} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
                             ))
                         }
                     </div>
