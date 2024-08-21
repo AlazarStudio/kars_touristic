@@ -29,7 +29,7 @@ const PaymentButton = ({ order_name, order_cost, onPaymentSuccess, ...props }) =
                     const widget = new window.LpWidget({
                         name: order_name,
                         cost: order_cost,
-                        key: "tX7+E/OF6hgb4CJzEjWGXMIDvvIviUweyePg8uOH2xw=",
+                        key: "cj16pD7iiLSU54uC2GEkFWlU5tgoMT2FYv9tUT2mCXw=",
                         order_id: uniqeId,
                         prepayment_page: "0",
                         on_success: handleSuccess,
