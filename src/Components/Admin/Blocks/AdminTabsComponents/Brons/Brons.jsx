@@ -23,7 +23,10 @@ function Brons({ children, ...props }) {
     const [users, setUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState(receivedData?.name || '');
     const [paymentType, setPaymentType] = useState(receivedData?.paymentType || '');
-    const [paymentState, setPaymentState] = useState(receivedData?.paymentState || '');    
+    const [paymentState, setPaymentState] = useState(receivedData?.paymentState || '');
+
+    const [bronTypeRole, setBronTypeRole] = useState(receivedData?.bronTypeRole || 'agent');
+    const [dateQuery, setDateQuery] = useState('');
 
     useEffect(() => {
         async function fetchTouragents() {
@@ -31,7 +34,7 @@ function Brons({ children, ...props }) {
                 const response = await fetch(`${server}/api/getAgents`);
                 const data = await response.json();
                 setTouragents(data.agent.reverse());
-                setFilteredAgents(data.agent); 
+                setFilteredAgents(data.agent);
             } catch (error) {
                 console.error("Error fetching mission info:", error);
             }
@@ -78,23 +81,31 @@ function Brons({ children, ...props }) {
                 passangerTitles.includes(textMatch) ||
                 String(price).includes(textMatch);
     
-            // Приведение `paymentState` к правильному типу и фильтрация по состоянию подтверждения
             const matchesPaymentState = paymentState === '' || agent.confirm === (paymentState === 'true');
             const matchesPaymentType = paymentType === '' || agent.paymentType === paymentType;
+            const matchesBronTypeRole = bronTypeRole === '' || agent.bronTypeRole === bronTypeRole;
+    
+            // Приведение дат к одному формату для сравнения
+            const agentBookingDate = new Date(agent.bookingDate).toISOString().split('T')[0];
+            const matchesDateQuery = dateQuery === '' || agentBookingDate === dateQuery;
     
             return (
                 matchesTourTitleOrAgent &&
                 matchesPaymentType &&
-                matchesPaymentState
+                matchesPaymentState &&
+                matchesBronTypeRole &&
+                matchesDateQuery
             );
         });
     
         setFilteredAgents(filtered);
     };
+    
 
     useEffect(() => {
         applyFilters();
-    }, [searchQuery, paymentType, paymentState, touragents, users]);
+    }, [searchQuery, paymentType, paymentState, bronTypeRole, dateQuery, touragents, users]);
+    
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -106,6 +117,14 @@ function Brons({ children, ...props }) {
 
     const handlePaymentStateChange = (e) => {
         setPaymentState(e.target.value);
+    };
+
+    const handleBronTypeRoleChange = (e) => {
+        setBronTypeRole(e.target.value);
+    };
+
+    const handleDateQueryChange = (e) => {
+        setDateQuery(e.target.value);
     };
 
     async function updateConfirm(id, price, agentID) {
@@ -161,6 +180,15 @@ function Brons({ children, ...props }) {
         }
     }
 
+    function formatDate(isoDate) {
+        const date = new Date(isoDate);
+
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+        const year = date.getFullYear();
+
+        return `${day}.${month}.${year}`;
+    }
 
     return (
         <>
@@ -177,38 +205,60 @@ function Brons({ children, ...props }) {
                     </div>
 
                     <div className={classes.filters}>
-                        <input
-                            type="text"
-                            placeholder="Поиск по названию тура, представителю или пассажиру"
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                            className={classes.filterInput}
-                        />
-                        <select
-                            name="paymentType"
-                            value={paymentType}
-                            onChange={handlePaymentTypeChange}
-                            className={classes.filterSelect}
-                        >
-                            <option value="">Все способы оплаты</option>
-                            <option value="cash">Наличные</option>
-                            <option value="card">Карта</option>
-                        </select>
-                        <select
-                            name="paymentState"
-                            value={paymentState}
-                            onChange={handlePaymentStateChange}
-                            className={classes.filterSelect}
-                        >
-                            <option value="">Все состояния</option>
-                            <option value={'true'}>Подтверждено</option>
-                            <option value={'false'}>Не подтверждено</option>
-                        </select>
+                        <div className={classes.searchBlock}>
+                            <input
+                                type="text"
+                                placeholder="Поиск по названию тура, представителю или пассажиру"
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                                className={classes.filterInput}
+                            />
+                        </div>
+
+                        <div className={classes.filterBlock}>
+                            <select
+                                name="bronTypeRole"
+                                value={bronTypeRole}
+                                onChange={handleBronTypeRoleChange}
+                                className={classes.filterSelect}
+                            >
+                                <option value="">Все бронирования</option>
+                                <option value="agent">Бронирования представителя</option>
+                                <option value="user">Бронирования пользователя</option>
+                            </select>
+                            <input
+                                type="date"
+                                value={dateQuery}
+                                onChange={handleDateQueryChange}
+                                className={classes.filterInput}
+                            />
+                            <select
+                                name="paymentType"
+                                value={paymentType}
+                                onChange={handlePaymentTypeChange}
+                                className={classes.filterSelect}
+                            >
+                                <option value="">Все способы оплаты</option>
+                                <option value="cash">Наличные</option>
+                                <option value="card">Карта</option>
+                            </select>
+                            <select
+                                name="paymentState"
+                                value={paymentState}
+                                onChange={handlePaymentStateChange}
+                                className={classes.filterSelect}
+                            >
+                                <option value="">Все состояния</option>
+                                <option value={'true'}>Подтверждено</option>
+                                <option value={'false'}>Не подтверждено</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className={classes.gids}>
                         <ul className={classes.listBron}>
                             <li>
+                                <div className={classes.listBronItem}><b>Дата</b></div>
                                 <div className={classes.listBronItem}><b>Название тура</b></div>
                                 <div className={classes.listBronItem}><b>Пассажиры</b></div>
                                 <div className={classes.listBronItem}><b>Представитель</b></div>
@@ -219,6 +269,7 @@ function Brons({ children, ...props }) {
                             {filteredAgents.length > 0 ?
                                 filteredAgents.map((agent, index) => (
                                     <li key={index}>
+                                        <div className={classes.listBronItem}>{formatDate(agent.bookingDate)}</div>
                                         <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
                                         <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.fullName).join(', ')}</div>
                                         <div className={classes.listBronItem}>{getUserNameById(agent.agent)}</div>

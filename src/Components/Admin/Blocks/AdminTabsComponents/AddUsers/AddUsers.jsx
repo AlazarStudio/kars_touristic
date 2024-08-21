@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import classes from './AddAgent.module.css';
+import classes from './AddUsers.module.css';
 import server from '../../../../../serverConfig';
 import { useNavigate, Link } from "react-router-dom";
 
@@ -14,14 +14,14 @@ function Modal({ isActive, onClose, children }) {
     );
 }
 
-function AddAgent({ setActiveTab }) {
+function AddUsers({ setActiveTab }) {
     const [formData, setFormData] = useState({
         name: "",
         phone: "",
         email: "",
         username: "",
         password: "",
-        role: "agent",
+        role: "user",
         adminPanelAccess: true
     });
     const [loading, setLoading] = useState(false);
@@ -56,7 +56,7 @@ function AddAgent({ setActiveTab }) {
                     email: "",
                     username: "",
                     password: "",
-                    role: "agent",
+                    role: "user",
                     adminPanelAccess: true
                 });
                 setIsModalActive(false);
@@ -72,7 +72,7 @@ function AddAgent({ setActiveTab }) {
         const response = await fetch(`${server}/api/getUsers`);
         if (response.ok) {
             const data = await response.json();
-            const filteredAgents = data.users.filter(user => user.role === 'agent');
+            const filteredAgents = data.users.filter(user => user.role === 'user');
             setAgents(filteredAgents);
         } else {
             console.error('Failed to fetch agents');
@@ -88,8 +88,8 @@ function AddAgent({ setActiveTab }) {
     return (
         <div className={classes.multidayTours}>
             <div className={classes.multidayTours_top}>
-                <div className={classes.multidayTours_top__title}>Представители</div>
-                <button onClick={() => setIsModalActive(true)} className={classes.multidayTours_top__add}>Зарегистрировать представителя</button>
+                <div className={classes.multidayTours_top__title}>Пользователи</div>
+                <button onClick={() => setIsModalActive(true)} className={classes.multidayTours_top__add}>Зарегистрировать пользователя</button>
             </div>
 
             <div className={classes.gids}>
@@ -98,8 +98,6 @@ function AddAgent({ setActiveTab }) {
                         <div className={classes.gids_info__elem}><b>ФИО</b></div>
                         <div className={classes.gids_info__elem}><b>Почта</b></div>
                         <div className={classes.gids_info__elem}><b>Телефон</b></div>
-                        <div className={classes.gids_info__elem}><b>Логин / Пароль</b></div>
-                        <div className={classes.gids_info__elem}><b>Задолженность</b></div>
                     </div>
                 </div>
                 {agents.length > 0 ?
@@ -109,17 +107,15 @@ function AddAgent({ setActiveTab }) {
                                 to="/admin/brons"
                                 state={{
                                     name: item.name,
-                                    paymentType: 'cash',
-                                    paymentState: 'false',
-                                    bronTypeRole: 'agent'
+                                    paymentType: '',
+                                    paymentState: '',
+                                    bronTypeRole: 'user'
                                 }}
                                 className={classes.gids_info_data}
                             >
                                 <div className={classes.gids_info__elem}>{item.name}</div>
                                 <div className={classes.gids_info__elem}>{item.email}</div>
                                 <div className={classes.gids_info__elem}>{item.phone}</div>
-                                <div className={classes.gids_info__elem}>{item.username}</div>
-                                <div className={classes.gids_info__elem}>{item.debt.toLocaleString('ru-RU')} ₽</div>
                             </Link>
                         </div>
                     ))
@@ -130,7 +126,7 @@ function AddAgent({ setActiveTab }) {
 
             <Modal isActive={isModalActive} onClose={() => setIsModalActive(false)}>
                 <div className={classes.addData}>
-                    <div className={classes.addData_title}>Регистрация представителя</div>
+                    <div className={classes.addData_title}>Регистрация пользователя</div>
                     <form onSubmit={handleSubmit} className={classes.registerForm}>
                         <input
                             type="text"
@@ -181,4 +177,4 @@ function AddAgent({ setActiveTab }) {
     );
 }
 
-export default AddAgent;
+export default AddUsers;

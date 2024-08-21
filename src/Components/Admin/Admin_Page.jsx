@@ -21,6 +21,7 @@ import Gids from "./Blocks/AdminTabsComponents/Gids/Gids";
 import ModeredAuthorTours from "./Blocks/AdminTabsComponents/ModeredAuthorTours/ModeredAuthorTours";
 import AddAgent from "./Blocks/AdminTabsComponents/AddAgent/AddAgent";
 import Brons from "./Blocks/AdminTabsComponents/Brons/Brons";
+import AddUsers from "./Blocks/AdminTabsComponents/AddUsers/AddUsers";
 
 const ItemType = {
     REGION: 'region',
@@ -341,6 +342,12 @@ function Admin_Page({ children, ...props }) {
                                         onClick={() => { setActiveTab('addAgent'); setOpenSection('addAgent'); }}>
                                         Представители
                                     </Link>
+
+                                    <Link to={`/admin/addUsers`}
+                                        className={`${classes.admin_data__nav___item} ${isActive('addUsers')} ${classes.hoverBlock}`}
+                                        onClick={() => { setActiveTab('addUsers'); setOpenSection('addUsers'); }}>
+                                        Пользователи
+                                    </Link>
                                 </> : null}
 
                         </div>
@@ -375,6 +382,7 @@ function Admin_Page({ children, ...props }) {
 
                             {/* Добавить Представителей */}
                             {activeTab === 'addAgent' && <AddAgent setActiveTab={setActiveTab}/>}
+                            {activeTab === 'addUsers' && <AddUsers setActiveTab={setActiveTab}/>}
                         </div>
                     </div>
                 </div>

@@ -257,7 +257,7 @@ function Cart_Page({ children, ...props }) {
         let formData = {
             price: totalSum,
             agent: user._id,
-            paymentType: 'cart',
+            paymentType: 'card',
             tours: selectedTours,
             passengers: [{fullName: user.name, phone: user.phone}],
             paymanetState: 'processing',
@@ -297,7 +297,7 @@ function Cart_Page({ children, ...props }) {
 
     const selectedTourTitles = selectedTours.map(tour => tour.tourTitle).join(', ').substring(0, 128).trim();
 
-    const uniqueOrderId = uuidv4();
+    // const uniqueOrderId = uuidv4();
 
     return (
         <>
@@ -366,7 +366,7 @@ function Cart_Page({ children, ...props }) {
                                             style={{}}
                                             order_name={selectedTourTitles}
                                             order_cost={totalCost}
-                                            order_id={uniqueOrderId}
+                                            // order_id={uniqueOrderId}
                                             onPaymentSuccess={handleUserPayment}
                                         ></PaymentButton>
                                     :
@@ -504,7 +504,7 @@ function Cart_Page({ children, ...props }) {
                                         style={{}}
                                         order_name={selectedTourTitles}
                                         order_cost={totalCost * passengerCount}
-                                        order_id={uniqueOrderId}
+                                        // order_id={uniqueOrderId}
                                         onPaymentSuccess={handlePaymentSuccess}
                                     ></PaymentButton>
                                     :

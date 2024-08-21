@@ -167,14 +167,18 @@
 }
 
 .listBronItem:nth-child(1){
-    width: 30%;
+    width: 10%;
 }
 
 .listBronItem:nth-child(2){
+    width: 30%;
+}
+
+.listBronItem:nth-child(3){
     width: 20%;
 }
 
-.listBronItem:nth-child(6){
+.listBronItem:nth-child(7){
     width: 20%;
 }
 
@@ -190,26 +194,48 @@
 
 .filters{
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     gap: 20px;
 }
 
-.filters select {
-    width: 20%;
+.searchBlock {
+    width: 100%;
+}
+
+.searchBlock input {
+    width: 100%;
     border: 1px solid #8C8C8C;
     border-radius: 10px;
     padding: 12px 15px;
-    cursor: pointer;
     font-family: Montserrat;
     font-size: 16px;
     outline: none;
 }
 
-.filters input {
-    width: 60%;
+.filterBlock{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.filterBlock input {
+    width: 25%;
     border: 1px solid #8C8C8C;
     border-radius: 10px;
     padding: 12px 15px;
+    font-family: Montserrat;
+    font-size: 16px;
+    outline: none;
+}
+
+.filterBlock select {
+    width: 25%;
+    border: 1px solid #8C8C8C;
+    border-radius: 10px;
+    padding: 12px 15px;
+    cursor: pointer;
     font-family: Montserrat;
     font-size: 16px;
     outline: none;

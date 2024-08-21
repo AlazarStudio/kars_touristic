@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-const PaymentButton = ({ order_name, order_cost, order_id, onPaymentSuccess, ...props }) => {
+const PaymentButton = ({ order_name, order_cost, onPaymentSuccess, ...props }) => {
     const [paymentProcessed, setPaymentProcessed] = useState(false);
     const isProcessing = useRef(false);
 
@@ -22,23 +23,24 @@ const PaymentButton = ({ order_name, order_cost, order_id, onPaymentSuccess, ...
         script.src = 'https://partner.life-pay.ru/gui/lifepay_widget/js/lp-widget.js?1234567';
         script.type = 'text/javascript';
         script.onload = () => {
-            const widget = new window.LpWidget({
-                name: order_name,
-                cost: order_cost,
-                key: "tX7+E/OF6hgb4CJzEjWGXMIDvvIviUweyePg8uOH2xw=",
-                order_id: order_id,
-                prepayment_page: "0",
-                on_success: handleSuccess,
-                on_fail: function () {
-                    // console.log("Payment Failed");
-                },
-                on_close: function () {
-                    // console.log("Widget Closed");
-                },
-            });
-
             document.getElementById('payment-button').onclick = function () {
                 if (!isProcessing.current) {
+                    const uniqeId = uuidv4();  // Генерация нового order_id перед каждым вызовом виджета
+                    const widget = new window.LpWidget({
+                        name: order_name,
+                        cost: order_cost,
+                        key: "tX7+E/OF6hgb4CJzEjWGXMIDvvIviUweyePg8uOH2xw=",
+                        order_id: uniqeId,
+                        prepayment_page: "0",
+                        on_success: handleSuccess,
+                        on_fail: function () {
+                            console.log("Payment Failed", uniqeId);
+                        },
+                        on_close: function () {
+                            console.log("Widget Closed", uniqeId);
+                            isProcessing.current = false;  // Разблокировка нажатия после закрытия виджета
+                        },
+                    });
                     widget.render();
                 }
                 return false;
@@ -49,7 +51,7 @@ const PaymentButton = ({ order_name, order_cost, order_id, onPaymentSuccess, ...
         return () => {
             document.body.removeChild(script);
         };
-    }, [order_name, order_cost, order_id, handleSuccess]);
+    }, [order_name, order_cost, handleSuccess]);
 
     return (
         <div>
