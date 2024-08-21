@@ -88,6 +88,16 @@ function Profile({ children, ...props }) {
     }
 
     const filteredAgents = agents.filter(agent => agent.agent === user._id);
+
+    function formatDate(isoDate) {
+        const date = new Date(isoDate);
+    
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+        const year = date.getFullYear();
+    
+        return `${day}.${month}.${year}`;
+    }
     return (
         <>
             <Header_black />
@@ -150,11 +160,12 @@ function Profile({ children, ...props }) {
                                 <div className={classes.contacts}>
                                     <div className={classes.titleBlock}>
                                         <H2 text_transform={'uppercase'}>Брони</H2>
-                                        <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>
+                                        {user.role == 'agent' && <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>}
                                     </div>
 
                                     <ul className={classes.listBron}>
                                         <li>
+                                            <div className={classes.listBronItem}><b>Дата</b></div>
                                             <div className={classes.listBronItem}><b>Название тура</b></div>
                                             <div className={classes.listBronItem}><b>Участники</b></div>
                                             <div className={classes.listBronItem}><b>Полная цена</b></div>
@@ -163,6 +174,7 @@ function Profile({ children, ...props }) {
                                         </li>
                                         {filteredAgents.map((agent) => (
                                             <li key={agent.id}>
+                                                <div className={classes.listBronItem}>{formatDate(agent.bookingDate)}</div>
                                                 <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
                                                 <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.fullName).join(', ')}</div>
                                                 <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>

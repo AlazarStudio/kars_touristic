@@ -178,8 +178,9 @@ function Cart_Page({ children, ...props }) {
             passengers: passengerInfo,
             paymanetState: paymentMethod === 'cash' ? 'done' : 'processing',
             confirm: confirmData,
-            bookingDate: passengerDate,
+            bookingDate: new Date(),
             bookingTime: selectedTours[0].departureTime,
+            bronTypeRole: 'agent'
         }
 
         try {
@@ -213,7 +214,7 @@ function Cart_Page({ children, ...props }) {
                 setPassengerCount(0);
                 setSelectedTours([]);
                 // location.reload();
-                alert('Заказ успешно оформлен')
+                // alert('Заказ успешно оформлен')
             } else {
                 throw new Error('Failed to complete booking.');
             }
@@ -246,13 +247,52 @@ function Cart_Page({ children, ...props }) {
 
     const handlePaymentSuccess = async () => {
         await handleBooking();  // Обработка бронирования
-        await updateState('done');  // Обновление состояния
+        // await updateState('done');  // Обновление состояния
     };
 
+
     const handleUserPayment = async () => {
-        await Promise.all(selectedTours.map(async (tour) => {
-            await handleDeleteItem(tour._id);
-        }));
+        const totalSum = totalCost * passengerCount;
+
+        let formData = {
+            price: totalSum,
+            agent: user._id,
+            paymentType: 'cart',
+            tours: selectedTours,
+            passengers: [{fullName: user.name, phone: user.phone}],
+            paymanetState: 'processing',
+            confirm: true,
+            bookingDate: new Date(),
+            bookingTime: selectedTours[0].departureTime,
+            bronTypeRole: 'user'
+        }
+
+        try {
+            const response = await fetch(`${server}/api/addAgent`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                await Promise.all(selectedTours.map(async (tour) => {
+                    await handleDeleteItem(tour._id);
+                }));
+
+                setIsModalOpen(false);
+                setSelectedTours([]);
+                // location.reload();
+                // alert('Заказ успешно оформлен')
+
+            } else {
+                throw new Error('Failed to complete booking.');
+            }
+        } catch (error) {
+            console.error('Error during booking:', error);
+        }
     }
 
     const selectedTourTitles = selectedTours.map(tour => tour.tourTitle).join(', ').substring(0, 128).trim();
@@ -363,13 +403,13 @@ function Cart_Page({ children, ...props }) {
                             &times;
                         </div>
                         
-                        <h2>Выберите дату</h2>
+                        {/* <h2>Выберите дату</h2>
                         <input
                             type="date"
                             value={passengerDate}
                             onChange={handlePassengerDateChange}
                             className={classes.passangerCount}
-                        />
+                        /> */}
 
                         <h2>Введите количество людей</h2>
 
