@@ -11,6 +11,7 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, phot
 
     const [selectedTour, setSelectedTour] = useState({
         title: '',
+        type: '',
         description: '',
         moreInfo: '',
         stars: '',
@@ -145,20 +146,26 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, phot
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
-                <label>Название отеля </label>
-                <input name="title" type="text" placeholder="Название отеля" required value={selectedTour.title} />
+                <label>Тип </label>
+                <select name="type" required value={selectedTour.type} >
+                    <option value="hotel">Отель</option>
+                    <option value="apartments">Апартаменты</option>
+                </select>
 
-                <label>Город отеля</label>
-                <input name="city" type="text" placeholder="Город отеля" required  value={selectedTour.city} />
+                <label>Название </label>
+                <input name="title" type="text" placeholder="Название" required value={selectedTour.title} />
 
-                <label>Адрес отеля</label>
-                <input name="adress" type="text" placeholder="Адрес отеля" required  value={selectedTour.adress} />
+                <label>Город </label>
+                <input name="city" type="text" placeholder="Город " required  value={selectedTour.city} />
 
-                <label>Количество звезд у отеля</label>
-                <input name="stars" type="number" placeholder="Количество звезд у отеля" value={selectedTour.stars} />
+                <label>Адрес</label>
+                <input name="adress" type="text" placeholder="Адрес" required  value={selectedTour.adress} />
 
-                <label>Описание отеля</label>
-                <textarea name="description" type="text" placeholder="Описание отеля" value={selectedTour.description} ></textarea>
+                <label>Количество звезд</label>
+                <input name="stars" type="number" placeholder="Количество звезд у" value={selectedTour.stars} />
+
+                <label>Описание</label>
+                <textarea name="description" type="text" placeholder="Описание" value={selectedTour.description} ></textarea>
 
                 <label>Дополнительная информация</label>
                 <textarea name="moreInfo" type="text" placeholder="Дополнительная информация" value={selectedTour.moreInfo} ></textarea>

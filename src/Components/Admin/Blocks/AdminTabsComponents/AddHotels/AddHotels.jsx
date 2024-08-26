@@ -68,6 +68,12 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
 
                 <div><input name="region" type="hidden" placeholder="Регион" required value={region} readOnly /></div>
 
+                <label>Тип </label>
+                <select name="type" required >
+                    <option value="hotel">Отель</option>
+                    <option value="apartments">Апартаменты</option>
+                </select>
+
                 <label>Название отеля</label>
                 <input name="title" type="text" placeholder="Название отеля" required />
                 

@@ -19,6 +19,13 @@
     margin-bottom: 25px;
 }
 
+.addData_form select {
+    border: 1px solid #000000;
+    border-radius: 20px;
+    padding: 15px 25px;
+    margin-bottom: 25px;
+}
+
 .addData_form textarea {
     border: 1px solid #000000;
     border-radius: 20px;
