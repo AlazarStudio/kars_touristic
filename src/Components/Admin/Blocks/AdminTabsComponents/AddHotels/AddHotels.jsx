@@ -8,17 +8,23 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
     const [checklists, setChecklists] = useState(['']);
     const [days, setDays] = useState(['']);
     const [photos, setPhotos] = useState([]);
+    const [type, setType] = useState(''); // Добавлен стейт для типа
 
     const handleAddItem = () => setItems([...items, { title: '', description: '' }]);
     const handleAddChecklist = () => setChecklists([...checklists, '']);
     const handleAddDay = () => setDays([...days, '']);
     const handleFileChange = (event) => setPhotos([...photos, ...Array.from(event.target.files)]);
 
+    const handleTypeChange = (event) => {
+        setType(event.target.value); // Обновление стейта при изменении типа
+    };
+
     const resetAll = () => {
         setItems([{ title: '', description: '' }]);
         setChecklists(['']);
         setDays(['']);
         setPhotos([]);
+        setType(''); // Сброс типа при сбросе всех данных
     };
 
     const handleItemChange = (index, field, value) => {
@@ -61,33 +67,46 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
 
     return (
         <div className={classes.addData}>
-            <div className={classes.addData_title}>ДОБАВИТЬ Отель</div>
+            <div className={classes.addData_title}>ДОБАВИТЬ Отель / Апартамент</div>
 
             <Form actionUrl={`${server}/api/addHotels`} method="post" needNavigate={true} resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
                 <label className={classes.addData_step}>Шаг 1</label>
 
                 <div><input name="region" type="hidden" placeholder="Регион" required value={region} readOnly /></div>
-
-                <label>Тип </label>
-                <select name="type" required >
-                    <option value="hotel">Отель</option>
-                    <option value="apartments">Апартаменты</option>
-                </select>
-
-                <label>Название отеля</label>
-                <input name="title" type="text" placeholder="Название отеля" required />
                 
-                <label>Город отеля</label>
-                <input name="city" type="text" placeholder="Город отеля" required />
-                
-                <label>Адрес отеля</label>
-                <input name="adress" type="text" placeholder="Адрес отеля" required />
+                <div className={classes.selectedTypeData}>
+                    <label>Тип </label>
+                    <select name="type" required onChange={handleTypeChange}>
+                        <option value="">Выберите тип</option>
+                        <option value="hotel">Отель</option>
+                        <option value="apartments">Апартаменты</option>
+                    </select>
 
-                <label>Количество звезд у отеля</label>
-                <input name="stars" type="number" placeholder="Количество звезд у отеля" required />
+                    {type === "apartments" && (
+                        <>
+                            <label>Стоимость в сутки</label>
+                            <input name="price" type="text" placeholder="Стоимость" required />
 
-                <label>Описание отеля</label>
-                <textarea name="description" type="text" placeholder="Описание отеля" required ></textarea>
+                            <label>Количество мест</label>
+                            <input name="places" type="text" placeholder="Количество мест" required />
+                        </>
+                    )}
+                </div>
+
+                <label>Название</label>
+                <input name="title" type="text" placeholder="Название" required />
+
+                <label>Город</label>
+                <input name="city" type="text" placeholder="Город" required />
+
+                <label>Адрес</label>
+                <input name="adress" type="text" placeholder="Адрес" required />
+
+                <label>Количество звезд</label>
+                <input name="stars" type="number" placeholder="Количество звезд у" required />
+
+                <label>Описание</label>
+                <textarea name="description" type="text" placeholder="Описание" required ></textarea>
 
                 <label>Дополнительная информация</label>
                 <textarea name="moreInfo" type="text" placeholder="Дополнительная информация" required ></textarea>
@@ -97,7 +116,7 @@ function AddHotels({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
                 <input
                     type="file"
                     name="galery"
-                    className={classes.noBorder} 
+                    className={classes.noBorder}
                     multiple
                     onChange={handleFileChange}
                     required

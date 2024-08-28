@@ -12,6 +12,8 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, phot
     const [selectedTour, setSelectedTour] = useState({
         title: '',
         type: '',
+        price: '',
+        places: '',
         description: '',
         moreInfo: '',
         stars: '',
@@ -137,6 +139,8 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, phot
         }
     };
 
+
+
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Отель</div>
@@ -146,20 +150,20 @@ function EditHotels({ children, activeTab, setIsDirty, region, onTourAdded, phot
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
-                <label>Тип </label>
-                <select name="type" required value={selectedTour.type} >
-                    <option value="hotel">Отель</option>
-                    <option value="apartments">Апартаменты</option>
-                </select>
-
                 <label>Название </label>
                 <input name="title" type="text" placeholder="Название" required value={selectedTour.title} />
 
+                {selectedTour.type === "apartments" && <label>Стоимость в сутки</label>}
+                {selectedTour.type === "apartments" && <input name="price" type="text" placeholder="Стоимость" required value={selectedTour.price} />}
+
+                {selectedTour.type === "apartments" && <label>Количество мест</label>}
+                {selectedTour.type === "apartments" && <input name="places" type="text" placeholder="Количество мест" required value={selectedTour.places} />}
+
                 <label>Город </label>
-                <input name="city" type="text" placeholder="Город " required  value={selectedTour.city} />
+                <input name="city" type="text" placeholder="Город " required value={selectedTour.city} />
 
                 <label>Адрес</label>
-                <input name="adress" type="text" placeholder="Адрес" required  value={selectedTour.adress} />
+                <input name="adress" type="text" placeholder="Адрес" required value={selectedTour.adress} />
 
                 <label>Количество звезд</label>
                 <input name="stars" type="number" placeholder="Количество звезд у" value={selectedTour.stars} />

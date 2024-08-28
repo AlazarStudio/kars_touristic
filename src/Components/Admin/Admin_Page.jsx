@@ -22,6 +22,7 @@ import ModeredAuthorTours from "./Blocks/AdminTabsComponents/ModeredAuthorTours/
 import AddAgent from "./Blocks/AdminTabsComponents/AddAgent/AddAgent";
 import Brons from "./Blocks/AdminTabsComponents/Brons/Brons";
 import AddUsers from "./Blocks/AdminTabsComponents/AddUsers/AddUsers";
+import AddHotelAndApartments from "./Blocks/AdminTabsComponents/AddHotelAndApartments/AddHotelAndApartments";
 
 const ItemType = {
     REGION: 'region',
@@ -348,6 +349,12 @@ function Admin_Page({ children, ...props }) {
                                         onClick={() => { setActiveTab('addUsers'); setOpenSection('addUsers'); }}>
                                         Пользователи
                                     </Link>
+
+                                    <Link to={`/admin/addHotelAndApartments`}
+                                        className={`${classes.admin_data__nav___item} ${isActive('addHotelAndApartments')} ${classes.hoverBlock}`}
+                                        onClick={() => { setActiveTab('addHotelAndApartments'); setOpenSection('addHotelAndApartments'); }}>
+                                        Отели / Апартаменты
+                                    </Link>
                                 </> : null}
 
                         </div>
@@ -383,6 +390,7 @@ function Admin_Page({ children, ...props }) {
                             {/* Добавить Представителей */}
                             {activeTab === 'addAgent' && <AddAgent setActiveTab={setActiveTab}/>}
                             {activeTab === 'addUsers' && <AddUsers setActiveTab={setActiveTab}/>}
+                            {activeTab === 'addHotelAndApartments' && <AddHotelAndApartments setActiveTab={setActiveTab}/>}
                         </div>
                     </div>
                 </div>

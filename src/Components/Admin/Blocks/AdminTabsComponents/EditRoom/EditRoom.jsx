@@ -13,6 +13,7 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
 
     const [selectedRoom, setSelectedTour] = useState({
         title: '',
+        price: '',
         description: '',
         places: '',
         square: '',
@@ -146,6 +147,9 @@ function EditRoom({ children, activeTab, setIsDirty, region, hotelID, onRoomUpda
 
                 <label>Название </label>
                 <input name="title" type="text" placeholder="Название" value={selectedRoom.title} />
+
+                <label>Стоимость в сутки</label>
+                <input name="price" type="text" placeholder="Стоимость" value={selectedRoom.price} />
 
                 <label>Количество мест</label>
                 <input name="places" type="text" placeholder="Количество мест" value={selectedRoom.places} />

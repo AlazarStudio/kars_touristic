@@ -42,7 +42,7 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                 <img src={`${server}/refs/${tour.mainPhoto ? tour.mainPhoto : tour.galery[0]}`} alt="" />
             </div>
             <div className={classes.multidayTours_data__tour___info}>
-                <div className={classes.multidayTours_data__tour___info____title}>{tour.title}</div>
+                <div className={classes.multidayTours_data__tour___info____title}>{tour.type == 'hotel' ? 'Отель' : 'Апартаменты'} - {tour.title} </div>
             </div>
             <div className={classes.multidayTours_data__tour___btns}>
                 <Link to={`editHotel/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>
@@ -52,14 +52,14 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                     <img src="/delete.webp" alt="" />
                 </div>
             </div>
-            <div className={classes.multidayTours_data__tour___btnsInfo}>
+            {tour.type == 'hotel' && <div className={classes.multidayTours_data__tour___btnsInfo}>
                 <Link to={`addRoom/${tour._id}`} className={classes.addRoom}>
                     Добавить номер
                 </Link>
                 <Link to={`showRooms/${tour._id}`} className={classes.addRoom}>
                     Показать все номера
                 </Link>
-            </div>
+            </div>}
         </div>
     );
 }
@@ -124,7 +124,7 @@ function Hotels({ children, title, type, ...props }) {
                         </div>
 
                         <div className={classes.multidayTours_top}>
-                            <div className={classes.multidayTours_top__title}>Отели региона</div>
+                            <div className={classes.multidayTours_top__title}>Отели / апартаменты региона</div>
                             <Link to={'addHotel'} className={classes.multidayTours_top__add}>Добавить отель</Link>
                         </div>
 
@@ -167,7 +167,7 @@ function Hotels({ children, title, type, ...props }) {
                     {add === 'showRooms' ?
                         <>
                             <div className={classes.multidayTours}>
-                                <ShowRooms hotelId={idToEdit} region={title} type={type}/>
+                                <ShowRooms hotelId={idToEdit} region={title} type={type} />
                             </div>
                         </>
                         : null
@@ -180,7 +180,7 @@ function Hotels({ children, title, type, ...props }) {
                                 <Link to={`/admin/edit/${title}/${type}`}><img src="/back.webp" alt="" /> Вернуться назад</Link>
                             </div>
 
-                            <EditHotels region={title} onTourAdded={response}  photoMassName={'galery'}/>
+                            <EditHotels region={title} onTourAdded={response} photoMassName={'galery'} />
                         </>
                         : null
                     }

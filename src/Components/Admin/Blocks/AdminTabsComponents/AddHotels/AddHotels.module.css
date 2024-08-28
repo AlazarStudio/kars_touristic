@@ -85,3 +85,9 @@
 .add_moreData{
     width: 100%;
 }
+
+.selectedTypeData{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}

@@ -59,7 +59,7 @@ function EditRegion({ children, role, userName, userID, ...props }) {
                                 <div className={classes.editBlocks_item__img}>
                                     <img src="/admin_oteli.webp" alt="" />
                                 </div>
-                                <div className={classes.editBlocks_item__title}>Отели</div>
+                                <div className={classes.editBlocks_item__title}>Отели / Апартаменты</div>
                             </Link>
                             <Link to={`/admin/${id}/${title}/visit`} className={classes.editBlocks_item}>
                                 <div className={classes.editBlocks_item__img}>
