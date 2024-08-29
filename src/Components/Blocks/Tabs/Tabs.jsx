@@ -66,7 +66,6 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
         }
     }, [token]);
 
-    console.log(foundData);
 
     return (
         <>

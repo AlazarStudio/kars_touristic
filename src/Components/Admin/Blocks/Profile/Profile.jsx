@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 function Profile({ children, ...props }) {
     const [user, setUser] = useState(null);
     const [agents, setAgents] = useState([]);
+    const [hotelBrons, setHotelBrons] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
@@ -58,8 +59,25 @@ function Profile({ children, ...props }) {
 
             if (response.ok) {
                 const agentsData = await response.json();
-                console.log(agentsData)
                 setAgents(agentsData.agent.reverse());
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const getHotelBronsInfo = async () => {
+        try {
+            const response = await fetch(`${server}/api/getHotelBrons`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                const hotelBronsData = await response.json();
+                setHotelBrons(hotelBronsData.hotelBron.reverse());
             }
         } catch (error) {
             console.log(error);
@@ -71,6 +89,7 @@ function Profile({ children, ...props }) {
         if (token && checkTokenValidity(token)) {
             getUserInfo(token);
             getAgentsInfo(); // Получаем список агентов после проверки токена
+            getHotelBronsInfo(); // Получаем список броней отлей после проверки токена
         } else {
             // localStorage.removeItem('token');
             navigate('/signIn');
@@ -88,16 +107,19 @@ function Profile({ children, ...props }) {
     }
 
     const filteredAgents = agents.filter(agent => agent.agent === user._id);
+    const filteredHotelBrons = hotelBrons.filter(hotelBron => hotelBron.userID === user._id);
 
     function formatDate(isoDate) {
         const date = new Date(isoDate);
-    
+
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
         const year = date.getFullYear();
-    
+
         return `${day}.${month}.${year}`;
     }
+
+    console.log(filteredHotelBrons)
     return (
         <>
             <Header_black />
@@ -184,6 +206,38 @@ function Profile({ children, ...props }) {
                                                         'Подтверждено'
                                                 }
                                                 </div>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+
+                        {(user.role != 'admin' && filteredHotelBrons.length > 0) &&
+                            <div className={classes.blockUser}>
+                                <div className={classes.contacts}>
+                                    <div className={classes.titleBlock}>
+                                        <H2 text_transform={'uppercase'}>Брони отелей / апартаментов</H2>
+                                        {user.role == 'agent' && <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>}
+                                    </div>
+
+                                    <ul className={classes.listBron}>
+                                        <li>
+                                            <div className={classes.listBronItem}><b>Дата брони</b></div>
+                                            <div className={classes.listBronItem}><b>Название отеля</b></div>
+                                            <div className={classes.listBronItem}><b>Количество гостей</b></div>
+                                            <div className={classes.listBronItem}><b>Полная цена</b></div>
+                                            <div className={classes.listBronItem}><b>Дата прибытия</b></div>
+                                            <div className={classes.listBronItem}><b>Дата выезда</b></div> 
+                                        </li>
+                                        {filteredHotelBrons.map((hotelBron) => (
+                                            <li key={hotelBron.id}>
+                                                <div className={classes.listBronItem}>{formatDate(hotelBron.createdAt)}</div>
+                                                <div className={classes.listBronItem}>{hotelBron.name}</div>
+                                                <div className={classes.listBronItem}>{hotelBron.guests}</div>
+                                                <div className={classes.listBronItem}>{Number(hotelBron.fullPrice).toLocaleString('ru-RU')} ₽</div>
+                                                <div className={classes.listBronItem}>{formatDate(hotelBron.arrivalDate)}</div>
+                                                <div className={classes.listBronItem}>{formatDate(hotelBron.departureDate)}</div>
                                             </li>
                                         ))}
                                     </ul>

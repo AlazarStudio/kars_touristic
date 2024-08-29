@@ -7,14 +7,20 @@ import H2 from "../../Standart/H2/H2";
 import Feedback from "../Feedback/Feedback";
 import SliderHotel from "../SliderHotel/SliderHotel";
 import HotelNumber from "../HotelNumber/HotelNumber";
+import ReactModal from 'react-modal';
+import Calendar from "../Calendar/Calendar";
 
-import server from '../../../serverConfig'
+import server from '../../../serverConfig';
+
+ReactModal.setAppElement('#root');
+
 function Hotels({ children, ...props }) {
     let img = '/hotel_bg.webp';
 
     let { id } = useParams();
 
     const [hotel, setHotel] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const fetchHotel = () => {
         fetch(`${server}/api/getOneHotel/${id}`)
@@ -66,10 +72,14 @@ function Hotels({ children, ...props }) {
         const region = regions.find(region => region.link === targetLink);
         return region ? region.title : null;
     }
-    
+
     let regionNameData = '';
 
     regionsName && hotel ? regionNameData = getTitleByLink(regionsName, hotel.region) : null
+
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     return (
         <>
@@ -78,14 +88,29 @@ function Hotels({ children, ...props }) {
                     <div className={classes.main} style={{ backgroundImage: `url('${server}/refs/${hotel.mainPhoto ? hotel.mainPhoto : hotel.galery[0]}')` }}>
                         <CenterBlock>
                             <WidthBlock>
-                                <div className={classes.hotelInfo}>
-                                    <div className={classes.tour_topInfo__bread}>
-                                        <Link to={'/'}>Главная</Link> / <Link to={`/region/${hotel.region}`}>{regionNameData}</Link> / {hotel.title}
+                                <div className={classes.separateBlock}>
+                                    <div className={classes.hotelInfo}>
+                                        <div className={classes.tour_topInfo__bread}>
+                                            <Link to={'/'}>Главная</Link> / <Link to={`/region/${hotel.region}`}>{regionNameData}</Link> / {hotel.title}
+                                        </div>
+                                        <div className={classes.hotelTitle}>{hotel.title} ({hotel.city})</div>
+                                        <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
+                                        <div className={classes.hotelDesc}>{hotel.description}</div>
+                                        <div className={classes.hotelBron} onClick={openModal}>Забронировать</div>
+
+
+                                        {/* Модальное окно */}
+                                        <ReactModal
+                                            isOpen={isModalOpen}
+                                            onRequestClose={closeModal}
+                                            contentLabel="Бронирование номера"
+                                            className={classes.modal}
+                                            overlayClassName={classes.overlay}
+                                        >
+                                            <Calendar closeModal={closeModal} hotel={hotel} rooms={rooms}/>
+                                            <button onClick={closeModal} className={classes.modalCloseButton}>&#x2715;</button>
+                                        </ReactModal>
                                     </div>
-                                    <div className={classes.hotelTitle}>{hotel.title} ({hotel.city})</div>
-                                    <div className={classes.hotelDesc}>{hotel.description}</div>
-                                    <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
-                                    <div className={classes.hotelBron}>Забронировать</div>
                                 </div>
                             </WidthBlock>
                         </CenterBlock>
