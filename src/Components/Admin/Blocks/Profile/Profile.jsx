@@ -118,8 +118,7 @@ function Profile({ children, ...props }) {
 
         return `${day}.${month}.${year}`;
     }
-
-    console.log(filteredHotelBrons)
+    
     return (
         <>
             <Header_black />

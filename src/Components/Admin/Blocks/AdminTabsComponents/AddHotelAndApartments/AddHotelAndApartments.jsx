@@ -26,7 +26,7 @@ function AddHotelAndApartments({ setActiveTab }) {
     });
     const [loading, setLoading] = useState(false);
     const [isModalActive, setIsModalActive] = useState(false);
-    const [agents, setAgents] = useState([]);
+    const [bronHotels, setBronHotels] = useState([]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -68,23 +68,30 @@ function AddHotelAndApartments({ setActiveTab }) {
         }
     };
 
-    const fetchAgents = async () => {
-        const response = await fetch(`${server}/api/getUsers`);
+    const fetchBronHotels = async () => {
+        const response = await fetch(`${server}/api/getHotelBrons`);
         if (response.ok) {
             const data = await response.json();
-            const filteredAgents = data.users.filter(user => user.role === 'user');
-            setAgents(filteredAgents);
+            setBronHotels(data.hotelBron.reverse());
         } else {
-            console.error('Failed to fetch agents');
+            console.error('Failed to fetch BronHotels');
         }
     };
 
     useEffect(() => {
-        fetchAgents();
+        fetchBronHotels();
     }, []);
 
+    function formatDate(isoDate) {
+        const date = new Date(isoDate);
 
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+        const year = date.getFullYear();
 
+        return `${day}.${month}.${year}`;
+    }
+    
     return (
         <div className={classes.multidayTours}>
             <div className={classes.multidayTours_top}>
@@ -95,28 +102,23 @@ function AddHotelAndApartments({ setActiveTab }) {
             <div className={classes.gids}>
                 <div className={classes.gids_info}>
                     <div className={classes.gids_info_data}>
-                        <div className={classes.gids_info__elem}><b>ФИО</b></div>
-                        <div className={classes.gids_info__elem}><b>Отель</b></div>
-                        <div className={classes.gids_info__elem}><b>Дата</b></div>
+                        <div className={classes.gids_info__elem}><b>Дата брони</b></div>
+                        <div className={classes.gids_info__elem}><b>Название отеля</b></div>
+                        <div className={classes.gids_info__elem}><b>Количество гостей</b></div>
+                        <div className={classes.gids_info__elem}><b>Полная цена</b></div>
+                        <div className={classes.gids_info__elem}><b>Дата прибытия</b></div>
+                        <div className={classes.gids_info__elem}><b>Дата выезда</b></div>
                     </div>
                 </div>
-                {agents.length > 0 ?
-                    agents.map((item, index) => (
-                        <div className={classes.gids_info} key={index} onClick={() => setActiveTab('brons')}>
-                            <Link
-                                to="/admin/brons"
-                                state={{
-                                    name: item.name,
-                                    paymentType: '',
-                                    paymentState: '',
-                                    bronTypeRole: 'user'
-                                }}
-                                className={classes.gids_info_data}
-                            >
-                                <div className={classes.gids_info__elem}>{item.name}</div>
-                                <div className={classes.gids_info__elem}>{item.email}</div>
-                                <div className={classes.gids_info__elem}>{item.phone}</div>
-                            </Link>
+                {bronHotels.length > 0 ?
+                    bronHotels.map((item, index) => (
+                        <div className={classes.gids_info} key={index}>
+                            <div className={classes.gids_info__elem}>{formatDate(item.createdAt)}</div>
+                            <div className={classes.gids_info__elem}>{item.name}</div>
+                            <div className={classes.gids_info__elem}>{item.guests}</div>
+                            <div className={classes.gids_info__elem}>{Number(item.fullPrice).toLocaleString('ru-RU')} ₽</div>
+                            <div className={classes.gids_info__elem}>{formatDate(item.arrivalDate)}</div>
+                            <div className={classes.gids_info__elem}>{formatDate(item.departureDate)}</div>
                         </div>
                     ))
                     :
