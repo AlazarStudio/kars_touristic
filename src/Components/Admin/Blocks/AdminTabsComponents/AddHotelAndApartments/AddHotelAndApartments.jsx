@@ -2,71 +2,31 @@ import React, { useEffect, useState } from "react";
 import classes from './AddHotelAndApartments.module.css';
 import server from '../../../../../serverConfig';
 import { useNavigate, Link } from "react-router-dom";
+import ReactModal from 'react-modal';
+import CalendarAdmin from "../../../../Blocks/CalendarAdmin/CalendarAdmin";
 
-function Modal({ isActive, onClose, children }) {
-    return (
-        <div className={`${classes.modal} ${isActive ? classes.active : ''}`} onClick={onClose}>
-            <div className={classes.modalContent} onClick={(e) => e.stopPropagation()}>
-                <button className={classes.closeButton} onClick={onClose}>×</button>
-                {children}
-            </div>
-        </div>
-    );
-}
+// Устанавливаем корневой элемент для модального окна
+ReactModal.setAppElement('#root');
 
 function AddHotelAndApartments({ setActiveTab }) {
-    const [formData, setFormData] = useState({
-        name: "",
-        phone: "",
-        email: "",
-        username: "",
-        password: "",
-        role: "user",
-        adminPanelAccess: true
-    });
-    const [loading, setLoading] = useState(false);
-    const [isModalActive, setIsModalActive] = useState(false);
     const [bronHotels, setBronHotels] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
+    const [hotel, setHotel] = useState([]);
+
+    const fetchHotel = () => {
+        fetch(`${server}/api/getHotels`)
+            .then(response => response.json())
+            .then(data => setHotel(data))
+            .catch(error => console.error('Ошибка при загрузке регионов:', error));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        const response = await fetch(`${server}/api/registration`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
+    useEffect(() => {
+        fetchHotel();
+    }, []);
 
-        if (response.ok) {
-            setTimeout(() => {
-                setLoading(false);
-                setFormData({
-                    name: "",
-                    phone: "",
-                    email: "",
-                    username: "",
-                    password: "",
-                    role: "user",
-                    adminPanelAccess: true
-                });
-                setIsModalActive(false);
-                fetchAgents();
-            }, 1000);
-        } else {
-            setLoading(false);
-            console.error('Registration error');
-        }
-    };
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     const fetchBronHotels = async () => {
         const response = await fetch(`${server}/api/getHotelBrons`);
@@ -86,17 +46,17 @@ function AddHotelAndApartments({ setActiveTab }) {
         const date = new Date(isoDate);
 
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Месяцы в JavaScript начинаются с 0
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
 
         return `${day}.${month}.${year}`;
     }
-    
+
     return (
         <div className={classes.multidayTours}>
             <div className={classes.multidayTours_top}>
                 <div className={classes.multidayTours_top__title}>Брони Отелей / Апартаментов</div>
-                <button onClick={() => setIsModalActive(true)} className={classes.multidayTours_top__add}>Забронировать отель</button>
+                <button className={classes.multidayTours_top__add} onClick={openModal}>Забронировать отель</button>
             </div>
 
             <div className={classes.gids}>
@@ -126,55 +86,17 @@ function AddHotelAndApartments({ setActiveTab }) {
                 }
             </div>
 
-            <Modal isActive={isModalActive} onClose={() => setIsModalActive(false)}>
-                <div className={classes.addData}>
-                    <div className={classes.addData_title}>Регистрация пользователя</div>
-                    <form onSubmit={handleSubmit} className={classes.registerForm}>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="ФИО"
-                            value={formData.name}
-                            required
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="text"
-                            name="phone"
-                            placeholder="Телефон"
-                            value={formData.phone}
-                            required
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="text"
-                            name="email"
-                            placeholder="Email"
-                            value={formData.email}
-                            required
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="Логин"
-                            value={formData.username}
-                            required
-                            onChange={handleChange}
-                        />
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Пароль"
-                            value={formData.password}
-                            required
-                            onChange={handleChange}
-                        />
-                        <button type="submit" disabled={loading}>Зарегистрировать</button>
-                    </form>
-                    {loading && <div className={classes.loaderWrapper}><div className={classes.loader}></div></div>}
-                </div>
-            </Modal>
+            {/* Модальное окно */}
+            <ReactModal
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+                contentLabel="Бронирование номера"
+                className={classes.customModal}
+                overlayClassName={classes.customOverlay}
+            >
+                <CalendarAdmin closeModal={closeModal} hotels={hotel.hotels} fetchBronHotels={fetchBronHotels}/>
+                <button onClick={closeModal} className={classes.modalCloseButton}>&#x2715;</button>
+            </ReactModal>
         </div>
     );
 }
