@@ -26,6 +26,7 @@
 .centerPosition {
     width: 100%;
     height: 100vh;
+    min-height: 900px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -362,6 +363,7 @@
 
     .centerPosition {
         height: auto;
+        min-height: auto;
         padding: 80px 10px 10px 10px;
         margin: 0;
         gap: 20px;
