@@ -1,5 +1,5 @@
 <?php
-$to = "8rusik8@mail.ru"; // Email получателя
+$to = "alimdzhatdoev@mail.ru"; // Email получателя
 $subject = "Заголовок письма"; // Тема письма
 $message = "Текст сообщения"; // Основное сообщение
 

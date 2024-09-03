@@ -7,25 +7,27 @@ import 'vanilla-calendar-pro/build/vanilla-calendar.min.css';
 import server from '../../../serverConfig';
 
 import PaymentButton from '../../PaymentButton/PaymentButton'
+import axios from 'axios';
 
 function Calendar({ children, hotel, rooms, closeModal, ...props }) {
     let token = localStorage.getItem('token');
 
-    const onPaymentSuccess = async (e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('../../../../public/php/send_mail file.php', new URLSearchParams(form));
-            alert(response.data);
-            setForm({
-                email: '',
-                subject: '',
-                message: ''
-            });
-        } catch (error) {
-            console.error('Ошибка при отправке сообщения:', error);
-            alert('Произошла ошибка при отправке сообщения.');
-        }
-    };
+    // const onPaymentSuccess = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const response = await axios.post('../../../../public/php/send_mail file.php', new URLSearchParams(form));
+    //         alert(response.data);
+    //         setForm({
+    //             email: '',
+    //             subject: '',
+    //             message: ''
+    //         });
+    //         handleAddBron();
+    //     } catch (error) {
+    //         console.error('Ошибка при отправке сообщения:', error);
+    //         alert('Произошла ошибка при отправке сообщения.');
+    //     }
+    // };
 
     const [user, setUser] = useState();
 
@@ -233,6 +235,8 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                 body: JSON.stringify(formData)
             });
 
+            const responseMail = await axios.post('../../../../public/php/send_mail file.php', new URLSearchParams());
+
             if (responseBron.ok) {
                 console.log(formData)
             } else {
@@ -392,16 +396,27 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     </div>
                 </div>
             </div>
-            <PaymentButton
-                style={{}}
-                order_name={hotel.title}
-                order_cost={bron.fullPrice}
-                // order_id={uniqueOrderId}
-                onPaymentSuccess={onPaymentSuccess}
-            ></PaymentButton>
-            <div className={classes.bookButton} onClick={handleAddBron}>
-                Перейти к оплате
-            </div>
+            {
+                (
+                    bron.userID !== '' &&
+                    bron.name !== '' &&
+                    bron.adress !== '' &&
+                    bron.guests !== '' &&
+                    bron.price !== '' &&
+                    bron.arrivalDate !== '' &&
+                    bron.departureDate !== '' &&
+                    bron.client[0].name !== '' &&
+                    bron.client[0].phone !== '' &&
+                    bron.client[0].email !== ''
+                )
+                &&
+                <PaymentButton
+                    style={{}}
+                    order_name={hotel.title}
+                    order_cost={bron.fullPrice}
+                    // order_id={uniqueOrderId}
+                    onPaymentSuccess={handleAddBron}
+                ></PaymentButton>}
         </div>
     );
 }
