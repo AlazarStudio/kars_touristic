@@ -4,7 +4,7 @@ import Header_black from "../../Blocks/Header_black/Header_black";
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import server from '../../../serverConfig';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import PaymentButton from '../../PaymentButton/PaymentButton'
 
 function Cart_Page({ children, ...props }) {

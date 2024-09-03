@@ -6,8 +6,26 @@ import 'vanilla-calendar-pro/build/vanilla-calendar.min.css';
 
 import server from '../../../serverConfig';
 
+import PaymentButton from '../../PaymentButton/PaymentButton'
+
 function Calendar({ children, hotel, rooms, closeModal, ...props }) {
     let token = localStorage.getItem('token');
+
+    const onPaymentSuccess = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('../../../../public/php/send_mail file.php', new URLSearchParams(form));
+            alert(response.data);
+            setForm({
+                email: '',
+                subject: '',
+                message: ''
+            });
+        } catch (error) {
+            console.error('Ошибка при отправке сообщения:', error);
+            alert('Произошла ошибка при отправке сообщения.');
+        }
+    };
 
     const [user, setUser] = useState();
 
@@ -297,23 +315,26 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
 
                     <div className={classes.calendarSeparate_right_item}>
                         <h3>Информация для бронирования</h3>
-                        {hotel?.type === 'hotel' && (
-                            <div className={classes.formGroup}>
-                                <label>Выберите номер</label>
-                                <select
-                                    name="roomNumber"
-                                    value={bron.roomNumber}
-                                    onChange={handleRoomChange}
-                                >
-                                    <option value="">Выберите номер</option>
-                                    {rooms && rooms.map((room, index) => (
-                                        <option key={index} value={room.title}>
-                                            {room.title}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                        )}
+                        {hotel?.type === 'hotel' &&
+
+                            (
+
+                                <div className={classes.formGroup}>
+                                    <label>Выберите номер</label>
+                                    <select
+                                        name="roomNumber"
+                                        value={bron.roomNumber}
+                                        onChange={handleRoomChange}
+                                    >
+                                        <option value="">Выберите номер</option>
+                                        {rooms && rooms.map((room, index) => (
+                                            <option key={index} value={room.title}>
+                                                {room.title}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+                            )}
                         {(hotel?.type === 'hotel' && bron.roomNumber !== '') && (
                             <div className={classes.formGroup}>
                                 <label>Количество гостей</label>
@@ -371,6 +392,13 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     </div>
                 </div>
             </div>
+            <PaymentButton
+                style={{}}
+                order_name={hotel.title}
+                order_cost={bron.fullPrice}
+                // order_id={uniqueOrderId}
+                onPaymentSuccess={onPaymentSuccess}
+            ></PaymentButton>
             <div className={classes.bookButton} onClick={handleAddBron}>
                 Перейти к оплате
             </div>

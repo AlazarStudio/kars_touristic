@@ -16,6 +16,8 @@ function Form({ children, ...props }) {
         setForm({ ...form, [name]: value });
     };
 
+    // ----------------------------------------------------------------
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -33,6 +35,9 @@ function Form({ children, ...props }) {
             alert('Произошла ошибка при отправке сообщения.');
         }
     };
+
+    // ----------------------------------------------------------------
+
     return (
         <>
             <form onSubmit={handleSubmit} className={classes.form}>
