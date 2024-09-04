@@ -21,6 +21,8 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         departureTime: '',
         tourType: '',
         difficulty: '',
+        min: '',
+        max: '',
         cost: '',
         optional: '',
         places: [],
@@ -249,6 +251,12 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
 
                 <label>Сложность</label>
                 <input name="difficulty" type="text" placeholder="Сложность" value={selectedTour.difficulty} />
+
+                <label>Минимальное количество людей</label>
+                <input name="min" type="number" placeholder="Минимальное количество людей" required />
+
+                <label>Максимальное количество людей</label>
+                <input name="max" type="number" placeholder="Максимальное количество людей" required />
 
                 <label>Стоимость</label>
                 <input name="cost" type="text" placeholder="Стоимость" value={selectedTour.cost} />
