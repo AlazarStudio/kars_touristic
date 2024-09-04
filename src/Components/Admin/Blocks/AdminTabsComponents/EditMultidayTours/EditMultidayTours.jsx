@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import VanillaCalendar from 'vanilla-calendar-pro';
+import 'vanilla-calendar-pro/build/vanilla-calendar.min.css';
 
 import classes from './EditMultidayTours.module.css';
 import FormEdit from "../../FormEdit/FormEdit";
@@ -10,7 +12,6 @@ import server from '../../../../../serverConfig';
 
 function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, photoMassName, ...props }) {
     const { idToEdit } = useParams();
-
     let imgUrl = `${server}/refs/`;
 
     const [selectedTour, setSelectedTour] = useState({
@@ -25,20 +26,26 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         places: [],
         checklists: [],
         days: [],
+        departureDates: [], // Добавляем состояние для диапазонов дат
         photos: []
     });
 
     const [loadedPhotos, setLoadedPhotos] = useState([]);
     const [newPhotos, setNewPhotos] = useState([]);
+    const [photosToDelete, setPhotosToDelete] = useState([]);
 
-    const { places, checklists, days, photos } = selectedTour;
+    const calendarRefs = useRef([]);
+    const { places, checklists, days, departureDates, photos } = selectedTour;
 
     const fetchTourById = (id) => {
         fetch(`${server}/api/getOneMultidayTour/${id}`)
             .then(response => response.json())
             .then(data => {
                 if (data && typeof data === 'object') {
-                    setSelectedTour(data);
+                    setSelectedTour({
+                        ...data,
+                        departureDates: data.departureDates || [] // <-- Защита от undefined
+                    });
                     setLoadedPhotos(data.photos || []);
                 } else {
                     console.error('Received data is not an object:', data);
@@ -56,6 +63,8 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const handleAddPlace = useCallback(() => setSelectedTour(prevState => ({ ...prevState, places: [...prevState.places, ''] })), []);
     const handleAddChecklist = useCallback(() => setSelectedTour(prevState => ({ ...prevState, checklists: [...prevState.checklists, ''] })), []);
     const handleAddDay = useCallback(() => setSelectedTour(prevState => ({ ...prevState, days: [...prevState.days, ''] })), []);
+    const handleAddDepartureDate = () => setSelectedTour(prevState => ({ ...prevState, departureDates: [...prevState.departureDates, ''] }));
+
     const handleFileChange = (event) => {
         const files = Array.from(event.target.files);
         setNewPhotos(files);
@@ -79,12 +88,22 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         setSelectedTour(prevState => ({ ...prevState, days: newDays }));
     };
 
+    const handleDepartureDateChange = (index, value) => {
+        const newDepartureDates = [...departureDates];
+        newDepartureDates[index] = value;
+        setSelectedTour(prevState => ({ ...prevState, departureDates: newDepartureDates }));
+    };
 
     const handleRemovePlace = index => setSelectedTour(prevState => ({ ...prevState, places: prevState.places.filter((_, i) => i !== index) }));
     const handleRemoveChecklist = index => setSelectedTour(prevState => ({ ...prevState, checklists: prevState.checklists.filter((_, i) => i !== index) }));
     const handleRemoveDay = index => setSelectedTour(prevState => ({ ...prevState, days: prevState.days.filter((_, i) => i !== index) }));
-
-    const [photosToDelete, setPhotosToDelete] = useState([]);
+    const handleRemoveDepartureDate = index => {
+        setSelectedTour(prevState => ({
+            ...prevState,
+            departureDates: prevState.departureDates.filter((_, i) => i !== index)
+        }));
+        calendarRefs.current = calendarRefs.current.filter((_, i) => i !== index);
+    };
 
     const handleRemovePhoto = (index, photo) => {
         if (confirm("Вы уверены, что хотите удалить картинку?")) {
@@ -116,7 +135,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         formData.append('photosToDelete', JSON.stringify(photosToDelete));
 
         try {
-            const response = await fetch(`${server}/api/updateOneMultidayTour/${id}`, {
+            await fetch(`${server}/api/updateOneMultidayTour/${id}`, {
                 method: 'PUT',
                 body: formData
             });
@@ -128,7 +147,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
     const changeMainImg = async (id, photoPath) => {
         if (confirm("Вы уверены, что хотите сделать эту картинку главной?")) {
             try {
-                const response = await fetch(`${server}/api/changeMainImgMultidayTour?id=${id}&mainImgPath=${photoPath}`, {
+                await fetch(`${server}/api/changeMainImgMultidayTour?id=${id}&mainImgPath=${photoPath}`, {
                     method: 'PUT',
                 });
 
@@ -142,12 +161,74 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
         }
     };
 
+    useEffect(() => {
+        departureDates.forEach((_, index) => {
+            if (calendarRefs.current[index]) {
+                const options = {
+                    settings: {
+                        lang: 'ru',
+                        iso8601: true,
+                        visibility: {
+                            theme: 'light',
+                            daysOutside: false,
+                        },
+                        range: {
+                            disableGaps: true,
+                            disablePast: true,
+                            disabled: departureDates,
+                        },
+                        selection: {
+                            day: 'multiple-ranged',
+                        }
+                    },
+                    input: true,
+                    actions: {
+                        changeToInput(e, self) {
+                            if (!self.HTMLInputElement) return;
+                            if (self.selectedDates.length > 0) {
+                                const dateRange = `${self.selectedDates[0]}${self.selectedDates.length > 1 ? ` - ${self.selectedDates[self.selectedDates.length - 1]}` : ''}`;
+                                self.HTMLInputElement.value = dateRange;
+                                handleDepartureDateChange(index, dateRange);
+                            } else {
+                                self.HTMLInputElement.value = '';
+                                handleDepartureDateChange(index, '');
+                            }
+                        },
+                    }
+                };
+
+                const calendar = new VanillaCalendar(calendarRefs.current[index], options);
+                calendar.init();
+            }
+        });
+    }, [departureDates]);
+
+    function formatDateRange(dateRange) {
+        if (dateRange == '') return ''
+        
+        const [startDate, endDate] = dateRange.split(' - ');
+
+        const formatDate = (date) => {
+            const [year, month, day] = date.split('-');
+            return `${day}.${month}.${year}`;
+        };
+
+        const formattedStartDate = formatDate(startDate.replace(/\s/g, ''));
+
+        if (endDate) {
+            const formattedEndDate = formatDate(endDate.replace(/\s/g, ''));
+            return `${formattedStartDate} - ${formattedEndDate}`;
+        } else {
+            return formattedStartDate;
+        }
+    }
+
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>Изменить Многодневный тур</div>
 
             <FormEdit actionUrl={`${server}/api/updateOneMultidayTour/${idToEdit}`} method="put" photoMassName={photoMassName} newPhotos={newPhotos} needNavigate={true} initialValues={selectedTour} onTourAdded={onTourAdded} setSelectedTour={setSelectedTour}>
-                <label className={classes.addData_step}>Шаг 1</label>
+                <label className={classes.addData_step}>Шаг 1 - основная информация</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
@@ -175,7 +256,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                 <label>Дополнительная информация (не обязательно)</label>
                 <input name="optional" type="text" placeholder="Дополнительная информация" value={selectedTour.optional} />
 
-                <label className={classes.addData_step}>Шаг 2</label>
+                <label className={classes.addData_step}>Шаг 2 - фотографии тура</label>
                 <label>Фотографии</label>
 
                 <div className={classes.imgBlock}>
@@ -202,10 +283,32 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                     onChange={handleFileChange}
                 />
 
-
-                {/* Третий этап - Места */}
+                {/* Третий этап - Диапазоны дат */}
                 <label className={classes.addData_step}>
-                    Шаг 3
+                    Шаг 3 - Даты проведения тура
+                    <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDepartureDate}>+</div>
+                </label>
+
+                {departureDates.map((dateRange, index) => (
+                    <div key={index} className={classes.addData_blockAddData}>
+                        <label>Дата проведения {index + 1}</label>
+                        <div className={classes.add_remove_btn}>
+                            <input
+                                ref={(el) => calendarRefs.current[index] = el}
+                                type="text"
+                                name={`departureDates[]`}
+                                placeholder="Выберите диапазон дат"
+                                value={formatDateRange(dateRange)}
+                                readOnly
+                            />
+                            <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDepartureDate(index)}>-</div>
+                        </div>
+                    </div>
+                ))}
+
+                {/* Четвертый этап - Места */}
+                <label className={classes.addData_step}>
+                    Шаг 4 - Места
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddPlace}>+</div>
                 </label>
                 {places.map((place, index) => (
@@ -219,16 +322,15 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 placeholder={`Место ${index + 1}`}
                                 value={place}
                                 onChange={(event) => handlePlaceChange(index, event)}
-
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemovePlace(index)}>-</div>
                         </div>
                     </div>
                 ))}
 
-                {/* Четвертый этап - Чек-листы */}
+                {/* Пятый этап - Чек-листы */}
                 <label className={classes.addData_step}>
-                    Шаг 4
+                    Шаг 5 - Чек-листы
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddChecklist}>+</div>
                 </label>
                 {checklists.map((checklist, index) => (
@@ -242,16 +344,15 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 placeholder={`Чек-лист ${index + 1}`}
                                 value={checklist}
                                 onChange={(event) => handleChecklistChange(index, event)}
-
                             />
                             <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveChecklist(index)}>-</div>
                         </div>
                     </div>
                 ))}
 
-                {/* Пятый этап - Дни */}
+                {/* Шестой этап - Дни */}
                 <label className={classes.addData_step}>
-                    Шаг 5
+                    Шаг 6 - Информация по дням
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div>
                 </label>
 

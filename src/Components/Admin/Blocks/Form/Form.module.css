@@ -36,7 +36,7 @@
 }
 
 
-.addData_form button {
+.addData_form>button {
     background-color: #000;
     color: #fff;
     border-radius: 50px;

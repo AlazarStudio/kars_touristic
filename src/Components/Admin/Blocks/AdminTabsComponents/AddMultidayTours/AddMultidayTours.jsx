@@ -1,27 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from './AddMultidayTours.module.css';
 import Form from "../../Form/Form";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import server from '../../../../../serverConfig';
 
+
+
+import VanillaCalendar from 'vanilla-calendar-pro';
+import 'vanilla-calendar-pro/build/vanilla-calendar.min.css';
+
+
 function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
     const [places, setPlaces] = useState(['']);
     const [checklists, setChecklists] = useState(['']);
     const [days, setDays] = useState(['']);
     const [photos, setPhotos] = useState([]);
+    const [departureDates, setDepartureDates] = useState(['']);
 
-    // Функции для добавления и изменения данных
+    const calendarRefs = useRef([]);
+
     const handleAddPlace = () => setPlaces([...places, '']);
     const handleAddChecklist = () => setChecklists([...checklists, '']);
     const handleAddDay = () => setDays([...days, '']);
     const handleFileChange = (event) => setPhotos([...photos, ...Array.from(event.target.files)]);
+    const handleAddDepartureDate = () => setDepartureDates([...departureDates, '']);
 
     const resetAll = () => {
         setPlaces(['']);
         setChecklists(['']);
         setDays(['']);
         setPhotos([]);
+        setDepartureDates([]);
+    };
+
+    const handleDepartureDateChange = (index, value) => {
+        const newDepartureDates = [...departureDates];
+        newDepartureDates[index] = value;
+        setDepartureDates(newDepartureDates);
     };
 
     const handlePlaceChange = (index, event) => {
@@ -38,7 +54,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
 
     const handleDayChange = (index, value) => {
         const newDays = [...days];
-        newDays[index] = value; // Здесь принимаем значение напрямую из ReactQuill
+        newDays[index] = value;
         setDays(newDays);
     };
 
@@ -46,39 +62,99 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
         return array.filter((item, i) => i !== index);
     }
 
-    const handleRemovePlace = index => {
-        setPlaces(current => removeItemFromArray(current, index));
+    const handleRemoveDepartureDate = index => {
+        setDepartureDates(current => removeItemFromArray(current, index));
+        calendarRefs.current = calendarRefs.current.filter((_, i) => i !== index);
     };
 
-    const handleRemoveChecklist = index => {
-        setChecklists(current => removeItemFromArray(current, index));
-    };
-
-    const handleRemoveDay = index => {
-        setDays(current => removeItemFromArray(current, index));
-    };
+    const handleRemovePlace = index => setPlaces(current => removeItemFromArray(current, index));
+    const handleRemoveChecklist = index => setChecklists(current => removeItemFromArray(current, index));
+    const handleRemoveDay = index => setDays(current => removeItemFromArray(current, index));
 
     const initialValues = {
         region,
         places,
         checklists,
         days,
-        photos
+        photos,
+        departureDates
     };
+
+    useEffect(() => {
+        departureDates.forEach((_, index) => {
+            if (calendarRefs.current[index]) {
+                const options = {
+                    settings: {
+                        lang: 'ru',
+                        iso8601: true,
+                        visibility: {
+                            theme: 'light',
+                            daysOutside: false,
+                        },
+                        range: {
+                            disableGaps: true,
+                            disablePast: true,
+                            disabled: departureDates,
+                        },
+                        selection: {
+                            day: 'multiple-ranged',
+                        }
+                    },
+                    input: true,
+                    actions: {
+                        changeToInput(e, self) {
+                            if (!self.HTMLInputElement) return;
+                            if (self.selectedDates.length > 0) {
+                                const dateRange = `${self.selectedDates[0]}${self.selectedDates.length > 1 ? ` - ${self.selectedDates[self.selectedDates.length - 1]}` : ''}`;
+                                self.HTMLInputElement.value = dateRange;
+                                handleDepartureDateChange(index, dateRange);
+                            } else {
+                                self.HTMLInputElement.value = '';
+                                handleDepartureDateChange(index, '');
+                            }
+                        },
+                    }
+                };
+
+                const calendar = new VanillaCalendar(calendarRefs.current[index], options);
+                calendar.init();
+            }
+        });
+    }, [departureDates]);
+
+    function formatDateRange(dateRange) {
+        if (dateRange == '') return ''
+
+        const [startDate, endDate] = dateRange.split(' - ');
+
+        const formatDate = (date) => {
+            const [year, month, day] = date.split('-');
+            return `${day}.${month}.${year}`;
+        };
+
+        const formattedStartDate = formatDate(startDate);
+
+        if (endDate) {
+            const formattedEndDate = formatDate(endDate);
+            return `${formattedStartDate} - ${formattedEndDate}`;
+        } else {
+            return formattedStartDate;
+        }
+    }
 
     return (
         <div className={classes.addData}>
             <div className={classes.addData_title}>ДОБАВИТЬ Многодневный тур</div>
 
-            <Form 
-                actionUrl={`${server}/api/addMultidayTour`} 
-                method="post" 
-                needNavigate={true} 
-                resetAll={resetAll} 
-                initialValues={initialValues} 
+            <Form
+                actionUrl={`${server}/api/addMultidayTour`}
+                method="post"
+                needNavigate={true}
+                resetAll={resetAll}
+                initialValues={initialValues}
                 onTourAdded={onTourAdded}
             >
-                <label className={classes.addData_step}>Шаг 1</label>
+                <label className={classes.addData_step}>Шаг 1 - основная информация</label>
 
                 <div><input name="region" type="hidden" placeholder="Регион" required value={region} readOnly /></div>
 
@@ -106,7 +182,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
                 <label>Дополнительная информация (не обязательно)</label>
                 <input name="optional" type="text" placeholder="Дополнительная информация" />
 
-                <label className={classes.addData_step}>Шаг 2</label>
+                <label className={classes.addData_step}>Шаг 2 - фотографии тура</label>
                 <label>Загрузите фотографии для слайдера</label>
                 <input
                     type="file"
@@ -119,7 +195,31 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
 
                 {/* Третий этап - Места */}
                 <label className={classes.addData_step}>
-                    Шаг 3
+                    Шаг 3 - Даты проведения тура
+                    <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDepartureDate}>+</div>
+                </label>
+                {departureDates.map((departureDate, index) => (
+                    <div key={index} className={classes.addData_blockAddData}>
+                        <label>Дата проведения {index + 1}</label>
+                        <div className={classes.add_remove_btn}>
+                            <input
+                                ref={el => calendarRefs.current[index] = el}
+                                type="text"
+                                name={`departureDates[]`}
+                                data-index={index}
+                                placeholder={`Дата отправления  ${index + 1}`}
+                                value={formatDateRange(departureDate)}
+                                onChange={(event) => handleDepartureDateChange(index, event)}
+                                required
+                            />
+                            <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDepartureDate(index)}>-</div>
+                        </div>
+                    </div>
+                ))}
+
+                {/* Третий этап - Места */}
+                <label className={classes.addData_step}>
+                    Шаг 4 - Места
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddPlace}>+</div>
                 </label>
                 {places.map((place, index) => (
@@ -142,7 +242,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
 
                 {/* Четвертый этап - Чек-листы */}
                 <label className={classes.addData_step}>
-                    Шаг 4
+                    Шаг 5 - Чек-листы
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddChecklist}>+</div>
                 </label>
                 {checklists.map((checklist, index) => (
@@ -165,7 +265,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
 
                 {/* Пятый этап - Дни */}
                 <label className={classes.addData_step}>
-                    Шаг 5
+                    Шаг 6 - Информация по дням
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div>
                 </label>
 

@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from './AddOnedayTours.module.css';
 import Form from "../../Form/Form";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 import server from '../../../../../serverConfig';
+
+
+import VanillaCalendar from 'vanilla-calendar-pro';
+import 'vanilla-calendar-pro/build/vanilla-calendar.min.css';
 
 function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region, onTourAdded, ...props }) {
     const [places, setPlaces] = useState(['']);
@@ -22,6 +26,7 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
         setChecklists(['']);
         setDays(['']);
         setPhotos([]);
+        setDepartureDates([]);
     };
 
     const handlePlaceChange = (index, event) => {
@@ -58,12 +63,93 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
         setDays(current => removeItemFromArray(current, index));
     };
 
+
+
+    const calendarRefs = useRef([]);
+    const [departureDates, setDepartureDates] = useState(['']);
+    const handleAddDepartureDate = () => setDepartureDates([...departureDates, '']);
+
+    const handleDepartureDateChange = (index, value) => {
+        const newDepartureDates = [...departureDates];
+        newDepartureDates[index] = value;
+        setDepartureDates(newDepartureDates);
+    };
+
+    const handleRemoveDepartureDate = index => {
+        setDepartureDates(current => removeItemFromArray(current, index));
+        calendarRefs.current = calendarRefs.current.filter((_, i) => i !== index);
+    };
+    useEffect(() => {
+        departureDates.forEach((_, index) => {
+            if (calendarRefs.current[index]) {
+                const options = {
+                    settings: {
+                        lang: 'ru',
+                        iso8601: true,
+                        visibility: {
+                            theme: 'light',
+                            daysOutside: false,
+                        },
+                        range: {
+                            disableGaps: true,
+                            disablePast: true,
+                            disabled: departureDates,
+                        },
+                        // selection: {
+                        //     day: 'multiple-ranged',
+                        // }
+                    },
+                    input: true,
+                    actions: {
+                        changeToInput(e, self) {
+                            if (!self.HTMLInputElement) return;
+                            if (self.selectedDates.length > 0) {
+                                const dateRange = `${self.selectedDates[0]}${self.selectedDates.length > 1 ? ` - ${self.selectedDates[self.selectedDates.length - 1]}` : ''}`;
+                                self.HTMLInputElement.value = dateRange;
+                                handleDepartureDateChange(index, dateRange);
+                            } else {
+                                self.HTMLInputElement.value = '';
+                                handleDepartureDateChange(index, '');
+                            }
+                        },
+                    }
+                };
+
+                const calendar = new VanillaCalendar(calendarRefs.current[index], options);
+                calendar.init();
+            }
+        });
+    }, [departureDates]);
+
+    function formatDateRange(dateRange) {
+        if (dateRange == '') return ''
+
+        const [startDate, endDate] = dateRange.split(' - ');
+        
+        const formatDate = (date) => {
+            const [year, month, day] = date.split('-');
+            return `${day}.${month}.${year}`;
+        };
+        
+        const formattedStartDate = formatDate(startDate.replace(/\s/g, ''));
+
+        if (endDate) {
+            const formattedEndDate = formatDate(endDate.replace(/\s/g, ''));
+            return `${formattedStartDate} - ${formattedEndDate}`;
+        } else {
+            return formattedStartDate;
+        }
+    }
+
+
+
     const initialValues = {
         region,
         places,
         checklists,
         days,
-        photos
+        photos,
+        departureDates
     };
 
     return (
@@ -71,7 +157,7 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
             <div className={classes.addData_title}>ДОБАВИТЬ Однодневный тур</div>
 
             <Form actionUrl={`${server}/api/addOnedayTour`} method="post" needNavigate={true} resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded}>
-                <label className={classes.addData_step}>Первый этап</label>
+                <label className={classes.addData_step}>Шаг 1 - основная информация</label>
 
                 <input name="region" type="hidden" placeholder="Регион" required value={region} readOnly />
 
@@ -96,7 +182,7 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
                 <label>Стоимость</label>
                 <input name="cost" type="text" placeholder="Стоимость" required />
 
-                <label className={classes.addData_step}>Второй этап</label>
+                <label className={classes.addData_step}>Шаг 2 - фотографии тура</label>
                 <label>Загрузите фотографии для слайдера</label>
                 <input
                     type="file"
@@ -109,7 +195,31 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
 
                 {/* Третий этап - Места */}
                 <label className={classes.addData_step}>
-                    Третий этап
+                    Шаг 3 - Даты проведения тура
+                    <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDepartureDate}>+</div>
+                </label>
+                {departureDates.map((departureDate, index) => (
+                    <div key={index} className={classes.addData_blockAddData}>
+                        <label>Дата проведения {index + 1}</label>
+                        <div className={classes.add_remove_btn}>
+                            <input
+                                ref={el => calendarRefs.current[index] = el}
+                                type="text"
+                                name={`departureDates[]`}
+                                data-index={index}
+                                placeholder={`Дата отправления  ${index + 1}`}
+                                value={formatDateRange(departureDate)}
+                                onChange={(event) => handleDepartureDateChange(index, event)}
+                                required
+                            />
+                            <div className={classes.addData_addButtonElements} type="button" onClick={() => handleRemoveDepartureDate(index)}>-</div>
+                        </div>
+                    </div>
+                ))}
+
+                {/* Третий этап - Места */}
+                <label className={classes.addData_step}>
+                    Шаг 4 - Места
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddPlace}>+</div>
                 </label>
                 {places.map((place, index) => (
@@ -132,7 +242,7 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
 
                 {/* Четвертый этап - Чек-листы */}
                 <label className={classes.addData_step}>
-                    Четвертый этап
+                    Шаг 5 - Чек-листы
                     <div className={classes.addData_addButtonElements} type="button" onClick={handleAddChecklist}>+</div>
                 </label>
                 {checklists.map((checklist, index) => (
@@ -155,7 +265,7 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
 
                 {/* Пятый этап - Дни */}
                 <label className={classes.addData_step}>
-                    Пятый этап
+                    Шаг 6 - Информация по дням
                     {/* <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div> */}
                 </label>
                 {days.map((day, index) => (
