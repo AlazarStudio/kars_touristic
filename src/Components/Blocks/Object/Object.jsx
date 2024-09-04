@@ -73,6 +73,7 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
     };
 
     const [user, setUser] = useState(null);
+    const [moreInfoText, setMoreInfoText] = useState(false);
 
     useEffect(() => {
         if (token) {
@@ -141,6 +142,15 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                     : <img src="/userLike_empty.png" alt="Not Liked" />
                 }
             </div>
+            <div className={classes.objects_item__moreInfo} onClick={() => setMoreInfoText(!moreInfoText)}>
+                {regionData.optional && <img src="/optional.png" alt="Optional" />}
+            </div>
+            {moreInfoText &&
+                <div className={classes.objects_item__moreInfoText}>
+                    {regionData.optional}
+                </div>
+            }
+
             <div className={classes.objects_item__img}>
                 <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
                     {photos.map((item, index) => (
@@ -164,13 +174,13 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                                 <div>Тип экскурсии: <span>{regionData.tourType}</span></div>
                                 <div>Сложность: <span>{regionData.difficulty}</span></div>
                             </div>
-                            {regionData.optional &&
+                            {/* {regionData.optional &&
                                 <div className={classes.objects_item__optional}>
                                     <img src="/optional.png" alt="Optional" /> {regionData.optional}
                                 </div>
-                            }
+                            } */}
                             <div className={classes.objects_item__price}>
-                                <div>Стоимость: <span>{regionData.cost} ₽ *</span></div>
+                                <div>Стоимость: <span>{regionData.cost} ₽</span></div>
                             </div>
                             <div className={classes.buttons}>
                                 <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
