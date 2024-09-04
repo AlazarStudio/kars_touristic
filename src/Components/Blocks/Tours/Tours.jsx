@@ -180,8 +180,67 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
         }
     };
 
+    const [activeTab, setActiveTab] = useState(null);
+
+    const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+    const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+
+    const groupedByYearAndMonth = tour && tour.departureDates.reduce((acc, range) => {
+        const [start, end] = range.split(' - ');
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+
+        const year = startDate.getFullYear();
+        const startMonth = startDate.getMonth() + 1;
+        const endMonth = endDate.getMonth() + 1;
+
+        let found = acc.find(item => item.year === year && item.month === startMonth);
+
+        if (found) {
+            found.ranges.push(range);
+        } else {
+            acc.push({
+                year: year,
+                month: startMonth,
+                ranges: [range]
+            });
+        }
+
+        return acc;
+    }, []);
+
+    const filteredGroupedByYearAndMonth = tour && groupedByYearAndMonth.filter(item => {
+        return item.year > currentYear || (item.year === currentYear && item.month >= currentMonth);
+    });
 
 
+    const getMonthName = (month) => {
+        const months = [
+            'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+            'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+        ];
+        return months[month - 1];
+    };
+
+    function formatDateRange(dateRange) {
+        if (dateRange == '') return ''
+
+        const [startDate, endDate] = dateRange.split(' - ');
+
+        const formatDate = (date) => {
+            const [year, month, day] = date.split('-');
+            return `${day}.${month}.${year}`;
+        };
+
+        const formattedStartDate = formatDate(startDate);
+
+        if (endDate) {
+            const formattedEndDate = formatDate(endDate);
+            return `${formattedStartDate} - ${formattedEndDate}`;
+        } else {
+            return formattedStartDate;
+        }
+    }
     return (
         <>
             {tour ?
@@ -228,12 +287,14 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                 </div>
                                                 <div className={classes.tour_topInfo__left___items____element}>
                                                     <div className={classes.tour_topInfo__left___items____element_____title}>Стоимость:</div>
-                                                    <div className={classes.tour_topInfo__left___items____element_____info}>{tour.cost}</div>
+                                                    <div className={classes.tour_topInfo__left___items____element_____info}>{tour.cost} ₽</div>
                                                 </div>
                                             </div>
-                                            <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
-                                                {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
-                                            </div>
+                                            {tour.departureDates.length > 0 &&
+                                                <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
+                                                    {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
+                                                </div>
+                                            }
                                         </div>
                                         <div className={classes.tour_topInfo__right}>
                                             <div className={classes.tour_topInfo__right___img}>
@@ -283,6 +344,59 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
                         <ToursTab tabs={tour.days} />
 
+                        {tour.departureDates.length > 0 &&
+                            <>
+                                <CenterBlock>
+                                    <H2 text_transform="uppercase" font_size="36px">Даты и наличие мест</H2>
+                                </CenterBlock>
+
+                                <div className={classes.tabs}>
+                                    {groupedByYearAndMonth.map((item, index) => (
+                                        <button
+                                            key={index}
+                                            className={item.year === currentYear && item.month === currentMonth ? classes.activeTab : ''}
+                                            onClick={() => {
+                                                setActiveTab(item.month);
+                                                setCurrentYear(item.year);
+                                                setCurrentMonth(item.month);
+                                            }}
+                                        >
+                                            {getMonthName(item.month)} {item.year}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div className={classes.departureDates}>
+                                    <div className={classes.departureDates_line}>
+                                        <div className={classes.departureDates_line_column}>Дата проведения тура</div>
+                                        <div className={classes.departureDates_line_column}>Продолжительность тура</div>
+                                        <div className={classes.departureDates_line_column}>Время отправления тура</div>
+                                        <div className={classes.departureDates_line_column}>Стоимость тура</div>
+                                    </div>
+
+                                    {filteredGroupedByYearAndMonth
+                                        .filter(item => item.year === currentYear && item.month === currentMonth)
+                                        .map((item, index) => (
+                                            item.ranges.map((range, rangeIndex) => {
+                                                const [start, end] = range.split(' - ');
+                                                const duration = tour.duration;
+                                                const departureTime = tour.departureTime;
+                                                const cost = tour.cost;
+
+                                                return (
+                                                    <div className={classes.departureDates_line} key={`${index}-${rangeIndex}`}>
+                                                        <div className={classes.departureDates_line_column}>{`${formatDateRange(start)} - ${formatDateRange(end)}`}</div>
+                                                        <div className={classes.departureDates_line_column}>{duration}</div>
+                                                        <div className={classes.departureDates_line_column}>{departureTime}</div>
+                                                        <div className={classes.departureDates_line_column}>{cost} ₽</div>
+                                                    </div>
+                                                );
+                                            })
+                                        ))}
+                                </div>
+                            </>
+                        }
+
                         {/* <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                         </CenterBlock>
@@ -318,7 +432,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                             {foundRegion.map((item, index) => (
                                                 item._id != id ?
                                                     <SwiperSlide key={index}>
-                                                        <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')}/>
+                                                        <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
                                                     </SwiperSlide>
                                                     : null
                                             ))}

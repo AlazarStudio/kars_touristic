@@ -312,6 +312,55 @@
     gap: 10px;
 }
 
+.departureDates{
+    display: flex;
+    flex-direction: column;
+}
+
+.departureDates_line {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #dfdfdf;
+    padding: 20px;
+    margin-top: -1px;
+}
+
+.departureDates_line:nth-child(1) {
+    font-weight: 600;
+}
+
+.departureDates_line_column{
+    width: 20%;
+    text-align: center;
+}
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    background: #fff;
+    border: 1px solid #dfdfdf;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    color: #000;
+    transition: color 0.3s;
+    border-radius: 50px;
+}
+
+.tabs button:hover {
+    color: #000;
+}
+
+.tabs button.activeTab {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+}
+
+
 @media (min-width: 0px) and (max-width: 1299px) {
     .main {
         height: auto;

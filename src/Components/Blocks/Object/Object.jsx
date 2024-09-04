@@ -174,9 +174,11 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                             </div>
                             <div className={classes.buttons}>
                                 <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
-                                <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>
-                                    {isInCart ? 'В корзине' : inCart}
-                                </Link>
+                                {regionData.departureDates.length > 0 &&
+                                    <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>
+                                        {isInCart ? 'В корзине' : inCart}
+                                    </Link>
+                                }
                             </div>
                         </>
                     )

@@ -66,7 +66,6 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
         }
     }, [token]);
 
-
     return (
         <>
             {foundData ?
@@ -75,21 +74,22 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                         <H2 text_transform="uppercase">{props.title}</H2> <span style={{ marginTop: '10px' }}>(Найдено: {foundData.length})</span>
                     </CenterBlock>
 
-                    {requestType == 'getMultidayTours' && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {requestType == 'getOnedayTours' && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {requestType == 'getAuthorTours' && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {requestType == 'getHotels' && <FilterHotels objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {requestType == 'getPlaces' && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {requestType == 'getEvents' && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {(requestType == 'getMultidayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {(requestType == 'getOnedayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {(requestType == 'getAuthorTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {(requestType == 'getHotels' && objects.length > 0) && <FilterHotels objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {(requestType == 'getPlaces' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                    {(requestType == 'getEvents' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
 
-
-                    <div className={classes.objects}>
-                        {
-                            foundData.map((item, index) => (
-                                <Object key={index} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
-                            ))
-                        }
-                    </div>
+                    {objects.length > 0 &&
+                        <div className={classes.objects}>
+                            {
+                                foundData.map((item, index) => (
+                                    <Object key={index} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                ))
+                            }
+                        </div>
+                    }
                 </div>
                 : null
             }
