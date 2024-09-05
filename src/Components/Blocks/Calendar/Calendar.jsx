@@ -32,19 +32,21 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
     const [user, setUser] = useState();
 
     const getUserInfo = async (token) => {
-        const response = await fetch(`${server}/api/user`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
+        if (token) {
+            const response = await fetch(`${server}/api/user`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
 
-        if (response.ok) {
-            const userData = await response.json();
-            setUser(userData);
-        } else {
-            localStorage.removeItem('token');
-            console.error('Ошибка получения информации о пользователе');
+            if (response.ok) {
+                const userData = await response.json();
+                setUser(userData);
+            } else {
+                localStorage.removeItem('token');
+                console.error('Ошибка получения информации о пользователе');
+            }
         }
     };
 
@@ -104,7 +106,12 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
             {
                 name: '',
                 phone: '',
-                email: ''
+                email: '',
+                address: '',
+                passportNumber: '',
+                passportSeries: '',
+                gender: '',
+                birthDate: ''
             }
         ]
     });
@@ -118,7 +125,12 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     {
                         name: user.name,
                         phone: user.phone,
-                        email: user.email
+                        email: user.email,
+                        address: user.address,
+                        passportNumber: user.passportNumber,
+                        passportSeries: user.passportSeries,
+                        gender: user.gender,
+                        birthDate: user.birthDate
                     }
                 ],
             }));
@@ -203,7 +215,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
 
     function generatePassword(length = 8) {
         const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
-        let password = "";
+        let password = '';
         for (let i = 0, n = charset.length; i < length; ++i) {
             password += charset.charAt(Math.floor(Math.random() * n));
         }
@@ -211,8 +223,8 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
     }
 
     const handleAddBron = async () => {
+        // Проверка на заполненность данных
         if (
-            bron.userID !== '' &&
             bron.name !== '' &&
             bron.adress !== '' &&
             bron.guests !== '' &&
@@ -221,12 +233,77 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
             bron.departureDate !== '' &&
             bron.client[0].name !== '' &&
             bron.client[0].phone !== '' &&
-            bron.client[0].email !== ''
+            bron.client[0].email !== '' &&
+            bron.client[0].address !== '' &&
+            bron.client[0].passportNumber !== '' &&
+            bron.client[0].passportSeries !== '' &&
+            bron.client[0].gender !== '' &&
+            bron.client[0].birthDate !== ''
         ) {
-            setIsDisabled(true)
+            setIsDisabled(true);
 
-            let formData = bron;
+            // Проверка на наличие токена
+            if (!token) {
+                // Если токен не найден, регистрируем нового пользователя
+                let formData = {
+                    username: bron.client[0].email,
+                    password: generatePassword(12),
+                    name: bron.client[0].name,
+                    phone: bron.client[0].phone,
+                    email: bron.client[0].email,
+                    address: bron.client[0].address,
+                    passportNumber: bron.client[0].passportNumber,
+                    passportSeries: bron.client[0].passportSeries,
+                    gender: bron.client[0].gender,
+                    birthDate: bron.client[0].birthDate
+                };
 
+                try {
+                    const response = await fetch(`${server}/api/registration`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        localStorage.setItem('token', data.token);
+                        setUser(data.user); // Устанавливаем нового пользователя
+
+                        // После успешной регистрации продолжаем процесс бронирования
+                        await processBooking(data.user._id);
+                    } else {
+                        console.error('Ошибка регистрации');
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Ошибка при регистрации:', error);
+                    return;
+                }
+            } else {
+                // Если токен существует, продолжаем процесс бронирования
+                console.log(user._id)
+                await processBooking(user._id);
+            }
+
+            closeModal();
+        } else {
+            setIsDisabled(false);
+            alert('Заполните все поля');
+        }
+    };
+
+    // Функция для обработки бронирования
+    const processBooking = async (userId) => {
+        let formData = {
+            ...bron,
+            userID: userId, // Используем ID пользователя для бронирования
+        };
+        
+
+        try {
             const responseBron = await fetch(`${server}/api/addHotelBron`, {
                 method: 'POST',
                 headers: {
@@ -235,48 +312,16 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                 body: JSON.stringify(formData)
             });
 
-            const responseMail = await axios.post('../../../../public/php/send_mail file.php', new URLSearchParams());
-
             if (responseBron.ok) {
-                console.log(formData)
+                // const responseMail = await axios.post('../../../../public/php/send_mail file.php', new URLSearchParams());
+                console.log('Бронирование успешно:', formData);
             } else {
-                console.error('Ошибка регистрации');
+                console.error('Ошибка при бронировании');
             }
-
-            if (!token) {
-                let formData = {
-                    username: bron.client[0].email,
-                    password: generatePassword(12),
-                    name: bron.client[0].name,
-                    phone: bron.client[0].phone,
-                    email: bron.client[0].email
-                }
-
-                const response = await fetch(`${server}/api/registration`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                if (response.ok) {
-                    const data = await response.json();
-                    localStorage.setItem('token', data.token);
-
-                    console.log(formData)
-                } else {
-                    console.error('Ошибка регистрации');
-                }
-            }
-
-            closeModal()
-
-        } else {
-            setIsDisabled(false)
-            alert('Заполните все поля')
+        } catch (error) {
+            console.error('Ошибка при бронировании:', error);
         }
-    }
+    };
 
     return (
         <div className={classes.calendar}>
@@ -286,37 +331,6 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     <div ref={calendarRef} className={classes.vanillaCalendar} />
                 </div>
                 <div className={classes.calendarSeparate_right}>
-                    <div className={classes.calendarSeparate_right_item}>
-                        <h3>Информация о клиенте</h3>
-                        <div className={classes.formGroup}>
-                            <label>ФИО клиента</label>
-                            <input
-                                type="text"
-                                name="client.name"
-                                value={bron.client[0].name}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className={classes.formGroup}>
-                            <label>Номер телефона</label>
-                            <input
-                                type="tel"
-                                name="client.phone"
-                                value={bron.client[0].phone}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className={classes.formGroup}>
-                            <label>Почта</label>
-                            <input
-                                type="email"
-                                name="client.email"
-                                value={bron.client[0].email}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                    </div>
-
                     <div className={classes.calendarSeparate_right_item}>
                         <h3>Информация для бронирования</h3>
                         {hotel?.type === 'hotel' &&
@@ -330,7 +344,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                                         value={bron.roomNumber}
                                         onChange={handleRoomChange}
                                     >
-                                        <option value="">Выберите номер</option>
+                                        <option value=''>Выберите номер</option>
                                         {rooms && rooms.map((room, index) => (
                                             <option key={index} value={room.title}>
                                                 {room.title}
@@ -390,15 +404,103 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                                 />
                             </div>
                         )}
-
-                        <br />
-                        {(bron.price !== '' && bron.guests !== '') && <b>Итого к оплате: {bron.fullPrice} ₽</b>}
                     </div>
                 </div>
             </div>
+
+            <h3>Информация о клиенте</h3>
+            <div className={classes.calendarSeparate_right_item_client}>
+                <div className={classes.formGroup}>
+                    <label>ФИО клиента</label>
+                    <input
+                        type="text"
+                        name="client.name"
+                        placeholder="Введите ФИО клиента"
+                        value={bron.client[0].name}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className={classes.formGroup}>
+                    <label>Номер телефона</label>
+                    <input
+                        type="tel"
+                        name="client.phone"
+                        placeholder="Введите номер телефона"
+                        value={bron.client[0].phone}
+                        onChange={handleInputChange}
+                    />
+                </div>
+                <div className={classes.formGroup}>
+                    <label>Почта</label>
+                    <input
+                        type="email"
+                        name="client.email"
+                        placeholder="Введите почту"
+                        value={bron.client[0].email}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className={classes.formGroup}>
+                    <label>Адрес</label>
+                    <input
+                        type="text"
+                        name="client.address"
+                        placeholder="Введите адрес"
+                        value={bron.client[0].address}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className={classes.formGroup}>
+                    <label>Номер паспорта</label>
+                    <input
+                        type="text"
+                        name="client.passportNumber"
+                        placeholder="Введите номер паспорта"
+                        value={bron.client[0].passportNumber}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className={classes.formGroup}>
+                    <label>Серия паспорта</label>
+                    <input
+                        type="text"
+                        name="client.passportSeries"
+                        placeholder="Введите серию паспорта"
+                        value={bron.client[0].passportSeries}
+                        onChange={handleInputChange}
+                    />
+                </div>
+
+                <div className={classes.formGroup}>
+                    <label>Пол</label>
+                    <select
+                        name="client.gender"
+                        value={bron.client[0].gender}
+                        onChange={handleInputChange}
+                    >
+                        <option value=''>Выберите пол</option>
+                        <option value="male">Мужской</option>
+                        <option value="female">Женский</option>
+                    </select>
+                </div>
+
+                <div className={classes.formGroup}>
+                    <label>Дата рождения</label>
+                    <input
+                        type="date"
+                        name="client.birthDate"
+                        value={bron.client[0].birthDate}
+                        onChange={handleInputChange}
+                    />
+                </div>
+            </div>
+
+            {(bron.price !== '' && bron.guests !== '') && <div className={classes.priceFull}>Итого к оплате: {bron.fullPrice} ₽</div>}
             {
                 (
-                    bron.userID !== '' &&
                     bron.name !== '' &&
                     bron.adress !== '' &&
                     bron.guests !== '' &&
@@ -407,7 +509,12 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     bron.departureDate !== '' &&
                     bron.client[0].name !== '' &&
                     bron.client[0].phone !== '' &&
-                    bron.client[0].email !== ''
+                    bron.client[0].email !== '' &&
+                    bron.client[0].address !== '' &&
+                    bron.client[0].passportNumber !== '' &&
+                    bron.client[0].passportSeries !== '' &&
+                    bron.client[0].gender !== '' &&
+                    bron.client[0].birthDate !== '' 
                 )
                 &&
                 <PaymentButton
@@ -416,7 +523,8 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     order_cost={bron.fullPrice}
                     // order_id={uniqueOrderId}
                     onPaymentSuccess={handleAddBron}
-                ></PaymentButton>}
+                ></PaymentButton>
+            }
         </div>
     );
 }

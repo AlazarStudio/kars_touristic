@@ -23,6 +23,12 @@
     width: 350px;
 }
 
+.calendarSeparate_right_item_client{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 11px;
+}
+
 .calendarSeparate_right_item h3{
     margin-bottom: 20px;
 }
@@ -59,6 +65,19 @@
     align-items: center;
     cursor: pointer;
     font-size: 14px;
+}
+
+.calendarSeparate_right_item_client .formGroup {
+    width: 24%;
+    justify-content: space-between;
+}
+
+.priceFull{
+    font-weight: 600;
+    font-size: 28px;
+    width: 100%;
+    text-align: right;
+    margin-top: 20px;
 }
 
 @media (min-width: 0px) and (max-width: 1299px) {}
