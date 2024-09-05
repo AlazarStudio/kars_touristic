@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import classes from './CalendarTour.module.css';
 import server from '../../../serverConfig';
+import PaymentButton from '../../PaymentButton/PaymentButton';
 
 function CalendarTour({ closeModal, tour, selectedDate }) {
     const [passengerCount, setPassengerCount] = useState(1);
@@ -153,7 +154,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             // Регистрация нового пользователя
             let formData = {
                 username: passengerInfo[0].phone,
-                password: 'alimdzhatdoev@mail.ru',
+                password: generatePassword(12),
                 name: passengerInfo[0].name,
                 phone: passengerInfo[0].phone,
                 email: passengerInfo[0].email,
@@ -419,14 +420,24 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 />
                 <p>Согласен с правилами бронирования</p>
             </div>
-
+            {/* 
             <button
                 onClick={handleBooking}
                 disabled={!isAgreed}
                 className={isAgreed ? classes.activeButton : classes.disabledButton}
             >
                 Забронировать
-            </button>
+            </button> */}
+            {isAgreed &&
+                <PaymentButton
+                    style={{}}
+                    order_name={tour.tourTitle}
+                    order_cost={totalCost}
+                    // order_id={uniqueOrderId}
+                    onPaymentSuccess={handleBooking}
+                ></PaymentButton>
+            }
+
         </div>
     );
 }
