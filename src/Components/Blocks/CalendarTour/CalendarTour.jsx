@@ -5,7 +5,7 @@ import server from '../../../serverConfig';
 function CalendarTour({ closeModal, tour, selectedDate }) {
     const [passengerCount, setPassengerCount] = useState(1);
     const [passengerInfo, setPassengerInfo] = useState([{
-        fullName: "",
+        name: "",
         email: "",
         phone: "",
         address: "",
@@ -14,10 +14,12 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         gender: "",
         birthDate: ""
     }]);
+    
     const [paymentMethod, setPaymentMethod] = useState("card");
     const [isAgreed, setIsAgreed] = useState(false);
     const [user, setUser] = useState(null);
     const [totalCost, setTotalCost] = useState(0);
+    const [fieldsToUpdate, setFieldsToUpdate] = useState({});  // Для отслеживания полей, которые нужно обновить
 
     const token = localStorage.getItem('token');
 
@@ -32,6 +34,31 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             if (response.ok) {
                 const data = await response.json();
                 setUser(data);
+                // Если роль пользователя "user", подставляем его данные в пассажира
+                if (data.role === 'user') {
+                    setPassengerInfo([{
+                        name: data.name || "",
+                        email: data.email || "",
+                        phone: data.phone || "",
+                        address: data.address || "",
+                        passportNumber: data.passportNumber || "",
+                        passportSeries: data.passportSeries || "",
+                        gender: data.gender || "",
+                        birthDate: data.birthDate || ""
+                    }]);
+
+                    // Сохраняем информацию о полях, которые изначально были пустыми и могут требовать обновления
+                    setFieldsToUpdate({
+                        name: !data.name,
+                        email: !data.email,
+                        phone: !data.phone,
+                        address: !data.address,
+                        passportNumber: !data.passportNumber,
+                        passportSeries: !data.passportSeries,
+                        gender: !data.gender,
+                        birthDate: !data.birthDate
+                    });
+                }
             }
         } catch (error) {
             console.error('Ошибка при загрузке пользователя', error);
@@ -53,7 +80,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             if (count > prevInfo.length) {
                 for (let i = prevInfo.length; i < count; i++) {
                     newInfo.push({
-                        fullName: "",
+                        name: "",
                         email: "",
                         phone: "",
                         address: "",
@@ -77,12 +104,66 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             newInfo[index][field] = value;
             return newInfo;
         });
+
+        // Если поле изначально было пустым и теперь заполнено, помечаем его для обновления
+        if (fieldsToUpdate[field]) {
+            setFieldsToUpdate(prevState => ({
+                ...prevState,
+                [field]: true
+            }));
+        }
+    };
+
+    const updateUserFields = async () => {
+        // Создаем объект обновлений, включающий только измененные данные
+        const updates = {};
+        const passenger = passengerInfo[0];  // Данные основного пассажира (текущего пользователя)
+
+        Object.keys(fieldsToUpdate).forEach((field) => {
+            if (fieldsToUpdate[field] && passenger[field]) {
+                updates[field] = passenger[field];
+            }
+        });
+
+        // Если есть поля для обновления, отправляем запрос
+        if (Object.keys(updates).length > 0) {
+            try {
+                const response = await fetch(`${server}/api/userUpdate`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updates)
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to update user.');
+                }
+    
+                return await response.json();
+            } catch (error) {
+                console.error('Error updating user:', error);
+                throw error;
+            }
+            // try {
+            //     const response = await updateUser(token, updates);
+            //     if (response) {
+            //         console.log('Данные пользователя успешно обновлены:', response);
+            //     }
+            // } catch (error) {
+            //     console.error('Ошибка при обновлении данных пользователя:', error);
+            // }
+        }
     };
 
     const handleBooking = async () => {
+        // Обновляем данные пользователя, если были изменения
+        await updateUserFields();
+
         const formData = {
             price: totalCost,
             agent: user._id,
+            bronTypeRole: (user && user.role == 'agent') ? 'agent' : 'user',
             paymentType: paymentMethod,
             tours: [tour],
             passengers: passengerInfo,
@@ -91,27 +172,25 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             confirm: paymentMethod === 'cash' ? false : true,
         };
 
-        console.log(formData);
+        try {
+            const response = await fetch(`${server}/api/addAgent`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
 
-        // try {
-        //     const response = await fetch(`${server}/api/addAgent`, {
-        //         method: 'POST',
-        //         headers: {
-        //             'Authorization': `Bearer ${token}`,
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(formData)
-        //     });
-
-        //     if (response.ok) {
-        //         closeModal();
-        //         alert('Бронирование успешно!');
-        //     } else {
-        //         alert('Ошибка при бронировании');
-        //     }
-        // } catch (error) {
-        //     console.error('Ошибка при бронировании:', error);
-        // }
+            if (response.ok) {
+                closeModal();
+                alert('Бронирование успешно!');
+            } else {
+                alert('Ошибка при бронировании');
+            }
+        } catch (error) {
+            console.error('Ошибка при бронировании:', error);
+        }
     };
 
     function formatDateRange(dateRange) {
@@ -137,18 +216,17 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
     return (
         <div className={classes.calendar}>
             <h2>Бронирование тура на дату: {formatDateRange(selectedDate)}</h2>
-            {user && (user.role == 'admin' || user.role == 'agent') &&
-                <div className={classes.field}>
-                    <label>Количество пассажиров:</label>
-                    <input
-                        type="number"
-                        min="1"
-                        value={passengerCount}
-                        onChange={handlePassengerCountChange}
-                        className={classes.input}
-                    />
-                </div>
-            }
+            
+            <div className={classes.field}>
+                <label>Количество пассажиров:</label>
+                <input
+                    type="number"
+                    min="1"
+                    value={passengerCount}
+                    onChange={handlePassengerCountChange}
+                    className={classes.input}
+                />
+            </div>
 
             <div className={classes.passengerBlock}>
                 {Array.from({ length: passengerCount }, (_, i) => (
@@ -161,8 +239,8 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                                 <input
                                     type="text"
                                     placeholder="Введите ФИО"
-                                    value={passengerInfo[i]?.fullName || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "fullName", e.target.value)}
+                                    value={passengerInfo[i]?.name || ""}
+                                    onChange={(e) => handlePassengerInfoChange(i, "name", e.target.value)}
                                     className={classes.input}
                                 />
                             </div>
@@ -303,6 +381,7 @@ export default CalendarTour;
 
 
 
+
 // (
 //     bron.userID !== '' &&
 //     bron.name !== '' &&
@@ -323,16 +402,3 @@ export default CalendarTour;
 //     // order_id={uniqueOrderId}
 //     onPaymentSuccess={handleAddBron}
 // ></PaymentButton>
-
-// {user && (user.role == 'admin' || user.role == 'agent') &&
-//     <div className={classes.field}>
-//         <label>Количество пассажиров:</label>
-//         <input
-//             type="number"
-//             min="1"
-//             value={passengerCount}
-//             onChange={handlePassengerCountChange}
-//             className={classes.input}
-//         />
-//     </div>
-// }

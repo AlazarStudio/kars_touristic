@@ -257,7 +257,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
     }, [tour]);
 
     const openModal = (date) => {
-        setSelectedDate(date); // Устанавливаем выбранную дату
+        setSelectedDate(date);
         setIsModalOpen(true);
     };
 
@@ -440,6 +440,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                             overlayClassName={classes.overlay}
                         >
                             <CalendarTour closeModal={closeModal} tour={tour} onChange={setSelectedDate} selectedDate={selectedDate} />
+                            <button onClick={closeModal} className={classes.modalCloseButton}>&#x2715;</button>
                         </ReactModal>
 
                         {/* <CenterBlock>
