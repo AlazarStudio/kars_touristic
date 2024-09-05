@@ -21,47 +21,38 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
     const [totalCost, setTotalCost] = useState(0);
     const [fieldsToUpdate, setFieldsToUpdate] = useState({});  // Для отслеживания полей, которые нужно обновить
 
+    const [newUser, setNewUser] = useState(null);
+
     const token = localStorage.getItem('token');
 
     const getUserInfo = async () => {
-        try {
-            const response = await fetch(`${server}/api/user`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
+        if (token) {
+            try {
+                const response = await fetch(`${server}/api/user`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setUser(data);
+                    if (data.role === 'user') {
+                        setPassengerInfo([{
+                            name: data.name || "",
+                            email: data.email || "",
+                            phone: data.phone || "",
+                            address: data.address || "",
+                            passportNumber: data.passportNumber || "",
+                            passportSeries: data.passportSeries || "",
+                            gender: data.gender || "",
+                            birthDate: data.birthDate || ""
+                        }]);
+                    }
                 }
-            });
-            if (response.ok) {
-                const data = await response.json();
-                setUser(data);
-                // Если роль пользователя "user", подставляем его данные в пассажира
-                if (data.role === 'user') {
-                    setPassengerInfo([{
-                        name: data.name || "",
-                        email: data.email || "",
-                        phone: data.phone || "",
-                        address: data.address || "",
-                        passportNumber: data.passportNumber || "",
-                        passportSeries: data.passportSeries || "",
-                        gender: data.gender || "",
-                        birthDate: data.birthDate || ""
-                    }]);
-
-                    // Сохраняем информацию о полях, которые изначально были пустыми и могут требовать обновления
-                    setFieldsToUpdate({
-                        name: !data.name,
-                        email: !data.email,
-                        phone: !data.phone,
-                        address: !data.address,
-                        passportNumber: !data.passportNumber,
-                        passportSeries: !data.passportSeries,
-                        gender: !data.gender,
-                        birthDate: !data.birthDate
-                    });
-                }
+            } catch (error) {
+                console.error('Ошибка при загрузке пользователя', error);
             }
-        } catch (error) {
-            console.error('Ошибка при загрузке пользователя', error);
         }
     };
 
@@ -148,14 +139,66 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         }
     };
 
+    function generatePassword(length = 8) {
+        const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~`|}{[]:;?><,./-=";
+        let password = "";
+        for (let i = 0, n = charset.length; i < length; ++i) {
+            password += charset.charAt(Math.floor(Math.random() * n));
+        }
+        return password;
+    }
+
     const handleBooking = async () => {
-        // Обновляем данные пользователя, если были изменения
-        (user && user.role == 'user') && await updateUserFields();
+        if (!token) {
+            // Регистрация нового пользователя
+            let formData = {
+                username: passengerInfo[0].phone,
+                password: 'alimdzhatdoev@mail.ru',
+                name: passengerInfo[0].name,
+                phone: passengerInfo[0].phone,
+                email: passengerInfo[0].email,
+                address: passengerInfo[0].address,
+                passportNumber: passengerInfo[0].passportNumber,
+                passportSeries: passengerInfo[0].passportSeries,
+                gender: passengerInfo[0].gender,
+                birthDate: passengerInfo[0].birthDate,
+            };
+
+            try {
+                const response = await fetch(`${server}/api/registration`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('token', data.token);
+
+                    await bookTour(data.user._id);  // Здесь должна выполняться bookTour
+                } else {
+                    console.error('Ошибка регистрации');
+                    return;
+                }
+            } catch (error) {
+                console.error('Ошибка при регистрации:', error);
+                return;
+            }
+        } else {
+            await updateUserFields();
+            await bookTour();  // Здесь должна выполняться bookTour
+        }
+    };
+
+    const bookTour = async (newRegUserId) => {
+        const userId = user ? user._id : newRegUserId;
 
         const formData = {
             price: totalCost,
-            agent: user._id,
-            bronTypeRole: (user && user.role == 'agent') ? 'agent' : 'user',
+            agent: userId,
+            bronTypeRole: user && user.role === 'agent' ? 'agent' : 'user',
             paymentType: paymentMethod,
             tours: [tour],
             passengers: passengerInfo,
@@ -166,7 +209,6 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
 
         if (paymentMethod === 'cash') {
             let debtUser = user.debt + totalCost;
-
             await fetch(`${server}/api/userUpdate`, {
                 method: 'PUT',
                 headers: {
@@ -191,12 +233,15 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 closeModal();
                 alert('Бронирование успешно!');
             } else {
-                alert('Ошибка при бронировании');
+                const errorData = await response.json();
+                alert('Ошибка при бронировании: ' + errorData.message);
             }
         } catch (error) {
             console.error('Ошибка при бронировании:', error);
+            alert('Ошибка при бронировании: ' + error.message);
         }
     };
+
 
     function formatDateRange(dateRange) {
         if (!dateRange) return '';
@@ -222,21 +267,23 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         <div className={classes.calendar}>
             <h2>Бронирование тура на дату: {formatDateRange(selectedDate)}</h2>
 
-            <div className={classes.field}>
-                <label>Количество пассажиров:</label>
-                <input
-                    type="number"
-                    min="1"
-                    value={passengerCount}
-                    onChange={handlePassengerCountChange}
-                    className={classes.input}
-                />
-            </div>
+            {user && (user.role == 'agent' || user.role == 'admin') &&
+                <div className={classes.field}>
+                    <label>Количество пассажиров:</label>
+                    <input
+                        type="number"
+                        min="1"
+                        value={passengerCount}
+                        onChange={handlePassengerCountChange}
+                        className={classes.input}
+                    />
+                </div>
+            }
 
             <div className={classes.passengerBlock}>
                 {Array.from({ length: passengerCount }, (_, i) => (
                     <div key={i} className={classes.passengerInfo}>
-                        <h3>Участник {i + 1}</h3>
+                        {user && (user.role == 'agent' || user.role == 'admin') && <h3>Участник {i + 1}</h3>}
 
                         <div className={classes.passengerInfo_data}>
                             <div className={classes.field}>
@@ -331,30 +378,33 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                     </div>
                 ))}
             </div>
-
-            <h3>Выберите способ оплаты</h3>
-            <div className={classes.paymentMethods}>
-                <label className={classes.radioLabel}>
-                    <input
-                        type="radio"
-                        value="card"
-                        checked={paymentMethod === "card"}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className={classes.radioInput}
-                    />
-                    Карта
-                </label>
-                <label className={classes.radioLabel}>
-                    <input
-                        type="radio"
-                        value="cash"
-                        checked={paymentMethod === "cash"}
-                        onChange={(e) => setPaymentMethod(e.target.value)}
-                        className={classes.radioInput}
-                    />
-                    Наличные
-                </label>
-            </div>
+            {user && (user.role == 'agent' || user.role == 'admin') &&
+                <>
+                    <h3>Выберите способ оплаты</h3>
+                    <div className={classes.paymentMethods}>
+                        <label className={classes.radioLabel}>
+                            <input
+                                type="radio"
+                                value="card"
+                                checked={paymentMethod === "card"}
+                                onChange={(e) => setPaymentMethod(e.target.value)}
+                                className={classes.radioInput}
+                            />
+                            Карта
+                        </label>
+                        <label className={classes.radioLabel}>
+                            <input
+                                type="radio"
+                                value="cash"
+                                checked={paymentMethod === "cash"}
+                                onChange={(e) => setPaymentMethod(e.target.value)}
+                                className={classes.radioInput}
+                            />
+                            Наличные
+                        </label>
+                    </div>
+                </>
+            }
 
             <div className={classes.totalSum}>
                 Итоговая сумма: {totalCost} ₽
