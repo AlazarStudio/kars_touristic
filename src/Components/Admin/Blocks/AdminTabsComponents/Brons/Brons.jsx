@@ -70,7 +70,7 @@ function Brons({ children, ...props }) {
     const applyFilters = () => {
         let filtered = touragents.filter(agent => {
             const tourTitles = agent.tours.map((tour) => tour.tourTitle.toLowerCase()).join(', ');
-            const passangerTitles = agent.passengers.map((passenger) => passenger.fullName.toLowerCase()).join(', ');
+            const passangerTitles = agent.passengers.map((passenger) => passenger.name.toLowerCase()).join(', ');
             const agentName = getUserNameById(agent.agent).toLowerCase();
             const price = Number(agent.price);
             const textMatch = searchQuery.toLowerCase();
@@ -86,7 +86,7 @@ function Brons({ children, ...props }) {
             const matchesBronTypeRole = bronTypeRole === '' || agent.bronTypeRole === bronTypeRole;
     
             // Приведение дат к одному формату для сравнения
-            const agentBookingDate = new Date(agent.bookingDate).toISOString().split('T')[0];
+            const agentBookingDate = new Date(agent.createdAt).toISOString().split('T')[0];
             const matchesDateQuery = dateQuery === '' || agentBookingDate === dateQuery;
     
             return (
@@ -258,7 +258,7 @@ function Brons({ children, ...props }) {
                     <div className={classes.gids}>
                         <ul className={classes.listBron}>
                             <li>
-                                <div className={classes.listBronItem}><b>Дата</b></div>
+                                <div className={classes.listBronItem}><b>Дата брони</b></div>
                                 <div className={classes.listBronItem}><b>Название тура</b></div>
                                 <div className={classes.listBronItem}><b>Пассажиры</b></div>
                                 <div className={classes.listBronItem}><b>Представитель</b></div>
@@ -269,9 +269,9 @@ function Brons({ children, ...props }) {
                             {filteredAgents.length > 0 ?
                                 filteredAgents.map((agent, index) => (
                                     <li key={index}>
-                                        <div className={classes.listBronItem}>{formatDate(agent.bookingDate)}</div>
+                                        <div className={classes.listBronItem}>{formatDate(agent.createdAt)}</div>
                                         <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
-                                        <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.fullName).join(', ')}</div>
+                                        <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.name).join(', ')}</div>
                                         <div className={classes.listBronItem}>{getUserNameById(agent.agent)}</div>
                                         <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽ </div>
                                         <div className={classes.listBronItem}>{agent.paymentType === 'cash' ? 'Наличные' : 'Карта'}</div>

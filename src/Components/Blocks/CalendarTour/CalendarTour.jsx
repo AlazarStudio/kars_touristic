@@ -14,7 +14,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         gender: "",
         birthDate: ""
     }]);
-    
+
     const [paymentMethod, setPaymentMethod] = useState("card");
     const [isAgreed, setIsAgreed] = useState(false);
     const [user, setUser] = useState(null);
@@ -139,26 +139,18 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 if (!response.ok) {
                     throw new Error('Failed to update user.');
                 }
-    
+
                 return await response.json();
             } catch (error) {
                 console.error('Error updating user:', error);
                 throw error;
             }
-            // try {
-            //     const response = await updateUser(token, updates);
-            //     if (response) {
-            //         console.log('Данные пользователя успешно обновлены:', response);
-            //     }
-            // } catch (error) {
-            //     console.error('Ошибка при обновлении данных пользователя:', error);
-            // }
         }
     };
 
     const handleBooking = async () => {
         // Обновляем данные пользователя, если были изменения
-        await updateUserFields();
+        (user && user.role == 'user') && await updateUserFields();
 
         const formData = {
             price: totalCost,
@@ -171,6 +163,19 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             bookingTime: tour.departureTime,
             confirm: paymentMethod === 'cash' ? false : true,
         };
+
+        if (paymentMethod === 'cash') {
+            let debtUser = user.debt + totalCost;
+
+            await fetch(`${server}/api/userUpdate`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ debt: debtUser })
+            });
+        }
 
         try {
             const response = await fetch(`${server}/api/addAgent`, {
@@ -195,16 +200,16 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
 
     function formatDateRange(dateRange) {
         if (!dateRange) return '';
-        
+
         const [startDate, endDate] = dateRange.split(' - ');
-        
+
         const formatDate = (date) => {
             const [year, month, day] = date.split('-');
             return `${day}.${month}.${year}`;
         };
-        
+
         const formattedStartDate = formatDate(startDate);
-        
+
         if (endDate) {
             const formattedEndDate = formatDate(endDate);
             return `${formattedStartDate} - ${formattedEndDate}`;
@@ -216,7 +221,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
     return (
         <div className={classes.calendar}>
             <h2>Бронирование тура на дату: {formatDateRange(selectedDate)}</h2>
-            
+
             <div className={classes.field}>
                 <label>Количество пассажиров:</label>
                 <input

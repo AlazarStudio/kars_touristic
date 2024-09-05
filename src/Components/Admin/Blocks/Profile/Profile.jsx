@@ -207,20 +207,20 @@ function Profile({ children, ...props }) {
                                         <li>
                                             <div className={classes.listBronItem}><b>Дата брони</b></div>
                                             <div className={classes.listBronItem}><b>Название тура</b></div>
-                                            {user.role == 'agent' && <div className={classes.listBronItem}><b>Участники</b></div>}
-                                            <div className={classes.listBronItem}><b>Дата выезда на тур</b></div>
+                                            {/* {user.role == 'agent' && <div className={classes.listBronItem}><b>Участники</b></div>} */}
+                                            <div className={classes.listBronItem}><b>Дата тура</b></div>
                                             <div className={classes.listBronItem}><b>Полная цена</b></div>
-                                            <div className={classes.listBronItem}><b>Способ оплаты</b></div>
+                                            <div className={classes.listBronItem}><b>Тип оплаты</b></div>
                                             <div className={classes.listBronItem}><b>Состояние</b></div>
                                         </li>
                                         {filteredAgents.map((agent) => (
                                             <li key={agent.id}>
                                                 <div className={classes.listBronItem}>{formatDate(agent.createdAt)}</div>
                                                 <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
-                                                {user.role == 'agent' && <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.fullName).join(', ')}</div>}
+                                                {/* {user.role == 'agent' && <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.name).join(', ')}</div>} */}
                                                 <div className={classes.listBronItem}>{formatDateRange(agent.bookingDate)}</div>
                                                 <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>
-                                                <div className={classes.listBronItem}>Оплата {agent.paymentType == 'cash' ? 'наличными' : 'картой'}</div><div className={classes.listBronItem}>{
+                                                <div className={classes.listBronItem}>{agent.paymentType == 'cash' ? 'Наличными' : 'Картой'}</div><div className={classes.listBronItem}>{
                                                     (agent.paymentType === 'cash' && agent.confirm == false) ?
                                                         'Не подтверждено' :
                                                         'Подтверждено'
