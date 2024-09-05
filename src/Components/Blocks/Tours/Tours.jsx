@@ -19,11 +19,15 @@ import Feedback from "../Feedback/Feedback";
 import Slider from "../Slider/Slider";
 
 import server from '../../../serverConfig'
+import ReactModal from "react-modal";
+import CalendarTour from "../CalendarTour/CalendarTour";
 
 function Tours({ children, requestType, pageName, tableName, similar, setCartCount, ...props }) {
     let { id } = useParams();
 
     const [tour, setTour] = useState();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const fetchTour = () => {
         fetch(`${server}/api/${requestType}/${id}`)
@@ -241,6 +245,27 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
             return formattedStartDate;
         }
     }
+
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            const element = document.getElementById(hash.substring(1));
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, [tour]);
+
+    const openModal = (date) => {
+        setSelectedDate(date); // Устанавливаем выбранную дату
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedDate(null);
+    };
+
     return (
         <>
             {tour ?
@@ -290,10 +315,13 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                     <div className={classes.tour_topInfo__left___items____element_____info}>{tour.cost} ₽</div>
                                                 </div>
                                             </div>
-                                            {tour.departureDates.length > 0 &&
-                                                <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
-                                                    {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
-                                                </div>
+                                            {(tour.departureDates.length > 0 && tour.departureDates[0]) &&
+                                                <a className={classes.tour_topInfo__left___btn} href={'#date'}>
+                                                    Забронировать
+                                                </a>
+                                                // <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
+                                                //     {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
+                                                // </div>
                                             }
                                         </div>
                                         <div className={classes.tour_topInfo__right}>
@@ -344,8 +372,8 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
                         <ToursTab tabs={tour.days} />
 
-                        {tour.departureDates.length > 0 &&
-                            <>
+                        {(tour.departureDates.length > 0 && tour.departureDates[0]) &&
+                            <div id="date" className={classes.docBlocks}>
                                 <CenterBlock>
                                     <H2 text_transform="uppercase" font_size="36px">Даты и наличие мест</H2>
                                 </CenterBlock>
@@ -368,10 +396,11 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
                                 <div className={classes.departureDates}>
                                     <div className={classes.departureDates_line}>
-                                        <div className={classes.departureDates_line_column}>Дата проведения тура</div>
-                                        <div className={classes.departureDates_line_column}>Продолжительность тура</div>
-                                        <div className={classes.departureDates_line_column}>Время отправления тура</div>
-                                        <div className={classes.departureDates_line_column}>Стоимость тура</div>
+                                        <div className={classes.departureDates_line_column}>Дата проведения</div>
+                                        <div className={classes.departureDates_line_column}>Продолжительность</div>
+                                        <div className={classes.departureDates_line_column}>Время отправления</div>
+                                        <div className={classes.departureDates_line_column}>Стоимость</div>
+                                        <div className={classes.departureDates_line_column}></div>
                                     </div>
 
                                     {filteredGroupedByYearAndMonth
@@ -389,13 +418,29 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                         <div className={classes.departureDates_line_column}>{duration}</div>
                                                         <div className={classes.departureDates_line_column}>{departureTime}</div>
                                                         <div className={classes.departureDates_line_column}>{cost} ₽</div>
+                                                        <div className={classes.departureDates_line_column}>
+                                                            <div className={classes.departureDates_line_column_btn} onClick={() => openModal(range)}>
+                                                                Забронировать
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 );
                                             })
                                         ))}
                                 </div>
-                            </>
+                            </div>
                         }
+
+                        <ReactModal
+                            isOpen={isModalOpen}
+                            onRequestClose={closeModal}
+                            contentLabel="Booking Modal"
+                            ariaHideApp={false}
+                            className={classes.modal}
+                            overlayClassName={classes.overlay}
+                        >
+                            <CalendarTour closeModal={closeModal} tour={tour} onChange={setSelectedDate} selectedDate={selectedDate} />
+                        </ReactModal>
 
                         {/* <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>

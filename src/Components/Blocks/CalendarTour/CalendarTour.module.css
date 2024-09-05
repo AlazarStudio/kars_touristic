@@ -1,0 +1,124 @@
+.calendar {
+    width: 1200px;
+    max-height: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.calendar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.calendar h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.calendar>.field {
+    margin-bottom: 20px;
+}
+
+.field {
+    width: 23%;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.input {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.passengerBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+    max-height: 438px;
+}
+
+.passengerInfo {
+    border: 1px solid #f0f0f0;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.passengerInfo_data{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.passengerInfo h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.paymentMethods {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.radioLabel {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.radioInput {
+    margin-right: 5px;
+}
+
+.totalSum {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.agreement {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.checkbox {
+    margin-right: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.activeButton {
+    background-color: #007bff;
+    color: white;
+}
+
+.disabledButton {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {}

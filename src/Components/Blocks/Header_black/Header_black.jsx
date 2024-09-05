@@ -75,14 +75,14 @@ function Header_black({ children, cartCount, ...props }) {
                     </div>
                     <div className={classes.navigation_btn}>
                         <ul>
-                            <li><Link to="/profile"><img src={profile} alt="" /></Link></li>
                             <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li>
-                            <li>
+                            <li><Link to="/profile"><img src={profile} alt="" /></Link></li>
+                            {/* <li>
                                 <Link to="/cart">
                                     <img src={cart} alt="" />
                                     {user && <div className={classes.cartCount}>{cartCount == 0 || cartCount ? cartCount : user && user.cart.length}</div>}
                                 </Link>
-                            </li>
+                            </li> */}
                             <li className={classes.mobileHeader} onClick={toggleMenu}><img src={burger} alt="Menu" /></li>
                         </ul>
                     </div>

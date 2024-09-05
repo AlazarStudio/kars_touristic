@@ -35,7 +35,7 @@ function Tours_Page({ children, requestType, pageName, tableName, similar, ...pr
         getUserInfo(token)
             .then(userData => {
                 setUser(userData);
-                setCartCount(userData.cart.length)
+                setCartCount(userData?.cart?.length || 0)
             })
             .catch(error => console.error('Error initializing user:', error));
     }, [token])
