@@ -121,16 +121,16 @@ function Profile({ children, ...props }) {
 
     function formatDateRange(dateRange) {
         if (!dateRange) return '';
-        
+
         const [startDate, endDate] = dateRange.split(' - ');
-        
+
         const formatDate = (date) => {
             const [year, month, day] = date.split('-');
             return `${day}.${month}.${year}`;
         };
-        
+
         const formattedStartDate = formatDate(startDate);
-        
+
         if (endDate) {
             const formattedEndDate = formatDate(endDate);
             return `${formattedStartDate} - ${formattedEndDate}`;
@@ -165,10 +165,14 @@ function Profile({ children, ...props }) {
                             </div>
                             <div className={classes.blockUser_info}>
                                 {user.name}
+                                <div className={classes.blockUser_info_desc}>
+                                    <div><b>Телефон:</b> {user.phone}</div>
+                                    <div><b>Почта:</b>  {user.email}</div>
+                                </div>
                             </div>
                         </div>
 
-                        <div className={classes.blockUser}>
+                        {/* <div className={classes.blockUser}>
                             <div className={classes.contacts}>
                                 <H2 text_transform={'uppercase'}>Контакты</H2>
 
@@ -193,7 +197,7 @@ function Profile({ children, ...props }) {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         {(user.role != 'admin' && filteredAgents.length > 0) &&
                             <div className={classes.blockUser}>

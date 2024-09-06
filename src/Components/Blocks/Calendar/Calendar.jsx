@@ -246,7 +246,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
             if (!token) {
                 // Если токен не найден, регистрируем нового пользователя
                 let formData = {
-                    username: bron.client[0].email,
+                    username: bron.client[0].phone,
                     password: generatePassword(12),
                     name: bron.client[0].name,
                     phone: bron.client[0].phone,
@@ -258,6 +258,13 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     birthDate: bron.client[0].birthDate
                 };
 
+                let forEmail = {
+                    "to": formData.email,
+                    "subject": "Данные для авторизации на сайте https://karstouristic.ru/",
+                    "text": "",
+                    "html": `<b>Логин:</b> ${formData.username} <br /> <b>Пароль:</b> ${formData.password}`
+                }
+
                 try {
                     const response = await fetch(`${server}/api/registration`, {
                         method: 'POST',
@@ -265,6 +272,14 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(formData)
+                    });
+
+                    const responseEmail = await fetch(`${server}/api/send-email`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(forEmail)
                     });
 
                     if (response.ok) {
@@ -302,7 +317,6 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
             userID: userId, // Используем ID пользователя для бронирования
         };
         
-
         try {
             const responseBron = await fetch(`${server}/api/addHotelBron`, {
                 method: 'POST',

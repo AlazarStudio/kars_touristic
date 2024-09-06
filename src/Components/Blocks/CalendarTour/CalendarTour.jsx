@@ -165,6 +165,13 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 birthDate: passengerInfo[0].birthDate,
             };
 
+            let forEmail = {
+                "to": formData.email,
+                "subject": "Данные для авторизации на сайте https://karstouristic.ru/",
+                "text": "",
+                "html": `<b>Логин:</b> ${formData.username} <br /> <b>Пароль:</b> ${formData.password}`
+            }
+
             try {
                 const response = await fetch(`${server}/api/registration`, {
                     method: 'POST',
@@ -174,11 +181,20 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                     body: JSON.stringify(formData)
                 });
 
+                const responseEmail = await fetch(`${server}/api/send-email`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(forEmail)
+                });
+
                 if (response.ok) {
                     const data = await response.json();
                     localStorage.setItem('token', data.token);
 
-                    await bookTour(data.user._id);  // Здесь должна выполняться bookTour
+                    await bookTour(data.user._id);  
+
                 } else {
                     console.error('Ошибка регистрации');
                     return;
