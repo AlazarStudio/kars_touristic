@@ -6,12 +6,13 @@ import server from '../../../../../serverConfig';
 import { Link, useParams } from "react-router-dom";
 import AddMultidayTours from "../AddMultidayTours/AddMultidayTours";
 import EditMultidayTours from "../EditMultidayTours/EditMultidayTours";
+import DuplicateTourModal from "../DuplicateTourModal/DuplicateTourModal";
 
 const ItemTypes = {
     TOUR: 'tour',
 };
 
-function Tour({ tour, index, moveTour, deleteElement }) {
+function Tour({ tour, index, moveTour, deleteElement, openModal }) {
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.TOUR,
         item: { index },
@@ -43,6 +44,9 @@ function Tour({ tour, index, moveTour, deleteElement }) {
                 <div className={classes.multidayTours_data__tour___info____title}>{tour.tourTitle}</div>
             </div>
             <div className={classes.multidayTours_data__tour___btns}>
+                <div className={`${classes.multidayTours_data__tour___btns____item}`} onClick={() => openModal(tour)}>
+                    <img src="/add.png" alt="" />
+                </div>
                 <Link to={`editHotel/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>
                     <img src="/edit.webp" alt="" />
                 </Link>
@@ -58,6 +62,7 @@ function MultidayTours({ children, title, type, role, ...props }) {
     const { add } = useParams();
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const response = () => {
         if (role == 'admin') {
@@ -108,6 +113,16 @@ function MultidayTours({ children, title, type, role, ...props }) {
             .catch(error => console.error('Ошибка при удалении тура:', error));
     };
 
+    const openModal = (tour) => {
+        setSelectedTour(tour);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedTour(null);
+    };
+
     return (
         <>
             {!add ?
@@ -130,6 +145,7 @@ function MultidayTours({ children, title, type, role, ...props }) {
                                     tour={tour}
                                     moveTour={moveTour}
                                     deleteElement={deleteElement}
+                                    openModal={openModal}
                                 />
                             ))}
                         </div>
@@ -155,6 +171,12 @@ function MultidayTours({ children, title, type, role, ...props }) {
                     }
                 </>
             }
+            <DuplicateTourModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                tour={selectedTour}
+                refreshTours={response}
+            />
         </>
     );
 }

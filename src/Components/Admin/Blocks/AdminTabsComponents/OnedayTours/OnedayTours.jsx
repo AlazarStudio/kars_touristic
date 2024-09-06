@@ -6,12 +6,13 @@ import { Link, useParams } from "react-router-dom";
 import AddOnedayTours from "../AddOnedayTours/AddOnedayTours";
 import EditOnedayTours from "../EditOnedayTours/EditOnedayTours";
 import server from '../../../../../serverConfig';
+import DuplicateOneDayTourModal from "../DuplicateOneDayTourModal/DuplicateOneDayTourModal";
 
 const ItemTypes = {
     TOUR: 'tour',
 };
 
-function Tour({ tour, index, moveTour, deleteElement }) { // добавляем deleteElement в параметры
+function Tour({ tour, index, moveTour, deleteElement, openModal }) { // добавляем deleteElement в параметры
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.TOUR,
         item: { index },
@@ -43,6 +44,9 @@ function Tour({ tour, index, moveTour, deleteElement }) { // добавляем 
                 <div className={classes.multidayTours_data__tour___info____title}>{tour.tourTitle}</div>
             </div>
             <div className={classes.multidayTours_data__tour___btns}>
+                <div className={`${classes.multidayTours_data__tour___btns____item}`} onClick={() => openModal(tour)}>
+                    <img src="/add.png" alt="" />
+                </div>
                 <Link to={`editHotel/${tour._id}`} className={`${classes.multidayTours_data__tour___btns____item} ${classes.editBtn}`}>
                     <img src="/edit.webp" alt="" />
                 </Link>
@@ -58,6 +62,7 @@ function OnedayTours({ children, title, type, role, ...props }) {
     const { add } = useParams();
     const [selectedTour, setSelectedTour] = useState(null);
     const [tours, setTours] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const response = () => {
         if (role == 'admin') {
@@ -105,6 +110,16 @@ function OnedayTours({ children, title, type, role, ...props }) {
             .catch(error => console.error('Ошибка при удалении тура:', error));
     }
 
+    const openModal = (tour) => {
+        setSelectedTour(tour);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedTour(null);
+    };
+
     return (
         <>
             {!add ?
@@ -126,7 +141,8 @@ function OnedayTours({ children, title, type, role, ...props }) {
                                     index={index}
                                     tour={tour}
                                     moveTour={moveTour}
-                                    deleteElement={deleteElement} // Передаем функцию deleteElement
+                                    deleteElement={deleteElement}
+                                    openModal={openModal}
                                 />
                             ))}
                         </div>
@@ -152,6 +168,12 @@ function OnedayTours({ children, title, type, role, ...props }) {
                     }
                 </>
             }
+            <DuplicateOneDayTourModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                tour={selectedTour}
+                refreshTours={response}
+            />
         </>
     );
 }
