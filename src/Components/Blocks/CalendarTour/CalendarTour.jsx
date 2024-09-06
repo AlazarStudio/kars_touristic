@@ -20,7 +20,8 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
     const [isAgreed, setIsAgreed] = useState(false);
     const [user, setUser] = useState(null);
     const [totalCost, setTotalCost] = useState(0);
-    const [fieldsToUpdate, setFieldsToUpdate] = useState({});  // Для отслеживания полей, которые нужно обновить
+    const [fieldsToUpdate, setFieldsToUpdate] = useState({});
+    const [paymentID, setPaymentID] = useState('');
 
     const [newUser, setNewUser] = useState(null);
 
@@ -149,7 +150,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         return password;
     }
 
-    const handleBooking = async () => {
+    const handleBooking = async (paymentID) => {
         if (!token) {
             // Регистрация нового пользователя
             let formData = {
@@ -193,7 +194,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                     const data = await response.json();
                     localStorage.setItem('token', data.token);
 
-                    await bookTour(data.user._id);  
+                    await bookTour(paymentID, data.user._id);
 
                 } else {
                     console.error('Ошибка регистрации');
@@ -205,11 +206,11 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             }
         } else {
             await updateUserFields();
-            await bookTour();  // Здесь должна выполняться bookTour
+            await bookTour(paymentID);  // Здесь должна выполняться bookTour
         }
     };
 
-    const bookTour = async (newRegUserId) => {
+    const bookTour = async (paymentID, newRegUserId) => {
         const userId = user ? user._id : newRegUserId;
 
         const formData = {
@@ -246,7 +247,24 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 body: JSON.stringify(formData)
             });
 
+
             if (response.ok) {
+                const data = await response.json();
+
+                const emailPayload = {
+                    ...formData,
+                    bookingInfo: data,
+                    paymentNumber: paymentID
+                };
+
+                const responseEmail = await fetch(`${server}/api/send-email-file`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ formData: emailPayload })
+                });
+
                 closeModal();
                 alert('Бронирование успешно!');
             } else {
@@ -436,8 +454,8 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 />
                 <p>Согласен с правилами бронирования</p>
             </div>
-            {/* 
-            <button
+
+            {/* <button
                 onClick={handleBooking}
                 disabled={!isAgreed}
                 className={isAgreed ? classes.activeButton : classes.disabledButton}
@@ -449,9 +467,9 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                     style={{}}
                     order_name={tour.tourTitle}
                     order_cost={totalCost}
-                    // order_id={uniqueOrderId}
-                    onPaymentSuccess={handleBooking}
-                ></PaymentButton>
+                    setPaymentID={setPaymentID}  
+                    onPaymentSuccess={(paymentID) => handleBooking(paymentID)} 
+                />
             }
 
         </div>
@@ -459,28 +477,3 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
 }
 
 export default CalendarTour;
-
-
-
-
-
-// (
-//     bron.userID !== '' &&
-//     bron.name !== '' &&
-//     bron.adress !== '' &&
-//     bron.guests !== '' &&
-//     bron.price !== '' &&
-//     bron.arrivalDate !== '' &&
-//     bron.departureDate !== '' &&
-//     bron.client[0].name !== '' &&
-//     bron.client[0].phone !== '' &&
-//     bron.client[0].email !== ''
-// )
-// &&
-// <PaymentButton
-//     style={{}}
-//     order_name={hotel.title}
-//     order_cost={bron.fullPrice}
-//     // order_id={uniqueOrderId}
-//     onPaymentSuccess={handleAddBron}
-// ></PaymentButton>

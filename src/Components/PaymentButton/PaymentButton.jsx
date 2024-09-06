@@ -1,22 +1,22 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const PaymentButton = ({ order_name, order_cost, onPaymentSuccess, ...props }) => {
+const PaymentButton = ({ order_name, order_cost, onPaymentSuccess, setPaymentID, ...props }) => {
     const [paymentProcessed, setPaymentProcessed] = useState(false);
     const isProcessing = useRef(false);
 
-    const handleSuccess = useCallback(() => {
+    const handleSuccess = useCallback((uniqeId) => {
         if (isProcessing.current) return; // предотвращаем повторное выполнение
 
         isProcessing.current = true;
         if (!paymentProcessed) {
             setPaymentProcessed(true);
+            setPaymentID(uniqeId);  // Устанавливаем уникальный ID платежа
             if (onPaymentSuccess) {
-                onPaymentSuccess();
+                onPaymentSuccess(uniqeId);  // Вызываем onPaymentSuccess и передаем paymentID
             }
-            // console.log("Payment Successful");
         }
-    }, [paymentProcessed, onPaymentSuccess]);
+    }, [paymentProcessed, onPaymentSuccess, setPaymentID]);
 
     useEffect(() => {
         const script = document.createElement('script');
@@ -32,7 +32,10 @@ const PaymentButton = ({ order_name, order_cost, onPaymentSuccess, ...props }) =
                         key: "cj16pD7iiLSU54uC2GEkFWlU5tgoMT2FYv9tUT2mCXw=",
                         order_id: uniqeId,
                         prepayment_page: "0",
-                        on_success: handleSuccess,
+                        on_success: () => {
+                            setPaymentID(uniqeId)
+                            handleSuccess(uniqeId)
+                        },
                         on_fail: function () {
                             console.log("Payment Failed", uniqeId);
                         },
