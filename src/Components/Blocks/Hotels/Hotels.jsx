@@ -94,7 +94,29 @@ function Hotels({ children, ...props }) {
                                             <Link to={'/'}>Главная</Link> / <Link to={`/region/${hotel.region}`}>{regionNameData}</Link> / {hotel.title}
                                         </div>
                                         <div className={classes.hotelTitle}>{hotel.title} ({hotel.city})</div>
-                                        <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
+                                        <div className={classes.hotelInfo_stars_links}>
+                                            <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
+
+                                            <div className={classes.links}>
+                                                {hotel.links.map((item, index) => (
+                                                    <a key={index} href={`${item}`} target="_blank" className={classes.links_item}>
+                                                        {/* <img src="/tg_white.webp" alt="" /> */}
+                                                        {item.includes("t.me") == true ?
+                                                            <img src="/tg_white.webp" alt="" />
+                                                            :
+                                                            item.includes("wa.me") == true ?
+                                                                <img src="/wa_white.webp" alt="" />
+                                                                :
+                                                                item.includes("vk") == true ?
+                                                                    <img src="/vk_white.webp" alt="" />
+                                                                    :
+                                                                    <img src="/website.png" alt="" />
+                                                        }
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+
                                         <div className={classes.hotelDesc}>{hotel.description}</div>
                                         <div className={classes.hotelBron} onClick={openModal}>Забронировать</div>
 
@@ -107,7 +129,7 @@ function Hotels({ children, ...props }) {
                                             className={classes.modal}
                                             overlayClassName={classes.overlay}
                                         >
-                                            <Calendar closeModal={closeModal} hotel={hotel} rooms={rooms}/>
+                                            <Calendar closeModal={closeModal} hotel={hotel} rooms={rooms} />
                                             <button onClick={closeModal} className={classes.modalCloseButton}>&#x2715;</button>
                                         </ReactModal>
                                     </div>
@@ -190,6 +212,7 @@ function Hotels({ children, ...props }) {
                                 :
                                 null
                             }
+                            <br />
 
                             {/* <CenterBlock>
                                 <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
@@ -197,20 +220,6 @@ function Hotels({ children, ...props }) {
 
                             <Feedback /> */}
 
-                            <div className={classes.links}>
-                                {hotel.links.map((item, index) => (
-                                    <a key={index} href={`${item}`} target="_blank" className={classes.links_item}>
-                                        <img src="/tg_white.webp" alt="" />
-                                    </a>
-                                ))}
-                                {/* 
-                                <a href="#" target="_blank" className={classes.links_item}>
-                                    <img src="/vk_white.webp" alt="" />
-                                </a>
-                                <a href="#" target="_blank" className={classes.links_item}>
-                                    <img src="/wa_white.webp" alt="" />
-                                </a> */}
-                            </div>
                         </WidthBlock>
                     </CenterBlock>
                 </>

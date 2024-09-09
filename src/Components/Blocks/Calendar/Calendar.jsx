@@ -12,23 +12,6 @@ import axios from 'axios';
 function Calendar({ children, hotel, rooms, closeModal, ...props }) {
     let token = localStorage.getItem('token');
 
-    // const onPaymentSuccess = async (e) => {
-    //     e.preventDefault();
-    //     try {
-    //         const response = await axios.post('../../../../public/php/send_mail file.php', new URLSearchParams(form));
-    //         alert(response.data);
-    //         setForm({
-    //             email: '',
-    //             subject: '',
-    //             message: ''
-    //         });
-    //         handleAddBron();
-    //     } catch (error) {
-    //         console.error('Ошибка при отправке сообщения:', error);
-    //         alert('Произошла ошибка при отправке сообщения.');
-    //     }
-    // };
-
     const [user, setUser] = useState();
 
     const getUserInfo = async (token) => {
@@ -258,13 +241,6 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     birthDate: bron.client[0].birthDate
                 };
 
-                let forEmail = {
-                    "to": formData.email,
-                    "subject": "Данные для авторизации на сайте https://karstouristic.ru/",
-                    "text": "",
-                    "html": `<b>Логин:</b> ${formData.username} <br /> <b>Пароль:</b> ${formData.password}`
-                }
-
                 try {
                     const response = await fetch(`${server}/api/registration`, {
                         method: 'POST',
@@ -274,20 +250,27 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                         body: JSON.stringify(formData)
                     });
 
-                    const responseEmail = await fetch(`${server}/api/send-email`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(forEmail)
-                    });
-
                     if (response.ok) {
                         const data = await response.json();
                         localStorage.setItem('token', data.token);
-                        setUser(data.user); // Устанавливаем нового пользователя
 
-                        // После успешной регистрации продолжаем процесс бронирования
+                        let forEmail = {
+                            "to": formData.email,
+                            "subject": "Данные для авторизации на сайте https://karstouristic.ru/",
+                            "text": "",
+                            "html": `<b>Логин:</b> ${formData.username} <br /> <b>Пароль:</b> ${formData.password}`
+                        }
+
+                        const responseEmail = await fetch(`${server}/api/send-email`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(forEmail)
+                        });
+
+                        setUser(data.user);
+
                         await processBooking(data.user._id);
                     } else {
                         console.error('Ошибка регистрации');
@@ -298,7 +281,6 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     return;
                 }
             } else {
-                // Если токен существует, продолжаем процесс бронирования
                 console.log(user._id)
                 await processBooking(user._id);
             }
@@ -310,13 +292,12 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
         }
     };
 
-    // Функция для обработки бронирования
     const processBooking = async (userId) => {
         let formData = {
             ...bron,
-            userID: userId, // Используем ID пользователя для бронирования
+            userID: userId,
         };
-        
+
         try {
             const responseBron = await fetch(`${server}/api/addHotelBron`, {
                 method: 'POST',
@@ -327,7 +308,6 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
             });
 
             if (responseBron.ok) {
-                // const responseMail = await axios.post('../../../../public/php/send_mail file.php', new URLSearchParams());
                 console.log('Бронирование успешно:', formData);
             } else {
                 console.error('Ошибка при бронировании');
@@ -336,6 +316,26 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
             console.error('Ошибка при бронировании:', error);
         }
     };
+
+    useEffect(() => {
+        const calculateFullPrice = () => {
+            if (bron.arrivalDate && bron.departureDate) {
+                const arrivalDate = new Date(bron.arrivalDate);
+                const departureDate = new Date(bron.departureDate);
+    
+                const differenceInTime = departureDate - arrivalDate;
+                const numberOfDays = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24)) + 1 || 1; // Количество дней
+    
+                const fullPrice = numberOfDays * bron.price * bron.guests;
+                setBron((prev) => ({
+                    ...prev,
+                    fullPrice: fullPrice
+                }));
+            }
+        };
+    
+        calculateFullPrice();
+    }, [bron.arrivalDate, bron.departureDate, bron.guests, bron.price]);
 
     return (
         <div className={classes.calendar}>
@@ -528,7 +528,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     bron.client[0].passportNumber !== '' &&
                     bron.client[0].passportSeries !== '' &&
                     bron.client[0].gender !== '' &&
-                    bron.client[0].birthDate !== '' 
+                    bron.client[0].birthDate !== ''
                 )
                 &&
                 <PaymentButton
