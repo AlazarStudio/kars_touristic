@@ -13,6 +13,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
     let token = localStorage.getItem('token');
 
     const [user, setUser] = useState();
+    const [paymentID, setPaymentID] = useState('');
 
     const getUserInfo = async (token) => {
         if (token) {
@@ -81,7 +82,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
         guests: '1',
         price: hotel && hotel.type == 'apartments' ? hotel.price : '',
         fullPrice: hotel && hotel.type == 'apartments' ? hotel.price : '',
-        roomNumber: 'none',
+        roomNumber: '-',
         arrivalDate: '',
         departureDate: '',
         userID: '',
@@ -205,7 +206,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
         return password;
     }
 
-    const handleAddBron = async () => {
+    const handleAddBron = async (paymentID) => {
         // Проверка на заполненность данных
         if (
             bron.name !== '' &&
@@ -271,7 +272,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
 
                         setUser(data.user);
 
-                        await processBooking(data.user._id);
+                        await processBooking(paymentID, data.user._id);
                     } else {
                         console.error('Ошибка регистрации');
                         return;
@@ -281,8 +282,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     return;
                 }
             } else {
-                console.log(user._id)
-                await processBooking(user._id);
+                await processBooking(paymentID, user._id);
             }
 
             closeModal();
@@ -292,10 +292,13 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
         }
     };
 
-    const processBooking = async (userId) => {
+    const processBooking = async (paymentID, userId) => {
         let formData = {
             ...bron,
             userID: userId,
+            paymentNumber: paymentID,
+            hotel,
+            rooms
         };
 
         try {
@@ -308,7 +311,20 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
             });
 
             if (responseBron.ok) {
-                console.log('Бронирование успешно:', formData);
+                const data = await responseBron.json();
+                const emailPayload = {
+                    ...formData,
+                    bookingInfo: data,
+                };
+                const responseEmail = await fetch(`${server}/api/send-email-file-hotel`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ formData: emailPayload })
+                });
+
+                // console.log('Бронирование успешно:', formData);
             } else {
                 console.error('Ошибка при бронировании');
             }
@@ -322,10 +338,10 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
             if (bron.arrivalDate && bron.departureDate) {
                 const arrivalDate = new Date(bron.arrivalDate);
                 const departureDate = new Date(bron.departureDate);
-    
+
                 const differenceInTime = departureDate - arrivalDate;
                 const numberOfDays = Math.ceil(differenceInTime / (1000 * 60 * 60 * 24)) + 1 || 1; // Количество дней
-    
+
                 const fullPrice = numberOfDays * bron.price * bron.guests;
                 setBron((prev) => ({
                     ...prev,
@@ -333,7 +349,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                 }));
             }
         };
-    
+
         calculateFullPrice();
     }, [bron.arrivalDate, bron.departureDate, bron.guests, bron.price]);
 
@@ -536,7 +552,8 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                     order_name={hotel.title}
                     order_cost={bron.fullPrice}
                     // order_id={uniqueOrderId}
-                    onPaymentSuccess={handleAddBron}
+                    setPaymentID={setPaymentID}
+                    onPaymentSuccess={(paymentID) => handleAddBron(paymentID)}
                 ></PaymentButton>
             }
         </div>
