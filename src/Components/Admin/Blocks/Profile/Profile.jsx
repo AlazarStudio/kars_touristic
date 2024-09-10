@@ -22,6 +22,40 @@ function Profile({ children, ...props }) {
         return Date.now() < expirationTime;
     };
 
+    const getHoursUntilExpiration = (token) => {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const expirationTime = payload.exp * 1000;
+        const currentTime = Date.now();
+        const timeDifference = expirationTime - currentTime;
+        const hoursUntilExpiration = timeDifference / (1000 * 60 * 60);
+
+        return hoursUntilExpiration;
+    };
+
+    const clearLocalStorageAtMidnight = () => {
+        const now = new Date();
+    
+        const nextMidnight = new Date();
+        nextMidnight.setHours(0, 0, 0, 0);
+    
+        if (now > nextMidnight) {
+            nextMidnight.setDate(nextMidnight.getDate() + 1);
+        }
+    
+        const timeUntilMidnight = nextMidnight - now;
+    
+        setTimeout(() => {
+            localStorage.clear();
+            console.log('Local Storage очищен в 00:00.');
+    
+            setInterval(() => {
+                localStorage.clear();
+                console.log('Local Storage очищен в 00:00.');
+            }, 24 * 60 * 60 * 1000);
+    
+        }, timeUntilMidnight);
+    };
+
     const getUserInfo = async (token) => {
         try {
             const response = await fetch(`${server}/api/user`, {
@@ -83,6 +117,11 @@ function Profile({ children, ...props }) {
             console.log(error);
         }
     };
+
+    clearLocalStorageAtMidnight();
+
+    const hours = getHoursUntilExpiration(localStorage.getItem('token'));
+    console.log(`Токен истечет через ${Math.floor(hours)} часов.`);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
