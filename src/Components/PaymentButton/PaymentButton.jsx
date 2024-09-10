@@ -58,23 +58,54 @@ const PaymentButton = ({ order_name, order_cost, onPaymentSuccess, setPaymentID,
 
     return (
         <div>
-            <style>{`
-                #a1lite_button {
-                    background: url(https://partner.life-pay.ru/gui/images/a1lite_buttons/green-buttons_36.png) no-repeat -9999px -9999px;
-                }
+            <style>
+                {/* {`
+                    #a1lite_button {
+                        background: url(https://partner.life-pay.ru/gui/images/a1lite_buttons/green-buttons_36.png) no-repeat -9999px -9999px;
+                    }
 
-                #a1lite_button:hover {
-                    background: url(https://partner.life-pay.ru/gui/images/a1lite_buttons/green-buttons_36.png) no-repeat;
-                    padding-top: 56px;
-                    width: 164px;
-                    background-position: 3px 0px;
-                    height: 0px !important;
-                    display: inline-block;
+                    #a1lite_button:hover {
+                        background: url(https://partner.life-pay.ru/gui/images/a1lite_buttons/green-buttons_36.png) no-repeat;
+                        padding-top: 56px;
+                        width: 164px;
+                        background-position: 3px 0px;
+                        height: 0px !important;
+                        display: inline-block;
+                    }
+                `} */}
+                {
+                    `
+                        .payButtonHere{
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 150px;
+                            border: 1px solid #000;
+                            padding: 12px 15px;
+                            border-radius: 10px;
+                            cursor: pointer;
+                            transition: all 0.3s ease-in-out;
+                            color: #000;
+                        }
+
+                        .payButtonHere:hover{
+                            background-color: #000;
+                            color: #fff;
+                        }
+                    `
                 }
-            `}</style>
-            <a href="#" id="payment-button" >
-                <img id="a1lite_button" style={{ border: 0 }}
-                    src="https://partner.life-pay.ru/gui/images/a1lite_buttons/green-buttons_35.png" title="Оплатить" alt="Оплатить" />
+            </style>
+            <a href="#" id="payment-button" className='payButtonHere'>
+                {/* <img
+                    id="a1lite_button"
+                    style={{ border: 0 }}
+                    className='payButtonHere'
+                    // src="https://partner.life-pay.ru/gui/images/a1lite_buttons/green-buttons_35.png"
+                    title="Оплатить"
+                    alt="Оплатить"
+                /> */}
+
+                Оплатить
             </a>
         </div>
     );
