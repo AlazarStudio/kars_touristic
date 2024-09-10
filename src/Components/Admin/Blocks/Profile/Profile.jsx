@@ -120,8 +120,8 @@ function Profile({ children, ...props }) {
 
     clearLocalStorageAtMidnight();
 
-    const hours = getHoursUntilExpiration(localStorage.getItem('token'));
-    console.log(`Токен истечет через ${Math.floor(hours)} часов.`);
+    // const hours = getHoursUntilExpiration(localStorage.getItem('token'));
+    // console.log(`Токен истечет через ${Math.floor(hours)} часов.`);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
