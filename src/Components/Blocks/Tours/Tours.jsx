@@ -186,6 +186,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
     const [activeTab, setActiveTab] = useState(null);
 
+    const [currentDay, setCurrentDay] = useState(new Date().toISOString().split('T')[0]);
     const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
@@ -216,7 +217,6 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
     const filteredGroupedByYearAndMonth = tour && groupedByYearAndMonth.filter(item => {
         return item.year > currentYear || (item.year === currentYear && item.month >= currentMonth);
     });
-
 
     const getMonthName = (month) => {
         const months = [
@@ -408,6 +408,10 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                         .map((item, index) => (
                                             item.ranges.map((range, rangeIndex) => {
                                                 const [start, end] = range.split(' - ');
+
+                                                if (currentDay > start) {
+                                                    return
+                                                }
                                                 const duration = tour.duration;
                                                 const departureTime = tour.departureTime;
                                                 const cost = tour.cost;

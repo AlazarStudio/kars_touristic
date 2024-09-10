@@ -34,25 +34,25 @@ function Profile({ children, ...props }) {
 
     const clearLocalStorageAtMidnight = () => {
         const now = new Date();
-    
+
         const nextMidnight = new Date();
         nextMidnight.setHours(0, 0, 0, 0);
-    
+
         if (now > nextMidnight) {
             nextMidnight.setDate(nextMidnight.getDate() + 1);
         }
-    
+
         const timeUntilMidnight = nextMidnight - now;
-    
+
         setTimeout(() => {
             localStorage.clear();
             console.log('Local Storage очищен в 00:00.');
-    
+
             setInterval(() => {
                 localStorage.clear();
                 console.log('Local Storage очищен в 00:00.');
             }, 24 * 60 * 60 * 1000);
-    
+
         }, timeUntilMidnight);
     };
 
@@ -145,7 +145,11 @@ function Profile({ children, ...props }) {
         return <div>Загрузка...</div>;
     }
 
-    const filteredAgents = agents.filter(agent => agent.agent === user._id);
+    const filteredAgents = agents.filter(agent =>
+        agent.agent === user._id ||
+        agent.passengers.some(passenger => passenger.name == user.name)
+    );
+
     const filteredHotelBrons = hotelBrons.filter(hotelBron => hotelBron.userID === user._id);
 
     function formatDate(isoDate) {
@@ -177,6 +181,9 @@ function Profile({ children, ...props }) {
             return formattedStartDate;
         }
     }
+
+
+    console.log(hotelBrons)
     return (
         <>
             <Header_black />
@@ -242,7 +249,7 @@ function Profile({ children, ...props }) {
                             <div className={classes.blockUser}>
                                 <div className={classes.contacts}>
                                     <div className={classes.titleBlock}>
-                                        <H2 text_transform={'uppercase'}>Брони</H2>
+                                        <H2 text_transform={'uppercase'}>Брони туров</H2>
                                         {user.role == 'agent' && <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>}
                                     </div>
 
@@ -255,6 +262,7 @@ function Profile({ children, ...props }) {
                                             <div className={classes.listBronItem}><b>Полная цена</b></div>
                                             <div className={classes.listBronItem}><b>Тип оплаты</b></div>
                                             <div className={classes.listBronItem}><b>Состояние</b></div>
+                                            <div className={classes.listBronItem}><b>Скачать</b></div>
                                         </li>
                                         {filteredAgents.map((agent) => (
                                             <li key={agent.id}>
@@ -263,11 +271,20 @@ function Profile({ children, ...props }) {
                                                 {/* {user.role == 'agent' && <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.name).join(', ')}</div>} */}
                                                 <div className={classes.listBronItem}>{formatDateRange(agent.bookingDate)}</div>
                                                 <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>
-                                                <div className={classes.listBronItem}>{agent.paymentType == 'cash' ? 'Наличными' : 'Картой'}</div><div className={classes.listBronItem}>{
+                                                <div className={classes.listBronItem}>{agent.paymentType == 'cash' ? 'Наличными' : 'Картой'}</div>
+                                                <div className={classes.listBronItem}>{
                                                     (agent.paymentType === 'cash' && agent.confirm == false) ?
                                                         'Не подтверждено' :
                                                         'Подтверждено'
                                                 }
+                                                </div>
+                                                <div className={classes.listBronItem}>
+                                                    <a href={`${server}/refs/VOUCHER для тура ${agent.tours[0].tourTitle} - ${agent.passengers[0].name}.docx`}>
+                                                        <img src="/voucher.png" alt="" />
+                                                    </a>
+                                                    <a href={''}>
+                                                        <img src="/contract.png" alt="" />
+                                                    </a>
                                                 </div>
                                             </li>
                                         ))}
@@ -275,6 +292,7 @@ function Profile({ children, ...props }) {
                                 </div>
                             </div>
                         }
+
 
                         {(user.role != 'admin' && filteredHotelBrons.length > 0) &&
                             <div className={classes.blockUser}>
@@ -290,8 +308,9 @@ function Profile({ children, ...props }) {
                                             <div className={classes.listBronItem}><b>Название отеля</b></div>
                                             <div className={classes.listBronItem}><b>Количество гостей</b></div>
                                             <div className={classes.listBronItem}><b>Полная цена</b></div>
-                                            <div className={classes.listBronItem}><b>Дата прибытия</b></div>
-                                            <div className={classes.listBronItem}><b>Дата выезда</b></div>
+                                            <div className={classes.listBronItem}><b>Прибытие</b></div>
+                                            <div className={classes.listBronItem}><b>Выезд</b></div>
+                                            <div className={classes.listBronItem}><b>Скачать</b></div>
                                         </li>
                                         {filteredHotelBrons.map((hotelBron) => (
                                             <li key={hotelBron.id}>
@@ -301,6 +320,14 @@ function Profile({ children, ...props }) {
                                                 <div className={classes.listBronItem}>{Number(hotelBron.fullPrice).toLocaleString('ru-RU')} ₽</div>
                                                 <div className={classes.listBronItem}>{formatDate(hotelBron.arrivalDate)}</div>
                                                 <div className={classes.listBronItem}>{formatDate(hotelBron.departureDate)}</div>
+                                                <div className={classes.listBronItem}>
+                                                    <a href={`${server}/refs/VOUCHER для отеля ${hotelBron.name} - ${hotelBron.client[0].name}.docx`}>
+                                                        <img src="/voucher.png" alt="" />
+                                                    </a>
+                                                    <a href={''}>
+                                                        <img src="/contract.png" alt="" />
+                                                    </a>
+                                                </div>
                                             </li>
                                         ))}
                                     </ul>

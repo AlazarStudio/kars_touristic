@@ -176,6 +176,9 @@
 }
 
 .listBronItem{
+    display: flex;
+    align-items: center;
+    gap: 10px;
     width: 15%;
 }
 
@@ -189,6 +192,14 @@
 
 .listBronItem:nth-child(3){
     width: 20%;
+}
+
+.listBronItem:nth-child(7){
+    width: 10%;
+}
+
+.listBronItem img{
+    width: 35px;
 }
 
 .titleBlock {

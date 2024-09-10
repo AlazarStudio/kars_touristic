@@ -195,8 +195,6 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                         body: JSON.stringify(forEmail)
                     });
 
-
-                    console.log(data.user._id);
                     await bookTour(paymentID, data.user._id);
 
                 } else {
@@ -208,8 +206,63 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 return;
             }
         } else {
-            await updateUserFields();
-            await bookTour(paymentID);  // Здесь должна выполняться bookTour
+            if (user && (user.role == 'agent' || user.role == 'admin')) {
+                let formData = {
+                    username: passengerInfo[0].phone,
+                    password: generatePassword(12),
+                    name: passengerInfo[0].name,
+                    phone: passengerInfo[0].phone,
+                    email: passengerInfo[0].email,
+                    address: passengerInfo[0].address,
+                    passportNumber: passengerInfo[0].passportNumber,
+                    passportSeries: passengerInfo[0].passportSeries,
+                    gender: passengerInfo[0].gender,
+                    birthDate: passengerInfo[0].birthDate,
+                };
+
+                try {
+                    const response = await fetch(`${server}/api/registration`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
+
+
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        let forEmail = {
+                            "to": formData.email,
+                            "subject": "Данные для авторизации на сайте https://karstouristic.ru/",
+                            "text": "",
+                            "html": `<b>Логин:</b> ${formData.username} <br /> <b>Пароль:</b> ${formData.password}`
+                        }
+
+                        const responseEmail = await fetch(`${server}/api/send-email`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(forEmail)
+                        });
+
+                        await updateUserFields();
+                        await bookTour(paymentID, data.user._id);
+
+                    } else {
+                        console.error('Ошибка регистрации:', error);
+                        return;
+                    }
+                } catch (error) {
+                    console.error('Ошибка при регистрации:', error);
+                    return;
+                }
+            } else {
+                await updateUserFields();
+                await bookTour(paymentID);
+            }
         }
     };
 
@@ -257,8 +310,11 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 const emailPayload = {
                     ...formData,
                     bookingInfo: data,
-                    paymentNumber: paymentID
+                    paymentNumber: paymentID,
+                    user
                 };
+
+                console.log(emailPayload);
 
                 const responseEmail = await fetch(`${server}/api/send-email-file`, {
                     method: 'POST',
