@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classes from './Footer.module.css';
 import { Link } from "react-router-dom";
 
@@ -8,8 +8,24 @@ import tg from '/tg.webp';
 import vk from '/vk.webp';
 
 import arnament from '/header_arnament.webp';
+import server from '../../../serverConfig';
 
 function Footer({ children, ...props }) {
+    const [contactsInfo, setContactsInfo] = useState("");
+
+    useEffect(() => {
+        async function fetchMissionInfo() {
+            try {
+                const response = await fetch(`${server}/api/contacts`);
+                const data = await response.json();
+                setContactsInfo(data);
+            } catch (error) {
+                console.error("Error fetching contacts info:", error);
+            }
+        }
+
+        fetchMissionInfo();
+    }, []);
     return (
         <>
             <footer>
@@ -41,13 +57,13 @@ function Footer({ children, ...props }) {
                     </div>
                     <div className={classes.footer_data__column}>
                         <div className={classes.footer_data__column___phone}>
-                            <a href="tel:+78005500488">+7 (800) 550-04-88</a>
+                            <a href={`tel:${contactsInfo.phone}`}>{contactsInfo.phone}</a>
                         </div>
                         <div className={classes.footer_data__column___text}>
                             <div>Телефон поддержки</div>
                         </div>
                         <div className={classes.footer_data__column___soc}>
-                            <a href="#" target="_blank" className={classes.footer_data__column___item____soc}>
+                            <a href="https://t.me/karstouristic" target="_blank" className={classes.footer_data__column___item____soc}>
                                 <img src={tg} alt="" />
                             </a>
                             <a href="#" target="_blank" className={classes.footer_data__column___item____soc}>
