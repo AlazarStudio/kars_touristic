@@ -202,6 +202,17 @@
     width: 35px;
 }
 
+.listBronItem{
+    display: flex;
+    justify-content: center;
+}
+
+.listBronItem a{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
 .titleBlock {
     display: flex;
     align-items: center;

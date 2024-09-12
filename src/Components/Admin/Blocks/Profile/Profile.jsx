@@ -282,9 +282,9 @@ function Profile({ children, ...props }) {
                                                     <a href={`${server}/refs/VOUCHER для тура ${agent.tours[0].tourTitle} - ${agent.passengers[0].name}.docx`}>
                                                         <img src="/voucher.png" alt="" />
                                                     </a>
-                                                    <a href={''}>
+                                                    {/* <a href={''}>
                                                         <img src="/contract.png" alt="" />
-                                                    </a>
+                                                    </a> */}
                                                 </div>
                                             </li>
                                         ))}

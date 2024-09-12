@@ -409,7 +409,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                             item.ranges.map((range, rangeIndex) => {
                                                 const [start, end] = range.split(' - ');
 
-                                                if (currentDay > start) {
+                                                if (currentDay > end) {
                                                     return
                                                 }
                                                 const duration = tour.duration;
