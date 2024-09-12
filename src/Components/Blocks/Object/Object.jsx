@@ -142,9 +142,9 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                     : <img src="/userLike_empty.png" alt="Not Liked" />
                 }
             </div>
-            <div className={classes.objects_item__moreInfo} onClick={() => setMoreInfoText(!moreInfoText)}>
+            {/* <div className={classes.objects_item__moreInfo} onClick={() => setMoreInfoText(!moreInfoText)}>
                 {regionData.optional && <img src="/optional.png" alt="Optional" />}
-            </div>
+            </div> */}
             {moreInfoText &&
                 <div className={classes.objects_item__moreInfoText}>
                     {regionData.optional}
@@ -164,34 +164,39 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                 {titleObject !== 'title'
                     ? (
                         <>
-                            <div className={classes.objects_item__title}>
-                                {truncateString(regionData[titleObject], 50)}
-                            </div>
-                            <div className={classes.objects_item__desc}>
-                                <div>Cпособ передвижения: <span>{regionData.travelMethod}</span></div>
-                                <div>Продолжительность: <span>{regionData.duration}</span></div>
-                                <div>Время отправления: <span>{regionData.departureTime}</span></div>
-                                <div>Тип экскурсии: <span>{regionData.tourType}</span></div>
-                                <div>Сложность: <span>{regionData.difficulty}</span></div>
-                            </div>
-                            {/* {regionData.optional &&
-                                <div className={classes.objects_item__optional}>
-                                    <img src="/optional.png" alt="Optional" /> {regionData.optional}
+                            <div className={classes.objects_item_top_desc_info}>
+                                <div className={classes.objects_item__title}>
+                                    {truncateString(regionData[titleObject], 50)}
                                 </div>
-                            } */}
-                            <div className={classes.objects_item__price}>
-                                <div>Стоимость: <span>{regionData.cost} ₽</span></div>
-                            </div>
-                            <div className={classes.buttons}>
-                                <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
-                                {(regionData.departureDates.length > 0 && regionData.departureDates[0]) &&
-                                    <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}#date`} className={classes.objects_item__button} >Забронировать</Link>
+                                <div className={classes.objects_item__desc}>
+                                    <div>Cпособ передвижения: <span>{regionData.travelMethod}</span></div>
+                                    <div>Продолжительность: <span>{regionData.duration}</span></div>
+                                    <div>Время отправления: <span>{regionData.departureTime}</span></div>
+                                    <div>Тип экскурсии: <span>{regionData.tourType}</span></div>
+                                    <div>Сложность: <span>{regionData.difficulty}</span></div>
+                                </div>
+                                {regionData.optional &&
+                                    <div className={classes.objects_item__optional}>
+                                        <img src="/optional_black.png" alt="Optional" /> {regionData.optional}
+                                    </div>
                                 }
-                                {/* {regionData.departureDates.length > 0 &&
+                            </div>
+
+                            <div className={classes.objects_item_top_desc_info}>
+                                <div className={classes.objects_item__price}>
+                                    <div>Стоимость: <span>{regionData.cost} ₽</span></div>
+                                </div>
+                                <div className={classes.buttons}>
+                                    <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
+                                    {(regionData.departureDates.length > 0 && regionData.departureDates[0]) &&
+                                        <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}#date`} className={classes.objects_item__button} >Забронировать</Link>
+                                    }
+                                    {/* {regionData.departureDates.length > 0 &&
                                     <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>
                                         {isInCart ? 'В корзине' : inCart}
                                     </Link>
                                 } */}
+                                </div>
                             </div>
                         </>
                     )
