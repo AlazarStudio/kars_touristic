@@ -95,9 +95,9 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
                             disablePast: true,
                             disabled: departureDates,
                         },
-                        // selection: {
-                        //     day: 'multiple-ranged',
-                        // }
+                        selection: {
+                            day: 'multiple-ranged',
+                        }
                     },
                     input: true,
                     actions: {

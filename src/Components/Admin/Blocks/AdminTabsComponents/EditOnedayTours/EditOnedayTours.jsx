@@ -175,9 +175,9 @@ function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded,
                             disablePast: true,
                             disabled: departureDates,
                         },
-                        // selection: {
-                        //     day: 'multiple-ranged',
-                        // }
+                        selection: {
+                            day: 'multiple-ranged',
+                        }
                     },
                     input: true,
                     actions: {
