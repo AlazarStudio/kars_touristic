@@ -23,13 +23,13 @@
     width: 350px;
 }
 
-.calendarSeparate_right_item_client{
+.calendarSeparate_right_item_client {
     display: flex;
     flex-wrap: wrap;
     gap: 11px;
 }
 
-.calendarSeparate_right_item h3{
+.calendarSeparate_right_item h3 {
     margin-bottom: 20px;
 }
 
@@ -44,7 +44,8 @@
     gap: 10px;
 }
 
-.formGroup input, .formGroup select {
+.formGroup input,
+.formGroup select {
     width: 100%;
     height: 35px;
     border: 1px solid #cecece;
@@ -53,7 +54,7 @@
     padding: 0 10px;
 }
 
-.bookButton{
+.bookButton {
     width: 300px;
     height: 40px;
     border: none;
@@ -72,7 +73,7 @@
     justify-content: space-between;
 }
 
-.priceFull{
+.priceFull {
     font-weight: 600;
     font-size: 28px;
     width: 100%;
@@ -80,4 +81,70 @@
     margin-top: 20px;
 }
 
-@media (min-width: 0px) and (max-width: 1299px) {}
+@media (min-width: 0px) and (max-width: 1299px) {
+    .calendar {
+        width: 100%;
+        height: fit-content;
+        max-height: 800px;
+        overflow: hidden;
+        overflow-y: scroll;
+        gap: 10px;
+    }
+
+    .passengerInfo {
+        padding: 10px;
+    }
+
+    .passengerInfo_data {
+        gap: 10px;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    .calendar h2 {
+        font-size: 18px !important;
+        margin-bottom: 10px;
+    }
+
+    .calendarSeparate {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .formGroup {
+        gap: 10px;
+    }
+
+    .calendarSeparate_right_item h3 {
+        margin-bottom: 0px;
+    }
+
+    .calendarSeparate_right_item_client{
+        max-height: 200px;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
+    .calendarSeparate_right_item_client .formGroup {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .formGroup input,
+    .formGroup select {
+        width: 100%;
+        height: 30px;
+        border: 1px solid #cecece;
+        border-radius: 5px;
+        outline: none;
+        padding: 0 10px;
+    }
+
+    .priceFull{
+        margin-top: 0;
+        font-size: 18px;
+    }
+    
+}

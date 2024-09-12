@@ -183,7 +183,7 @@ function Profile({ children, ...props }) {
     }
 
 
-    console.log(hotelBrons)
+    // console.log(hotelBrons)
     return (
         <>
             <Header_black />
@@ -255,24 +255,24 @@ function Profile({ children, ...props }) {
 
                                     <ul className={classes.listBron}>
                                         <li>
-                                            <div className={classes.listBronItem}><b>Дата брони</b></div>
-                                            <div className={classes.listBronItem}><b>Название тура</b></div>
+                                            <div className={`${classes.listBronItem} ${classes.mobileHide}`}><b>Дата брони</b></div>
+                                            <div className={`${classes.listBronItem}`}><b>Название тура</b></div>
                                             {/* {user.role == 'agent' && <div className={classes.listBronItem}><b>Участники</b></div>} */}
-                                            <div className={classes.listBronItem}><b>Дата тура</b></div>
-                                            <div className={classes.listBronItem}><b>Полная цена</b></div>
-                                            <div className={classes.listBronItem}><b>Тип оплаты</b></div>
-                                            <div className={classes.listBronItem}><b>Состояние</b></div>
-                                            <div className={classes.listBronItem}><b>Скачать</b></div>
+                                            <div className={`${classes.listBronItem}`}><b>Дата тура</b></div>
+                                            <div className={`${classes.listBronItem} ${classes.mobileHide}`}><b>Полная цена</b></div>
+                                            <div className={`${classes.listBronItem} ${classes.mobileHide}`}><b>Тип оплаты</b></div>
+                                            <div className={`${classes.listBronItem} ${classes.mobileHide}`}><b>Состояние</b></div>
+                                            <div className={`${classes.listBronItem} `}><b>Скачать</b></div>
                                         </li>
                                         {filteredAgents.map((agent) => (
                                             <li key={agent.id}>
-                                                <div className={classes.listBronItem}>{formatDate(agent.createdAt)}</div>
-                                                <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{formatDate(agent.createdAt)}</div>
+                                                <div className={`${classes.listBronItem}`}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
                                                 {/* {user.role == 'agent' && <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.name).join(', ')}</div>} */}
-                                                <div className={classes.listBronItem}>{formatDateRange(agent.bookingDate)}</div>
-                                                <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>
-                                                <div className={classes.listBronItem}>{agent.paymentType == 'cash' ? 'Наличными' : 'Картой'}</div>
-                                                <div className={classes.listBronItem}>{
+                                                <div className={`${classes.listBronItem}`}>{formatDateRange(agent.bookingDate)}</div>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{agent.paymentType == 'cash' ? 'Наличными' : 'Картой'}</div>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{
                                                     (agent.paymentType === 'cash' && agent.confirm == false) ?
                                                         'Не подтверждено' :
                                                         'Подтверждено'
@@ -304,29 +304,29 @@ function Profile({ children, ...props }) {
 
                                     <ul className={classes.listBron}>
                                         <li>
-                                            <div className={classes.listBronItem}><b>Дата брони</b></div>
-                                            <div className={classes.listBronItem}><b>Название отеля</b></div>
-                                            <div className={classes.listBronItem}><b>Количество гостей</b></div>
-                                            <div className={classes.listBronItem}><b>Полная цена</b></div>
-                                            <div className={classes.listBronItem}><b>Прибытие</b></div>
-                                            <div className={classes.listBronItem}><b>Выезд</b></div>
-                                            <div className={classes.listBronItem}><b>Скачать</b></div>
+                                            <div className={`${classes.listBronItem} ${classes.mobileHide}`}><b>Дата брони</b></div>
+                                            <div className={`${classes.listBronItem}`}><b>Название отеля</b></div>
+                                            <div className={`${classes.listBronItem} ${classes.mobileHide}`}><b>Количество гостей</b></div>
+                                            <div className={`${classes.listBronItem} ${classes.mobileHide}`}><b>Полная цена</b></div>
+                                            <div className={`${classes.listBronItem}`}><b>Прибытие</b></div>
+                                            <div className={`${classes.listBronItem}`}><b>Выезд</b></div>
+                                            <div className={`${classes.listBronItem}`}><b>Скачать</b></div>
                                         </li>
                                         {filteredHotelBrons.map((hotelBron) => (
                                             <li key={hotelBron.id}>
-                                                <div className={classes.listBronItem}>{formatDate(hotelBron.createdAt)}</div>
-                                                <div className={classes.listBronItem}>{hotelBron.name}</div>
-                                                <div className={classes.listBronItem}>{hotelBron.guests}</div>
-                                                <div className={classes.listBronItem}>{Number(hotelBron.fullPrice).toLocaleString('ru-RU')} ₽</div>
-                                                <div className={classes.listBronItem}>{formatDate(hotelBron.arrivalDate)}</div>
-                                                <div className={classes.listBronItem}>{formatDate(hotelBron.departureDate)}</div>
-                                                <div className={classes.listBronItem}>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{formatDate(hotelBron.createdAt)}</div>
+                                                <div className={`${classes.listBronItem}`}>{hotelBron.name}</div>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{hotelBron.guests}</div>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{Number(hotelBron.fullPrice).toLocaleString('ru-RU')} ₽</div>
+                                                <div className={`${classes.listBronItem}`}>{formatDate(hotelBron.arrivalDate)}</div>
+                                                <div className={`${classes.listBronItem}`}>{formatDate(hotelBron.departureDate)}</div>
+                                                <div className={`${classes.listBronItem}`}>
                                                     <a href={`${server}/refs/VOUCHER для отеля ${hotelBron.name} - ${hotelBron.client[0].name}.docx`}>
                                                         <img src="/voucher.png" alt="" />
                                                     </a>
-                                                    <a href={''}>
+                                                    {/* <a href={''}>
                                                         <img src="/contract.png" alt="" />
-                                                    </a>
+                                                    </a> */}
                                                 </div>
                                             </li>
                                         ))}

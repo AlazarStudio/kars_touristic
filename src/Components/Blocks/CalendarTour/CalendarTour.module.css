@@ -135,4 +135,29 @@
     background-color: #000;
 }
 
-@media (min-width: 0px) and (max-width: 1299px) {}
+@media (min-width: 0px) and (max-width: 1299px) {
+    .calendar {
+        width: 350px;
+        height: fit-content;
+        max-height: 100vh;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
+    .passengerInfo {
+        padding: 10px;
+    }
+
+    .passengerInfo_data{
+        gap: 10px;
+    }
+
+    .field{
+        width: 100%;
+    }
+
+    .calendar h2{
+        font-size: 18px !important;
+        margin-bottom: 10px;
+    }
+}

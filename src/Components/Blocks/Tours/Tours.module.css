@@ -507,4 +507,63 @@
         width: 90%;
         margin-bottom: 20px;
     }
+
+    .tabs{
+        flex-wrap: wrap;
+        padding: 0 5px;
+        gap: 10px;
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+
+    .tabs button{
+        font-size: 12px;
+        width: 48%;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .docBlocks{
+        gap: 20px;
+    }
+
+    .departureDates{
+        padding: 0 10px;
+    }
+
+    .departureDates_line{
+        padding: 10px 5px;
+    }
+
+    .departureDates_line_column{
+        font-size: 12px;
+    }
+
+    .departureDates_line_column_btn{
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .departureDates_line_column:nth-child(1){
+        width: 140px;
+    }
+    .departureDates_line_column:nth-child(2){
+        display: none;
+    }
+
+    .departureDates_line_column:nth-child(3){
+        display: none;
+    }
+
+    .departureDates_line_column:nth-child(4){
+        width: 70px;
+    }
+
+    .departureDates_line_column:nth-child(5){
+        width: 120px;
+    }
+
+    .modal{
+        padding: 10px;
+    }
 }

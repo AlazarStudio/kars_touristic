@@ -171,43 +171,43 @@
     padding: 20px 10px;
 }
 
-.listBron li:nth-child(2n){
+.listBron li:nth-child(2n) {
     background-color: #ececec;
 }
 
-.listBronItem{
+.listBronItem {
     display: flex;
     align-items: center;
     gap: 10px;
     width: 15%;
 }
 
-.listBronItem:nth-child(1){
+.listBronItem:nth-child(1) {
     width: 12%;
 }
 
-.listBronItem:nth-child(2){
+.listBronItem:nth-child(2) {
     width: 30%;
 }
 
-.listBronItem:nth-child(3){
+.listBronItem:nth-child(3) {
     width: 20%;
 }
 
-.listBronItem:nth-child(7){
+.listBronItem:nth-child(7) {
     width: 10%;
 }
 
-.listBronItem img{
+.listBronItem img {
     width: 35px;
 }
 
-.listBronItem{
+.listBronItem {
     display: flex;
     justify-content: center;
 }
 
-.listBronItem a{
+.listBronItem a {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -219,11 +219,11 @@
     justify-content: space-between;
 }
 
-.titleBlockPrice{
+.titleBlockPrice {
     font-size: 18px;
 }
 
-.blockUser_info_desc{
+.blockUser_info_desc {
     font-size: 14px;
     font-weight: 500;
     display: flex;
@@ -241,15 +241,16 @@
 
     .contacts {
         width: 100%;
-        gap: 20px;
+        gap: 10px;
     }
 
     .blockUser {
-        padding: 10px 40px 10px 10px;
+        padding: 10px;
         gap: 10px;
-        margin: 10px;
+        margin: 0 10px;
         width: calc(100% - 20px);
         border-radius: 20px;
+        align-items: flex-start;
     }
 
     .blockUser:last-child {
@@ -262,7 +263,7 @@
     }
 
     .blockUser_info {
-        width: calc(100% - 60px);
+        width: calc(100% - 100px);
         font-size: 16px;
         line-height: normal;
     }
@@ -279,5 +280,49 @@
         top: 15px;
         right: 15px;
         width: 20px;
+    }
+
+    .mobileHide {
+        display: none;
+    }
+
+    .listBron li {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .listBronItem {
+        text-align: center;
+    }
+
+    .listBronItem:nth-child(2) {
+        width: 110px;
+    }
+
+    .listBronItem:nth-child(3) {
+        width: 100px;
+    }
+
+    .listBronItem:nth-child(5) {
+        width: 90px;
+    }
+
+    .listBronItem:nth-child(6) {
+        width: 90px;
+    }
+
+    .listBronItem:nth-child(7) {
+        width: 60px;
+    }
+
+    .contacts h2 {
+        width: 100%;
+        font-size: 18px !important;
+        line-height: normal;
+        text-align: center;
+    }
+
+    .listBronItem img {
+        width: 25px;
     }
 }

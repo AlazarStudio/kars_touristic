@@ -29,3 +29,18 @@
     /* line-height: 24px; */
     outline: none;
 }
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .filter {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter select,
+    .filter input {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+}
