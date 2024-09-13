@@ -165,6 +165,7 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
 
                 <label>Тип бронирования</label>
                 <select name="typeOfBron" required>
+                    <option value="" disabled>Выберите тип бронирования</option>
                     <option value="Оставить заявку">Оставить заявку</option>
                     <option value="Оплата на сайте">Оплата на сайте</option>
                 </select>

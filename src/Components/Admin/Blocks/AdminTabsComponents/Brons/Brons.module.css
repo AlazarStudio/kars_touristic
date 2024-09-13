@@ -150,37 +150,44 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    gap: 2px;
 }
 
 .listBron li {
     display: flex;
     justify-content: space-between;
     padding: 20px 10px;
+    align-items: center;
+    border-radius: 10px;
 }
 
-.listBron li:nth-child(2n){
+.listBron li:nth-child(2n) {
     background-color: #ececec;
 }
 
-.listBronItem{
+.listBronItem {
     width: 15%;
 }
 
-.listBronItem:nth-child(1){
+.listBronItem:nth-child(1) {
     width: 12%;
 }
 
-.listBronItem:nth-child(2){
+.listBronItem:nth-child(2) {
     width: 30%;
 }
 
-.listBronItem:nth-child(3){
+.listBronItem:nth-child(3) {
     width: 20%;
 }
 
-.listBronItem:nth-child(7){
+.listBronItem:nth-child(7) {
     width: 20%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
 }
+
 
 .titleBlock {
     display: flex;
@@ -188,11 +195,11 @@
     justify-content: space-between;
 }
 
-.titleBlockPrice{
+.titleBlockPrice {
     font-size: 18px;
 }
 
-.filters{
+.filters {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -213,7 +220,7 @@
     outline: none;
 }
 
-.filterBlock{
+.filterBlock {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -239,4 +246,32 @@
     font-family: Montserrat;
     font-size: 16px;
     outline: none;
+}
+
+.statusConfirmCash {
+    background-color: rgba(255, 166, 0, 0.2) !important;
+}
+
+.statusConfirmRequest {
+    background-color: rgba(0, 0, 255, 0.2) !important;
+}
+
+.statusConfirmDone {
+    background-color: rgba(0, 128, 0, 0.2) !important;
+}
+
+.listBronItem button {
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid #000;
+    background-color: #ffffff49;
+    font-size: 12px;
+    border-radius: 20px;
+    transition: all 0.2s ease-in-out;
+}
+
+.listBronItem button:hover {
+    background-color: #000;
+    color: #fff;
 }

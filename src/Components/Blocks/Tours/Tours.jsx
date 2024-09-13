@@ -315,14 +315,20 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                     <div className={classes.tour_topInfo__left___items____element_____info}>{tour.cost} ₽</div>
                                                 </div>
                                             </div>
-                                            {(tour.departureDates.length > 0 && tour.departureDates[0]) &&
+                                            {(tour.departureDates.length > 0 && tour.departureDates[0] && tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&
                                                 <a className={classes.tour_topInfo__left___btn} href={'#date'}>
                                                     Забронировать
                                                 </a>
-                                                // <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
-                                                //     {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
-                                                // </div>
                                             }
+                                            {(tour.departureDates.length > 0 && tour.departureDates[0] && tour.typeOfBron && tour.typeOfBron == 'Оставить заявку') &&
+                                                <a className={classes.tour_topInfo__left___btn} href={'#date'}>
+                                                    Оставить заявку
+                                                </a>
+                                            }
+                                            {/* <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
+                                                {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
+                                            </div> */}
+
                                         </div>
                                         <div className={classes.tour_topInfo__right}>
                                             <div className={classes.tour_topInfo__right___img}>
@@ -424,7 +430,8 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                         <div className={classes.departureDates_line_column}>{cost} ₽</div>
                                                         <div className={classes.departureDates_line_column}>
                                                             <div className={classes.departureDates_line_column_btn} onClick={() => openModal(range)}>
-                                                                Забронировать
+                                                                {(tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') && 'Забронировать'}
+                                                                {(tour.typeOfBron && tour.typeOfBron == 'Оставить заявку') && 'Оставить заявку'}
                                                             </div>
                                                         </div>
                                                     </div>

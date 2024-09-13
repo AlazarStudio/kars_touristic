@@ -208,6 +208,22 @@ function Admin_Page({ children, ...props }) {
         fetchTouragents();
     }, []);
 
+    const [brons, setBrons] = useState([]);
+
+    useEffect(() => {
+        async function fetchBrons() {
+            try {
+                const response = await fetch(`${server}/api/getAgents`);
+                const data = await response.json();
+                const filteredBrons = data.agent.filter(agent => !agent.confirm);
+                setBrons(filteredBrons);
+            } catch (error) {
+                console.error("Error fetching mission info:", error);
+            }
+        }
+        fetchBrons();
+    }, []);
+
     const [tours, setTours] = useState([]);
     const [unmoderatedTourCount, setUnmoderatedTourCount] = useState(0);
 
@@ -240,13 +256,13 @@ function Admin_Page({ children, ...props }) {
                                 <>
                                     <Link to={'/admin/brons'} className={classes.admin_header__items___item} onClick={() => setActiveTab('brons')}>
                                         Брони
-                                        {/* {
-                                            touragents && touragents.length > 0 ?
-                                                <div className={classes.admin_header__nonAccessData}>{touragents.length}</div> :
+                                        {
+                                            brons && brons.length > 0 ?
+                                                <div className={classes.admin_header__nonAccessData}>{brons.length}</div> :
                                                 <div className={classes.admin_header__nonAccessData}>0</div>
-                                        } */}
+                                        }
                                     </Link>
-                                    
+
                                     <Link to={'/admin/touragents'} className={classes.admin_header__items___item} onClick={() => setActiveTab('touragents')}>
                                         Авторы туров
                                         {
@@ -388,9 +404,9 @@ function Admin_Page({ children, ...props }) {
                             {activeTab === 'addTuragent' && <AddTuragent />}
 
                             {/* Добавить Представителей */}
-                            {activeTab === 'addAgent' && <AddAgent setActiveTab={setActiveTab}/>}
-                            {activeTab === 'addUsers' && <AddUsers setActiveTab={setActiveTab}/>}
-                            {activeTab === 'addHotelAndApartments' && <AddHotelAndApartments setActiveTab={setActiveTab}/>}
+                            {activeTab === 'addAgent' && <AddAgent setActiveTab={setActiveTab} />}
+                            {activeTab === 'addUsers' && <AddUsers setActiveTab={setActiveTab} />}
+                            {activeTab === 'addHotelAndApartments' && <AddHotelAndApartments setActiveTab={setActiveTab} />}
                         </div>
                     </div>
                 </div>

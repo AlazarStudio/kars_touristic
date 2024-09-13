@@ -25,21 +25,21 @@ function Brons({ children, ...props }) {
     const [paymentType, setPaymentType] = useState(receivedData?.paymentType || '');
     const [paymentState, setPaymentState] = useState(receivedData?.paymentState || '');
 
-    const [bronTypeRole, setBronTypeRole] = useState(receivedData?.bronTypeRole || 'agent');
+    const [bronTypeRole, setBronTypeRole] = useState(receivedData?.bronTypeRole || '');
     const [dateQuery, setDateQuery] = useState('');
 
-    useEffect(() => {
-        async function fetchTouragents() {
-            try {
-                const response = await fetch(`${server}/api/getAgents`);
-                const data = await response.json();
-                setTouragents(data.agent.reverse());
-                setFilteredAgents(data.agent);
-            } catch (error) {
-                console.error("Error fetching mission info:", error);
-            }
+    async function fetchTouragents() {
+        try {
+            const response = await fetch(`${server}/api/getAgents`);
+            const data = await response.json();
+            setTouragents(data.agent.reverse());
+            setFilteredAgents(data.agent);
+        } catch (error) {
+            console.error("Error fetching mission info:", error);
         }
+    }
 
+    useEffect(() => {
         fetchTouragents();
     }, []);
 
@@ -63,7 +63,7 @@ function Brons({ children, ...props }) {
 
     const getUserNameById = (userId) => {
         const user = users.find(user => user._id === userId);
-        return user ? user.name : 'Неизвестный пользователь';
+        return user ? user.name : '-';
     };
 
     // Функция для фильтрации данных
@@ -74,21 +74,21 @@ function Brons({ children, ...props }) {
             const agentName = getUserNameById(agent.agent).toLowerCase();
             const price = Number(agent.price);
             const textMatch = searchQuery.toLowerCase();
-    
+
             const matchesTourTitleOrAgent =
                 tourTitles.includes(textMatch) ||
                 agentName.includes(textMatch) ||
                 passangerTitles.includes(textMatch) ||
                 String(price).includes(textMatch);
-    
+
             const matchesPaymentState = paymentState === '' || agent.confirm === (paymentState === 'true');
             const matchesPaymentType = paymentType === '' || agent.paymentType === paymentType;
             const matchesBronTypeRole = bronTypeRole === '' || agent.bronTypeRole === bronTypeRole;
-    
+
             // Приведение дат к одному формату для сравнения
             const agentBookingDate = new Date(agent.createdAt).toISOString().split('T')[0];
             const matchesDateQuery = dateQuery === '' || agentBookingDate === dateQuery;
-    
+
             return (
                 matchesTourTitleOrAgent &&
                 matchesPaymentType &&
@@ -97,15 +97,15 @@ function Brons({ children, ...props }) {
                 matchesDateQuery
             );
         });
-    
+
         setFilteredAgents(filtered);
     };
-    
+
 
     useEffect(() => {
         applyFilters();
     }, [searchQuery, paymentType, paymentState, bronTypeRole, dateQuery, touragents, users]);
-    
+
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -127,10 +127,14 @@ function Brons({ children, ...props }) {
         setDateQuery(e.target.value);
     };
 
-    async function updateConfirm(id, price, agentID) {
+    async function updateConfirm(id, price, agentID, requestFromSite) {
         const user = users.find(user => user._id === agentID);
 
-        let debtUser = user.debt - price;
+        let debtUser;
+
+        if (requestFromSite == 'cash') {
+            debtUser = user.debt - price;
+        }
 
         try {
             // Обновление статуса подтверждения на сервере
@@ -144,36 +148,42 @@ function Brons({ children, ...props }) {
                 })
             });
 
-            if (confirmResponse.ok) {
-                // Обновление долга пользователя на сервере
-                const debtResponse = await fetch(`${server}/api/userUpdateDebt`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        debt: debtUser,
-                        idUser: agentID
-                    })
-                });
+            if (confirmResponse.ok) { fetchTouragents() }
 
-                if (debtResponse.ok) {
-                    // Обновление состояния filteredAgents после успешного ответа сервера
-                    setFilteredAgents(prevAgents =>
-                        prevAgents.map(agent =>
-                            agent._id === id ? { ...agent, confirm: true } : agent
-                        )
-                    );
-                    setTouragents(prevAgents =>
-                        prevAgents.map(agent =>
-                            agent._id === id ? { ...agent, confirm: true } : agent
-                        )
-                    );
+            if (requestFromSite == 'cash') {
+                if (confirmResponse.ok) {
+                    // Обновление долга пользователя на сервере
+                    const debtResponse = await fetch(`${server}/api/userUpdateDebt`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            debt: debtUser,
+                            idUser: agentID
+                        })
+                    });
+
+                    if (debtResponse.ok) {
+                        // Обновление состояния filteredAgents после успешного ответа сервера
+                        setFilteredAgents(prevAgents =>
+                            prevAgents.map(agent =>
+                                agent._id === id ? { ...agent, confirm: true } : agent
+                            )
+                        );
+                        setTouragents(prevAgents =>
+                            prevAgents.map(agent =>
+                                agent._id === id ? { ...agent, confirm: true } : agent
+                            )
+                        );
+
+                        fetchTouragents()
+                    } else {
+                        console.error('Error updating user debt');
+                    }
                 } else {
-                    console.error('Error updating user debt');
+                    console.error('Error updating agent confirmation');
                 }
-            } else {
-                console.error('Error updating agent confirmation');
             }
         } catch (error) {
             console.error('Error updating confirmation and debt:', error);
@@ -223,6 +233,7 @@ function Brons({ children, ...props }) {
                                 className={classes.filterSelect}
                             >
                                 <option value="">Все бронирования</option>
+                                <option value="Заявка с сайта">Заявка с сайта</option>
                                 <option value="agent">Бронирования представителя</option>
                                 <option value="user">Бронирования пользователя</option>
                             </select>
@@ -268,16 +279,23 @@ function Brons({ children, ...props }) {
                             </li>
                             {filteredAgents.length > 0 ?
                                 filteredAgents.map((agent, index) => (
-                                    <li key={index}>
+                                    <li key={index} className={
+                                        (agent.paymentType === 'cash' && agent.confirm == false) ? classes.statusConfirmCash :
+                                            (agent.paymentType === 'Заявка с сайта' && agent.confirm == false) ? classes.statusConfirmRequest :
+                                                (agent.confirm == true) && classes.statusConfirmDone
+                                    }>
                                         <div className={classes.listBronItem}>{formatDate(agent.createdAt)}</div>
                                         <div className={classes.listBronItem}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
                                         <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.name).join(', ')}</div>
                                         <div className={classes.listBronItem}>{getUserNameById(agent.agent)}</div>
                                         <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽ </div>
-                                        <div className={classes.listBronItem}>{agent.paymentType === 'cash' ? 'Наличные' : 'Карта'}</div>
+                                        <div className={classes.listBronItem}>{agent.paymentType === 'cash' ? 'Наличные' : agent.paymentType === 'Заявка с сайта' ? '-' : 'Карта'}</div>
                                         <div className={classes.listBronItem}>{
-                                            (agent.paymentType === 'cash' && agent.confirm == false) ?
-                                                <button onClick={() => updateConfirm(agent._id, agent.price, agent.agent)}> Подтвердить получение</button> :
+                                            ((agent.paymentType === 'cash' || agent.paymentType === 'Заявка с сайта') && agent.confirm == false) ?
+                                                <button onClick={() => updateConfirm(agent._id, agent.price, agent.agent, agent.paymentType)}>
+                                                    {agent.paymentType === 'cash' ? 'Подтвердить получение' : agent.paymentType === 'Заявка с сайта' && 'Подтвердить заявку с сайта'}
+                                                </button>
+                                                :
                                                 'Подтверждено'
                                         }
                                         </div>

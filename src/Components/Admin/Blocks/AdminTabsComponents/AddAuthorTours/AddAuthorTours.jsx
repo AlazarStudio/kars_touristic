@@ -114,7 +114,7 @@ function AddAuthorTours({ children, activeTab, setIsDirty, region, onTourAdded, 
                             if (self.selectedDates.length > 0) {
                                 const dateRange = `${self.selectedDates[0]}${self.selectedDates.length > 1 ? ` - ${self.selectedDates[self.selectedDates.length - 1]}` : ''}`;
                                 self.HTMLInputElement.value = dateRange;
-                                handleDepartureDateChange(index, dateRange);    
+                                handleDepartureDateChange(index, dateRange);
                                 // Закрываем календарь после выбора второй даты
                                 if (self.selectedDates.length > 1) {
                                     self.hide();
@@ -161,10 +161,11 @@ function AddAuthorTours({ children, activeTab, setIsDirty, region, onTourAdded, 
 
                 <label>Тип бронирования</label>
                 <select name="typeOfBron" required>
+                    <option value="" disabled>Выберите тип бронирования</option>
                     <option value="Оставить заявку">Оставить заявку</option>
                     <option value="Оплата на сайте">Оплата на сайте</option>
                 </select>
-                
+
                 <label>Название тура</label>
                 <input name="tourTitle" type="text" placeholder="Название тура" required />
 

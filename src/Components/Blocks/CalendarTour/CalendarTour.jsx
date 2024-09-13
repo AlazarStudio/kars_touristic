@@ -357,6 +357,90 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         }
     }
 
+    const sendRequestFromUser = async () => {
+        const formData = {
+            price: totalCost,
+            agent: 'Заявка с сайта',
+            bronTypeRole: 'Заявка с сайта',
+            paymentType: 'Заявка с сайта',
+            tours: [tour],
+            passengers: passengerInfo,
+            bookingDate: selectedDate,
+            bookingTime: tour.departureTime,
+            confirm: false,
+        };
+
+        let forEmail = {
+            "to": 'kars-touristic@mail.ru',
+            "subject": "Заявка с сайта на тур",
+            "text": "",
+            "html": `
+            <b>ИНФОРМАЦИЯ О ТУРЕ:</b> 
+
+            <br/><br/>
+
+            <b>Название тура:</b> ${formData.tours[0].tourTitle} <br/>
+            <b>Дата тура:</b> ${formatDateRange(formData.bookingDate)} <br/>
+            <b>Cпособ передвижения:</b> ${formData.tours[0].travelMethod} <br/>
+            <b>Продолжительность:</b> ${formData.tours[0].duration} <br/>
+            <b>Время отправления:</b> ${formData.tours[0].departureTime} <br/>
+            <b>Тип экскурсии:</b> ${formData.tours[0].tourType} <br/>
+            <b>Сложность:</b> ${formData.tours[0].difficulty} <br/>
+            <b>Стоимость:</b> ${formData.price} 
+
+            <br/><br/>
+
+            <b>ИНФОРМАЦИЯ О ПАССАЖИРЕ:</b> 
+
+            <br/><br/>
+
+            <b>ФИО:</b> ${formData.passengers[0].name} <br/>
+            <b>Почта:</b> ${formData.passengers[0].email} <br/>
+            <b>Телефон:</b> ${formData.passengers[0].phone} <br/>
+            <b>Адрес:</b> ${formData.passengers[0].address} <br/>
+            <b>Паспортные данные:</b> ${formData.passengers[0].passportNumber} ${formData.passengers[0].passportSeries}<br/>
+            <b>Пол:</b> ${formData.passengers[0].gender} <br/>
+            <b>Дата рождения:</b> ${formData.passengers[0].birthDate}
+
+            <br/><br/>
+
+            <a href="${window.location.href}" target="_blank">ССЫЛКА НА ТУР</a>
+            `
+        }
+        try {
+            const response = await fetch(`${server}/api/addAgent`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (response.ok) {
+                const responseEmail = await fetch(`${server}/api/send-email`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(forEmail)
+                });
+
+                if (responseEmail.ok) {
+                    closeModal();
+                    alert('Заявка отправлена. Наш оператор в скором времени свяжется с Вами!');
+                }
+            } else {
+                const errorData = await response.json();
+                alert('Ошибка при бронировании: ' + errorData.message);
+            }
+        } catch (error) {
+            console.error('Ошибка при бронировании:', error);
+            alert('Ошибка при бронировании: ' + error.message);
+        }
+
+    }
+
     return (
         <div className={classes.calendar}>
             <h2>Бронирование тура на дату: {formatDateRange(selectedDate)}</h2>
@@ -472,7 +556,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                     </div>
                 ))}
             </div>
-            {user && (user.role == 'agent' || user.role == 'admin') &&
+            {user && (user.role == 'agent' || user.role == 'admin') && (tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&
                 <>
                     <h3>Выберите способ оплаты</h3>
                     <div className={classes.paymentMethods}>
@@ -504,24 +588,20 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 Итоговая сумма: {totalCost} ₽
             </div>
 
-            <div className={classes.agreement}>
-                <input
-                    type="checkbox"
-                    checked={isAgreed}
-                    onChange={(e) => setIsAgreed(e.target.checked)}
-                    className={classes.checkbox}
-                />
-                <p>Согласен с правилами бронирования</p>
-            </div>
+            {(tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&
+                <div className={classes.agreement}>
+                    <input
+                        type="checkbox"
+                        checked={isAgreed}
+                        onChange={(e) => setIsAgreed(e.target.checked)}
+                        className={classes.checkbox}
+                    />
+                    <p>Согласен с правилами бронирования</p>
+                </div>
+            }
 
-            {/* <button
-                onClick={handleBooking}
-                disabled={!isAgreed}
-                className={isAgreed ? classes.activeButton : classes.disabledButton}
-            >
-                Забронировать
-            </button> */}
-            {isAgreed &&
+
+            {(isAgreed && tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&
                 <PaymentButton
                     style={{}}
                     order_name={tour.tourTitle}
@@ -529,6 +609,15 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                     setPaymentID={setPaymentID}
                     onPaymentSuccess={(paymentID) => handleBooking(paymentID)}
                 />
+            }
+
+            {(tour.typeOfBron && tour.typeOfBron == 'Оставить заявку') &&
+                <button
+                    onClick={sendRequestFromUser}
+                    className={classes.activeButtonRequests}
+                >
+                    Оставить заявку
+                </button>
             }
 
         </div>

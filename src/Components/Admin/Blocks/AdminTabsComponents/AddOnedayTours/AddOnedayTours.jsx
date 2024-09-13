@@ -106,7 +106,7 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
                             if (self.selectedDates.length > 0) {
                                 const dateRange = `${self.selectedDates[0]}${self.selectedDates.length > 1 ? ` - ${self.selectedDates[self.selectedDates.length - 1]}` : ''}`;
                                 self.HTMLInputElement.value = dateRange;
-                                handleDepartureDateChange(index, dateRange);    
+                                handleDepartureDateChange(index, dateRange);
                                 // Закрываем календарь после выбора второй даты
                                 if (self.selectedDates.length > 1) {
                                     self.hide();
@@ -129,12 +129,12 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
         if (typeof dateRange !== 'string' || dateRange === '') return;
 
         const [startDate, endDate] = dateRange.split(' - ');
-        
+
         const formatDate = (date) => {
             const [year, month, day] = date.split('-');
             return `${day}.${month}.${year}`;
         };
-        
+
         const formattedStartDate = formatDate(startDate.replace(/\s/g, ''));
 
         if (endDate) {
@@ -167,6 +167,7 @@ function AddOnedayTours({ children, activeTab, fetchRegions, setIsDirty, region,
 
                 <label>Тип бронирования</label>
                 <select name="typeOfBron" required>
+                    <option value="" disabled>Выберите тип бронирования</option>
                     <option value="Оставить заявку">Оставить заявку</option>
                     <option value="Оплата на сайте">Оплата на сайте</option>
                 </select>

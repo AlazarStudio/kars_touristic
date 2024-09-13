@@ -191,7 +191,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
                                 const dateRange = `${self.selectedDates[0]}${self.selectedDates.length > 1 ? ` - ${self.selectedDates[self.selectedDates.length - 1]}` : ''}`;
                                 self.HTMLInputElement.value = dateRange;
                                 handleDepartureDateChange(index, dateRange);
-                                    
+
                                 // Закрываем календарь после выбора второй даты
                                 if (self.selectedDates.length > 1) {
                                     self.hide();
@@ -212,7 +212,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
 
     function formatDateRange(dateRange) {
         if (typeof dateRange !== 'string' || dateRange === '') return;
-        
+
         const [startDate, endDate] = dateRange.split(' - ');
 
         const formatDate = (date) => {
@@ -241,6 +241,7 @@ function EditMultidayTours({ children, activeTab, setIsDirty, region, onTourAdde
 
                 <label>Тип бронирования</label>
                 <select name="typeOfBron" required value={selectedTour.typeOfBron}>
+                    <option value="" disabled>Выберите тип бронирования</option>
                     <option value="Оставить заявку">Оставить заявку</option>
                     <option value="Оплата на сайте">Оплата на сайте</option>
                 </select>
