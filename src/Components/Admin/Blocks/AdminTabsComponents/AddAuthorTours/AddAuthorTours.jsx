@@ -159,6 +159,12 @@ function AddAuthorTours({ children, activeTab, setIsDirty, region, onTourAdded, 
             <Form actionUrl={`${server}/api/addAuthorTours`} method="post" needNavigate={true} resetAll={resetAll} initialValues={initialValues} onTourAdded={onTourAdded} authorTours={true}>
                 <label className={classes.addData_step}>Шаг 1 - основная информация</label>
 
+                <label>Тип бронирования</label>
+                <select name="typeOfBron" required>
+                    <option value="Оставить заявку">Оставить заявку</option>
+                    <option value="Оплата на сайте">Оплата на сайте</option>
+                </select>
+                
                 <label>Название тура</label>
                 <input name="tourTitle" type="text" placeholder="Название тура" required />
 
