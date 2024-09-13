@@ -80,10 +80,10 @@ function AddHotelAndApartments({ setActiveTab }) {
                     <div className={classes.gids_info_data}>
                         <div className={classes.gids_info__elem}><b>Дата брони</b></div>
                         <div className={classes.gids_info__elem}><b>Название отеля</b></div>
-                        <div className={classes.gids_info__elem}><b>Количество гостей</b></div>
+                        <div className={classes.gids_info__elem}><b>Гости</b></div>
                         <div className={classes.gids_info__elem}><b>Полная цена</b></div>
                         <div className={classes.gids_info__elem}><b>Дата заезда - выезда</b></div>
-                        <div className={classes.gids_info__elem}><b></b></div>
+                        <div className={classes.gids_info__elem}><b className={classes.bookButtonTitle}>Удалить</b></div>
                     </div>
                 </div>
                 {bronHotels.length > 0 ?
