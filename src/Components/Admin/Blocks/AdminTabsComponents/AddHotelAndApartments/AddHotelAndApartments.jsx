@@ -52,6 +52,22 @@ function AddHotelAndApartments({ setActiveTab }) {
         return `${day}.${month}.${year}`;
     }
 
+    const handleRemovePhoto = async (id) => {
+        if (confirm("Вы уверены, что хотите удалить бронирование?")) {
+            try {
+                const response = await fetch(`${server}/api/deleteHotelBron/${id}`, {
+                    method: 'delete',
+                });
+
+                if (response.ok) {
+                    fetchBronHotels();
+                }
+            } catch (error) {
+                console.error('Error updating photos', error);
+            }
+        }
+    };
+
     return (
         <div className={classes.multidayTours}>
             <div className={classes.multidayTours_top}>
@@ -66,8 +82,8 @@ function AddHotelAndApartments({ setActiveTab }) {
                         <div className={classes.gids_info__elem}><b>Название отеля</b></div>
                         <div className={classes.gids_info__elem}><b>Количество гостей</b></div>
                         <div className={classes.gids_info__elem}><b>Полная цена</b></div>
-                        <div className={classes.gids_info__elem}><b>Дата прибытия</b></div>
-                        <div className={classes.gids_info__elem}><b>Дата выезда</b></div>
+                        <div className={classes.gids_info__elem}><b>Дата заезда - выезда</b></div>
+                        <div className={classes.gids_info__elem}><b></b></div>
                     </div>
                 </div>
                 {bronHotels.length > 0 ?
@@ -77,8 +93,10 @@ function AddHotelAndApartments({ setActiveTab }) {
                             <div className={classes.gids_info__elem}>{item.name}</div>
                             <div className={classes.gids_info__elem}>{item.guests}</div>
                             <div className={classes.gids_info__elem}>{Number(item.fullPrice).toLocaleString('ru-RU')} ₽</div>
-                            <div className={classes.gids_info__elem}>{formatDate(item.arrivalDate)}</div>
-                            <div className={classes.gids_info__elem}>{formatDate(item.departureDate)}</div>
+                            <div className={classes.gids_info__elem}>{formatDate(item.arrivalDate)} - {formatDate(item.departureDate)}</div>
+                            <div className={classes.gids_info__elem} onClick={() => handleRemovePhoto(item._id)}>
+                                <div className={classes.bookButton}>Удалить</div>
+                            </div>
                         </div>
                     ))
                     :
@@ -94,7 +112,7 @@ function AddHotelAndApartments({ setActiveTab }) {
                 className={classes.customModal}
                 overlayClassName={classes.customOverlay}
             >
-                <CalendarAdmin closeModal={closeModal} hotels={hotel.hotels} fetchBronHotels={fetchBronHotels}/>
+                <CalendarAdmin closeModal={closeModal} hotels={hotel.hotels} fetchBronHotels={fetchBronHotels} />
                 <button onClick={closeModal} className={classes.modalCloseButton}>&#x2715;</button>
             </ReactModal>
         </div>

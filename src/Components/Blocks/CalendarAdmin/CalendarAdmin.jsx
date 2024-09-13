@@ -205,7 +205,7 @@ function CalendarAdmin({ children, hotels, allRooms, closeModal, fetchBronHotels
             });
 
             if (responseBron.ok) {
-                console.log(formData);
+                // console.log(formData);
                 fetchBronHotels()
             } else {
                 console.error('Ошибка регистрации');
@@ -353,7 +353,7 @@ function CalendarAdmin({ children, hotels, allRooms, closeModal, fetchBronHotels
             </div>
             {selectedHotel &&
                 <div className={classes.bookButton} onClick={handleAddBron}>
-                    Перейти к оплате
+                    Забронировать отель
                 </div>
             }
         </div>
