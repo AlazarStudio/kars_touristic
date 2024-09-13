@@ -116,7 +116,7 @@ function RegionInfo({ children, setCartCount, ...props }) {
                                                     onClick={() => handleTabClick(4)}
                                                 >
                                                     <img src="/region_hotels.webp" alt="" />
-                                                    Отели
+                                                    Отели / Апартаменты
                                                 </div>
                                                 <div
                                                     className={`${classes.region_right__item} ${activeTab === 5 ? `${classes.active_region_item}` : ""}`}
@@ -146,7 +146,7 @@ function RegionInfo({ children, setCartCount, ...props }) {
                                     {activeTab === 1 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'tours'} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'} />}
                                     {activeTab === 2 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'excursions'} tableName={'onedayTour'} requestType={'getOnedayTours'} title={'Однодневные экскурсии'} />}
                                     {activeTab === 3 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'gids'} tableName={'authorTour'} requestType={'getAuthorTours'} title={'Авторские туры'} checkModered={true}/>}
-                                    {activeTab === 4 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'hotels'} tableName={'hotels'} requestType={'getHotels'} title={'Отели'} />}
+                                    {activeTab === 4 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'hotels'} tableName={'hotels'} requestType={'getHotels'} title={'Отели / Апартаменты'} />}
                                     {activeTab === 5 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'visits'} tableName={'places'} requestType={'getPlaces'} title={'Что посетить'} />}
                                     {activeTab === 6 && <Tabs setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'events'} tableName={'events'} requestType={'getEvents'} title={'Региональные Mice ивенты'} />}
                                 </div>

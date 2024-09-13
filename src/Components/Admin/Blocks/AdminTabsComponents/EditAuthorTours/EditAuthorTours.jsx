@@ -188,7 +188,11 @@ function EditAuthorTours({ children, activeTab, setIsDirty, region, onTourAdded,
                             if (self.selectedDates.length > 0) {
                                 const dateRange = `${self.selectedDates[0]}${self.selectedDates.length > 1 ? ` - ${self.selectedDates[self.selectedDates.length - 1]}` : ''}`;
                                 self.HTMLInputElement.value = dateRange;
-                                handleDepartureDateChange(index, dateRange);
+                                handleDepartureDateChange(index, dateRange);    
+                                // Закрываем календарь после выбора второй даты
+                                if (self.selectedDates.length > 1) {
+                                    self.hide();
+                                }
                             } else {
                                 self.HTMLInputElement.value = '';
                                 handleDepartureDateChange(index, '');
@@ -204,7 +208,7 @@ function EditAuthorTours({ children, activeTab, setIsDirty, region, onTourAdded,
     }, [departureDates]);
 
     function formatDateRange(dateRange) {
-        if (dateRange == '') return ''
+        if (typeof dateRange !== 'string' || dateRange === '') return;
         
         const [startDate, endDate] = dateRange.split(' - ');
 
