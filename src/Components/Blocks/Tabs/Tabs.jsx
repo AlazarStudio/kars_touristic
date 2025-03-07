@@ -7,7 +7,13 @@ import FilterPlaces from "../FilterPlaces/FilterPlaces";
 import H2 from "../../Standart/H2/H2";
 import CenterBlock from "../../Standart/CenterBlock/CenterBlock";
 
+import { Modal, Box, Button, Slide } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+
 import server from '../../../serverConfig'
+import Tours_Page from "../../Pages/Tours_Page";
+import zIndex from "@mui/material/styles/zIndex";
 
 function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, ...props }) {
     const [objects, setObjects] = useState([]);
@@ -66,6 +72,30 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
         }
     }, [token]);
 
+    const style = {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: "100%",
+        height: '92dvh',
+        bgcolor: 'transparent',
+        boxShadow: 24,
+        outline: 'none',
+        zIndex: '9999999',
+        overflowY: 'scroll',
+        scrollbarWidth: 'none',
+        borderRadius: '30px 30px 0 0'
+    };
+
+    const [open, setOpen] = useState(false);
+    const [idToModal, setIdToModal] = useState(false);
+
+    const handleOpen = (id) => {
+        setOpen(true)
+        setIdToModal(id)
+    };
+    const handleClose = () => setOpen(false);
+
     return (
         <>
             {foundData ?
@@ -85,7 +115,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                         <div className={classes.objects}>
                             {
                                 foundData.map((item, index) => (
-                                    <Object key={index} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                    <Object key={index} handleOpen={handleOpen} open={open} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
                                 ))
                             }
                         </div>
@@ -93,6 +123,38 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                 </div>
                 : null
             }
+
+            {open &&
+                <IconButton onClick={handleClose} aria-label="close" sx={{
+                    border: '1px solid white',
+                    borderRadius: '50%',
+                    position: 'fixed',
+                    top: '10px',
+                    right: '10px',
+                    zIndex: 99999999999999,
+                    backgroundColor: '#fff',
+                    '&:hover': {
+                        backgroundColor: '#fff',
+                        border: '1px solid white',
+                    },
+                }}>
+                    <CloseIcon sx={{ color: '#000' }} />
+                </IconButton>
+            }
+
+            <Modal
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+            >
+                <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+                    <Box sx={style}>
+                        <Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} idToModal={idToModal} />
+                    </Box>
+                </Slide>
+            </Modal>
         </>
     );
 }

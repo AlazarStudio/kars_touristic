@@ -22,7 +22,7 @@ import server from '../../../serverConfig'
 import ReactModal from "react-modal";
 import CalendarTour from "../CalendarTour/CalendarTour";
 
-function Tours({ children, requestType, pageName, tableName, similar, setCartCount, ...props }) {
+function Tours({ children, requestType, pageName, tableName, similar, setCartCount, idToModal, ...props }) {
     let { id } = useParams();
 
     const [tour, setTour] = useState();
@@ -30,7 +30,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
     const [selectedDate, setSelectedDate] = useState(null);
 
     const fetchTour = () => {
-        fetch(`${server}/api/${requestType}/${id}`)
+        fetch(`${server}/api/${requestType}/${idToModal}`)
             .then(response => response.json())
             .then(data => setTour(data))
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
@@ -38,7 +38,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
     useEffect(() => {
         fetchTour();
-    }, [id]);
+    }, [idToModal]);
 
     const [regions, setRegions] = useState([]);
 
@@ -266,6 +266,49 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
         setSelectedDate(null);
     };
 
+
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => setWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const placesTour = tour ? tour.places : [];
+    const chunked = [];
+    const oddChunkSize = width >= 1040 ? Math.round(placesTour.length / 2) : 1; // для нечетного среза 4 элемента
+    const evenChunkSize = oddChunkSize; // для четного среза 3 элемента
+
+    let currentIndex = 0;
+    let isOddChunk = true;
+
+    while (currentIndex < placesTour.length) {
+        const currentChunkSize = isOddChunk ? oddChunkSize : evenChunkSize;
+        let chunk = placesTour.slice(currentIndex, currentIndex + currentChunkSize);
+
+        if (placesTour.length % 2 == 0 && oddChunkSize > 1) {
+            if (!isOddChunk) {
+                // Для четного среза добавляем пустые значения в начале и в конце
+                chunk = ["", ...chunk];
+            } else {
+                chunk = [...chunk, ""];
+            }
+        }
+        if (oddChunkSize == 1) {
+            if (!isOddChunk) {
+                chunk = ["", ...chunk];
+            } else {
+                chunk = [...chunk, ""];
+            }
+        }
+
+
+        chunked.push(chunk);
+        currentIndex += currentChunkSize;
+        isOddChunk = !isOddChunk;
+    }
+
     return (
         <>
             {tour ?
@@ -274,9 +317,9 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                         <CenterBlock>
                             <WidthBlock>
                                 <div className={classes.centerPosition}>
-                                    <div className={classes.tour_topInfo__bread}>
+                                    {/* <div className={classes.tour_topInfo__bread}>
                                         <Link to={'/'}>Главная</Link> / <Link to={`/region/${tour.region}`}>{regionNameData}</Link> / {tour.tourTitle}
-                                    </div>
+                                    </div> */}
 
                                     <div className={classes.tour_topInfo__left___title}>
                                         {tour.tourTitle}
@@ -342,11 +385,23 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                     ))}
                                                 </Swiper>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className={classes.tour_topInfo__left___title}>
+                                        Точки маршрута
+                                    </div>
 
-                                            <div className={classes.tour_topInfo__right___places_gradient}>
-                                                <div className={classes.tour_topInfo__right___places}>
-                                                    {tour.places.map((item, index) => (
-                                                        <div className={classes.tour_topInfo__right___places____place} key={index}>
+                                    <div className={classes.tour_topInfo__right___places_gradient}>
+                                        {chunked.map((chunk, rowIndex) => (
+                                            // Каждая строка обёрнута в отдельный flex-контейнер
+                                            <div className={classes.tour_topInfo__right___places} key={rowIndex} >
+                                                {chunk.map((item, index) => (
+                                                    // Используем React.Fragment, чтобы сгруппировать элементы без лишнего DOM-узла
+                                                    <React.Fragment key={`${rowIndex}-${index}`}>
+                                                        <div className={classes.tour_topInfo__right___places____place} style={{
+                                                            width: item && width >= 1040 ? '200px' : item && width < 1040 ? '65%' : '50px',
+                                                            opacity: item ? 1 : 0,
+                                                        }}>
                                                             <div className={classes.tour_topInfo__right___places____place_____img}>
                                                                 <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                     <path
@@ -359,10 +414,13 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                                 {renderPlaces(item)}
                                                             </div>
                                                         </div>
-                                                    ))}
-                                                </div>
+                                                        {index + 1 != chunk.length && width >= 1040 &&
+                                                            <div className={classes.tour_topInfo__right___places____place_empty}></div>
+                                                        }
+                                                    </React.Fragment>
+                                                ))}
                                             </div>
-                                        </div>
+                                        ))}
                                     </div>
                                 </div>
                             </WidthBlock>
@@ -499,8 +557,6 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                             </>
                             : null
                         }
-
-                        <br />
                     </WidthBlock>
                 </div>
                 :

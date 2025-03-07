@@ -7,7 +7,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-function Object({ pageName, titleObject, regionData, width, inCart, setCartCount }) {
+function Object({ pageName, titleObject, regionData, width, inCart, setCartCount, handleOpen, open }) {
 
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
@@ -135,7 +135,7 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
     }
 
     return (
-        <div className={classes.objects_item} style={{ width: width }}>
+        <div className={classes.objects_item} style={{ width: width, height: '650px' }}>
             <div className={classes.objects_item__like} onClick={handleLikeClick}>
                 {user && user.likes && user.likes.includes(regionData._id)
                     ? <img src="/userLike_full.png" alt="Liked" />
@@ -187,13 +187,14 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                                     <div>Стоимость: <span>{regionData.cost} ₽</span></div>
                                 </div>
                                 <div className={classes.buttons}>
-                                    <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
-                                    {(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оплата на сайте') &&
+                                    <a className={classes.objects_item__button}  onClick={() => handleOpen(regionData._id)}>Подробнее</a>
+                                     {/* <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link> */}
+                                    {/*{(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оплата на сайте') &&
                                         <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}#date`} className={classes.objects_item__button} >Забронировать</Link>
                                     }
                                     {(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оставить заявку') &&
                                         <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}#date`} className={classes.objects_item__button} >Оставить заявку</Link>
-                                    }
+                                    } */}
                                     {/* {regionData.departureDates.length > 0 &&
                                     <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>
                                         {isInCart ? 'В корзине' : inCart}
