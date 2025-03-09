@@ -90,10 +90,20 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
     const [open, setOpen] = useState(false);
     const [idToModal, setIdToModal] = useState(false);
 
-    const handleOpen = (id) => {
+    const handleOpen = (id, isSimillar) => {
         setOpen(true)
         setIdToModal(id)
+
+        if (isSimillar) {
+            handleClose()
+            setTimeout(() => {
+                setOpen(true)
+                setIdToModal(id)
+            }, 300);
+        }
+
     };
+
     const handleClose = () => setOpen(false);
 
     return (
@@ -115,7 +125,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                         <div className={classes.objects}>
                             {
                                 foundData.map((item, index) => (
-                                    <Object key={index} handleOpen={handleOpen} open={open} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                    <Object key={index} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
                                 ))
                             }
                         </div>
@@ -151,7 +161,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
             >
                 <Slide direction="up" in={open} mountOnEnter unmountOnExit>
                     <Box sx={style}>
-                        <Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} idToModal={idToModal} />
+                        <Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
                     </Box>
                 </Slide>
             </Modal>

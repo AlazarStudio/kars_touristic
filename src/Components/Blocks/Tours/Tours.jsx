@@ -22,7 +22,7 @@ import server from '../../../serverConfig'
 import ReactModal from "react-modal";
 import CalendarTour from "../CalendarTour/CalendarTour";
 
-function Tours({ children, requestType, pageName, tableName, similar, setCartCount, idToModal, ...props }) {
+function Tours({ children, requestType, pageName, tableName, similar, setCartCount, idToModal, handleOpen, open, ...props }) {
     let { id } = useParams();
 
     const [tour, setTour] = useState();
@@ -547,7 +547,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                             {foundRegion.map((item, index) => (
                                                 item._id != id ?
                                                     <SwiperSlide key={index}>
-                                                        <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                                        <Object handleOpen={handleOpen} isSimillar={true} open={open} width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
                                                     </SwiperSlide>
                                                     : null
                                             ))}
