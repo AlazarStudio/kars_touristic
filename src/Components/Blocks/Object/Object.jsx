@@ -3,7 +3,7 @@ import classes from './Object.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import server from '../../../serverConfig';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
@@ -152,7 +152,12 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
             }
 
             <div className={classes.objects_item__img}>
-                <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
+                <Swiper
+                    navigation={true}
+                    modules={[Navigation]}
+                    loop={true}
+                    className="tourPhotos"
+                >
                     {photos.map((item, index) => (
                         <SwiperSlide key={index}>
                             <img src={`${server}/refs/${item}`} alt="" />

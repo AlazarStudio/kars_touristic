@@ -108,33 +108,38 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
 
     return (
         <>
-            {foundData ?
+            {foundData &&
                 <div className={classes.fullBlock}>
-                    <CenterBlock>
-                        <H2 text_transform="uppercase">{props.title}</H2> <span style={{ marginTop: '10px' }}>(Найдено: {foundData.length})</span>
-                    </CenterBlock>
+                    {objects.length > 0 ?
+                        <>
+                            <CenterBlock >
+                                <H2 text_transform="uppercase">{props.title}</H2>
+                                {/* <span style={{ marginTop: '10px' }}>(Найдено: {foundData.length})</span> */}
+                            </CenterBlock>
 
-                    {(requestType == 'getMultidayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {(requestType == 'getOnedayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {(requestType == 'getAuthorTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {(requestType == 'getHotels' && objects.length > 0) && <FilterHotels objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {(requestType == 'getPlaces' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                    {(requestType == 'getEvents' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestType == 'getMultidayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestType == 'getOnedayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestType == 'getAuthorTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestType == 'getHotels' && objects.length > 0) && <FilterHotels objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestType == 'getPlaces' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestType == 'getEvents' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
 
-                    {objects.length > 0 &&
-                        <div className={classes.objects}>
-                            {
-                                foundData.map((item, index) => (
-                                    <Object key={index} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
-                                ))
-                            }
-                        </div>
+
+                            <div className={classes.objects}>
+                                {
+                                    foundData.map((item, index) => (
+                                        <Object key={index} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                    ))
+                                }
+                            </div>
+                        </>
+                        :
+                        <H2 text_transform="uppercase">Ничего не найдено</H2>
                     }
-                </div>
-                : null
+                </div >
             }
-
-            {open &&
+            {
+                open &&
                 <IconButton onClick={handleClose} aria-label="close" sx={{
                     border: '1px solid white',
                     borderRadius: '50%',

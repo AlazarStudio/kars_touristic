@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Header_white from "../Blocks/Header_white/Header_white";
 import RegionInfo from "../Blocks/RegionInfo/RegionInfo";
 import server from '../../serverConfig';
+import Header_black from "../Blocks/Header_black/Header_black";
 
 
 function RegionInfo_Page({ children, ...props }) {
@@ -48,7 +48,7 @@ function RegionInfo_Page({ children, ...props }) {
 
     return (
         <>
-            <Header_white cartCount={cartCount} />
+            <Header_black cartCount={cartCount} />
             <RegionInfo setCartCount={setCartCount} />
         </>
     );
