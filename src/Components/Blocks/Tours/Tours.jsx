@@ -11,9 +11,10 @@ import H2 from "../../Standart/H2/H2";
 import Object from "../Object/Object";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 import Feedback from "../Feedback/Feedback";
 import Slider from "../Slider/Slider";
@@ -266,49 +267,9 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
         setSelectedDate(null);
     };
 
-
-    const [width, setWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
     const placesTour = tour ? tour.places : [];
-    const chunked = [];
-    const oddChunkSize = width >= 1040 ? Math.round(placesTour.length / 2) : 1; // для нечетного среза 4 элемента
-    const evenChunkSize = oddChunkSize; // для четного среза 3 элемента
 
-    let currentIndex = 0;
-    let isOddChunk = true;
-
-    while (currentIndex < placesTour.length) {
-        const currentChunkSize = isOddChunk ? oddChunkSize : evenChunkSize;
-        let chunk = placesTour.slice(currentIndex, currentIndex + currentChunkSize);
-
-        if (placesTour.length % 2 == 0 && oddChunkSize > 1) {
-            if (!isOddChunk) {
-                // Для четного среза добавляем пустые значения в начале и в конце
-                chunk = ["", ...chunk];
-            } else {
-                chunk = [...chunk, ""];
-            }
-        }
-        if (oddChunkSize == 1) {
-            if (!isOddChunk) {
-                chunk = ["", ...chunk];
-            } else {
-                chunk = [...chunk, ""];
-            }
-        }
-
-
-        chunked.push(chunk);
-        currentIndex += currentChunkSize;
-        isOddChunk = !isOddChunk;
-    }
-
+    const updatedPlaces = placesTour.flatMap(place => [place, ""]).slice(0, -1);
     return (
         <>
             {tour ?
@@ -391,37 +352,62 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                         Точки маршрута
                                     </div>
 
-                                    <div className={classes.tour_topInfo__right___places_gradient}>
-                                        {chunked.map((chunk, rowIndex) => (
-                                            // Каждая строка обёрнута в отдельный flex-контейнер
-                                            <div className={classes.tour_topInfo__right___places} key={rowIndex} >
-                                                {chunk.map((item, index) => (
-                                                    // Используем React.Fragment, чтобы сгруппировать элементы без лишнего DOM-узла
-                                                    <React.Fragment key={`${rowIndex}-${index}`}>
-                                                        <div className={classes.tour_topInfo__right___places____place} style={{
-                                                            width: item && width >= 1040 ? '200px' : item && width < 1040 ? '65%' : '50px',
-                                                            opacity: item ? 1 : 0,
-                                                        }}>
-                                                            <div className={classes.tour_topInfo__right___places____place_____img}>
-                                                                <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path
-                                                                        d="M8.49996 21.5C7.05646 20.2433 5.71847 18.8656 4.49998 17.3814C2.67142 15.1523 0.500001 11.8327 0.500001 8.66931C0.49838 5.36547 2.4477 2.38623 5.43834 1.12183C8.42898 -0.142565 11.8714 0.5571 14.1594 2.89434C15.6639 4.42306 16.5067 6.50255 16.5 8.66931C16.5 11.8327 14.3285 15.1523 12.4999 17.3814C11.2814 18.8656 9.94346 20.2433 8.49996 21.5ZM8.49996 5.17003C7.27506 5.17003 6.1432 5.83699 5.53075 6.91967C4.91829 8.00235 4.91829 9.33627 5.53075 10.419C6.1432 11.5016 7.27506 12.1686 8.49996 12.1686C10.3935 12.1686 11.9285 10.6019 11.9285 8.66931C11.9285 6.73671 10.3935 5.17003 8.49996 5.17003Z"
-                                                                        fill="var(--black_color)"
-                                                                    />
-                                                                </svg>
+                                    <div className={classes.tour_topInfo__right___places}  >
+                                        <Swiper
+                                            slidesPerView={7}
+                                            spaceBetween={0}
+                                            loop={false}
+                                            modules={[Pagination]}
+                                            className={"tourPointsSlider"}
+                                            pagination={{
+                                                clickable: true, // Делаем кружочки кликабельными
+                                                dynamicBullets: true // Динамическое изменение размеров кружков
+                                            }}
+                                            breakpoints={{
+                                                320: {
+                                                    slidesPerView: 2,
+                                                },
+                                                768: {
+                                                    slidesPerView: 2,
+                                                },
+                                                1024: {
+                                                    slidesPerView: 7,
+                                                },
+                                            }}
+                                        >
+                                            {updatedPlaces.map((item, index) => (
+                                                <SwiperSlide key={index}>
+                                                    <div className={classes.tour_topInfo_withLine}>
+                                                        {item != '' ?
+                                                            <div className={classes.tour_topInfo__right___places____place}>
+                                                                <div className={classes.tour_topInfo__right___places____place_____img}>
+                                                                    <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M8.49996 21.5C7.05646 20.2433 5.71847 18.8656 4.49998 17.3814C2.67142 15.1523 0.500001 11.8327 0.500001 8.66931C0.49838 5.36547 2.4477 2.38623 5.43834 1.12183C8.42898 -0.142565 11.8714 0.5571 14.1594 2.89434C15.6639 4.42306 16.5067 6.50255 16.5 8.66931C16.5 11.8327 14.3285 15.1523 12.4999 17.3814C11.2814 18.8656 9.94346 20.2433 8.49996 21.5ZM8.49996 5.17003C7.27506 5.17003 6.1432 5.83699 5.53075 6.91967C4.91829 8.00235 4.91829 9.33627 5.53075 10.419C6.1432 11.5016 7.27506 12.1686 8.49996 12.1686C10.3935 12.1686 11.9285 10.6019 11.9285 8.66931C11.9285 6.73671 10.3935 5.17003 8.49996 5.17003Z"
+                                                                            fill="var(--black_color)"
+                                                                        />
+                                                                    </svg>
+                                                                </div>
+                                                                <div className={classes.tour_topInfo__right___places____place_____title}>
+                                                                    {renderPlaces(item)}
+                                                                </div>
                                                             </div>
-                                                            <div className={classes.tour_topInfo__right___places____place_____title}>
-                                                                {renderPlaces(item)}
-                                                            </div>
-                                                        </div>
-                                                        {index + 1 != chunk.length && width >= 1040 &&
-                                                            <div className={classes.tour_topInfo__right___places____place_empty}></div>
+                                                            :
+                                                            <>
+                                                                {index + 1 != updatedPlaces.length &&
+                                                                    <div className={classes.tour_topInfo_withLine_option}>
+                                                                        <div className={classes.tour_topInfo_withLine_option_num}>{(index + 1) /2}</div>
+                                                                        <img src="/line.png" alt="" />
+                                                                    </div>
+                                                                }
+                                                            </>
                                                         }
-                                                    </React.Fragment>
-                                                ))}
-                                            </div>
-                                        ))}
+                                                    </div>
+                                                </SwiperSlide>
+                                            ))}
+                                        </Swiper>
                                     </div>
+
                                 </div>
                             </WidthBlock>
                         </CenterBlock>
@@ -429,7 +415,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
                     <WidthBlock>
                         <CenterBlock>
-                            <H2 text_transform="uppercase" font_size="36px">Чек-Лист</H2>
+                            <H2 text_transform="uppercase" font_size="36px">Что взять с собой</H2>
                         </CenterBlock>
 
                         <Slider info={tour.checklists} boxShadow={'0px 4px 46.4px 0px #B4B4B440'} loop={false} />

@@ -135,18 +135,16 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
     }
 
     return (
-        <div className={classes.objects_item} style={{ width: width, height: '650px' }}>
+        <div className={classes.objects_item} style={{ width: width }}>
             <div className={classes.objects_item__like} onClick={handleLikeClick}>
                 {user && user.likes && user.likes.includes(regionData._id)
                     ? <img src="/userLike_full.png" alt="Liked" />
                     : <img src="/userLike_empty.png" alt="Not Liked" />
                 }
             </div>
-            {/* <div className={classes.objects_item__moreInfo} onClick={() => setMoreInfoText(!moreInfoText)}>
-                {regionData.optional && <img src="/optional.png" alt="Optional" />}
-            </div> */}
-            {moreInfoText &&
-                <div className={classes.objects_item__moreInfoText}>
+            {regionData.optional &&
+                <div className={classes.objects_item__moreInfo}>
+                    <img src="/optional_black.png" alt="Optional" />
                     {regionData.optional}
                 </div>
             }
@@ -180,11 +178,11 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                                     <div>Тип экскурсии: <span>{regionData.tourType}</span></div>
                                     <div>Сложность: <span>{regionData.difficulty}</span></div>
                                 </div>
-                                {regionData.optional &&
+                                {/* {regionData.optional &&
                                     <div className={classes.objects_item__optional}>
                                         <img src="/optional_black.png" alt="Optional" /> {regionData.optional}
                                     </div>
-                                }
+                                } */}
                             </div>
 
                             <div className={classes.objects_item_top_desc_info}>
