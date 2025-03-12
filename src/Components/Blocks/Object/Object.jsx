@@ -7,7 +7,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-function Object({ pageName, titleObject, regionData, width, inCart, setCartCount, handleOpen, open, isSimillar }) {
+function Object({ pageName, titleObject, regionData, width, inCart, setCartCount, handleOpen, open, isSimillar, regionName }) {
 
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
@@ -190,8 +190,9 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                                     <div>Стоимость: <span>{regionData.cost} ₽</span></div>
                                 </div>
                                 <div className={classes.buttons}>
-                                    <a className={classes.objects_item__button} onClick={() => handleOpen(regionData._id, isSimillar)}>Подробнее</a>
-                                    {/* <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link> */}
+                                    {/* <a className={classes.objects_item__button} onClick={() => handleOpen(regionData._id, isSimillar)}>Подробнее</a> */}
+                                    <Link to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
+
                                     {/*{(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оплата на сайте') &&
                                         <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}#date`} className={classes.objects_item__button} >Забронировать</Link>
                                     }

@@ -26,6 +26,7 @@ import Favorites_Page from "./Components/Pages/Favorites_Page/Favorites_Page";
 import Cart_Page from "./Components/Pages/Cart_Page/Cart_Page";
 import SignUpTouragent from "./Components/Admin/Blocks/SignUpTouragent/SignUpTouragent";
 import ToursModered_Page from "./Components/Pages/ToursModered_Page";
+import RedirectOldTours from "./Components/Pages/RedirectOldTours";
 
 function App() {
   return (
@@ -39,15 +40,24 @@ function App() {
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
           <Route path="/region/:id" element={<Region_Page />} />
+          <Route path="/region/:id/:idTour" element={<Region_Page />} />
           <Route path="/search" element={<Search_Page />} />
 
-          <Route path="/tours/:id" element={<Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} />} />
-          <Route path="/excursions/:id" element={<Tours_Page tableName={'onedayTour'} requestType={'getOneOnedayTour'} similar={'getOnedayTours'} pageName={'excursions'} />} />
-          <Route path="/gids/:id" element={<Tours_Page tableName={'authorTour'} requestType={'getOneAuthorTours'} similar={'getAuthorTours'} pageName={'gids'} />} />
-          <Route path="/hotels/:id" element={<Hotels_Page />} />
-          <Route path="/hotels/:id/:numID" element={<Number_Page />} />
-          <Route path="/visits/:id" element={<Visit_Page />} />
-          <Route path="/events/:id" element={<Event_Page />} />
+          <Route path="/tours/:id" element={<RedirectOldTours />} />
+          <Route path="/excursions/:id" element={<RedirectOldTours />} />
+          <Route path="/gids/:id" element={<RedirectOldTours />} />
+          <Route path="/hotels/:id" element={<RedirectOldTours />} />
+          <Route path="/hotels/:id/:numID" element={<RedirectOldTours />} />
+          <Route path="/visits/:id" element={<RedirectOldTours />} />
+          <Route path="/events/:id" element={<RedirectOldTours />} />
+
+          {/* <Route path="/tours/:id" element={<Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} />} /> */}
+          {/* <Route path="/excursions/:id" element={<Tours_Page tableName={'onedayTour'} requestType={'getOneOnedayTour'} similar={'getOnedayTours'} pageName={'excursions'} />} /> */}
+          {/* <Route path="/gids/:id" element={<Tours_Page tableName={'authorTour'} requestType={'getOneAuthorTours'} similar={'getAuthorTours'} pageName={'gids'} />} /> */}
+          {/* <Route path="/hotels/:id" element={<Hotels_Page />} /> */}
+          {/* <Route path="/hotels/:id/:numID" element={<Number_Page />} /> */}
+          {/* <Route path="/visits/:id" element={<Visit_Page />} /> */}
+          {/* <Route path="/events/:id" element={<Event_Page />} /> */}
 
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/signIn" element={<SignIn />} />

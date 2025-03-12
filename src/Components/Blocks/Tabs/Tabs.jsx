@@ -15,8 +15,9 @@ import server from '../../../serverConfig'
 import Tours_Page from "../../Pages/Tours_Page";
 import zIndex from "@mui/material/styles/zIndex";
 import LazyLoadTours from "../../Pages/LazyLoadTours";
+import { useNavigate } from "react-router-dom";
 
-function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, ...props }) {
+function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, idTour, ...props }) {
     const [objects, setObjects] = useState([]);
     const [filteredObjects, setFilteredObjects] = useState([]);
 
@@ -96,16 +97,30 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
         setIdToModal(id)
 
         if (isSimillar) {
-            handleClose()
+            setOpen(false)
             setTimeout(() => {
                 setOpen(true)
                 setIdToModal(id)
             }, 300);
         }
-
     };
 
-    const handleClose = () => setOpen(false);
+    const navigate = useNavigate();
+
+    const handleClose = () => {
+        setOpen(false)
+        navigate(`/region/${regionName}`);
+    };
+
+    useEffect(() => {
+        setOpen(false)
+        if (idTour) {
+            setTimeout(() => {
+                setOpen(true)
+                setIdToModal(idTour)
+            }, 300);
+        }
+    }, [idTour]);
 
     return (
         <>
@@ -127,7 +142,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
 
 
                             <div className={classes.objects}>
-                                <LazyLoadTours foundData={foundData} itemsPerPage={9} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                <LazyLoadTours regionName={regionName} foundData={foundData} itemsPerPage={9} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
 
                                 {/* {
                                     foundData.map((item, index) => (
@@ -141,9 +156,10 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     }
                 </div >
             }
+
             {
                 open &&
-                <IconButton onClick={handleClose} aria-label="close" sx={{
+                <IconButton onClick={() => handleClose()} aria-label="close" sx={{
                     border: '1px solid white',
                     borderRadius: '50%',
                     position: 'fixed',
@@ -162,14 +178,14 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
 
             <Modal
                 open={open}
-                onClose={handleClose}
+                onClose={() => handleClose()}
                 closeAfterTransition
                 aria-labelledby="modal-title"
                 aria-describedby="modal-description"
             >
                 <Slide direction="up" in={open} mountOnEnter unmountOnExit>
                     <Box sx={style}>
-                        <Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
+                        <Tours_Page regionName={regionName} tableName={tableName} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
                     </Box>
                 </Slide>
             </Modal>

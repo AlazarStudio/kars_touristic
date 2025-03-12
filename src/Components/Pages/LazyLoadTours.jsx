@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Object from "../Blocks/Object/Object";
 import CircularProgress from "@mui/material/CircularProgress"; // Лоадер от Material UI
 
-const LazyLoadTours = ({ foundData, itemsPerPage = 3, handleOpen, isSimillar, open, setCartCount, pageName, titleObject, inCart }) => {
+const LazyLoadTours = ({ foundData, itemsPerPage = 3, regionName, handleOpen, isSimillar, open, setCartCount, pageName, titleObject, inCart }) => {
     const [visibleTours, setVisibleTours] = useState(foundData.slice(0, itemsPerPage)); // Первые N туров
     const [loadIndex, setLoadIndex] = useState(itemsPerPage); // Индекс загрузки
     const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
@@ -44,16 +44,17 @@ const LazyLoadTours = ({ foundData, itemsPerPage = 3, handleOpen, isSimillar, op
     return (
         <>
             {visibleTours.map((tour, index) => (
-                <Object 
-                    key={index} 
-                    handleOpen={handleOpen} 
-                    isSimillar={isSimillar} 
-                    open={open} 
-                    setCartCount={setCartCount} 
-                    regionData={tour} 
-                    pageName={pageName} 
-                    titleObject={titleObject} 
-                    inCart={inCart} 
+                <Object
+                    key={index}
+                    handleOpen={handleOpen}
+                    isSimillar={isSimillar}
+                    open={open}
+                    setCartCount={setCartCount}
+                    regionData={tour}
+                    pageName={pageName}
+                    titleObject={titleObject}
+                    inCart={inCart}
+                    regionName={regionName}
                 />
             ))}
             {/* Лоадер */}

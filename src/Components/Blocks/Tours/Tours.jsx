@@ -23,7 +23,7 @@ import server from '../../../serverConfig'
 import ReactModal from "react-modal";
 import CalendarTour from "../CalendarTour/CalendarTour";
 
-function Tours({ children, requestType, pageName, tableName, similar, setCartCount, idToModal, handleOpen, open, ...props }) {
+function Tours({ children, requestType, pageName, tableName, similar, setCartCount, idToModal, handleOpen, open, regionName, ...props }) {
     let { id } = useParams();
 
     const [tour, setTour] = useState();
@@ -167,7 +167,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
     const handleAddCartClick = async () => {
         if (token) {
             const updates = {
-                cart: [id]
+                cart: [idToModal]
             };
 
             try {
@@ -330,7 +330,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                 </a>
                                             }
                                             {/* <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
-                                                {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
+                                                {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(idToModal)) ? 'В корзине' : 'Добавить в корзину'}
                                             </div> */}
 
                                         </div>
@@ -396,7 +396,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                             <>
                                                                 {index + 1 != updatedPlaces.length &&
                                                                     <div className={classes.tour_topInfo_withLine_option}>
-                                                                        <div className={classes.tour_topInfo_withLine_option_num}>{(index + 1) /2}</div>
+                                                                        <div className={classes.tour_topInfo_withLine_option_num}>{(index + 1) / 2}</div>
                                                                         <img src="/line.png" alt="" />
                                                                     </div>
                                                                 }
@@ -531,9 +531,9 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                             }}
                                         >
                                             {foundRegion.map((item, index) => (
-                                                item._id != id ?
+                                                item._id != idToModal ?
                                                     <SwiperSlide key={index}>
-                                                        <Object handleOpen={handleOpen} isSimillar={true} open={open} width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                                        <Object regionName={regionName} handleOpen={handleOpen} isSimillar={true} open={open} width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
                                                     </SwiperSlide>
                                                     : null
                                             ))}

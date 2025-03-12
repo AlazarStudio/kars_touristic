@@ -5,7 +5,6 @@ import Header_black from "../Blocks/Header_black/Header_black";
 
 
 function RegionInfo_Page({ children, ...props }) {
-
     const [user, setUser] = useState(null);
     const [cartCount, setCartCount] = useState(0);
 
