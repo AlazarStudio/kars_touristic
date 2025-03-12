@@ -14,6 +14,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import server from '../../../serverConfig'
 import Tours_Page from "../../Pages/Tours_Page";
 import zIndex from "@mui/material/styles/zIndex";
+import LazyLoadTours from "../../Pages/LazyLoadTours";
 
 function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, ...props }) {
     const [objects, setObjects] = useState([]);
@@ -126,11 +127,13 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
 
 
                             <div className={classes.objects}>
-                                {
+                                <LazyLoadTours foundData={foundData} itemsPerPage={9} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+
+                                {/* {
                                     foundData.map((item, index) => (
                                         <Object key={index} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} regionData={item} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
                                     ))
-                                }
+                                } */}
                             </div>
                         </>
                         :
