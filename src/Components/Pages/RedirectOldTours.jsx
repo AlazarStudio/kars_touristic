@@ -39,7 +39,7 @@ function RedirectOldTours({ children, ...props }) {
             requestType = 'getOneEvent'
             break;
         default:
-            pageTitle = "Страница не найдена";
+            requestType = "Страница не найдена";
             break;
     }
 

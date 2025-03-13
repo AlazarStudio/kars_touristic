@@ -13,11 +13,13 @@ import CloseIcon from '@mui/icons-material/Close';
 
 import server from '../../../serverConfig'
 import Tours_Page from "../../Pages/Tours_Page";
+import Hotels_Page from "../../Pages/Hotels_Page";
 import zIndex from "@mui/material/styles/zIndex";
 import LazyLoadTours from "../../Pages/LazyLoadTours";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import Number_Page from "../../Pages/Number_Page";
 
-function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, idTour, ...props }) {
+function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, idTour, idRoom, ...props }) {
     const [objects, setObjects] = useState([]);
     const [filteredObjects, setFilteredObjects] = useState([]);
 
@@ -80,7 +82,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
         left: 0,
         width: "100%",
         height: '92dvh',
-        bgcolor: 'transparent',
+        bgcolor: '#fff',
         boxShadow: 24,
         outline: 'none',
         zIndex: '9999999',
@@ -108,9 +110,19 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
     const navigate = useNavigate();
 
     const handleClose = () => {
-        setOpen(false)
-        navigate(`/region/${regionName}`);
+        if (!idRoom) {
+            setOpen(false)
+            navigate(`/region/${regionName}`);
+        } else {
+            setOpen(false)
+            navigate(`/region/${regionName}/${idTour}`);
+            setTimeout(() => {
+                setOpen(true)
+                setIdToModal(idTour)
+            }, 300);
+        }
     };
+
 
     useEffect(() => {
         setOpen(false)
@@ -121,6 +133,35 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
             }, 300);
         }
     }, [idTour]);
+
+    let requestTypeOne
+
+    switch (requestType) {
+        case "getMultidayTours":
+            requestTypeOne = 'getOneMultidayTour'
+            break;
+        case "getOnedayTours":
+            requestTypeOne = 'getOneOnedayTour'
+            break;
+        case "getAuthorTours":
+            requestTypeOne = 'getOneAuthorTours'
+            break;
+        case "getHotels":
+            requestTypeOne = 'getOneHotel'
+            break;
+        case "getRooms":
+            requestTypeOne = 'getOneRoom'
+            break;
+        case "getPlaces":
+            requestTypeOne = 'getOnePlace'
+            break;
+        case "getEvents":
+            requestTypeOne = 'getOneEvent'
+            break;
+        default:
+            requestTypeOne = "Страница не найдена";
+            break;
+    }
 
     return (
         <>
@@ -178,14 +219,27 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
 
             <Modal
                 open={open}
-                onClose={() => handleClose()}
+                onClose={() => handleClose(roomId)}
                 closeAfterTransition
                 aria-labelledby="modal-title"
                 aria-describedby="modal-description"
             >
                 <Slide direction="up" in={open} mountOnEnter unmountOnExit>
                     <Box sx={style}>
-                        <Tours_Page regionName={regionName} tableName={tableName} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
+                        {(
+                            requestType == 'getMultidayTours' ||
+                            requestType == 'getOnedayTours' ||
+                            requestType == 'getAuthorTours'
+                        )
+                            &&
+                            <Tours_Page regionName={regionName} tableName={tableName} requestType={requestTypeOne} similar={requestType} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
+                        }
+                        {(requestType == 'getHotels' && idTour && !idRoom) && <Hotels_Page handleOpen={handleOpen} isSimillar={false} />}
+                        {(requestType == 'getHotels' && idTour && idRoom) && <Number_Page />}
+
+                        {/* <Route path="/hotels/:id/:numID" element={<Number_Page />} /> */}
+                        {/* <Route path="/visits/:id" element={<Visit_Page />} /> */}
+                        {/* <Route path="/events/:id" element={<Event_Page />} /> */}
                     </Box>
                 </Slide>
             </Modal>

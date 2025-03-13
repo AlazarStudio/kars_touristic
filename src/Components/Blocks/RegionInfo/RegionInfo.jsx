@@ -10,7 +10,7 @@ import Preloader from "../../Blocks/Preloader/Preloader";
 import server from '../../../serverConfig'
 
 function RegionInfo({ children, setCartCount, ...props }) {
-    const { id, idTour } = useParams();
+    const { id, idTour, idRoom } = useParams();
 
     const [regions, setRegions] = useState([]);
 
@@ -357,12 +357,12 @@ function RegionInfo({ children, setCartCount, ...props }) {
                         <CenterBlock>
                             <WidthBlock>
                                 <>
-                                    {activeTab === 1 && <Tabs idTour={idTour} setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'tours'} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'} />}
-                                    {activeTab === 2 && <Tabs idTour={idTour} setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'excursions'} tableName={'onedayTour'} requestType={'getOnedayTours'} title={'Однодневные экскурсии'} />}
-                                    {activeTab === 3 && <Tabs idTour={idTour} setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'gids'} tableName={'authorTour'} requestType={'getAuthorTours'} title={'Авторские туры'} checkModered={true} />}
-                                    {activeTab === 4 && <Tabs idTour={idTour} setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'hotels'} tableName={'hotels'} requestType={'getHotels'} title={'Отели / Апартаменты'} />}
-                                    {activeTab === 5 && <Tabs idTour={idTour} setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'visits'} tableName={'places'} requestType={'getPlaces'} title={'Что посетить'} />}
-                                    {activeTab === 6 && <Tabs idTour={idTour} setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'events'} tableName={'events'} requestType={'getEvents'} title={'Региональные Mice ивенты'} />}
+                                    {activeTab === 1 && <Tabs idTour={idTour} idRoom={idRoom} setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'tours'} tableName={'multidayTour'} requestType={'getMultidayTours'} title={'Многодневные туры'} />}
+                                    {activeTab === 2 && <Tabs idTour={idTour} idRoom={idRoom} setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'excursions'} tableName={'onedayTour'} requestType={'getOnedayTours'} title={'Однодневные экскурсии'} />}
+                                    {activeTab === 3 && <Tabs idTour={idTour} idRoom={idRoom} setCartCount={setCartCount} regionName={id} titleObject={'tourTitle'} pageName={'gids'} tableName={'authorTour'} requestType={'getAuthorTours'} title={'Авторские туры'} checkModered={true} />}
+                                    {activeTab === 4 && <Tabs idTour={idTour} idRoom={idRoom} setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'hotels'} tableName={'hotels'} requestType={'getHotels'} title={'Отели / Апартаменты'} />}
+                                    {activeTab === 5 && <Tabs idTour={idTour} idRoom={idRoom} setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'visits'} tableName={'places'} requestType={'getPlaces'} title={'Что посетить'} />}
+                                    {activeTab === 6 && <Tabs idTour={idTour} idRoom={idRoom} setCartCount={setCartCount} regionName={id} titleObject={'title'} pageName={'events'} tableName={'events'} requestType={'getEvents'} title={'Региональные Mice ивенты'} />}
                                 </>
                             </WidthBlock>
                         </CenterBlock>

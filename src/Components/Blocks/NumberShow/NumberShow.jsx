@@ -17,10 +17,11 @@ import server from '../../../serverConfig'
 function NumberShow({ children, ...props }) {
     const [room, setRoom] = useState();
 
-    let { numID } = useParams();
+    let { idRoom } = useParams();
+
 
     const fetchRoom = () => {
-        fetch(`${server}/api/getOneRoom/${numID}`)
+        fetch(`${server}/api/getOneRoom/${idRoom}`)
             .then(response => response.json())
             .then(data => setRoom(data))
             .catch(error => console.error('Ошибка при загрузке регионов:', error));

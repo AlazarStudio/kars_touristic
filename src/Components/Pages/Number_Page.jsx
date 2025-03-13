@@ -5,8 +5,8 @@ import NumberShow from "../Blocks/NumberShow/NumberShow";
 function Number_Page({ children, ...props }) {
     return (
         <>
-            <Header_black />
-            <NumberShow/>
+            {/* <Header_black /> */}
+            <NumberShow />
         </>
     );
 }

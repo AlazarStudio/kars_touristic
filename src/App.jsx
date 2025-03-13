@@ -40,7 +40,8 @@ function App() {
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
           <Route path="/region/:id" element={<Region_Page />} />
-          <Route path="/region/:id/:idTour" element={<Region_Page />} />
+          <Route path="/region/:id/:idTour/" element={<Region_Page />} />
+          <Route path="/region/:id/:idTour/:idRoom" element={<Region_Page />} />
           <Route path="/search" element={<Search_Page />} />
 
           <Route path="/tours/:id" element={<RedirectOldTours />} />

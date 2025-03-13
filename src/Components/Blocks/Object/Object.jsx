@@ -213,7 +213,7 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                             <div className={classes.objects_item__title} style={{ textAlign: 'center' }}>
                                 {truncateString(regionData[titleObject], 50)}
                             </div>
-                            <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
+                            <Link to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
                         </>
                     )
                 }
