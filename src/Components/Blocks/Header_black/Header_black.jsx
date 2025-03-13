@@ -11,7 +11,7 @@ import burger from '/header_burger_black.webp';
 
 import server from '../../../serverConfig';
 
-function Header_black({ children, cartCount, ...props }) {
+function Header_black({ children, cartCount, tempMain, ...props }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -59,13 +59,40 @@ function Header_black({ children, cartCount, ...props }) {
 
     return (
         <>
-            <header className={classes.header}>
-                <div className={classes.navigation}>
-                    <Link to="/" className={classes.navigation_logo}>
-                        <img src={logo} alt="Logo Kars Touristic" />
-                    </Link>
-                    <div className={classes.navigation_links}>
+            {!tempMain &&
+                <>
+                    <header className={classes.header}>
+                        <div className={classes.navigation}>
+                            <Link to="/" className={classes.navigation_logo}>
+                                <img src={logo} alt="Logo Kars Touristic" />
+                            </Link>
+                            <div className={classes.navigation_links}>
+                                <ul>
+                                    <li><Link to="/about">О нас</Link></li>
+                                    <li><Link to="/transfer">Трансфер</Link></li>
+                                    <li><Link to="/faq">FAQ</Link></li>
+                                    <li><Link to="/contacts">Контакты</Link></li>
+                                    <li><Link to="/turagents">Турагентам</Link></li>
+                                </ul>
+                            </div>
+                            <div className={classes.navigation_btn}>
+                                <ul>
+                                    <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li>
+                                    <li><Link to="/profile"><img src={profile} alt="" /></Link></li>
+                                    {/* <li>
+                                <Link to="/cart">
+                                    <img src={cart} alt="" />
+                                    {user && <div className={classes.cartCount}>{cartCount == 0 || cartCount ? cartCount : user && user.cart.length}</div>}
+                                </Link>
+                            </li> */}
+                                    <li className={classes.mobileHeader} onClick={toggleMenu}><img src={burger} alt="Menu" /></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </header>
+                    <div className={`${classes.mobileMenu} ${!menuOpen ? classes.mobileMenuClosed : ''}`}>
                         <ul>
+                            <li><Link to="/">Главная</Link></li>
                             <li><Link to="/about">О нас</Link></li>
                             <li><Link to="/transfer">Трансфер</Link></li>
                             <li><Link to="/faq">FAQ</Link></li>
@@ -73,31 +100,8 @@ function Header_black({ children, cartCount, ...props }) {
                             <li><Link to="/turagents">Турагентам</Link></li>
                         </ul>
                     </div>
-                    <div className={classes.navigation_btn}>
-                        <ul>
-                            <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li>
-                            <li><Link to="/profile"><img src={profile} alt="" /></Link></li>
-                            {/* <li>
-                                <Link to="/cart">
-                                    <img src={cart} alt="" />
-                                    {user && <div className={classes.cartCount}>{cartCount == 0 || cartCount ? cartCount : user && user.cart.length}</div>}
-                                </Link>
-                            </li> */}
-                            <li className={classes.mobileHeader} onClick={toggleMenu}><img src={burger} alt="Menu" /></li>
-                        </ul>
-                    </div>
-                </div>
-            </header>
-            <div className={`${classes.mobileMenu} ${!menuOpen ? classes.mobileMenuClosed : ''}`}>
-                <ul>
-                    <li><Link to="/">Главная</Link></li>
-                    <li><Link to="/about">О нас</Link></li>
-                    <li><Link to="/transfer">Трансфер</Link></li>
-                    <li><Link to="/faq">FAQ</Link></li>
-                    <li><Link to="/contacts">Контакты</Link></li>
-                    <li><Link to="/turagents">Турагентам</Link></li>
-                </ul>
-            </div>
+                </>
+            }
         </>
     );
 }

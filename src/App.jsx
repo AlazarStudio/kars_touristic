@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import Layout from "./Components/Standart/Layout/Layout";
@@ -29,11 +29,13 @@ import ToursModered_Page from "./Components/Pages/ToursModered_Page";
 import RedirectOldTours from "./Components/Pages/RedirectOldTours";
 
 function App() {
+  const [tempMain, setTempMain] = useState('Karachaevo-Cherkessiya');
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Main_Page />} />
+        <Route path="/" element={<Layout tempMain={tempMain}/>}>
+          <Route index element={<Main_Page tempMain={tempMain}/>} />
           <Route path="/about" element={<About_Page />} />
           <Route path="/transfer" element={<Transfer_Page />} />
           <Route path="/faq" element={<Faq_Page />} />
