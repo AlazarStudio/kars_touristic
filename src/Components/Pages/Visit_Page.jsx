@@ -5,7 +5,7 @@ import Visits from "../Blocks/Visits/Visits";
 function Visit_Page({ children, ...props }) {
     return (
         <>
-            <Header_white />
+            {/* <Header_white /> */}
             <Visits/>
         </>
     );

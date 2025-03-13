@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 import server from '../../../serverConfig'
 function Visits({ children, ...props }) {
-    let { id } = useParams();
+    let { idTour } = useParams();
 
     const [place, setPlace] = useState();
     const [multidayTours, setMultidayTours] = useState([]);
@@ -20,7 +20,7 @@ function Visits({ children, ...props }) {
     useEffect(() => {
         const fetchPlace = async () => {
             try {
-                const response = await fetch(`${server}/api/getOnePlace/${id}`);
+                const response = await fetch(`${server}/api/getOnePlace/${idTour}`);
                 const data = await response.json();
                 setPlace(data);
             } catch (error) {
@@ -29,7 +29,7 @@ function Visits({ children, ...props }) {
         };
 
         fetchPlace();
-    }, [id]);
+    }, [idTour]);
 
     useEffect(() => {
         const fetchMultidayTours = async () => {

@@ -18,6 +18,8 @@ import zIndex from "@mui/material/styles/zIndex";
 import LazyLoadTours from "../../Pages/LazyLoadTours";
 import { useNavigate, useParams } from "react-router-dom";
 import Number_Page from "../../Pages/Number_Page";
+import Visit_Page from "../../Pages/Visit_Page";
+import Event_Page from "../../Pages/Event_Page";
 
 function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, idTour, idRoom, ...props }) {
     const [objects, setObjects] = useState([]);
@@ -237,9 +239,8 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                         {(requestType == 'getHotels' && idTour && !idRoom) && <Hotels_Page handleOpen={handleOpen} isSimillar={false} />}
                         {(requestType == 'getHotels' && idTour && idRoom) && <Number_Page />}
 
-                        {/* <Route path="/hotels/:id/:numID" element={<Number_Page />} /> */}
-                        {/* <Route path="/visits/:id" element={<Visit_Page />} /> */}
-                        {/* <Route path="/events/:id" element={<Event_Page />} /> */}
+                        {(requestType == 'getPlaces' && idTour) && <Visit_Page />}
+                        {(requestType == 'getEvents' && idTour) && <Event_Page />}
                     </Box>
                 </Slide>
             </Modal>
