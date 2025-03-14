@@ -10,7 +10,7 @@ function Empty({ children, tempMain, ...props }) {
         <>
             {/* <Header/> */}
             <Outlet />
-            {!tempMain && <Footer />}
+            <Footer />
         </>
     );
 }

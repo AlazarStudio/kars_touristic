@@ -185,7 +185,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
 
 
                             <div className={classes.objects}>
-                                <LazyLoadTours regionName={regionName} foundData={foundData} itemsPerPage={9} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                <LazyLoadTours regionName={regionName} foundData={foundData} itemsPerPage={9} handleOpen={handleOpen} isSimillar={false} open={open} setCartCount={setCartCount} pageName={pageName} titleObject={titleObject} inCart={(user && user.cart.includes(idTour) ? 'В корзине' : 'Добавить в корзину')} />
 
                                 {/* {
                                     foundData.map((item, index) => (

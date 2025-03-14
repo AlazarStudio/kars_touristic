@@ -271,26 +271,6 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
     const updatedPlaces = placesTour.flatMap(place => [place, ""]).slice(0, -1);
 
-    function parseHTML(htmlString) {
-        const domParser = new DOMParser();
-        const parsedDocument = domParser.parseFromString(htmlString, 'text/html');
-
-        function parseNode(node, index) {
-            if (node.nodeType === Node.TEXT_NODE) {
-                return node.textContent;
-            } else if (node.nodeType === Node.ELEMENT_NODE) {
-                const props = {};
-                for (let i = 0; i < node.attributes.length; i++) {
-                    const { name, value } = node.attributes[i];
-                    props[name] = value;
-                }
-                const children = Array.from(node.childNodes).map(parseNode);
-                return React.createElement(node.tagName.toLowerCase(), { key: index, ...props }, ...children);
-            }
-        }
-
-        return Array.from(parsedDocument.body.childNodes).map(parseNode);
-    }
     return (
         <>
             {tour ?
@@ -450,8 +430,6 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                             </CenterBlock>
                         </div>
 
-                        {/* <Slider info={tour.checklists} boxShadow={'0px 4px 46.4px 0px #B4B4B440'} loop={false} /> */}
-
                         <ToursTab tabs={tour.days} />
 
                         {(tour.departureDates.length > 0 && tour.departureDates[0]) &&
@@ -530,11 +508,13 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                             <button onClick={closeModal} className={classes.modalCloseButton}>&#x2715;</button>
                         </ReactModal>
 
-                        {/* <CenterBlock>
+                        <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                         </CenterBlock>
 
-                        <Feedback /> */}
+                        {/* Блок для ввода отзыва */}
+
+                        <Feedback />
 
                         {foundRegion.length > 1 ?
                             <>
