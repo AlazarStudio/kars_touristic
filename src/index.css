@@ -159,6 +159,10 @@ main {
     overflow: visible;
 }
 
+.tourDaysSlider{
+    width: 100%;
+}
+
 .tourPointsSlider .swiper-pagination{
     top: auto;
     bottom: -35px;

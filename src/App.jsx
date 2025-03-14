@@ -41,9 +41,11 @@ function App() {
           <Route path="/faq" element={<Faq_Page />} />
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
+
           <Route path="/region/:id" element={<Region_Page />} />
           <Route path="/region/:id/:idTour/" element={<Region_Page />} />
           <Route path="/region/:id/:idTour/:idRoom" element={<Region_Page />} />
+
           <Route path="/search" element={<Search_Page />} />
 
           <Route path="/tours/:id" element={<RedirectOldTours />} />
@@ -71,6 +73,7 @@ function App() {
           <Route path="/profileTouragent/:id" element={<ProfileTouragent />} />
 
           <Route path="/favourites" element={<Favorites_Page />} />
+          
           {/* <Route path="/cart" element={<Cart_Page />} /> */}
 
           <Route path="/toursModered/:id" element={<ToursModered_Page tableName={'AuthorTour'} requestType={'getOneAuthorTours'} similar={'getAuthorTours'} pageName={'tours'} />} />
