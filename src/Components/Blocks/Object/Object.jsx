@@ -134,6 +134,15 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
         photos = [regionData.mainPhoto, ...regionData.photos.filter(photo => photo !== regionData.mainPhoto)];
     }
 
+    function getStars(number) {
+        let stars = '';
+        for (let i = 0; i < number; i++) {
+            stars += `<img src="/starYellow.png" alt="" />`;
+        }
+
+        return stars;
+    }
+
     return (
         <div className={classes.objects_item} style={{ width: width }}>
             <div className={classes.objects_item__like} onClick={handleLikeClick}>
@@ -210,9 +219,23 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                     )
                     : (
                         <>
-                            <div className={classes.objects_item__title} style={{ textAlign: 'center' }}>
+                            <div className={classes.objects_item__title}>
                                 {truncateString(regionData[titleObject], 50)}
+                                {regionData.stars &&
+                                    <div className={classes.objects_item__title_stars} dangerouslySetInnerHTML={{ __html: getStars(regionData.stars) }}></div>
+                                }
                             </div>
+                            {regionData.city &&
+                                <div className={classes.objects_item__title_places}>
+                                    < img src="/placePoint.webp" alt="" />
+                                    {regionData.city}
+                                </div>
+                            }
+                            {regionData.description &&
+                                <div className={classes.objects_item__title_desc}>
+                                    {truncateString(regionData.description, 200)}
+                                </div>
+                            }
                             <Link to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
                         </>
                     )

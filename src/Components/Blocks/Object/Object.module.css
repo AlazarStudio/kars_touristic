@@ -46,6 +46,11 @@
     font-weight: 500;
     text-align: left;
     font-weight: 600;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
 }
 
 .objects_item__price {
@@ -219,6 +224,30 @@
     border-radius: 10px;
 }
 
+.objects_item__title_stars {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.objects_item__title_stars img {
+    width: 18px;
+}
+
+.objects_item__title_places {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.objects_item__title_desc {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    color: #8C8C8C;
+}
 
 @media (min-width: 0px) and (max-width: 1299px) {
     .objects_item {

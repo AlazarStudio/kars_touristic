@@ -48,7 +48,7 @@ function Hotels({ children, handleOpen, isSimillar, ...props }) {
     function getStars(number) {
         let stars = '';
         for (let i = 0; i < number; i++) {
-            stars += `<img src="/star.webp" alt="" />`;
+            stars += `<img src="/starYellow.png" alt="" />`;
         }
 
         return stars;
@@ -90,9 +90,9 @@ function Hotels({ children, handleOpen, isSimillar, ...props }) {
                             <WidthBlock>
                                 <div className={classes.separateBlock}>
                                     <div className={classes.hotelInfo}>
-                                        <div className={classes.tour_topInfo__bread}>
+                                        {/* <div className={classes.tour_topInfo__bread}>
                                             <Link to={'/'}>Главная</Link> / <Link to={`/region/${hotel.region}`}>{regionNameData}</Link> / {hotel.title}
-                                        </div>
+                                        </div> */}
                                         <div className={classes.hotelTitle}>{hotel.title} ({hotel.city})</div>
                                         <div className={classes.hotelInfo_stars_links}>
                                             <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
