@@ -139,7 +139,7 @@ function AddUsers({ setActiveTab }) {
         <div className={classes.gids_info1}>
           <div className={classes.gids_info_data}>
             <div className={classes.gids_info__elements2}>
-            {/* <div className={classes.gids_info__elem2}><b>Выбрать</b></div> */}
+            <div className={classes.gids_info__elem2}><b>Выбрать</b></div>
               <div className={classes.gids_info__elem2}><b>ФИО</b></div>
               <div className={classes.gids_info__elem2}><b>Почта</b></div>
               <div className={classes.gids_info__elem2}><b>Телефон</b></div>

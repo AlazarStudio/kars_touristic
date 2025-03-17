@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -171,20 +171,6 @@ function AdminPageNew({ children, ...props }) {
     behavior: 'auto',
   });
 
-  const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef(null);
-
-  // Закрытие при клике вне блока
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
   const [user, setUser] = useState();
 
   let token = localStorage.getItem('token');
@@ -307,12 +293,7 @@ function AdminPageNew({ children, ...props }) {
 
     fetchTours();
   }, []);
-
-  const logout = () => {
-    localStorage.clear();
-    setUser(null);
-    navigate('/signIn');
-};
+  
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -518,34 +499,32 @@ function AdminPageNew({ children, ...props }) {
                 </div>
               )}
 
-              {/* Брони */}
-              <div
-                className={classes.nav_title}
-                onClick={() => toggleSection('brons')}
-              >
-                Брони
-              </div>
-              {openSections.brons && (
-                <div className={classes.admin_data__nav___item1}>
-                  {/* Брони туров */}
-                  <Link
-                    to="/admin/brons"
-                    className={classes.admin_data__nav___item}
-                    onClick={() => setActiveTab('brons')}
-                  >
-                    Брони туров
-                  </Link>
+     {/* Брони */}
+<div className={classes.nav_title} onClick={() => toggleSection('brons')}>
+    Брони
+</div>
+{openSections.brons && (
+    <div className={classes.admin_data__nav___item1}>
+        {/* Брони туров */}
+        <Link
+            to="/admin/brons"
+            className={classes.admin_data__nav___item}
+            onClick={() => setActiveTab('brons')}
+        >
+            Брони туров
+        </Link>
 
-                  {/* Брони отелей */}
-                  <Link
-                    to="/admin/addHotelAndApartments"
-                    className={classes.admin_data__nav___item}
-                    onClick={() => setActiveTab('addHotelAndApartments')}
-                  >
-                    Брони отелей
-                  </Link>
-                </div>
-              )}
+        {/* Брони отелей */}
+        <Link
+            to="/admin/addHotelAndApartments"
+            className={classes.admin_data__nav___item}
+            onClick={() => setActiveTab('addHotelAndApartments')}
+        >
+            Брони отелей
+        </Link>
+    </div>
+)}
+
 
               <Link
                 to={'/admin/moderedAuthorTours'}
@@ -553,7 +532,7 @@ function AdminPageNew({ children, ...props }) {
                 onClick={() => setActiveTab('moderedAuthorTours')}
               >
                 <span className={classes.nav_title}>Неподтвержденные туры</span>
-
+{/* 
                 {/* {unmoderatedTourCount ? (
                       <div className={classes.admin_header__nonAccessData}>
                         {unmoderatedTourCount}
@@ -562,7 +541,7 @@ function AdminPageNew({ children, ...props }) {
                       <div className={classes.admin_header__nonAccessData}>
                         0
                       </div>
-                    )} */}
+                    )} */} */}
               </Link>
               <a
                 href="/"
@@ -598,48 +577,18 @@ function AdminPageNew({ children, ...props }) {
                     month: 'long',
                   })}
                 </span>
-                <div
-                  style={{ position: 'relative', display: 'inline-block' }}
-                  ref={ref}
-                >
-                  {/* Основной блок пользователя */}
-                  <span
-                    className={classes.admin_data__info_top_user}
-                    onClick={() => setIsOpen(!isOpen)}
-                    style={{
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <img
-                      src="/logo_about.png"
-                      alt="User"
-                      style={{ marginRight: 8 }}
-                    />
-                    <span>
-                      {user ? (
-                        <>
-                          <span>{user.name}</span> <span>({user.role})</span>
-                        </>
-                      ) : (
-                        'Загрузка...'
-                      )}
-                    </span>
+                <span className={classes.admin_data__info_top_user}>
+                  <img src="/logo_about.png" />
+                  <span>
+                    {user ? (
+                      <>
+                        <span>{user.name}</span> <span>({user.role})</span>
+                      </>
+                    ) : (
+                      'Загрузка...'
+                    )}
                   </span>
-
-                  {/* Выпадающее меню */}
-                  {isOpen && (
-                    <div className={classes.adminWindow}
-                      style={{
-                     
-                      }}
-                    >
-                     
-                      <button onClick={logout}><img src='/logoutAdmin.png'/> Выйти</button>
-                    </div>
-                  )}
-                </div>
+                </span>
               </div>
               {/* Добавить регион */}
               {activeTab === 'addRegion' && (

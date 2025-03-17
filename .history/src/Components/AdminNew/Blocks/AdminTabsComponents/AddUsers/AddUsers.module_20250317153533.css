@@ -388,7 +388,7 @@ padding-left: 15px;
   /* outline: 1px solid red; */
 }
 
-.gids_info__elem2:nth-child(1) {
+.gids_info__elem2 div:nth-o(1) {
   width: 35%;
 }
 

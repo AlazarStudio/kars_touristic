@@ -636,7 +636,7 @@ function AdminPageNew({ children, ...props }) {
                       }}
                     >
                      
-                      <button onClick={logout}><img src='/logoutAdmin.png'/> Выйти</button>
+                      <button><img src='/logoutAdmin.png'/> Выйти</button>
                     </div>
                   )}
                 </div>

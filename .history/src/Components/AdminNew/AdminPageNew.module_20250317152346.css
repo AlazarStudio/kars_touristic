@@ -203,10 +203,6 @@
   color: var(--black_color);
 }
 
-.hoverBlock{
-  cursor: pointer;
-}
-
 /* .admin_data__nav___item____subItem_____add:hover,
 .hoverBlock:hover,
 .admin_data__nav___item____subItem:hover {

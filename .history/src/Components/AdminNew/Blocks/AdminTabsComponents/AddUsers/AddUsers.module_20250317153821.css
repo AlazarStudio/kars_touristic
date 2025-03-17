@@ -353,7 +353,7 @@
 }
 
 .gids_info__elem1:nth-child(1) {
-  width: 27%;
+  width: 227%;
 }
 
 .gids_info__elem1:nth-child(2) {
@@ -364,7 +364,6 @@
   display: flex;
   width: 70%;
   gap: 25px;
-padding-left: 15px;
   /* outline: 1px solid blue; */
 }
 
@@ -390,6 +389,7 @@ padding-left: 15px;
 
 .gids_info__elem2:nth-child(1) {
   width: 35%;
+
 }
 
 .gids_info__elem2:nth-child(2) {
@@ -410,6 +410,7 @@ padding-left: 15px;
 
 .gids_info__elem:nth-child(1) {
   width: 35%;
+  outline: 1px solid red;
 }
 
 .gids_info__elem:nth-child(2) {

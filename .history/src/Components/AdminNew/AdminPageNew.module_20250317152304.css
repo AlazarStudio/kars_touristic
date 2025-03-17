@@ -166,7 +166,7 @@
   display: flex;
   flex-direction: column;
   padding-left: 20px;
-  
+  cursor: pointer;
 }
 
 .admin_data__nav___item {
@@ -201,10 +201,6 @@
   width: 100%;
   padding: 8px 20px;
   color: var(--black_color);
-}
-
-.hoverBlock{
-  cursor: pointer;
 }
 
 /* .admin_data__nav___item____subItem_____add:hover,

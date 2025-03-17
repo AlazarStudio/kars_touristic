@@ -139,7 +139,6 @@ function AddUsers({ setActiveTab }) {
         <div className={classes.gids_info1}>
           <div className={classes.gids_info_data}>
             <div className={classes.gids_info__elements2}>
-            {/* <div className={classes.gids_info__elem2}><b>Выбрать</b></div> */}
               <div className={classes.gids_info__elem2}><b>ФИО</b></div>
               <div className={classes.gids_info__elem2}><b>Почта</b></div>
               <div className={classes.gids_info__elem2}><b>Телефон</b></div>
@@ -150,7 +149,7 @@ function AddUsers({ setActiveTab }) {
         {agents.length > 0 ? agents.map((item, index) => (
           <div className={classes.gids_info} key={index}>
             <div className={classes.gids_info__elements}>
-              {/* <input type='checkbox'/> */}
+              <input type='checkbox'/>
               <div className={classes.gids_info__elem}>{item.name}</div>
               <div className={classes.gids_info__elem}>{item.email}</div>
               <div className={classes.gids_info__elem}>{item.phone}</div>

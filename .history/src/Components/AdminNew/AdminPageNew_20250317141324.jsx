@@ -308,12 +308,6 @@ function AdminPageNew({ children, ...props }) {
     fetchTours();
   }, []);
 
-  const logout = () => {
-    localStorage.clear();
-    setUser(null);
-    navigate('/signIn');
-};
-
   return (
     <DndProvider backend={HTML5Backend}>
       {user &&
@@ -630,13 +624,26 @@ function AdminPageNew({ children, ...props }) {
 
                   {/* Выпадающее меню */}
                   {isOpen && (
-                    <div className={classes.adminWindow}
+                    <div
                       style={{
-                     
+                        position: 'absolute',
+                        top: '100%',
+                        left: 0,
+                        background: 'white',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                        borderRadius: 8,
+                        padding: 12,
+                        minWidth: 200,
+                        zIndex: 10,
                       }}
                     >
-                     
-                      <button onClick={logout}><img src='/logoutAdmin.png'/> Выйти</button>
+                      <p>
+                        <strong>Имя:</strong> {user?.name}
+                      </p>
+                      <p>
+                        <strong>Роль:</strong> {user?.role}
+                      </p>
+                      <button> Выйти</button>
                     </div>
                   )}
                 </div>

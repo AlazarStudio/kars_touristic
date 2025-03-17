@@ -364,7 +364,7 @@
   display: flex;
   width: 70%;
   gap: 25px;
-padding-left: 15px;
+
   /* outline: 1px solid blue; */
 }
 
@@ -390,6 +390,7 @@ padding-left: 15px;
 
 .gids_info__elem2:nth-child(1) {
   width: 35%;
+
 }
 
 .gids_info__elem2:nth-child(2) {

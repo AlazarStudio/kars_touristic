@@ -308,12 +308,6 @@ function AdminPageNew({ children, ...props }) {
     fetchTours();
   }, []);
 
-  const logout = () => {
-    localStorage.clear();
-    setUser(null);
-    navigate('/signIn');
-};
-
   return (
     <DndProvider backend={HTML5Backend}>
       {user &&
@@ -636,7 +630,7 @@ function AdminPageNew({ children, ...props }) {
                       }}
                     >
                      
-                      <button onClick={logout}><img src='/logoutAdmin.png'/> Выйти</button>
+                      <button><img Выйти</button>
                     </div>
                   )}
                 </div>

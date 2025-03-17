@@ -364,7 +364,7 @@
   display: flex;
   width: 70%;
   gap: 25px;
-padding-left: 15px;
+padding-left: 1px;
   /* outline: 1px solid blue; */
 }
 
