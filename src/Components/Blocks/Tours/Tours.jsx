@@ -22,6 +22,7 @@ import Slider from "../Slider/Slider";
 import server from '../../../serverConfig'
 import ReactModal from "react-modal";
 import CalendarTour from "../CalendarTour/CalendarTour";
+import Add_Feedback from "../Add_Feedback/Add_Feedback";
 
 function Tours({ children, requestType, pageName, tableName, similar, setCartCount, idToModal, handleOpen, open, regionName, ...props }) {
     let { id } = useParams();
@@ -512,7 +513,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                             <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                         </CenterBlock>
 
-                        {/* Блок для ввода отзыва */}
+                        {user && <Add_Feedback />}
 
                         <Feedback />
 
