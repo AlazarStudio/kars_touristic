@@ -51,6 +51,8 @@ function App() {
           <Route path="/region/:id/:idTour/:idRoom" element={<Region_Page />} />
 
           <Route path="/search" element={<Search_Page />} />
+        
+        
 
 
           <Route path="/tours/:id" element={<RedirectOldTours />} />
