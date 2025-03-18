@@ -29,7 +29,6 @@ import Cart_Page from './Components/Pages/Cart_Page/Cart_Page';
 import SignUpTouragent from './Components/Admin/Blocks/SignUpTouragent/SignUpTouragent';
 import ToursModered_Page from './Components/Pages/ToursModered_Page';
 import AdminPageNew from './Components/AdminNew/AdminPageNew';
-import RedirectOldTours from "./Components/Pages/RedirectOldTours";
 
 
 function App() {
