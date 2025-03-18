@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  width: 100%;
+}
+
+.containerLeft {
+  display: flex;
+  flex-direction: column;
+  width: 381px;
+  height: 100vh;
+  padding-left: 80px;
+  padding-top: 24px;
+  padding-right: 53px;
+  padding-bottom: ;
+  background-color: #f2f2f2;
+}

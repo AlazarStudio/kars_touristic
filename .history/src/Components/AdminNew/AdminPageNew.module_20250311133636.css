@@ -1,0 +1,246 @@
+.admin {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-left: 50px;
+  min-height: 70vh;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.admin_header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.admin_header__logo {
+  width: 105px;
+  height: 98px;
+}
+
+.admin_header__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.admin_header__items {
+  display: flex;
+  align-items: center;
+  gap: 45px;
+}
+
+.admin_header__items___item {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #000;
+}
+
+.admin_header__nonAccessData {
+  font-size: 12px;
+  color: var(--white_color);
+  font-weight: 600;
+  background-color: #c01111;
+  padding: 0 2px;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin_header__items___item____dashboard {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  margin-left: 40px;
+}
+
+.admin_header__items___item____dashboard a {
+  color: #000;
+}
+
+.admin_header__items___item:hover {
+  border-bottom: 1px solid #000;
+}
+
+.dashboard:hover {
+  border-bottom: 2px solid transparent;
+}
+
+/* ------------------------------------------- */
+
+.admin_data {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 50px;
+  align-items: flex-start;
+  padding-left: 380px;
+  /* outline: 1px solid red; */
+}
+
+.nav_title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  outline: 1px solid red;
+}
+
+.admin_data_nav_home {
+  margin-top: 40px;
+}
+
+.admin_data__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  font-family: Montserrat;
+  width: 391px;
+  height: 100dvh;
+  position: absolute;
+  left: 0;
+  padding-left: 50px;
+  padding-right: 10px;
+  padding-bottom: 20px;
+  background-color: #f2f2f2;
+  outline: 1px solid red;
+  
+  /* Добавляем скролл */
+  overflow-y: auto;
+  direction: rtl; /* Переносим скроллбар налево */
+  text-align: left; /* Возвращаем текст в нормальное положение */
+}
+
+/* Стилизация скроллбара */
+.admin_data__nav::-webkit-scrollbar {
+  width: 8px; /* Ширина полосы */
+}
+
+.admin_data__nav::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Фон скроллбара */
+  border-radius: 10px;
+}
+
+.admin_data__nav::-webkit-scrollbar-thumb {
+  background: #888; /* Цвет ползунка */
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.admin_data__nav::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Затемнение при наведении */
+}
+
+/* Для Firefox */
+.admin_data__nav {
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
+}
+
+
+.admin_data_nav_logo img {
+  width: 143px;
+  height: 133px;
+  margin-top: 24px;
+}
+
+.admin_data__nav___item {
+  cursor: pointer;
+  color: var(--black_color);
+}
+
+.admin_data__nav___item____desc {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin_data__nav___item____subItem_____add {
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 20px;
+  color: var(--black_color);
+}
+
+.admin_data__nav___item____subItem {
+  cursor: pointer;
+  width: 100%;
+  padding: 8px 20px;
+  color: var(--black_color);
+}
+
+/* .admin_data__nav___item____subItem_____add:hover,
+.hoverBlock:hover,
+.admin_data__nav___item____subItem:hover {
+  font-weight: 600;
+} */
+
+/* -------------------------------- */
+
+.admin_data__info {
+  width: 100%;
+  padding-bottom: 40px;
+  height: 100dvh;
+  overflow: hidden;
+  overflow-y: scroll;
+  padding-top: 30px;
+  padding-right: 20px;
+  /* Firefox: задаем тонкий скроллбар */
+  scrollbar-width: thin; /* auto, thin */
+  scrollbar-color: #888 #f1f1f1; /* цвет ползунка и фона */
+}
+
+/* Для Chrome, Safari и Edge */
+.admin_data__info::-webkit-scrollbar {
+  width: 8px; /* Ширина полосы прокрутки */
+}
+
+.admin_data__info::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Цвет фона */
+  border-radius: 10px;
+}
+
+.admin_data__info::-webkit-scrollbar-thumb {
+  background: #888; /* Цвет ползунка */
+  border-radius: 10px;
+  transition: background 0.3s ease-in-out;
+}
+
+.admin_data__info::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Цвет ползунка при наведении */
+}
+
+.boldText {
+  font-weight: 600;
+}
+
+.elemBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.elemBlock img {
+  width: 12px;
+}
+
+.boldText,
+.dragging {
+  font-weight: 600;
+}

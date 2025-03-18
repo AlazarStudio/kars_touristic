@@ -1,0 +1,559 @@
+/* 
+.admin_data__info::-webkit-scrollbar{
+    width: 0;
+} */
+
+.addData {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.addData_title {
+  font-family: Montserrat;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 48px;
+  text-transform: uppercase;
+  text-align: center;
+  width: 100%;
+}
+
+.addData .noBorder {
+  border: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+.addData_subtitle {
+  font-family: Montserrat;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 48px;
+  text-transform: uppercase;
+}
+
+.teamList {
+  display: flex;
+  gap: 30px;
+}
+
+.teamMember {
+  width: 23%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.teamMember_img {
+  width: 100%;
+  height: 300px;
+}
+
+.teamMember_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.teamMemberInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.teamMemberDelete {
+  width: 50%;
+  padding: 12px 20px;
+  border: 1px solid var(--black_color);
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  color: var(--black_color);
+  margin: 0 auto;
+}
+
+.teamMemberDelete:hover {
+  border: 1px solid #fa1919;
+  background-color: #fa1919;
+  color: #fff;
+}
+
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+
+.registerForm form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
+}
+
+.registerForm input {
+  width: 100%;
+  height: 50px;
+  border-radius: 50px;
+  border: 1px solid #8c8c8c;
+  padding: 0 20px;
+  outline: none;
+}
+
+.registerForm button {
+  width: 100%;
+  height: 50px;
+  border-radius: 50px;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.registerForm h2 {
+  margin-bottom: 20px;
+  font-size: 36px;
+}
+
+.loaderWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Полупрозрачный фон */
+  z-index: 1000;
+  /* Высокий z-index, чтобы быть поверх всего */
+}
+
+.loader {
+  border: 8px solid #f3f3f3;
+  /* Светло-серый цвет */
+  border-top: 8px solid #3498db;
+  /* Синий цвет */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+/* Анимация вращения */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modalContent {
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  position: relative;
+  width: 500px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.gidsButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gids {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 35px;
+  /* outline: 1px solid red; */
+   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+   border-radius: 20px;
+  /* outline: 1px solid yellow; */
+}
+
+.gids_buttons {
+  width: 25%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* justify-content: space-between; */
+}
+
+.gidsButton button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  flex-wrap: nowrap;
+  padding: 13px 36px;
+  border-radius: 20px;
+  background-color: #f4f4f4;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); */
+}
+
+.gidsButton button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.gidsButtonLeft {
+  display: flex;
+  gap: 17px;
+}
+
+.gidsButtonRight {
+  display: flex;
+  gap: 17px;
+}
+
+.gids_info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--black_color);
+}
+
+.gids_buttons {
+  display: flex;
+  gap: 20px;
+  /* outline: 1px solid red; */
+}
+
+.gids_buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 11px 20px;
+  cursor: pointer;
+  background-color: #f4f4f4;
+  color: #000;
+  transition: all 0.3s ease;
+  border-radius: 20px;
+  border: none;
+}
+
+.gids_buttons button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.gids_info:last-child {
+  border: none;
+}
+
+.gids_info__img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.gids_info__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+.gids_info1 {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  height: 38px;
+  background-color: #f4f4f4;
+  /* outline: 1px solid red; */
+}
+
+.gids_info div:nth-of-type(1) {
+  /* background-color: red; */
+}
+
+.gids_info div:nth-of-type(2) {
+  /* background-color: red; */
+}
+
+.gids_info div:nth-of-type(3) {
+  /* background-color: red; */
+}
+
+.gids_info__elem1 {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24.38px;
+  display: flex;
+  align-items: center;
+  /* gap: 10px; */
+  width: 12%;
+  /* outline: 1px solid red; */
+}
+
+.gids_info__elem1:nth-child(1) {
+  width: 27%;
+}
+
+.gids_info__elem1:nth-child(2) {
+  width: 26%;
+}
+
+.gids_info__elements {
+  display: flex;
+  width: 70%;
+  gap: 25px;
+  /* outline: 1px solid blue; */
+}
+
+.gids_info__elements2 {
+  display: flex;
+  width: 70%;
+  gap: 25px;
+}
+
+.gids_info__elem2 {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 24.38px;
+  display: flex;
+  align-items: center;
+  /* gap: 10px; */
+  width: 20%;
+  /* outline: 1px solid red; */
+}
+
+.gids_info__elem2:nth-child(1) {
+  width: 35%;
+}
+
+.gids_info__elem2:nth-child(2) {
+  width: 35%;
+}
+
+.gids_info__elem {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24.38px;
+  display: flex;
+  align-items: center;
+  /* gap: 10px; */
+  width: 20%;
+  /* outline: 1px solid red; */
+}
+
+.gids_info__elem:nth-child(1) {
+  width: 35%;
+}
+
+.gids_info__elem:nth-child(2) {
+  width: 35%;
+}
+
+.gids_info__access {
+  color: #169a4c;
+  border-radius: 30px;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.gids_info__noAccess {
+  color: #9a2516;
+  border-radius: 30px;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gids_info__changeBTN {
+  background: var(--black_color);
+  border-radius: 30px;
+  padding: 10px 15px;
+  color: var(--white_color);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gids_info_data {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 50px;
+  color: #000;
+}
+
+.multidayTours {
+  max-width: 100%;
+  /* border-radius: 30px; */
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-left: 10px;
+  margin-top: 40px;
+  /* outline: 1px solid red; */
+}
+
+.multidayTours_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  /* outline: 1px solid red; */
+}
+
+.multidayTours_top__title {
+  font-family: Montserrat;
+  font-size: 32px;
+  font-weight: 600;
+  /* line-height: 48px; */
+  text-transform: uppercase;
+  padding-left: 30px;
+}
+
+.multidayTours_top__date {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  background-color: #f4f4f4;
+  padding: 18px 27px;
+  border-radius: 20px;
+}
+
+.multidayTours_top__user {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  padding-left: 30px;
+}
+
+.buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  border-radius: 20px;
+  padding: 15px 39px;
+  background-color: inherit;
+  border: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;}
+
+.buttons button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.multidayTours_top__add {
+  color: var(--black_color);
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--black_color);
+  border-radius: 30px;
+  padding: 15px 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+}
+
+.multidayTours_top__add:hover {
+  color: var(--white_color);
+  background-color: var(--black_color);
+}
+
+.multidayTours_back button {
+  color: var(--black_color);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 170px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.multidayTours_back button img {
+  width: 14px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
+}

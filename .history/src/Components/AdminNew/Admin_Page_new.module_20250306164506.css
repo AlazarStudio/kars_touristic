@@ -1,0 +1,150 @@
+.container {
+  display: flex;
+  width: 100%;
+  position: relative;
+  pa
+}
+
+.containerLeft {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  width: 381px;
+  height: 100vh;
+  padding-left: 80px;
+  padding-top: 24px;
+  padding-right: 53px;
+  padding-bottom: 31px;
+  background-color: #f2f2f2;
+}
+
+.containerLeftLogo {
+  width: 143px;
+  height: 133px;
+}
+
+.containerLeftMenu {
+  display: flex;
+  flex-direction: column;
+  width: 260px;
+  gap: 24px;
+  margin-top: 20px;
+  /* outline: 1px solid blue; */
+}
+
+.sectionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  /* margin-bottom: 10px; */
+  padding-left: 12px;
+  /* outline: 1px solid red; */
+}
+
+.sectionItem {
+  cursor: pointer;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  /* outline: 1px solid red; */
+}
+
+.subSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  /* outline: 1px solid red; */
+}
+
+.subSectionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* outline: 1px solid red; */
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.subSectionItem {
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.containerLeftBottom {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  gap: 16px;
+  color: #000;
+  font-size: 16px;
+  font-weight: 600;
+  bottom: 30px;
+}
+
+.containerRight {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+.containerRightTop {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  justify-content: space-between;
+}
+
+.containerRightTop span:nth-of-type(1) {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.containerRightTopMenu {
+  display: flex;
+  gap: 16px;
+}
+
+.containerRightTopMenu span:nth-of-type(1) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 52px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: #f4f4f4;
+  border-radius: 20px;
+}
+
+.containerRightTopMenuAdminName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  height: 52px;
+}
+
+.containerRightTopMenuAdminName span:nth-of-type(1) {
+  background-color: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.containerRightTopMenuAdminName span:nth-of-type(2) {
+  font-size: 12px;
+  font-weight: 500;
+  color: #4872f2;
+  cursor: pointer;
+}

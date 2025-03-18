@@ -1,0 +1,178 @@
+.multidayTours {
+    width: 100%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.multidayTours_top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+}
+
+.multidayTours_top__title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
+
+.multidayTours_top__add {
+    display: flex;
+    color: var(--black_color);
+    font-family: Montserrat;
+    font-size: 18px;
+    width: 186px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--black_color);
+    border-radius: 30px;
+    padding: 15px 50px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.multidayTours_top__add:hover {
+    color: var(--white_color);
+    background-color: var(--black_color);
+}
+
+.buttonStyle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 186px;
+    height: 44px;
+    border-radius: 20px;
+    background-color: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border: 1px solid #000;
+}
+
+.buttonStyle:hover{
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+}
+
+.multidayTours_back a {
+    color: var(--black_color);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 170px;
+    margin-top: 30px;
+}
+
+.multidayTours_back a img {
+    width: 14px;
+}
+
+.mb40{
+    margin-bottom: 40px;
+}
+
+.multidayTours_data {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 50px 36px;
+}
+
+.multidayTours_data__tour {
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.multidayTours_data__tour___img {
+    width: 100%;
+    height: 240px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.multidayTours_data__tour___img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.multidayTours_data__tour___info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.multidayTours_data__tour___info____title {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+}
+
+.multidayTours_data__tour___btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #ffffffdc;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.multidayTours_data__tour___btns____item {
+    width: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.multidayTours_data__tour___btns____item img{
+    width: 100%;
+}
+
+.addRoom{
+    width: 100%;
+    height: 50px;
+    border: 1px solid #000;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.addRoom:hover{
+    background-color: #000;
+    color: #fff;
+}
+
+.newAdded{
+    width: 40px;
+    position: absolute;
+    top: 15px;
+    left: -1px;
+}
+
+.newAdded img{
+    width: 100%;
+}

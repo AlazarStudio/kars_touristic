@@ -1,0 +1,146 @@
+/* 
+.admin_data__info::-webkit-scrollbar{
+    width: 0;
+} */
+
+.addData {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-bottom: 40px;
+}
+
+.addData_title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
+
+.addData .noBorder {
+    border: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+.addData_subtitle {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 48px;
+}
+
+.addData .addData_step {
+    font-size: 24px;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 40px 0;
+    border-top: 1px solid var(--black_color);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.addData_blockAddData {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.addData_addButtonElements {
+    background-color: var(--black_color);
+    color: var(--white_color);
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.add_remove_btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 25px;
+}
+
+.add_remove_btn input {
+    width: calc(100% - 70px);
+}
+
+.add_remove_btn textarea {
+    width: calc(100% - 70px);
+}
+
+.add_remove_btn .addData_addButtonElements {
+    margin-bottom: 25px;
+    background-color: #fa1919;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.calendarSeparate {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.calendarSeparate_right {
+    width: 100%;
+    display: flex;
+    gap: 30px;
+}
+
+.calendarSeparate_right_item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 350px;
+}
+
+.calendarSeparate_right_item h3{
+    margin-bottom: 20px;
+}
+
+.vanillaCalendar {
+    width: 100%;
+    border: 1px solid #cecece;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formGroup input, .formGroup select {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    outline: none;
+    padding: 0 10px;
+}
+
+.bookButton{
+    width: 300px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
