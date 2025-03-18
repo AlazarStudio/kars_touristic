@@ -1,5 +1,7 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+
 
 import Layout from './Components/Standart/Layout/Layout';
 import Non_Found_Page from './Components/Pages/Non_Found_Page';
@@ -28,57 +30,44 @@ import SignUpTouragent from './Components/Admin/Blocks/SignUpTouragent/SignUpTou
 import ToursModered_Page from './Components/Pages/ToursModered_Page';
 import AdminPageNew from './Components/AdminNew/AdminPageNew';
 
+
 function App() {
+  const [tempMain, setTempMain] = useState('Karachaevo-Cherkessiya');
+
   return (
     <>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Main_Page />} />
+        <Route path="/" element={<Layout tempMain={tempMain}/>}>
+          <Route index element={<Main_Page tempMain={tempMain}/>} />
           <Route path="/about" element={<About_Page />} />
           <Route path="/transfer" element={<Transfer_Page />} />
           <Route path="/faq" element={<Faq_Page />} />
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
+
           <Route path="/region/:id" element={<Region_Page />} />
+          <Route path="/region/:id/:idTour/" element={<Region_Page />} />
+          <Route path="/region/:id/:idTour/:idRoom" element={<Region_Page />} />
+
           <Route path="/search" element={<Search_Page />} />
 
-          <Route
-            path="/tours/:id"
-            element={
-              <Tours_Page
-                tableName={'multidayTour'}
-                requestType={'getOneMultidayTour'}
-                similar={'getMultidayTours'}
-                pageName={'tours'}
-              />
-            }
-          />
-          <Route
-            path="/excursions/:id"
-            element={
-              <Tours_Page
-                tableName={'onedayTour'}
-                requestType={'getOneOnedayTour'}
-                similar={'getOnedayTours'}
-                pageName={'excursions'}
-              />
-            }
-          />
-          <Route
-            path="/gids/:id"
-            element={
-              <Tours_Page
-                tableName={'authorTour'}
-                requestType={'getOneAuthorTours'}
-                similar={'getAuthorTours'}
-                pageName={'gids'}
-              />
-            }
-          />
-          <Route path="/hotels/:id" element={<Hotels_Page />} />
-          <Route path="/hotels/:id/:numID" element={<Number_Page />} />
-          <Route path="/visits/:id" element={<Visit_Page />} />
-          <Route path="/events/:id" element={<Event_Page />} />
+
+          <Route path="/tours/:id" element={<RedirectOldTours />} />
+          <Route path="/excursions/:id" element={<RedirectOldTours />} />
+          <Route path="/gids/:id" element={<RedirectOldTours />} />
+          <Route path="/hotels/:id" element={<RedirectOldTours />} />
+          <Route path="/hotels/:id/:numID" element={<RedirectOldTours />} />
+          <Route path="/visits/:id" element={<RedirectOldTours />} />
+          <Route path="/events/:id" element={<RedirectOldTours />} />
+
+          {/* <Route path="/tours/:id" element={<Tours_Page tableName={'multidayTour'} requestType={'getOneMultidayTour'} similar={'getMultidayTours'} pageName={'tours'} />} /> */}
+          {/* <Route path="/excursions/:id" element={<Tours_Page tableName={'onedayTour'} requestType={'getOneOnedayTour'} similar={'getOnedayTours'} pageName={'excursions'} />} /> */}
+          {/* <Route path="/gids/:id" element={<Tours_Page tableName={'authorTour'} requestType={'getOneAuthorTours'} similar={'getAuthorTours'} pageName={'gids'} />} /> */}
+          {/* <Route path="/hotels/:id" element={<Hotels_Page />} /> */}
+          {/* <Route path="/hotels/:id/:numID" element={<Number_Page />} /> */}
+          {/* <Route path="/visits/:id" element={<Visit_Page />} /> */}
+          {/* <Route path="/events/:id" element={<Event_Page />} /> */}
+
 
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/signIn" element={<SignIn />} />
@@ -89,6 +78,7 @@ function App() {
           <Route path="/profileTouragent/:id" element={<ProfileTouragent />} />
 
           <Route path="/favourites" element={<Favorites_Page />} />
+          
           {/* <Route path="/cart" element={<Cart_Page />} /> */}
 
           <Route

@@ -4,15 +4,26 @@
     gap: 25px;
 }
 
-.filter select,
-.filter input {
-    width: 25%;
+.filter select{
+    width: 20%;
     border: 1px solid #8C8C8C;
-    border-radius: 12px;
+    border-radius: 30px;
     padding: 12px 15px;
     cursor: pointer;
     font-family: Montserrat;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    /* line-height: 24px; */
+    outline: none;
+}
+
+.filter input {
+    width: 40%;
+    border: 1px solid #8C8C8C;
+    border-radius: 30px;
+    padding: 12px 15px;
+    font-family: Montserrat;
+    font-size: 14px;
     font-weight: 500;
     /* line-height: 24px; */
     outline: none;

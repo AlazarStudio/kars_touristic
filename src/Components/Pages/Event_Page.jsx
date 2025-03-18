@@ -5,7 +5,7 @@ import Events from "../Blocks/Events/Events";
 function Event_Page({ children, ...props }) {
     return (
         <>
-            <Header_white />
+            {/* <Header_white /> */}
             <Events/>
         </>
     );

@@ -14,16 +14,16 @@ import server from '../../../serverConfig';
 
 ReactModal.setAppElement('#root');
 
-function Hotels({ children, ...props }) {
+function Hotels({ children, handleOpen, isSimillar, ...props }) {
     let img = '/hotel_bg.webp';
 
-    let { id } = useParams();
+    let { idTour, idRoom } = useParams();
 
     const [hotel, setHotel] = useState();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const fetchHotel = () => {
-        fetch(`${server}/api/getOneHotel/${id}`)
+        fetch(`${server}/api/getOneHotel/${idTour}`)
             .then(response => response.json())
             .then(data => setHotel(data))
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
@@ -36,19 +36,19 @@ function Hotels({ children, ...props }) {
     const [rooms, setRooms] = useState([]);
 
     useEffect(() => {
-        fetch(`${server}/api/getRooms?hotelId=${id}`)
+        fetch(`${server}/api/getRooms?hotelId=${idTour}`)
             .then(response => response.json())
             .then(data => {
                 const sortedTours = data.rooms.sort((a, b) => a.order - b.order);
                 setRooms(sortedTours);
             })
             .catch(error => console.error('Ошибка:', error));
-    }, [id]);
+    }, [idTour]);
 
     function getStars(number) {
         let stars = '';
         for (let i = 0; i < number; i++) {
-            stars += `<img src="/star.webp" alt="" />`;
+            stars += `<img src="/starYellow.png" alt="" />`;
         }
 
         return stars;
@@ -90,9 +90,9 @@ function Hotels({ children, ...props }) {
                             <WidthBlock>
                                 <div className={classes.separateBlock}>
                                     <div className={classes.hotelInfo}>
-                                        <div className={classes.tour_topInfo__bread}>
+                                        {/* <div className={classes.tour_topInfo__bread}>
                                             <Link to={'/'}>Главная</Link> / <Link to={`/region/${hotel.region}`}>{regionNameData}</Link> / {hotel.title}
-                                        </div>
+                                        </div> */}
                                         <div className={classes.hotelTitle}>{hotel.title} ({hotel.city})</div>
                                         <div className={classes.hotelInfo_stars_links}>
                                             <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
@@ -207,7 +207,7 @@ function Hotels({ children, ...props }) {
                                         <H2 text_transform="uppercase" font_size="36px">НОМЕРА</H2>
                                     </CenterBlock>
 
-                                    <HotelNumber numbers={rooms} />
+                                    <HotelNumber numbers={rooms} handleOpen={handleOpen} isSimillar={false} />
                                 </>
                                 :
                                 null

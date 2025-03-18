@@ -3,11 +3,11 @@ import classes from './Object.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import server from '../../../serverConfig';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-function Object({ pageName, titleObject, regionData, width, inCart, setCartCount }) {
+function Object({ pageName, titleObject, regionData, width, inCart, setCartCount, handleOpen, open, isSimillar, regionName }) {
 
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
@@ -134,6 +134,15 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
         photos = [regionData.mainPhoto, ...regionData.photos.filter(photo => photo !== regionData.mainPhoto)];
     }
 
+    function getStars(number) {
+        let stars = '';
+        for (let i = 0; i < number; i++) {
+            stars += `<img src="/starYellow.png" alt="" />`;
+        }
+
+        return stars;
+    }
+
     return (
         <div className={classes.objects_item} style={{ width: width }}>
             <div className={classes.objects_item__like} onClick={handleLikeClick}>
@@ -142,17 +151,20 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                     : <img src="/userLike_empty.png" alt="Not Liked" />
                 }
             </div>
-            {/* <div className={classes.objects_item__moreInfo} onClick={() => setMoreInfoText(!moreInfoText)}>
-                {regionData.optional && <img src="/optional.png" alt="Optional" />}
-            </div> */}
-            {moreInfoText &&
-                <div className={classes.objects_item__moreInfoText}>
+            {regionData.optional &&
+                <div className={classes.objects_item__moreInfo}>
+                    <img src="/optional_black.png" alt="Optional" />
                     {regionData.optional}
                 </div>
             }
 
             <div className={classes.objects_item__img}>
-                <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
+                <Swiper
+                    navigation={true}
+                    modules={[Navigation]}
+                    loop={true}
+                    className="tourPhotos"
+                >
                     {photos.map((item, index) => (
                         <SwiperSlide key={index}>
                             <img src={`${server}/refs/${item}`} alt="" />
@@ -175,11 +187,11 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                                     <div>Тип экскурсии: <span>{regionData.tourType}</span></div>
                                     <div>Сложность: <span>{regionData.difficulty}</span></div>
                                 </div>
-                                {regionData.optional &&
+                                {/* {regionData.optional &&
                                     <div className={classes.objects_item__optional}>
                                         <img src="/optional_black.png" alt="Optional" /> {regionData.optional}
                                     </div>
-                                }
+                                } */}
                             </div>
 
                             <div className={classes.objects_item_top_desc_info}>
@@ -187,13 +199,15 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                                     <div>Стоимость: <span>{regionData.cost} ₽</span></div>
                                 </div>
                                 <div className={classes.buttons}>
-                                    <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
-                                    {(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оплата на сайте') &&
+                                    {/* <a className={classes.objects_item__button} onClick={() => handleOpen(regionData._id, isSimillar)}>Подробнее</a> */}
+                                    <Link to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
+
+                                    {/*{(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оплата на сайте') &&
                                         <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}#date`} className={classes.objects_item__button} >Забронировать</Link>
                                     }
                                     {(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оставить заявку') &&
                                         <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}#date`} className={classes.objects_item__button} >Оставить заявку</Link>
-                                    }
+                                    } */}
                                     {/* {regionData.departureDates.length > 0 &&
                                     <Link to={``} className={`${classes.objects_item__button} ${classes.objects_item__bron}`} onClick={handleAddCartClick}>
                                         {isInCart ? 'В корзине' : inCart}
@@ -205,10 +219,24 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                     )
                     : (
                         <>
-                            <div className={classes.objects_item__title} style={{ textAlign: 'center' }}>
+                            <div className={classes.objects_item__title}>
                                 {truncateString(regionData[titleObject], 50)}
+                                {regionData.stars &&
+                                    <div className={classes.objects_item__title_stars} dangerouslySetInnerHTML={{ __html: getStars(regionData.stars) }}></div>
+                                }
                             </div>
-                            <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
+                            {regionData.city &&
+                                <div className={classes.objects_item__title_places}>
+                                    < img src="/placePoint.webp" alt="" />
+                                    {regionData.city}
+                                </div>
+                            }
+                            {regionData.description &&
+                                <div className={classes.objects_item__title_desc}>
+                                    {truncateString(regionData.description, 200)}
+                                </div>
+                            }
+                            <Link to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
                         </>
                     )
                 }

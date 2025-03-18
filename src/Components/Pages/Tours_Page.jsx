@@ -3,10 +3,10 @@ import Header_white from "../Blocks/Header_white/Header_white";
 import Tours from "../Blocks/Tours/Tours";
 import server from '../../serverConfig';
 
-function Tours_Page({ children, requestType, pageName, tableName, similar, ...props }) {
+function Tours_Page({ children, regionName, requestType, pageName, tableName, similar, idToModal, handleOpen, open, ...props }) {
     const [user, setUser] = useState(null);
     const [cartCount, setCartCount] = useState(0);
-    
+
     const token = localStorage.getItem('token');
 
     const getUserInfo = async (token) => {
@@ -42,8 +42,8 @@ function Tours_Page({ children, requestType, pageName, tableName, similar, ...pr
 
     return (
         <>
-            <Header_white cartCount={cartCount}/>
-            <Tours setCartCount={setCartCount} requestType={requestType} pageName={pageName} tableName={tableName} similar={similar}/>
+            {/* <Header_white cartCount={cartCount} /> */}
+            <Tours regionName={regionName} setCartCount={setCartCount} requestType={requestType} pageName={pageName} tableName={tableName} similar={similar} idToModal={idToModal} handleOpen={handleOpen} open={open} />
         </>
     );
 }

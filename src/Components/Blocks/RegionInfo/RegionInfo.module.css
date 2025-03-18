@@ -76,30 +76,204 @@
     gap: 25px;
 }
 
-.region_right__item {
-    width: 31%;
+.newRegionBlock {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0 30px;
+    position: relative;
+    background-repeat: 'no-repeat';
+    background-size: cover;
+}
+
+.newRegionBlockLineTop {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.newRegionBlockLineBottom {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.newRegionBlockLineTop .newRegionBlockLineTop_BlockText {
+    width: 50%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 0 0 30px 0;
     display: flex;
     flex-direction: column;
+    gap: 17px;
+    position: relative;
+}
+
+.newRegionBlockLineBottom .newRegionBlockLineTop_BlockText {
+    width: 40%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 30px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    position: relative;
+}
+
+.newRegionBlockLineTop .newRegionBlockLineTop_Block_buttons {
+    width: 50%;
+    position: relative;
+}
+
+.newRegionBlockLineBottom .newRegionBlockLineTop_Block_buttons {
+    width: 60%;
+    position: relative;
+}
+
+.newRegionBlockLineTop_BlockText_imgTitle {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 15px;
-    background: #FFFFFF26;
-    border-radius: 10px;
-    backdrop-filter: blur(3px);
-    padding: 25px;
+    gap: 27px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 36px;
+}
+
+.radiusBlock {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+}
+
+.top {
+    top: 0;
+    left: 0;
+}
+
+.bottom {
+    bottom: 0;
+    right: 0;
+    transform: rotate(180deg);
+}
+
+.radiusBlock img {
+    width: 100%;
+    height: 100%;
+}
+
+.newRegionBlockLineTop_Block_buttons_button {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 40px;
+    gap: 16px;
+}
+
+.region_right__item {
+    width: 48%;
+    background-color: #fff;
+    padding: 30px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    border-radius: 20px;
     cursor: pointer;
-    border: 1px solid transparent;
     transition: all 0.3s ease-in-out;
-    color: var(--white_color);
-    text-align: center;
+    border: 2px solid transparent;
 }
 
-.region_right__item:hover,
+.region_right__item img {
+    height: 45px;
+}
+
+.region_right__item:hover {
+    background-color: #69A64B;
+    color: #fff;
+}
+
+.svgIcon path {
+    transition: fill 0.3s ease-in-out;
+}
+
+.region_right__item:hover .svgIcon path {
+    fill: #fff;
+}
+
 .active_region_item {
-    backdrop-filter: blur(0px);
-    border: 1px solid var(--white_color);
+    background-color: #000000;
+    /* background-color: #000000 !important; */
+    color: #fff;
 }
 
+.newRegionBlockMobile {
+    display: none;
+    padding: 10px;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.newRegionBlockMobile_BlockText {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.newRegionBlockMobile_BlockText_imgTitle {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    text-transform: uppercase;
+}
+
+.newRegionBlockMobile_BlockText_description {
+    font-family: Montserrat;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    letter-spacing: 0%;
+}
+
+.newRegionBlockMobile_BlockButtons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 20px 15px;
+    border-radius: 30px;
+    overflow: hidden;
+    background-repeat: 'no-repeat';
+    background-size: cover;
+    flex-wrap: wrap;
+}
+
+.imageContainer {
+    transition: all 0.3s ease-in-out;
+}
+
+.imageContainer img {
+    height: 45px;
+}
+
+.imageContainer img.defaultImg {
+    display: block;
+}
+
+.imageContainer img.hoverImg {
+    position: absolute;
+    opacity: 0;
+}
+
+.imageContainer:hover img.defaultImg {
+    display: none;
+}
+
+.imageContainer:hover img.hoverImg {
+    display: block;
+}
 
 @media (min-width: 0px) and (max-width: 1299px) {
     .main {
@@ -108,7 +282,7 @@
         gap: 20px;
         min-height: auto;
     }
-    
+
     .main::before {
         height: 100%;
         min-height: auto;
@@ -141,6 +315,18 @@
         width: 48%;
         gap: 10px;
         padding: 10px;
-        font-size: 14px;
+        font-size: 12px;
+    }
+
+    .region_right__item img {
+        height: 35px;
+    }
+
+    .newRegionBlock {
+        display: none;
+    }
+
+    .newRegionBlockMobile {
+        display: flex;
     }
 }

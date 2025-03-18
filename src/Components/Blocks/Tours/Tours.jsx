@@ -11,9 +11,10 @@ import H2 from "../../Standart/H2/H2";
 import Object from "../Object/Object";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 import Feedback from "../Feedback/Feedback";
 import Slider from "../Slider/Slider";
@@ -21,8 +22,9 @@ import Slider from "../Slider/Slider";
 import server from '../../../serverConfig'
 import ReactModal from "react-modal";
 import CalendarTour from "../CalendarTour/CalendarTour";
+import Add_Feedback from "../Add_Feedback/Add_Feedback";
 
-function Tours({ children, requestType, pageName, tableName, similar, setCartCount, ...props }) {
+function Tours({ children, requestType, pageName, tableName, similar, setCartCount, idToModal, handleOpen, open, regionName, ...props }) {
     let { id } = useParams();
 
     const [tour, setTour] = useState();
@@ -30,7 +32,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
     const [selectedDate, setSelectedDate] = useState(null);
 
     const fetchTour = () => {
-        fetch(`${server}/api/${requestType}/${id}`)
+        fetch(`${server}/api/${requestType}/${idToModal}`)
             .then(response => response.json())
             .then(data => setTour(data))
             .catch(error => console.error('Ошибка при загрузке регионов:', error));
@@ -38,7 +40,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
     useEffect(() => {
         fetchTour();
-    }, [id]);
+    }, [idToModal]);
 
     const [regions, setRegions] = useState([]);
 
@@ -166,7 +168,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
     const handleAddCartClick = async () => {
         if (token) {
             const updates = {
-                cart: [id]
+                cart: [idToModal]
             };
 
             try {
@@ -266,6 +268,10 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
         setSelectedDate(null);
     };
 
+    const placesTour = tour ? tour.places : [];
+
+    const updatedPlaces = placesTour.flatMap(place => [place, ""]).slice(0, -1);
+
     return (
         <>
             {tour ?
@@ -274,9 +280,9 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                         <CenterBlock>
                             <WidthBlock>
                                 <div className={classes.centerPosition}>
-                                    <div className={classes.tour_topInfo__bread}>
+                                    {/* <div className={classes.tour_topInfo__bread}>
                                         <Link to={'/'}>Главная</Link> / <Link to={`/region/${tour.region}`}>{regionNameData}</Link> / {tour.tourTitle}
-                                    </div>
+                                    </div> */}
 
                                     <div className={classes.tour_topInfo__left___title}>
                                         {tour.tourTitle}
@@ -326,7 +332,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                 </a>
                                             }
                                             {/* <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
-                                                {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(id)) ? 'В корзине' : 'Добавить в корзину'}
+                                                {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(idToModal)) ? 'В корзине' : 'Добавить в корзину'}
                                             </div> */}
 
                                         </div>
@@ -342,27 +348,66 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                     ))}
                                                 </Swiper>
                                             </div>
-
-                                            <div className={classes.tour_topInfo__right___places_gradient}>
-                                                <div className={classes.tour_topInfo__right___places}>
-                                                    {tour.places.map((item, index) => (
-                                                        <div className={classes.tour_topInfo__right___places____place} key={index}>
-                                                            <div className={classes.tour_topInfo__right___places____place_____img}>
-                                                                <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                                    <path
-                                                                        d="M8.49996 21.5C7.05646 20.2433 5.71847 18.8656 4.49998 17.3814C2.67142 15.1523 0.500001 11.8327 0.500001 8.66931C0.49838 5.36547 2.4477 2.38623 5.43834 1.12183C8.42898 -0.142565 11.8714 0.5571 14.1594 2.89434C15.6639 4.42306 16.5067 6.50255 16.5 8.66931C16.5 11.8327 14.3285 15.1523 12.4999 17.3814C11.2814 18.8656 9.94346 20.2433 8.49996 21.5ZM8.49996 5.17003C7.27506 5.17003 6.1432 5.83699 5.53075 6.91967C4.91829 8.00235 4.91829 9.33627 5.53075 10.419C6.1432 11.5016 7.27506 12.1686 8.49996 12.1686C10.3935 12.1686 11.9285 10.6019 11.9285 8.66931C11.9285 6.73671 10.3935 5.17003 8.49996 5.17003Z"
-                                                                        fill="var(--black_color)"
-                                                                    />
-                                                                </svg>
-                                                            </div>
-                                                            <div className={classes.tour_topInfo__right___places____place_____title}>
-                                                                {renderPlaces(item)}
-                                                            </div>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
                                         </div>
+                                    </div>
+                                    <div className={classes.tour_topInfo__left___title}>
+                                        Точки маршрута
+                                    </div>
+
+                                    <div className={classes.tour_topInfo__right___places}  >
+                                        <Swiper
+                                            slidesPerView={7}
+                                            spaceBetween={0}
+                                            loop={false}
+                                            modules={[Pagination]}
+                                            className={"tourPointsSlider"}
+                                            pagination={{
+                                                clickable: true, // Делаем кружочки кликабельными
+                                                dynamicBullets: true // Динамическое изменение размеров кружков
+                                            }}
+                                            breakpoints={{
+                                                320: {
+                                                    slidesPerView: 2,
+                                                },
+                                                768: {
+                                                    slidesPerView: 2,
+                                                },
+                                                1024: {
+                                                    slidesPerView: 7,
+                                                },
+                                            }}
+                                        >
+                                            {updatedPlaces.map((item, index) => (
+                                                <SwiperSlide key={index}>
+                                                    <div className={classes.tour_topInfo_withLine}>
+                                                        {item != '' ?
+                                                            <div className={classes.tour_topInfo__right___places____place}>
+                                                                <div className={classes.tour_topInfo__right___places____place_____img}>
+                                                                    <svg width="17" height="22" viewBox="0 0 17 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M8.49996 21.5C7.05646 20.2433 5.71847 18.8656 4.49998 17.3814C2.67142 15.1523 0.500001 11.8327 0.500001 8.66931C0.49838 5.36547 2.4477 2.38623 5.43834 1.12183C8.42898 -0.142565 11.8714 0.5571 14.1594 2.89434C15.6639 4.42306 16.5067 6.50255 16.5 8.66931C16.5 11.8327 14.3285 15.1523 12.4999 17.3814C11.2814 18.8656 9.94346 20.2433 8.49996 21.5ZM8.49996 5.17003C7.27506 5.17003 6.1432 5.83699 5.53075 6.91967C4.91829 8.00235 4.91829 9.33627 5.53075 10.419C6.1432 11.5016 7.27506 12.1686 8.49996 12.1686C10.3935 12.1686 11.9285 10.6019 11.9285 8.66931C11.9285 6.73671 10.3935 5.17003 8.49996 5.17003Z"
+                                                                            fill="var(--black_color)"
+                                                                        />
+                                                                    </svg>
+                                                                </div>
+                                                                <div className={classes.tour_topInfo__right___places____place_____title}>
+                                                                    {renderPlaces(item)}
+                                                                </div>
+                                                            </div>
+                                                            :
+                                                            <>
+                                                                {index + 1 != updatedPlaces.length &&
+                                                                    <div className={classes.tour_topInfo_withLine_option}>
+                                                                        <div className={classes.tour_topInfo_withLine_option_num}>{(index + 1) / 2}</div>
+                                                                        <img src="/line.png" alt="" />
+                                                                    </div>
+                                                                }
+                                                            </>
+                                                        }
+                                                    </div>
+                                                </SwiperSlide>
+                                            ))}
+                                        </Swiper>
                                     </div>
                                 </div>
                             </WidthBlock>
@@ -371,10 +416,20 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
                     <WidthBlock>
                         <CenterBlock>
-                            <H2 text_transform="uppercase" font_size="36px">Чек-Лист</H2>
+                            <H2 text_transform="uppercase" font_size="36px">Что взять с собой</H2>
                         </CenterBlock>
 
-                        <Slider info={tour.checklists} boxShadow={'0px 4px 46.4px 0px #B4B4B440'} loop={false} />
+                        <div className={classes.checkList}>
+                            <CenterBlock>
+                                <div className={classes.checkList_block}>
+                                    {tour.checklists.map((item, index) => (
+                                        <div className={classes.checkList_block_item} key={index}>
+                                            <img src="/checkmark-circle.png" alt="" /> {item}
+                                        </div>
+                                    ))}
+                                </div>
+                            </CenterBlock>
+                        </div>
 
                         <ToursTab tabs={tour.days} />
 
@@ -454,11 +509,13 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                             <button onClick={closeModal} className={classes.modalCloseButton}>&#x2715;</button>
                         </ReactModal>
 
-                        {/* <CenterBlock>
+                        <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                         </CenterBlock>
 
-                        <Feedback /> */}
+                        {user && <Add_Feedback />}
+
+                        <Feedback />
 
                         {foundRegion.length > 1 ?
                             <>
@@ -487,9 +544,9 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                             }}
                                         >
                                             {foundRegion.map((item, index) => (
-                                                item._id != id ?
+                                                item._id != idToModal ?
                                                     <SwiperSlide key={index}>
-                                                        <Object width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
+                                                        <Object regionName={regionName} handleOpen={handleOpen} isSimillar={true} open={open} width={'100%'} regionData={item} titleObject={'tourTitle'} pageName={pageName} inCart={(user && user.cart.includes(item._id) ? 'В корзине' : 'Добавить в корзину')} />
                                                     </SwiperSlide>
                                                     : null
                                             ))}
@@ -499,8 +556,6 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                             </>
                             : null
                         }
-
-                        <br />
                     </WidthBlock>
                 </div>
                 :

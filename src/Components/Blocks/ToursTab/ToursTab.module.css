@@ -8,12 +8,11 @@
 .tabButtons {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
     width: 100%;
     gap: 15px;
 }
 
-.tabButtons div {
+.tabButton {
     padding: 15px;
     font-family: Montserrat;
     font-size: 16px;
@@ -26,13 +25,49 @@
     border: 1px solid #8C8C8C;
     background-color: var(--white_color);
     border-radius: 60px;
-    width: 18%;
+    width: 100%;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
 
-.tabButtons div:hover,
-.tabButtons .active {
+.tabButtonCircle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+}
+
+.tabButtonCircle_block{
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.tabButtonCircle_lineLeft{
+    position: absolute;
+    width: 50%;
+    border: 1px solid #000;
+    left: -10px;
+}
+
+.tabButtonCircle_lineRight{
+    position: absolute;
+    width: 50%;
+    border: 1px solid #000;
+    right: -10px;
+}
+
+.activeCircle,
+.tabButtonCircle_block:hover{
+    background-color: #000;
+}
+
+.tabButton:hover,
+.active {
     border: 1px solid #ffffff00;
     box-shadow: 0px 4px 14.7px 0px #D9D9D9A3;
     background-color: #000;
@@ -67,9 +102,9 @@
         line-height: normal;
     }
 
-    .tabButtons div {
-        width: 48%;
-        padding: 10px;
+    .tabButton {
+        width: 100%;
+        padding: 10px 0;
         font-size: 14px;
     }
 

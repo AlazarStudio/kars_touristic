@@ -10,7 +10,7 @@ import Map from "../Map/Map";
 import server from '../../../serverConfig';
 import Transfer from "../Transfer/Transfer";
 function Events({ children, ...props }) {
-    let { id } = useParams();
+    let { idTour } = useParams();
 
     const [event, setEvent] = useState();
     const [transferInfo, setTransferInfo] = useState("");
@@ -18,7 +18,7 @@ function Events({ children, ...props }) {
     useEffect(() => {
         const fetchEvent = async () => {
             try {
-                const response = await fetch(`${server}/api/getOneEvent/${id}`);
+                const response = await fetch(`${server}/api/getOneEvent/${idTour}`);
                 const data = await response.json();
                 setEvent(data);
             } catch (error) {
@@ -27,7 +27,7 @@ function Events({ children, ...props }) {
         };
 
         fetchEvent();
-    }, [id]);
+    }, [idTour]);
 
 
     useEffect(() => {

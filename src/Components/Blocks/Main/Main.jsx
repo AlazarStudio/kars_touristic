@@ -4,8 +4,7 @@ import classes from './Main.module.css';
 import Region from "../Region/Region";
 import server from '../../../serverConfig';
 
-function Main({ children, ...props }) {
-
+function Main({ children, tempMain, ...props }) {
     const [regions, setRegions] = useState([]);
     const [searchQuery, setSearchQuery] = useState(localStorage.getItem('searchQuery') || '');
     const navigate = useNavigate();
@@ -40,31 +39,37 @@ function Main({ children, ...props }) {
         localStorage.removeItem('searchQuery');
     };
 
+    if (tempMain) {
+        navigate(`/region/${tempMain}`);
+    }
+
     return (
         <>
-            <div className={classes.main}>
-                <div className={classes.main_title}>Организуем ваш отдых на Кавказе</div>
-                <div className={classes.main_desc}>
-                    <div className={classes.main_desc__inputBlock}>
-                        <input
-                            type="text"
-                            placeholder="Поиск"
-                            value={searchQuery}
-                            onChange={handleSearchChange}
-                        />
-                        {searchQuery && (
-                            <p className={classes.clearButton} onClick={handleClearClick}>×</p>
-                        )}
-                    </div> 
+            {!tempMain &&
+                <div className={classes.main}>
+                    <div className={classes.main_title}>Организуем ваш отдых на Кавказе</div>
+                    <div className={classes.main_desc}>
+                        <div className={classes.main_desc__inputBlock}>
+                            <input
+                                type="text"
+                                placeholder="Поиск"
+                                value={searchQuery}
+                                onChange={handleSearchChange}
+                            />
+                            {searchQuery && (
+                                <p className={classes.clearButton} onClick={handleClearClick}>×</p>
+                            )}
+                        </div>
 
-                    <button className={classes.searchButton} onClick={handleSearchClick}>Найти</button>
+                        <button className={classes.searchButton} onClick={handleSearchClick}>Найти</button>
+                    </div>
+                    <div className={classes.main_blocks}>
+                        {regions.map((item, index) => (
+                            <Region key={index} link={item.link} title={item.title} bg={item.coverImgPath} logo={item.iconPath} />
+                        ))}
+                    </div>
                 </div>
-                <div className={classes.main_blocks}>
-                    {regions.map((item, index) => (
-                        <Region key={index} link={item.link} title={item.title} bg={item.coverImgPath} logo={item.iconPath} />
-                    ))}
-                </div>
-            </div>
+            }
         </>
     );
 }
