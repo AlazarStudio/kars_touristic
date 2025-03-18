@@ -83,14 +83,14 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
         bottom: 0,
         left: 0,
         width: "100%",
-        height: '92dvh',
+        height: '100dvh',
         bgcolor: '#fff',
         boxShadow: 24,
         outline: 'none',
         zIndex: '9999999',
         overflowY: 'scroll',
         scrollbarWidth: 'none',
-        borderRadius: '30px 30px 0 0'
+        // borderRadius: '30px 30px 0 0'
     };
 
     const [open, setOpen] = useState(false);
@@ -203,7 +203,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
             {
                 open &&
                 <IconButton onClick={() => handleClose()} aria-label="close" sx={{
-                    border: '1px solid white',
+                    border: '1px solid #000',
                     borderRadius: '50%',
                     position: 'fixed',
                     top: '10px',
@@ -216,7 +216,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     },
                 }}>
                     <CloseIcon sx={{ color: '#000' }} />
-                </IconButton>
+                </IconButton >
             }
 
             <Modal
@@ -239,8 +239,8 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                         {(requestType == 'getHotels' && idTour && !idRoom) && <Hotels_Page user={user} handleOpen={handleOpen} isSimillar={false} />}
                         {(requestType == 'getHotels' && idTour && idRoom) && <Number_Page user={user} />}
 
-                        {(requestType == 'getPlaces' && idTour) && <Visit_Page />}
-                        {(requestType == 'getEvents' && idTour) && <Event_Page />}
+                        {(requestType == 'getPlaces' && idTour) && <Visit_Page user={user} />}
+                        {(requestType == 'getEvents' && idTour) && <Event_Page user={user} />}
                     </Box>
                 </Slide>
             </Modal>
