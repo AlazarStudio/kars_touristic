@@ -2,10 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding-left: 30px;
-  height: 100dvh;
-  margin-bottom: 40px;
+  /* padding-left: 30px; */
+  /* height: 100dvh; */
+  /* margin-bottom: 40px; */
   position: relative;
+  /* border: 2px solid red; */
 }
 
 .admin_header {
@@ -19,6 +20,9 @@
   width: 105px;
   height: 98px;
 }
+
+
+
 
 .admin_header__logo img {
   width: 100%;
@@ -103,70 +107,50 @@
 }
 
 .admin_data_nav_home {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .admin_data__nav {
   display: flex;
-  align-items: flex-end;
+  /* align-items: flex-end; */
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   font-family: Montserrat;
-  width: 391px;
+  width: 381px;
   height: 100dvh;
   position: absolute;
   left: 0;
   font-size: 14px;
-  padding-left: 50px;
-  padding-right: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-bottom: 20px;
   background-color: #f2f2f2;
   /* outline: 1px solid red; */
-  
-  /* Добавляем скролл */
-  overflow-y: auto;
-  direction: rtl; /* Переносим скроллбар налево */
-  text-align: left; /* Возвращаем текст в нормальное положение */
 }
-
-/* Стилизация скроллбара */
-.admin_data__nav::-webkit-scrollbar {
-  width: 8px; /* Ширина полосы */
-}
-
-.admin_data__nav::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Фон скроллбара */
-  border-radius: 10px;
-}
-
-.admin_data__nav::-webkit-scrollbar-thumb {
-  background: #888; /* Цвет ползунка */
-  border-radius: 10px;
-  transition: background 0.3s ease-in-out;
-}
-
-.admin_data__nav::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Затемнение при наведении */
-}
-
-/* Для Firefox */
-.admin_data__nav {
-  scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
-}
-
 
 .admin_data_nav_logo img {
-  width: 143px;
-  height: 133px;
-  margin-top: 24px;
+  width: 83px;
+  margin-top: 10px;
 }
 
-.admin_data__nav___item1{
+.admin_data__nav___item1 {
   display: flex;
   flex-direction: column;
   padding-left: 20px;
-  
+  gap: 5px;
+}
+
+.admin_data__nav___item {
+  color: #000;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.admin_data__nav___item.activeLink,
+.admin_data__nav___item____subItem.activeLink,
+.hoverBlock.activeLink {
+  font-weight: bold;
+  color: #000;; /* Цвет выделения */
 }
 
 .admin_data__nav___item {
@@ -187,6 +171,12 @@
 
 .admin_data__nav___item____desc a {
   color: #000;
+  text-decoration: none;
+  font-weight: normal; /* Обычный текст */
+}
+
+.admin_data__nav___item____desc a.active {
+  font-weight: bold; /* Выделяем активный пункт */
 }
 
 .admin_data__nav___item____subItem_____add {
@@ -199,11 +189,11 @@
 .admin_data__nav___item____subItem {
   cursor: pointer;
   width: 100%;
-  padding: 8px 20px;
+  /* padding: 8px 20px; */
   color: var(--black_color);
 }
 
-.hoverBlock{
+.hoverBlock {
   cursor: pointer;
 }
 
@@ -221,15 +211,16 @@
   height: 100dvh;
   overflow: hidden;
   overflow-y: scroll;
-  padding-top: 30px;
+  padding-top: 40px;
   padding-right: 20px;
+  padding-left: 20px;
   position: relative;
   /* Firefox: задаем тонкий скроллбар */
   scrollbar-width: thin; /* auto, thin */
   scrollbar-color: #888 #f1f1f1; /* цвет ползунка и фона */
 }
 
-.admin_data__info_top{
+.admin_data__info_top {
   display: flex;
   gap: 20px;
   position: absolute;
@@ -237,52 +228,50 @@
   top: 20px;
 }
 
-.admin_data__info_top_date{
+.admin_data__info_top_date {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 52px;
-  background-color: #F4F4F4;
+  background-color: #f4f4f4;
   padding: 18px 27px;
   border-radius: 20px;
   font-size: 14px;
   font-weight: 600;
 }
 
-.admin_data__info_top_user{
+.admin_data__info_top_user {
   display: flex;
   gap: 12px;
   cursor: pointer;
 }
 
-.admin_data__info_top_user span{
+.admin_data__info_top_user span {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.admin_data__info_top_user span span:nth-of-type(1){
+.admin_data__info_top_user span span:nth-of-type(1) {
   font-size: 16px;
   font-weight: 600;
 }
 
-.admin_data__info_top_user span span:nth-of-type(2){
+.admin_data__info_top_user span span:nth-of-type(2) {
   font-size: 14px;
   font-weight: 500;
-  color: #4872F2;
+  color: #4872f2;
 }
 
-.admin_data__info_top_user img{
+.admin_data__info_top_user img {
   display: flex;
- width: 52px;
- height: 52px;
- border-radius: 25px;
- /* border: 1px solid red; */
+  width: 52px;
+  height: 52px;
+  border-radius: 25px;
+  /* border: 1px solid red; */
 }
 
-
-
-.adminWindow{
+.adminWindow {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -294,17 +283,17 @@
   /* borderRadius: 8; */
   /* padding: 12; */
   /* minWidth: 200; */
-  zIndex: 10;
+  zindex: 10;
   /* outline: 1px solid red; */
 }
 
-.adminWindow button{
+.adminWindow button {
   width: 170px;
   height: 40px;
   border-radius: 10px;
-  background-color: #FFDEDE;
+  background-color: #ffdede;
   border: none;
-  color: #C92121;
+  color: #c92121;
   font-size: 14px;
   font-weight: 600;
   margin-top: 10px;
