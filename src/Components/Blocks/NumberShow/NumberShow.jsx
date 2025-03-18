@@ -13,8 +13,10 @@ import WidthBlock from "../../Standart/WidthBlock/WidthBlock";
 import H2 from "../../Standart/H2/H2";
 
 import server from '../../../serverConfig'
+import Add_Feedback from "../Add_Feedback/Add_Feedback";
+import Feedback from "../Feedback/Feedback";
 
-function NumberShow({ children, ...props }) {
+function NumberShow({ children, user, ...props }) {
     const [room, setRoom] = useState();
 
     let { idRoom } = useParams();
@@ -133,6 +135,17 @@ function NumberShow({ children, ...props }) {
 
                             <div className={classes.button}>Оставить заявку</div>
                         </CenterBlock> */}
+
+
+                        <CenterBlock>
+                            <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
+                        </CenterBlock>
+
+                        {user && <Add_Feedback />}
+
+                        <Feedback />
+
+                        <br />
                     </WidthBlock>
                 </CenterBlock>
                 :

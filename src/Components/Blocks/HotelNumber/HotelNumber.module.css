@@ -6,12 +6,14 @@
 
 .hotelNumbers_item {
     width: 31%;
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
 .hotelNumbers_item__img {
     width: 100%;
     height: 270px;
-    border-radius: 20px 20px 0 0;
     overflow: hidden;
 }
 
@@ -22,23 +24,19 @@
 }
 
 .hotelNumbers_item__bottom {
-    padding: 25px 30px;
-    border: 1px solid #8C8C8C;
+    padding: 20px;
     border-top: none;
-    border-radius: 0 0 20px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 20px;
-    height: 285px;
 }
 
 .hotelNumbers_item__bottom___title {
-    font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 24.38px;
-    width: 90%;
+    font-weight: 700;
+    font-size: 18px;
+    color: #545873;
+    height: 50px;
 }
 
 .hotelNumbers_item__bottom___feedback {
@@ -54,11 +52,35 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Montserrat;
     font-size: 16px;
     font-weight: 500;
     line-height: 19.5px;
     color: var(--black_color);
+}
+
+.hotelNumbers_item__bottom___infoBlocks_text{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hotelNumbers_item__bottom___infoBlocks____price {
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #545873;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.hotelNumbers_item__bottom___infoBlocks____price span {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #9E9E9E;
 }
 
 .hotelNumbers_item__bottom___feedback____item:last-child {
@@ -68,21 +90,16 @@
 
 .hotelNumbers_item__bottom___infoBlocks {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 20px;
 }
 
 .hotelNumbers_item__bottom___infoBlocks____block {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.hotelNumbers_item__bottom___infoBlocks____block_____title {
-    font-family: Montserrat;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19.5px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #0057C3;
 }
 
 .hotelNumbers_item__bottom___button {
@@ -104,33 +121,39 @@
 
 
 @media (min-width: 0px) and (max-width: 1299px) {
-    .hotelNumbers{
+    .hotelNumbers {
         gap: 10px;
         padding: 10px;
     }
-    .hotelNumbers_item{
+
+    .hotelNumbers_item {
         width: 100%;
     }
-    .hotelNumbers_item__img{
+
+    .hotelNumbers_item__img {
         height: 200px;
     }
-    .hotelNumbers_item__bottom{
+
+    .hotelNumbers_item__bottom {
         padding: 20px;
         gap: 15px;
         height: auto;
     }
-    .hotelNumbers_item__bottom___title{
+
+    .hotelNumbers_item__bottom___title {
         width: 100%;
-        text-align: center;
     }
-    .hotelNumbers_item__bottom___feedback{
+
+    .hotelNumbers_item__bottom___feedback {
         width: 100%;
         padding: 5px;
     }
-    .hotelNumbers_item__bottom___feedback____item{
+
+    .hotelNumbers_item__bottom___feedback____item {
         font-size: 12px;
     }
-    .hotelNumbers_item__bottom___button{
+
+    .hotelNumbers_item__bottom___button {
         font-size: 14px;
         line-height: normal;
         padding: 10px;

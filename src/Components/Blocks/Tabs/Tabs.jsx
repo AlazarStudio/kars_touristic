@@ -236,8 +236,8 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                             &&
                             <Tours_Page regionName={regionName} tableName={tableName} requestType={requestTypeOne} similar={requestType} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
                         }
-                        {(requestType == 'getHotels' && idTour && !idRoom) && <Hotels_Page handleOpen={handleOpen} isSimillar={false} />}
-                        {(requestType == 'getHotels' && idTour && idRoom) && <Number_Page />}
+                        {(requestType == 'getHotels' && idTour && !idRoom) && <Hotels_Page user={user} handleOpen={handleOpen} isSimillar={false} />}
+                        {(requestType == 'getHotels' && idTour && idRoom) && <Number_Page user={user} />}
 
                         {(requestType == 'getPlaces' && idTour) && <Visit_Page />}
                         {(requestType == 'getEvents' && idTour) && <Event_Page />}
