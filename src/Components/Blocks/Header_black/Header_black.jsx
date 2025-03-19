@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classes from './Header_black.module.css';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import logo from '/favicon_black.webp';
 import arnament from '/header_arnament.webp';
@@ -13,6 +13,7 @@ import server from '../../../serverConfig';
 
 function Header_black({ children, cartCount, tempMain, ...props }) {
     const [menuOpen, setMenuOpen] = useState(false);
+    let pageName = useLocation().pathname;
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -68,11 +69,11 @@ function Header_black({ children, cartCount, tempMain, ...props }) {
                             </Link>
                             <div className={classes.navigation_links}>
                                 <ul>
-                                    <li><Link to="/about">О нас</Link></li>
-                                    <li><Link to="/transfer">Трансфер</Link></li>
-                                    <li><Link to="/faq">FAQ</Link></li>
-                                    <li><Link to="/contacts">Контакты</Link></li>
-                                    <li><Link to="/turagents">Турагентам</Link></li>
+                                    <li><Link to="/about" className={`${pageName == '/about' && classes.activeLink}`}>О нас</Link></li>
+                                    <li><Link to="/transfer" className={`${pageName == '/transfer' && classes.activeLink}`}>Трансфер</Link></li>
+                                    <li><Link to="/faq" className={`${pageName == '/faq' && classes.activeLink}`}>FAQ</Link></li>
+                                    <li><Link to="/contacts" className={`${pageName == '/contacts' && classes.activeLink}`}>Контакты</Link></li>
+                                    <li><Link to="/turagents" className={`${pageName == '/turagents' && classes.activeLink}`}>Турагентам</Link></li>
                                 </ul>
                             </div>
                             <div className={classes.navigation_btn}>

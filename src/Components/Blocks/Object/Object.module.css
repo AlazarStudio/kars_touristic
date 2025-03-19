@@ -254,31 +254,58 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 15px;
-        width: 100%;
+        gap: 0px;
+        width: 48%;
+        overflow: hidden;
     }
 
     .objects_item__bottom {
-        height: auto;
-        padding: 10px 10px 20px 10px;
+        height: 155px;
+        padding: 10px;
     }
 
     .objects_item__img {
-        height: 250px;
+        height: 110px;
+        border-radius: 0;
     }
 
     .objects_item__title {
-        font-size: 16px;
-        padding: 10px 15px;
+        font-size: 12px;
+        padding: 0px;
     }
 
     .objects_item__button {
-        font-size: 14px;
+        font-size: 12px;
         line-height: normal;
-        padding: 15px;
+        padding: 10px;
     }
 
     .objects_item__desc div {
         font-size: 12px;
+    }
+
+    .objects_item__desc{
+        display: none;
+    }
+
+    .objects_item__price{
+        font-size: 12px;
+        line-height: normal;
+    }
+
+    .objects_item__price span{
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .objects_item__moreInfo{
+        display: none;
+    }
+
+    .objects_item__like{
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
     }
 }

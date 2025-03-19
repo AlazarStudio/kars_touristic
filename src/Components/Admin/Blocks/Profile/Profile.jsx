@@ -183,7 +183,7 @@ function Profile({ children, ...props }) {
     }
 
 
-    // console.log(hotelBrons)
+    console.log(filteredAgents)
     return (
         <>
             <Header_black />
@@ -334,6 +334,8 @@ function Profile({ children, ...props }) {
                                 </div>
                             </div>
                         }
+
+                        {(filteredAgents.length == 0 || filteredHotelBrons.length == 0) && <br />}
                     </WidthBlock>
                 </CenterBlock>
             ) : null}

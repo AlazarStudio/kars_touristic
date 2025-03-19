@@ -63,6 +63,10 @@
     margin-left: 5px;
 }
 
+.activeLink{
+    font-weight: 600 !important;
+}
+
 @media (min-width: 0px) and (max-width: 1299px) {
     .header {
         margin: 0;

@@ -17,45 +17,53 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 20px;
+    gap: 30px;
+}
+
+.footer_data__column___block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .footer_data__columnGap {
     display: flex;
     flex-direction: column;
-    gap: 35px;
+    gap: 15px;
+}
+
+.footer_data__columnGap .footer_data__column___title{
+    margin-bottom: 25px;
 }
 
 .footer_data__column___soc {
     display: flex;
-    justify-content: center;
     gap: 15px;
 }
 
 .footer_data__column___phone a {
-    font-family: Montserrat;
-    font-size: 24px;
     font-weight: 600;
-    line-height: 29.26px;
-    color: var(--white_color);
-    width: 100%;
-    display: flex;
-    justify-content: center;
+    font-size: 24px;
+    line-height: 100%;
+    color: #fff;
 }
 
 .footer_data__column___text {
-    font-family: Montserrat;
-    font-size: 18px;
     font-weight: 500;
-    line-height: 21.94px;
-    color: var(--white_color);
-    width: 100%;
+    font-size: 16px;
+    line-height: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
+
 .footer_data__column___item a {
-    color: var(--white_color);
+    color: #C1C1C1;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
 }
 
 .footer_data__column___item____soc {
@@ -68,7 +76,8 @@ footer {
     align-items: center;
     padding: 10px;
 }
-.footer_data__column___item____soc img{
+
+.footer_data__column___item____soc img {
     width: 100%;
 }
 
@@ -91,12 +100,20 @@ footer {
     width: 100%;
 }
 
-
+.footer_data__column___title {
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 @media (min-width: 0px) and (max-width: 1299px) {
-    footer{
+    footer {
         padding: 20px 10px;
     }
+
     .footer_data {
         flex-direction: column;
         gap: 10px;
@@ -114,7 +131,7 @@ footer {
 
     .footer_data__column___item:nth-child(2),
     .footer_data__column___item:nth-child(3),
-    .footer_data__column___soc{
+    .footer_data__column___soc {
         display: none;
     }
 
@@ -133,20 +150,20 @@ footer {
         width: 150px;
     }
 
-    .footer_data__column___text{
+    .footer_data__column___text {
         font-size: 14px;
     }
 
-    .footerArnament{
+    .footerArnament {
         display: none;
     }
 
-    .footer_data__column___item____soc{
+    .footer_data__column___item____soc {
         width: 35px;
         height: 35px;
     }
 
-    .footer_data__column{
+    .footer_data__column {
         gap: 10px;
     }
 }

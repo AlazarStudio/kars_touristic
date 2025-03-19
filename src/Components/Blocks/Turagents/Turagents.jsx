@@ -9,6 +9,7 @@ import Form from "../Form/Form";
 import turagents_bg from "/turagents_bg.webp";
 
 import server from '../../../serverConfig';
+import Preloader from "../Preloader/Preloader";
 
 function Turagents({ children, ...props }) {
     const [turagentInfo, setTuragentInfo] = useState("");
@@ -26,23 +27,34 @@ function Turagents({ children, ...props }) {
 
         fetchMissionInfo();
     }, []);
+    
+    const [preloaderShowFirst, setPreloaderShowFirst] = useState(true);
+
+    setTimeout(() => {
+        setPreloaderShowFirst(false)
+    }, 500);
     return (
         <>
-            <CenterBlock>
-                <WidthBlock>
-                    <BlockTopInfo
-                        topTitle={"Турагентам"}
-                        bgImg={turagents_bg}
-                    />
-                    <div className={classes.turagentsText}>
-                        {turagentInfo.description}
-                    </div>
-                    <div className={classes.turagentsButtons}>
-                        <a href={`${server}/refs/${turagentInfo.docPath}`} target="_blank" className={classes.turagentsButtons_item}>Агентский договор</a>
-                        {/* <a href="" className={classes.turagentsButtons_item}>Отчет Агента</a> */}
-                    </div>
-                </WidthBlock>
-            </CenterBlock>
+            {preloaderShowFirst
+                ?
+                <Preloader />
+                :
+                <CenterBlock>
+                    <WidthBlock>
+                        <BlockTopInfo
+                            topTitle={"Турагентам"}
+                            bgImg={turagents_bg}
+                        />
+                        <div className={classes.turagentsText}>
+                            {turagentInfo.description}
+                        </div>
+                        <div className={classes.turagentsButtons}>
+                            <a href={`${server}/refs/${turagentInfo.docPath}`} target="_blank" className={classes.turagentsButtons_item}>Агентский договор</a>
+                            {/* <a href="" className={classes.turagentsButtons_item}>Отчет Агента</a> */}
+                        </div>
+                    </WidthBlock>
+                </CenterBlock>
+            }
         </>
     );
 }

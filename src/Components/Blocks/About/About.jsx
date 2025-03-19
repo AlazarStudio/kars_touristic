@@ -11,12 +11,13 @@ import TeamBlock from "../TeamBlock/TeamBlock";
 import logo from "/logo_about.png";
 import about_certificate from "/about_certificate.webp";
 import about_interaction from "/about_interaction.webp";
-import about_handshake from "/about_handshake.webp"; 
+import about_handshake from "/about_handshake.webp";
 
 import team_no_img from "/team_no_img.webp";
 import mission_arnament from "/mission_arnament.webp";
 
 import server from '../../../serverConfig';
+import Preloader from "../Preloader/Preloader";
 
 function About({ children, ...props }) {
     let teamData = []
@@ -69,77 +70,87 @@ function About({ children, ...props }) {
         fetchTeamMembers();
     }, []);
 
+    const [preloaderShowFirst, setPreloaderShowFirst] = useState(true);
+
+    setTimeout(() => {
+        setPreloaderShowFirst(false)
+    }, 500);
     return (
         <>
-            <CenterBlock>
-                <WidthBlock>
-                    <div className={classes.about_title}>
-                        <div className={classes.about_title__left}>
-                            <img src={logo} alt="" />
-                        </div>
-                        <div className={classes.about_title__right}>
-                            <div className={classes.about_title__right___name}>О компании</div>
-                            <div className={classes.about_title__right___text}>
-                                {companyInfo ? companyInfo : null}
+            {preloaderShowFirst
+                ?
+                <Preloader />
+                :
+                <CenterBlock>
+                    <WidthBlock>
+                        <div className={classes.about_title}>
+                            <div className={classes.about_title__left}>
+                                <img src={logo} alt="" />
+                            </div>
+                            <div className={classes.about_title__right}>
+                                <div className={classes.about_title__right___name}>О компании</div>
+                                <div className={classes.about_title__right___text}>
+                                    {companyInfo ? companyInfo : null}
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <RowBlock justifyContent={"space-between"}>
-                        <InfoBlock width={"32%"} height={"150px"}>
-                            <img src={about_certificate} alt="" />
-                            <div>
-                                <p>Сертифицированный туроператор</p>
-                                <a href="tel:+78005500488" style={{ 'color': '#000' }}>+7 (800) 550-04-88</a>
-                            </div>
-                        </InfoBlock>
-                        <InfoBlock width={"32%"} height={"150px"}>
-                            <img src={about_interaction} alt="" />
-                            <div className={classes.info_block_text}>
-                                Работаем без посредников
-                            </div>
-                        </InfoBlock>
-                        <InfoBlock width={"32%"} height={"150px"}>
-                            <img src={about_handshake} alt="" />
-                            Оказываем поддержку клиентам
-                        </InfoBlock>
-                    </RowBlock>
-
-                    <CenterBlock>
-                        <H2 text_transform={"uppercase"}>Наша команда</H2>
-                    </CenterBlock>
-
-                    {teamMembers.length > 0 ?
-                        <RowBlock>
-                            {teamMembers.map((item, index) => (
-                            <TeamBlock
-                                key={index}
-                                width={"23%"}
-                                img={item.imgPath}
-                                title={item.name}
-                                text={item.description}
-                            />
-                            ))}
+                        <RowBlock justifyContent={"space-between"}>
+                            <InfoBlock width={"32%"} height={"150px"}>
+                                <img src={about_certificate} alt="" />
+                                <div>
+                                    <p>Сертифицированный туроператор</p>
+                                    <a href="tel:+78005500488" style={{ 'color': '#000' }}>+7 (800) 550-04-88</a>
+                                </div>
+                            </InfoBlock>
+                            <InfoBlock width={"32%"} height={"150px"}>
+                                <img src={about_interaction} alt="" />
+                                <div className={classes.info_block_text}>
+                                    Работаем без посредников
+                                </div>
+                            </InfoBlock>
+                            <InfoBlock width={"32%"} height={"150px"}>
+                                <img src={about_handshake} alt="" />
+                                Оказываем поддержку клиентам
+                            </InfoBlock>
                         </RowBlock>
-                        : null
-                    }
 
-                    <div className={classes.mission}>
-                        <div className={classes.mission_title}>
-                            НАША МИССИЯ
-                        </div>
-                        <div className={classes.mission_line}>
-                            <img src={mission_arnament} alt="" />
-                            <img src={mission_arnament} alt="" />
-                            <img src={mission_arnament} alt="" />
-                        </div>
-                        <div className={classes.mission_text}>
-                            {missionInfo ? missionInfo : null}
-                        </div>
-                    </div>
+                        <CenterBlock>
+                            <H2 text_transform={"uppercase"}>Наша команда</H2>
+                        </CenterBlock>
 
-                </WidthBlock>
-            </CenterBlock>
+                        {teamMembers.length > 0 ?
+                            <RowBlock>
+                                {teamMembers.map((item, index) => (
+                                    <TeamBlock
+                                        key={index}
+                                        width={"23%"}
+                                        img={item.imgPath}
+                                        title={item.name}
+                                        text={item.description}
+                                    />
+                                ))}
+                            </RowBlock>
+                            : null
+                        }
+
+                        <div className={classes.mission}>
+                            <div className={classes.mission_title}>
+                                НАША МИССИЯ
+                            </div>
+                            <div className={classes.mission_line}>
+                                <img src={mission_arnament} alt="" />
+                                <img src={mission_arnament} alt="" />
+                                <img src={mission_arnament} alt="" />
+                            </div>
+                            <div className={classes.mission_text}>
+                                {missionInfo ? missionInfo : null}
+                            </div>
+                        </div>
+
+                    </WidthBlock>
+                </CenterBlock>
+            }
         </>
     );
 }
