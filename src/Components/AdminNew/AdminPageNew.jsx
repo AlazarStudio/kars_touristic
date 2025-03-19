@@ -37,6 +37,9 @@ function DraggableRegion({
   setActiveTab,
   role,
 }) {
+  const navigate = useNavigate();
+  const { id } = useParams(); // Получаем id из URL
+
   const [, ref] = useDrag({
     type: ItemType.REGION,
     item: { index },
@@ -52,48 +55,53 @@ function DraggableRegion({
     },
   });
 
-  let activeShow = region.link === activeTab ? classes.boldText : '';
-  // console.log(region.link);
+  // Проверяем, активен ли этот регион
+  const isActive = id === region.link ? classes.boldText : '';
 
   return (
-    <div
-      ref={(node) => ref(drop(node))}
-      className={`${classes.elemBlock} ${activeShow}`}
-    >
-      <Link
-        to={`/admin/edit/${region.link}`}
+    <div ref={(node) => ref(drop(node))} className={`${classes.elemBlock} ${isActive}`}>
+      <span
         className={classes.admin_data__nav___item____subItem}
-        onClick={() => setActiveTab('editRegion')}
+        onClick={() => {
+          setActiveTab(`editRegion-${region.link}`);
+          navigate(`/admin/edit/${region.link}`);
+        }}
+        style={{ cursor: 'pointer' }}
       >
         {region.title}
-      </Link>
+      </span>
       {role === 'admin' ? (
-        <img
-          src="/delete_region.webp"
-          alt=""
-          onClick={() => deleteElement(region._id)}
-        />
+        <img src="/delete_region.webp" alt="Удалить" onClick={() => deleteElement(region._id)} />
       ) : null}
     </div>
   );
 }
+
 
 function AdminPageNew({ children, ...props }) {
   const { id, title } = useParams();
 
   // Храним состояние открытых секций
 
+  useEffect(() => {
+    setActiveTab(id); // Устанавливаем активный таб сразу при изменении id
+    if (id === 'editRegion') {
+      setOpenSection('regions'); // Устанавливаем секцию для редактирования
+    }
+  }, [id]); // Следим за изменением id
 
   const [openSections, setOpenSections] = useState(() => {
     const savedSections = localStorage.getItem('openSections');
-    return savedSections ? JSON.parse(savedSections) : {
-      pages: false,
-      brons: false,
-      regions: false,
-      about: false,
-    };
+    return savedSections
+      ? JSON.parse(savedSections)
+      : {
+          pages: false,
+          brons: false,
+          regions: false,
+          about: false,
+        };
   });
-  
+
   // Функция для переключения секций с сохранением в локальное хранилище
   // const toggleSection = (section) => {
   //   setOpenSections((prev) => {
@@ -107,8 +115,10 @@ function AdminPageNew({ children, ...props }) {
   //     return updatedSections;
   //   });
   // };
-  
 
+  useEffect(() => {
+    localStorage.setItem('openSections', JSON.stringify(openSections));
+  }, [openSections]);
 
   // const [openSections, setOpenSections] = useState({
   //   pages: false,
@@ -355,7 +365,13 @@ function AdminPageNew({ children, ...props }) {
   }, []);
 
   useEffect(() => {
-    setActiveTab(id);
+    if (id && id.startsWith('edit')) {
+      setActiveTab(`editRegion-${id.replace('edit/', '')}`); // Ставим активный регион
+      setOpenSections((prev) => ({
+        ...prev,
+        regions: true, // Открываем секцию "Регион" автоматически
+      }));
+    }
   }, [id]);
 
   const logout = () => {
@@ -642,8 +658,9 @@ function AdminPageNew({ children, ...props }) {
               )}
 
               {/* Редактировать регион */}
-              {activeTab === 'editRegion' && (
+              {activeTab.startsWith('editRegion') && (
                 <EditRegion
+                  regionId={activeTab.replace('editRegion-', '')} // Передаем ID региона
                   role={user.role}
                   userName={user.name}
                   userID={user._id}
