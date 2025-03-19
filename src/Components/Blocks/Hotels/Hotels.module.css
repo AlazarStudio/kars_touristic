@@ -129,8 +129,9 @@
     width: 50%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 60px;
+    padding: 60px 0;
 }
 
 .aboutHotel_info__right___title {
@@ -204,15 +205,20 @@
 }
 
 .hotelBron {
-    width: 300px;
-    height: 50px;
+    width: 450px;
+    height: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000;
+    background-color: #69A64B;
     color: #fff;
-    border-radius: 10px;
+    border-radius: 20px;
     cursor: pointer;
+
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: 0%;
 }
 
 .tour_topInfo__bread {
@@ -240,6 +246,7 @@
     outline: none;
     width: 1000px;
     height: fit-content;
+    z-index: 9999999;
 }
 
 .overlay {
@@ -248,7 +255,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 999;
+    z-index: 9999999;
     background-color: rgba(0, 0, 0, 0.75);
 }
 
@@ -271,6 +278,9 @@
 
 
 @media (min-width: 0px) and (max-width: 1299px) {
+    .hotelBron{
+        width: 100%;
+    }
     .main {
         height: auto;
         padding: 80px 10px 20px 10px;
@@ -330,7 +340,7 @@
         font-size: 22px;
     }
 
-    .aboutHotel_info__right___text{
+    .aboutHotel_info__right___text {
         line-height: normal;
         text-align: justify;
     }
@@ -362,7 +372,7 @@
         margin-top: 0;
     }
 
-    .hotelStars{
+    .hotelStars {
         align-items: center;
         padding: 10px 20px;
     }

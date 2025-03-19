@@ -11,10 +11,11 @@ import ReactModal from 'react-modal';
 import Calendar from "../Calendar/Calendar";
 
 import server from '../../../serverConfig';
+import Add_Feedback from "../Add_Feedback/Add_Feedback";
 
 ReactModal.setAppElement('#root');
 
-function Hotels({ children, handleOpen, isSimillar, ...props }) {
+function Hotels({ children, handleOpen, isSimillar, user, ...props }) {
     let img = '/hotel_bg.webp';
 
     let { idTour, idRoom } = useParams();
@@ -94,6 +95,9 @@ function Hotels({ children, handleOpen, isSimillar, ...props }) {
                                             <Link to={'/'}>Главная</Link> / <Link to={`/region/${hotel.region}`}>{regionNameData}</Link> / {hotel.title}
                                         </div> */}
                                         <div className={classes.hotelTitle}>{hotel.title} ({hotel.city})</div>
+
+                                        <div className={classes.hotelDesc}>{hotel.description}</div>
+
                                         <div className={classes.hotelInfo_stars_links}>
                                             <div className={classes.hotelStars} dangerouslySetInnerHTML={{ __html: getStars(hotel.stars) }}></div>
 
@@ -117,7 +121,6 @@ function Hotels({ children, handleOpen, isSimillar, ...props }) {
                                             </div>
                                         </div>
 
-                                        <div className={classes.hotelDesc}>{hotel.description}</div>
                                         <div className={classes.hotelBron} onClick={openModal}>Забронировать</div>
 
 
@@ -212,13 +215,16 @@ function Hotels({ children, handleOpen, isSimillar, ...props }) {
                                 :
                                 null
                             }
-                            <br />
 
-                            {/* <CenterBlock>
+                            <CenterBlock>
                                 <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                             </CenterBlock>
 
-                            <Feedback /> */}
+                            {user && <Add_Feedback />}
+
+                            <Feedback />
+
+                            <br />
 
                         </WidthBlock>
                     </CenterBlock>

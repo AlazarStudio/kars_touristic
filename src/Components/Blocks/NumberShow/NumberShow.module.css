@@ -1,20 +1,46 @@
-.numberInfo {
-    width: 100%;
+.room {
+    padding: 60px 0;
     display: flex;
-    justify-content: space-between;
-    gap: 40px;
+    flex-direction: column;
+    gap: 80px;
 }
 
-.numberInfo_left {
-    width: 35%;
+.roomTitle {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.numberInfo_left__slider {
+.roomTitle_title {
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    text-transform: uppercase;
+    color: #34343C;
+}
+
+.numberInfo {
     width: 100%;
-    height: 570px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.numberInfo_left {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    gap: 45px;
+}
+
+.numberInfo_left__slider {
+    width: 60%;
+    height: 520px;
     border-radius: 20px;
     overflow: hidden;
     position: relative;
@@ -29,6 +55,7 @@
 .numberInfo_left__desc {
     display: flex;
     flex-direction: column;
+    width: 60%;
 }
 
 .numberInfo_left__desc___item {
@@ -47,30 +74,34 @@
 }
 
 .numberInfo_right {
-    width: 65%;
     display: flex;
     flex-direction: column;
     gap: 35px;
+    width: 60%;
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    padding: 30px 50px;
+    border-radius: 20px;
+    margin-top: 40px;
 }
 
 .numberInfo_right__title {
     font-family: Montserrat;
-    font-size: 34px;
-    font-weight: 600;
-    line-height: 36px;
-    text-align: center;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    vertical-align: middle;
     text-transform: uppercase;
+    color: #34343C;
 }
 
 .numberInfo_right__desc {
     font-family: Montserrat;
+    font-weight: 400;
     font-size: 16px;
-    font-weight: 500;
     line-height: 21px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 30px;
+    letter-spacing: 0%;
+    vertical-align: middle;
 }
 
 .numberInfo_right__desc___items {
@@ -156,6 +187,101 @@
 }
 
 
+.roomInfoData {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.roomInfoData_rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    text-transform: uppercase;
+}
+
+.roomInfoData_feedback,
+.roomInfoData_adress {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #8C8C8C;
+}
+
+.roomInfoData_button {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #4872F2;
+    cursor: pointer;
+}
+
+.numberInfo_bron {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.numberInfo_bron_calendar {
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    /* height: fit-content; */
+    height: 320px;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+.numberInfo_bron_service span {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #8C8C8C;
+    text-align: center;
+}
+
+.numberInfo_bron_service a {
+    color: #000;
+}
+
+.numberInfo_bron_service {
+    font-family: Montserrat;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 21px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.numberInfo_bron_dop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21px;
+    vertical-align: middle;
+    cursor: pointer;
+}
 
 @media (min-width: 0px) and (max-width: 1299px) {
     .numberInfo {
@@ -219,7 +345,7 @@
         width: 100%;
     }
 
-    .numberInfo_right__title{
+    .numberInfo_right__title {
         font-size: 22px;
     }
 }

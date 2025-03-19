@@ -9,7 +9,9 @@ import Object from "../Object/Object";
 import { Link } from "react-router-dom";
 
 import server from '../../../serverConfig'
-function Visits({ children, ...props }) {
+import Add_Feedback from "../Add_Feedback/Add_Feedback";
+import Feedback from "../Feedback/Feedback";
+function Visits({ children, user, ...props }) {
     let { idTour } = useParams();
 
     const [place, setPlace] = useState();
@@ -102,9 +104,9 @@ function Visits({ children, ...props }) {
                     <div className={classes.visitMain} style={{ backgroundImage: `url(${server}/refs/${place.mainPhoto})` }}>
                         <WidthBlock>
                             <CenterBlock gap={'40px'}>
-                                <div className={classes.tour_topInfo__bread}>
+                                {/* <div className={classes.tour_topInfo__bread}>
                                     <Link to={'/'}>Главная</Link> / <Link to={`/region/${place.region}`}>{regionNameData}</Link> / {place.title}
-                                </div>
+                                </div> */}
                                 <H2 text_transform="uppercase" text_align={'center'} font_size="60px" color="var(--white_color)" zIndex="1">{place.title}</H2>
 
                                 <div className={classes.visitBlocks_item_forText}>
@@ -119,12 +121,6 @@ function Visits({ children, ...props }) {
                     <WidthBlock>
 
                         <CenterBlock>
-                            <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
-                        </CenterBlock>
-
-                        <SliderPlaces info={place.photos} boxShadow={'none'} loop={true} />
-
-                        <CenterBlock>
                             <H2 text_transform="uppercase" font_size="36px">Интересные факты</H2>
                         </CenterBlock>
 
@@ -132,13 +128,11 @@ function Visits({ children, ...props }) {
 
                             {place.placeItems.map((item, index) => (
                                 <div className={classes.visitBlocks_item} key={index}>
-                                    {/* <div className={classes.visitBlocks_item__img}>
-                                        <img src="/visit_img_1.webp" alt="" />
-                                    </div> */}
                                     <div className={classes.visitBlocks_item__title}>{item.title}</div>
                                     <div className={classes.visitBlocks_item__desc}>{item.description}</div>
                                 </div>
                             ))}
+
                             {/* <div className={classes.visitBlocks_item}>
                                 <div className={classes.visitBlocks_item__img}>
                                     <img src="/visit_img_2.webp" alt="" />
@@ -160,6 +154,11 @@ function Visits({ children, ...props }) {
                                 <div className={classes.visitBlocks_item__title}>Ледники дают жизнь трем крупным рекам — <b>Кубани, Малку и Баксан</b></div>
                             </div> */}
                         </div>
+                        <CenterBlock>
+                            <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
+                        </CenterBlock>
+
+                        <SliderPlaces info={place.photos} boxShadow={'none'} loop={true} />
 
                         {combinedArray.length > 0 ?
                             <>
@@ -177,6 +176,14 @@ function Visits({ children, ...props }) {
                             </>
                             : null}
 
+
+                        <CenterBlock>
+                            <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
+                        </CenterBlock>
+
+                        {user && <Add_Feedback />}
+
+                        <Feedback />
 
                         <br />
                     </WidthBlock>

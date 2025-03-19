@@ -83,14 +83,14 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
         bottom: 0,
         left: 0,
         width: "100%",
-        height: '92dvh',
+        height: '100dvh',
         bgcolor: '#fff',
         boxShadow: 24,
         outline: 'none',
         zIndex: '9999999',
         overflowY: 'scroll',
         scrollbarWidth: 'none',
-        borderRadius: '30px 30px 0 0'
+        // borderRadius: '30px 30px 0 0'
     };
 
     const [open, setOpen] = useState(false);
@@ -203,7 +203,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
             {
                 open &&
                 <IconButton onClick={() => handleClose()} aria-label="close" sx={{
-                    border: '1px solid white',
+                    border: '1px solid #00000090',
                     borderRadius: '50%',
                     position: 'fixed',
                     top: '10px',
@@ -212,11 +212,11 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     backgroundColor: '#fff',
                     '&:hover': {
                         backgroundColor: '#fff',
-                        border: '1px solid white',
+                        border: '1px solid #00000090',
                     },
                 }}>
-                    <CloseIcon sx={{ color: '#000' }} />
-                </IconButton>
+                    <CloseIcon sx={{ color: '#00000090' }} />
+                </IconButton >
             }
 
             <Modal
@@ -236,11 +236,11 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                             &&
                             <Tours_Page regionName={regionName} tableName={tableName} requestType={requestTypeOne} similar={requestType} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
                         }
-                        {(requestType == 'getHotels' && idTour && !idRoom) && <Hotels_Page handleOpen={handleOpen} isSimillar={false} />}
-                        {(requestType == 'getHotels' && idTour && idRoom) && <Number_Page />}
+                        {(requestType == 'getHotels' && idTour && !idRoom) && <Hotels_Page user={user} handleOpen={handleOpen} isSimillar={false} />}
+                        {(requestType == 'getHotels' && idTour && idRoom) && <Number_Page user={user} />}
 
-                        {(requestType == 'getPlaces' && idTour) && <Visit_Page />}
-                        {(requestType == 'getEvents' && idTour) && <Event_Page />}
+                        {(requestType == 'getPlaces' && idTour) && <Visit_Page user={user} />}
+                        {(requestType == 'getEvents' && idTour) && <Event_Page user={user} />}
                     </Box>
                 </Slide>
             </Modal>
