@@ -150,7 +150,7 @@ function MultidayTours({ children, title, type, role, ...props }) {
         <DndProvider backend={HTML5Backend}>
           <div className={classes.multidayTours}>
             <div className={classes.multidayTours_back}>
-              <Link to={`/admin1/edit/${title}`}>
+              <Link to={`/admin/edit/${title}`}>
                 <img src="/back.webp" alt="" /> Вернуться назад
               </Link>
             </div>
@@ -181,7 +181,7 @@ function MultidayTours({ children, title, type, role, ...props }) {
           {add === 'addMultiday_tour' ? (
             <>
               <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                <Link to={`/admin1/edit/${title}/${type}`}>
+                <Link to={`/admin/edit/${title}/${type}`}>
                   <img src="/back.webp" alt="" /> Вернуться назад
                 </Link>
               </div>
@@ -191,7 +191,7 @@ function MultidayTours({ children, title, type, role, ...props }) {
           ) : (
             <>
               <div className={`${classes.multidayTours_back} ${classes.mb40}`}>
-                <Link to={`/admin1/edit/${title}/${type}`}>
+                <Link to={`/admin/edit/${title}/${type}`}>
                   <img src="/back.webp" alt="" /> Вернуться назад
                 </Link>
               </div>
