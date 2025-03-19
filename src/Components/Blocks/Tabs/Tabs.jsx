@@ -203,7 +203,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
             {
                 open &&
                 <IconButton onClick={() => handleClose()} aria-label="close" sx={{
-                    border: '1px solid #000',
+                    border: '1px solid #00000090',
                     borderRadius: '50%',
                     position: 'fixed',
                     top: '10px',
@@ -212,10 +212,10 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     backgroundColor: '#fff',
                     '&:hover': {
                         backgroundColor: '#fff',
-                        border: '1px solid white',
+                        border: '1px solid #00000090',
                     },
                 }}>
-                    <CloseIcon sx={{ color: '#000' }} />
+                    <CloseIcon sx={{ color: '#00000090' }} />
                 </IconButton >
             }
 
