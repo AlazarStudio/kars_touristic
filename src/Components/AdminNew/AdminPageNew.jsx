@@ -82,18 +82,59 @@ function AdminPageNew({ children, ...props }) {
   const { id, title } = useParams();
 
   // Храним состояние открытых секций
-  const [openSections, setOpenSections] = useState({
-    pages: false,
-    brons: false,
-  });
 
-  // Функция для переключения секций
+
+  const [openSections, setOpenSections] = useState(() => {
+    const savedSections = localStorage.getItem('openSections');
+    return savedSections ? JSON.parse(savedSections) : {
+      pages: false,
+      brons: false,
+      regions: false,
+      about: false,
+    };
+  });
+  
+  // Функция для переключения секций с сохранением в локальное хранилище
   const toggleSection = (section) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [section]: !prev[section], // Инвертируем текущее состояние
-    }));
+    setOpenSections((prev) => {
+      const updatedSections = {
+        pages: section === 'pages' ? !prev.pages : prev.pages,
+        brons: section === 'brons' ? !prev.brons : prev.brons,
+        regions: section === 'regions' ? !prev.regions : prev.regions,
+        about: section === 'about' ? !prev.about : prev.about,
+      };
+      localStorage.setItem('openSections', JSON.stringify(updatedSections)); // Сохраняем в локальное хранилище
+      return updatedSections;
+    });
   };
+  
+
+
+  // const [openSections, setOpenSections] = useState({
+  //   pages: false,
+  //   brons: false,
+  // });
+
+  // // Функция для переключения секций
+  // const toggleSection = (section) => {
+  //   setOpenSections((prev) => {
+  //     // Если кликнули на основную секцию (pages, brons), закрываем остальные основные
+  //     if (section === 'pages' || section === 'brons') {
+  //       return {
+  //         pages: section === 'pages' ? !prev.pages : false,
+  //         brons: section === 'brons' ? !prev.brons : false,
+  //         regions: false,
+  //         about: false,
+  //       };
+  //     }
+
+  //     // Если кликнули на вложенную секцию, оставляем главную открытой
+  //     return {
+  //       ...prev,
+  //       [section]: !prev[section],
+  //     };
+  //   });
+  // };
 
   let block = id;
   let boldName = id;
@@ -313,6 +354,10 @@ function AdminPageNew({ children, ...props }) {
     fetchTours();
   }, []);
 
+  useEffect(() => {
+    setActiveTab(id);
+  }, [id]);
+
   const logout = () => {
     localStorage.clear();
     setUser(null);
@@ -354,45 +399,46 @@ function AdminPageNew({ children, ...props }) {
               >
                 Страницы
               </div>
+
               {openSections.pages && (
                 <div className={classes.admin_data__nav___item1}>
                   {/* Регион */}
                   <div
                     className={`${classes.hoverBlock} ${
-                      activeTab === 'Region' ? classes.activeLink : ''
+                      openSections.regions ? classes.activeLink : ''
                     }`}
-                    onClick={() => {
-                      toggleSection('regions');
-                      setActiveTab('Region'); // Обновляем активный таб
-                    }}
+                    onClick={() => toggleSection('regions')}
                   >
                     Регион
                   </div>
                   {openSections.regions && (
-                     <div className={classes.admin_data__nav___item____desc}>
-                     {user.role === 'admin' && (
-                       <Link
-                         to={'/admin/addRegion'}
-                         className={`${classes.admin_data__nav___item____subItem} ${activeTab === 'addRegion' ? classes.activeLink : ''}`}
-                         onClick={() => setActiveTab('addRegion')}
-                       >
-                         + Добавить регион
-                       </Link>
-                     )}
+                    <div className={classes.admin_data__nav___item____desc}>
+                      {user.role === 'admin' && (
+                        <Link
+                          to={'/admin/addRegion'}
+                          className={`${
+                            classes.admin_data__nav___item____subItem
+                          } ${
+                            activeTab === 'addRegion' ? classes.activeLink : ''
+                          }`}
+                          onClick={() => setActiveTab('addRegion')}
+                        >
+                          + Добавить регион
+                        </Link>
+                      )}
 
-{regions.map((region, index) => (
-  <DraggableRegion
-    key={region._id}
-    region={region}
-    index={index}
-    moveRegion={moveRegion}
-    deleteElement={deleteElement}
-    activeTab={activeTab} // Передаём activeTab
-    setActiveTab={setActiveTab}
-    role={user.role}
-  />
-))}
-
+                      {regions.map((region, index) => (
+                        <DraggableRegion
+                          key={region._id}
+                          region={region}
+                          index={index}
+                          moveRegion={moveRegion}
+                          deleteElement={deleteElement}
+                          activeTab={activeTab}
+                          setActiveTab={setActiveTab}
+                          role={user.role}
+                        />
+                      ))}
                     </div>
                   )}
 
@@ -410,6 +456,8 @@ function AdminPageNew({ children, ...props }) {
                       <Link
                         to="/admin/addAboutCompany"
                         className={`${
+                          classes.admin_data__nav___item____subItem
+                        } ${
                           activeTab === 'addAboutCompany'
                             ? classes.activeLink
                             : ''
@@ -421,6 +469,8 @@ function AdminPageNew({ children, ...props }) {
                       <Link
                         to="/admin/addOurTeam"
                         className={`${
+                          classes.admin_data__nav___item____subItem
+                        } ${
                           activeTab === 'addOurTeam' ? classes.activeLink : ''
                         }`}
                         onClick={() => setActiveTab('addOurTeam')}
@@ -430,6 +480,8 @@ function AdminPageNew({ children, ...props }) {
                       <Link
                         to="/admin/addOurMission"
                         className={`${
+                          classes.admin_data__nav___item____subItem
+                        } ${
                           activeTab === 'addOurMission'
                             ? classes.activeLink
                             : ''
@@ -488,7 +540,7 @@ function AdminPageNew({ children, ...props }) {
               )}
 
               {/* Брони */}
-              {/* Брони */}
+
               <div
                 className={classes.nav_title}
                 onClick={() => toggleSection('brons')}
@@ -497,7 +549,6 @@ function AdminPageNew({ children, ...props }) {
               </div>
               {openSections.brons && (
                 <div className={classes.admin_data__nav___item1}>
-                  {/* Брони туров */}
                   <Link
                     to="/admin/brons"
                     className={`${classes.admin_data__nav___item} ${
@@ -507,8 +558,6 @@ function AdminPageNew({ children, ...props }) {
                   >
                     Брони туров
                   </Link>
-
-                  {/* Брони отелей */}
                   <Link
                     to="/admin/addHotelAndApartments"
                     className={`${classes.admin_data__nav___item} ${
