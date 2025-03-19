@@ -95,18 +95,18 @@ function AdminPageNew({ children, ...props }) {
   });
   
   // Функция для переключения секций с сохранением в локальное хранилище
-  const toggleSection = (section) => {
-    setOpenSections((prev) => {
-      const updatedSections = {
-        pages: section === 'pages' ? !prev.pages : prev.pages,
-        brons: section === 'brons' ? !prev.brons : prev.brons,
-        regions: section === 'regions' ? !prev.regions : prev.regions,
-        about: section === 'about' ? !prev.about : prev.about,
-      };
-      localStorage.setItem('openSections', JSON.stringify(updatedSections)); // Сохраняем в локальное хранилище
-      return updatedSections;
-    });
-  };
+  // const toggleSection = (section) => {
+  //   setOpenSections((prev) => {
+  //     const updatedSections = {
+  //       pages: section === 'pages' ? !prev.pages : prev.pages,
+  //       brons: section === 'brons' ? !prev.brons : prev.brons,
+  //       regions: section === 'regions' ? !prev.regions : prev.regions,
+  //       about: section === 'about' ? !prev.about : prev.about,
+  //     };
+  //     localStorage.setItem('openSections', JSON.stringify(updatedSections)); // Сохраняем в локальное хранилище
+  //     return updatedSections;
+  //   });
+  // };
   
 
 
@@ -116,25 +116,25 @@ function AdminPageNew({ children, ...props }) {
   // });
 
   // // Функция для переключения секций
-  // const toggleSection = (section) => {
-  //   setOpenSections((prev) => {
-  //     // Если кликнули на основную секцию (pages, brons), закрываем остальные основные
-  //     if (section === 'pages' || section === 'brons') {
-  //       return {
-  //         pages: section === 'pages' ? !prev.pages : false,
-  //         brons: section === 'brons' ? !prev.brons : false,
-  //         regions: false,
-  //         about: false,
-  //       };
-  //     }
+  const toggleSection = (section) => {
+    setOpenSections((prev) => {
+      // Если кликнули на основную секцию (pages, brons), закрываем остальные основные
+      if (section === 'pages' || section === 'brons') {
+        return {
+          pages: section === 'pages' ? !prev.pages : false,
+          brons: section === 'brons' ? !prev.brons : false,
+          regions: false,
+          about: false,
+        };
+      }
 
-  //     // Если кликнули на вложенную секцию, оставляем главную открытой
-  //     return {
-  //       ...prev,
-  //       [section]: !prev[section],
-  //     };
-  //   });
-  // };
+      // Если кликнули на вложенную секцию, оставляем главную открытой
+      return {
+        ...prev,
+        [section]: !prev[section],
+      };
+    });
+  };
 
   let block = id;
   let boldName = id;
