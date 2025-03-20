@@ -333,8 +333,8 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                     <div className={classes.tour_topInfo__left___items____element_____info}>{extractAmount(tour.cost)} ₽</div>
                                                 </div>
                                             </div>
-                                            
-                                            <a className={classes.tour_topInfo__left___btn} href={'#date'}>
+
+                                            <a className={classes.tour_topInfo__left___btn} onClick={() => setIsModalOpen(true)}>
                                                 Забронировать
                                             </a>
 
@@ -350,7 +350,10 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                         </div>
                                         <div className={classes.tour_topInfo__right}>
                                             <div className={classes.tour_topInfo__right___img}>
-                                                <Swiper navigation={true} modules={[Navigation]} loop={false} className="tourPhotos">
+                                                <Swiper navigation={true} pagination={{
+                                                    clickable: true, // Делаем кружочки кликабельными
+                                                    dynamicBullets: true // Динамическое изменение размеров кружков
+                                                }} modules={[Navigation, Pagination]} loop={false} className="tourPhotos">
                                                     {tour.photos.map((item, index) => (
                                                         // item != tour.mainPhoto ?
                                                         <SwiperSlide key={index}>

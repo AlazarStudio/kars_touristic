@@ -4,7 +4,7 @@ import server from '../../../serverConfig';
 import PaymentButton from '../../PaymentButton/PaymentButton';
 
 function CalendarTour({ closeModal, tour, selectedDate }) {
-    const [passengerCount, setPassengerCount] = useState(1);
+    const [passengerCount, setPassengerCount] = useState(tour.days.length > 1 ? 2 : 1);
     const [passengerInfo, setPassengerInfo] = useState([{
         name: "",
         email: "",
@@ -15,6 +15,9 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         gender: "",
         birthDate: ""
     }]);
+
+    console.log(tour);
+    
 
     const [paymentMethod, setPaymentMethod] = useState("card");
     const [isAgreed, setIsAgreed] = useState(false);
@@ -441,6 +444,20 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
 
     }
 
+    
+    const extractAmount = (input) => {
+        if (!input) return null;
+
+        const sanitizedInput = String(input).replace(/\s/g, '').replace(/\.(?=\d{3})/g, '').replace(/,/g, '.');
+
+        const match = sanitizedInput.match(/\d+(\.\d+)?/);
+        if (!match) return null;
+
+        const amount = parseFloat(match[0]);
+
+        return amount.toLocaleString('ru-RU');
+    };
+
     return (
         <div className={classes.calendar}>
             <h2>Бронирование тура на дату: {formatDateRange(selectedDate)}</h2>
@@ -450,7 +467,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                     <label>Количество пассажиров:</label>
                     <input
                         type="number"
-                        min="1"
+                        min={tour.days.length > 1 ? 2 : 1}
                         value={passengerCount}
                         onChange={handlePassengerCountChange}
                         className={classes.input}
@@ -585,7 +602,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             }
 
             <div className={classes.totalSum}>
-                Итоговая сумма: {totalCost} ₽
+                Итоговая сумма: {extractAmount(totalCost)} ₽
             </div>
 
             {(tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&

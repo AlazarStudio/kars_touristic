@@ -115,12 +115,12 @@ main {
     transition: all 0.3s ease-in-out;
 }
 
-.tourPhotos .swiper-button-prev:hover{
+.tourPhotos .swiper-button-prev:hover {
     color: #000000;
     background-color: #fff;
 }
 
-.tourPhotos .swiper-button-next:hover{
+.tourPhotos .swiper-button-next:hover {
     color: #000000;
     background-color: #fff;
 }
@@ -155,20 +155,30 @@ main {
     height: 100%;
 }
 
-.tourPointsSlider{
+.tourPointsSlider {
     overflow: visible;
 }
 
-.tourDaysSlider{
+.tourDaysSlider {
     width: 100%;
 }
 
-.tourPointsSlider .swiper-pagination{
+.tourPointsSlider .swiper-pagination {
     top: auto;
     bottom: -35px;
 }
 
-.tourPointsSlider .swiper-pagination-bullet{
+.tourPointsSlider .swiper-pagination-bullet {
+    background: #fff;
+    opacity: 1;
+}
+
+.tourPhotos .swiper-pagination-bullet {
+    background: #ffffff7e;
+    opacity: 1;
+}
+
+.tourPhotos .swiper-pagination-bullet-active{
     background: #fff;
     opacity: 1;
 }
@@ -343,7 +353,7 @@ main {
         row-gap: 0;
     }
 
-    .tourPointsSlider .swiper-pagination{
+    .tourPointsSlider .swiper-pagination {
         display: none;
     }
 }
