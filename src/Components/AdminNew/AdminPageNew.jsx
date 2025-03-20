@@ -79,7 +79,8 @@ function DraggableRegion({
 
 
 function AdminPageNew({ children, ...props }) {
-  const { id, title } = useParams();
+    const { id = "", title } = useParams(); // Теперь id всегда строка
+  
 
   // Храним состояние открытых секций
 
@@ -364,15 +365,31 @@ function AdminPageNew({ children, ...props }) {
     fetchTours();
   }, []);
 
+
+
+
+
+  // const { id: routeId } = useParams(); // Переименовываем id в routeId
+  // const id = routeId || ""; // Теперь id всегда строка
+  
   useEffect(() => {
-    if (id && id.startsWith('edit')) {
-      setActiveTab(`editRegion-${id.replace('edit/', '')}`); // Ставим активный регион
+    console.log("Current ID:", id); // Для отладки
+  
+    if (id.startsWith("edit")) { 
+      setActiveTab(`editRegion-${id.replace("edit/", "")}`);
       setOpenSections((prev) => ({
         ...prev,
-        regions: true, // Открываем секцию "Регион" автоматически
+        regions: true,
       }));
     }
   }, [id]);
+  
+  
+  
+  
+  
+  
+  
 
   const logout = () => {
     localStorage.clear();
