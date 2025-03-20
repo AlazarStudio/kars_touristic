@@ -79,7 +79,7 @@ function ToursTab({ children, tabs, ...props }) {
                                     День {index + 1}
                                 </div>
                                 <div
-                                    key={index}
+                                    key={index + 12123312}
                                     onClick={() => handleTabClick(index)}
                                     className={classes.tabButtonCircle}
                                 >

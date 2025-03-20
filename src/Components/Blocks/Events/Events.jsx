@@ -66,7 +66,7 @@ function Events({ children, ...props }) {
                             <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
                         </CenterBlock>
 
-                        <SliderPlaces info={event.photos} boxShadow={'none'} loop={true} />
+                        <SliderPlaces info={event.photos} boxShadow={'none'} loop={false} />
 
                         {transferInfo ? <Transfer data={transferInfo} /> : null}
                     </WidthBlock>

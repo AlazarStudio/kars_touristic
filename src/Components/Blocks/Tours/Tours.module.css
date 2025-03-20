@@ -48,7 +48,7 @@
     justify-content: space-between;
     align-items: flex-start;
     z-index: 1;
-    gap: 55px;
+    gap: 40px;
 }
 
 .tour_topInfo__left {
@@ -71,12 +71,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 15px;
+    gap: 20px;
 }
 
 .tour_topInfo__left___items____element {
     width: 48%;
-    height: 120px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,7 +84,7 @@
     background: #FFFFFF26;
     border-radius: 20px;
     backdrop-filter: blur(3px);
-    padding: 20px;
+    padding: 10px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     color: var(--white_color);
@@ -95,16 +95,15 @@
 
 .tour_topInfo__left___items____element_____title {
     font-family: Montserrat;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     color: #ffffffb6;
 }
 
 .tour_topInfo__left___items____element_____info {
     font-family: Montserrat;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
-    line-height: 30px;
 }
 
 .tour_topInfo__left___title {
@@ -119,29 +118,30 @@
 
 .tour_topInfo__left___btn {
     width: 100%;
+    height: 67px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px 0;
     color: var(--white_color);
-    background-color: var(--black_color);
+    background-color: #69A64B;
     border-radius: 20px;
     cursor: pointer;
     font-family: Montserrat;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 30px;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
     transition: all 0.3s ease-in-out;
 }
 
 .tour_topInfo__left___btn:hover {
-    background-color: var(--white_color);
-    color: var(--black_color);
+    background-color: #fff;
+    color: #000;
 }
 
 .tour_topInfo__right___img {
     width: 100%;
-    height: 390px;
+    height: 440px;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -550,12 +550,6 @@
     .tour_topInfo__left___items____element_____info {
         font-size: 16px;
         line-height: normal;
-    }
-
-    .tour_topInfo__left___btn {
-        font-size: 16px;
-        padding: 10px 0;
-        width: 100%;
     }
 
     .tour_topInfo__right___places____place_____title {

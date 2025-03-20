@@ -3,7 +3,7 @@ import classes from './Add_Feedback.module.css';
 
 function Add_Feedback({ children, ...props }) {
     return (
-        <div div className={classes.feedbackNew} >
+        <div className={classes.feedbackNew} >
             <div className={classes.feedbackNew_stars}>
                 <img src="/starFeedback.svg" alt="" />
                 <img src="/starFeedback.svg" alt="" />

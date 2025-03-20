@@ -158,7 +158,7 @@ function Visits({ children, user, ...props }) {
                             <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
                         </CenterBlock>
 
-                        <SliderPlaces info={place.photos} boxShadow={'none'} loop={true} />
+                        <SliderPlaces info={place.photos} boxShadow={'none'} loop={false} />
 
                         {combinedArray.length > 0 ?
                             <>

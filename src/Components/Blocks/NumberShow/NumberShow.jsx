@@ -55,7 +55,7 @@ function NumberShow({ children, user, ...props }) {
 
                                 <div className={classes.numberInfo_left}>
                                     <div className={`${classes.numberInfo_left__slider} numberSlider`}>
-                                        <Swiper navigation={true} modules={[Navigation]} loop={true} className="mySwiper">
+                                        <Swiper navigation={true} modules={[Navigation]} loop={false} className="mySwiper">
                                             {room.photos.map((img, index) => (
                                                 <SwiperSlide key={index}><img src={`${server}/refs/${img}`} alt="" /></SwiperSlide>
                                             ))}

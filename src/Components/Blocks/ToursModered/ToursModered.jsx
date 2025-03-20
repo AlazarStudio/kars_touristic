@@ -242,7 +242,7 @@ function ToursModered({ children, requestType, pageName, tableName, similar, ...
                                         </div>
                                         <div className={classes.tour_topInfo__right}>
                                             <div className={classes.tour_topInfo__right___img}>
-                                                <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
+                                                <Swiper navigation={true} modules={[Navigation]} loop={false} className="tourPhotos">
                                                     {tour.photos.map((item, index) => (
                                                         // item != tour.mainPhoto ?
                                                         <SwiperSlide key={index}>

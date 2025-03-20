@@ -175,7 +175,7 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                 <Swiper
                     navigation={true}
                     modules={[Navigation]}
-                    loop={true}
+                    loop={false}
                     className="tourPhotos"
                 >
                     {photos.map((item, index) => (

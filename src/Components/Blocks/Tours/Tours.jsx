@@ -272,7 +272,6 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
     const updatedPlaces = placesTour.flatMap(place => [place, ""]).slice(0, -1);
 
-    
     const extractAmount = (input) => {
         if (!input) return null;
 
@@ -334,16 +333,16 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                     <div className={classes.tour_topInfo__left___items____element_____info}>{extractAmount(tour.cost)} ₽</div>
                                                 </div>
                                             </div>
-                                            {(tour.departureDates.length > 0 && tour.departureDates[0] && tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&
-                                                <a className={classes.tour_topInfo__left___btn} href={'#date'}>
-                                                    Забронировать
-                                                </a>
-                                            }
-                                            {(tour.departureDates.length > 0 && tour.departureDates[0] && tour.typeOfBron && tour.typeOfBron == 'Оставить заявку') &&
+                                            
+                                            <a className={classes.tour_topInfo__left___btn} href={'#date'}>
+                                                Забронировать
+                                            </a>
+
+                                            {/* {(tour.departureDates.length > 0 && tour.departureDates[0] && tour.typeOfBron && tour.typeOfBron == 'Оставить заявку') &&
                                                 <a className={classes.tour_topInfo__left___btn} href={'#date'}>
                                                     Оставить заявку
                                                 </a>
-                                            }
+                                            } */}
                                             {/* <div className={classes.tour_topInfo__left___btn} onClick={handleAddCartClick}>
                                                 {isInCart ? 'В корзине' : (user && user.cart && user.cart.includes(idToModal)) ? 'В корзине' : 'Добавить в корзину'}
                                             </div> */}
@@ -351,7 +350,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                         </div>
                                         <div className={classes.tour_topInfo__right}>
                                             <div className={classes.tour_topInfo__right___img}>
-                                                <Swiper navigation={true} modules={[Navigation]} loop={true} className="tourPhotos">
+                                                <Swiper navigation={true} modules={[Navigation]} loop={false} className="tourPhotos">
                                                     {tour.photos.map((item, index) => (
                                                         // item != tour.mainPhoto ?
                                                         <SwiperSlide key={index}>

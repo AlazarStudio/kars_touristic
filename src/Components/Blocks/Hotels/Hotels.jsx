@@ -202,7 +202,7 @@ function Hotels({ children, handleOpen, isSimillar, user, ...props }) {
                                 <H2 text_transform="uppercase" font_size="36px">ГАЛЕРЕЯ</H2>
                             </CenterBlock>
 
-                            <SliderHotel info={hotel.galery} boxShadow={'none'} loop={true} />
+                            <SliderHotel info={hotel.galery} boxShadow={'none'} loop={false} />
 
                             {rooms.length > 0 ?
                                 <>
