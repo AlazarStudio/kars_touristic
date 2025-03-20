@@ -272,6 +272,19 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
     const updatedPlaces = placesTour.flatMap(place => [place, ""]).slice(0, -1);
 
+    
+    const extractAmount = (input) => {
+        if (!input) return null;
+
+        const sanitizedInput = input.replace(/\s/g, '').replace(/\.(?=\d{3})/g, '').replace(/,/g, '.');
+
+        const match = sanitizedInput.match(/\d+(\.\d+)?/);
+        if (!match) return null;
+
+        const amount = parseFloat(match[0]);
+
+        return amount.toLocaleString('ru-RU');
+    };
     return (
         <>
             {tour ?
@@ -318,7 +331,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                 </div>
                                                 <div className={classes.tour_topInfo__left___items____element}>
                                                     <div className={classes.tour_topInfo__left___items____element_____title}>Стоимость:</div>
-                                                    <div className={classes.tour_topInfo__left___items____element_____info}>{tour.cost} ₽</div>
+                                                    <div className={classes.tour_topInfo__left___items____element_____info}>{extractAmount(tour.cost)} ₽</div>
                                                 </div>
                                             </div>
                                             {(tour.departureDates.length > 0 && tour.departureDates[0] && tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&

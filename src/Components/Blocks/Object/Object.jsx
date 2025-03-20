@@ -143,6 +143,19 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
         return stars;
     }
 
+    const extractAmount = (input) => {
+        if (!input) return null;
+
+        const sanitizedInput = input.replace(/\s/g, '').replace(/\.(?=\d{3})/g, '').replace(/,/g, '.');
+
+        const match = sanitizedInput.match(/\d+(\.\d+)?/);
+        if (!match) return null;
+
+        const amount = parseFloat(match[0]);
+
+        return amount.toLocaleString('ru-RU');
+    };
+
     return (
         <div className={classes.objects_item} style={{ width: width }}>
             <div className={classes.objects_item__like} onClick={handleLikeClick}>
@@ -196,10 +209,9 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
 
                             <div className={classes.objects_item_top_desc_info}>
                                 <div className={classes.objects_item__price}>
-                                    <div>Стоимость: <span>{regionData.cost} ₽</span></div>
+                                    <div>Стоимость: <span>{extractAmount(regionData.cost)} ₽</span></div>
                                 </div>
                                 <div className={classes.buttons}>
-                                    {/* <a className={classes.objects_item__button} onClick={() => handleOpen(regionData._id, isSimillar)}>Подробнее</a> */}
                                     <Link to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
 
                                     {/*{(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оплата на сайте') &&
