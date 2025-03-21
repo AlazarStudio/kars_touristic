@@ -47,6 +47,7 @@
     align-items: center;
     gap: 10px;
     width: 170px;
+    height: 52px;
 }
 
 .multidayTours_back a img {
@@ -61,14 +62,14 @@
     display: flex;
     width: 100%;
     flex-wrap: wrap;
-    gap: 50px 36px;
+    gap: 36px;
 }
 
 .multidayTours_data__tour {
     width: 23%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     position: relative;
     overflow: hidden;
 }

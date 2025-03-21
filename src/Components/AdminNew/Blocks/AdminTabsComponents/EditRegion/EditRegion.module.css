@@ -1,23 +1,28 @@
 .edit {
     display: flex;
     flex-direction: column;
-    gap: 80px;
-    margin-top: 30px;
+    gap: 40px;
 }
 
 .editTitle {
     font-family: Montserrat;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 600;
-    line-height: 48px;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     gap: 20px;
+    width: 70%;
+    height: 52px;
 }
 .editTitle img{
     width: 25px;
     cursor: pointer;
+}
+
+.editTitle a{
+    display: flex;
+    align-items: center;
 }
 
 .editBlocks {

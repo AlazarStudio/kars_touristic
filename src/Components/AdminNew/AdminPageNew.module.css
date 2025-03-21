@@ -100,8 +100,8 @@
 }
 
 .nav_title {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: #000;
   cursor: pointer;
 }
@@ -114,17 +114,17 @@
   display: flex;
   /* align-items: flex-end; */
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   font-family: Montserrat;
   width: 381px;
   height: 100dvh;
   position: absolute;
   left: 0;
-  font-size: 14px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
+  padding: 0 30px 30px 30px;
   background-color: #f2f2f2;
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
   /* outline: 1px solid red; */
 }
 
@@ -139,7 +139,7 @@
   display: flex;
   flex-direction: column;
   padding-left: 20px;
-  gap: 5px;
+  gap: 10px;
 }
 
 .admin_data__nav___item {
@@ -155,20 +155,19 @@
   color: #000;; /* Цвет выделения */
 }
 
+
 .admin_data__nav___item {
   cursor: pointer;
   color: var(--black_color);
 }
 
 .admin_data__nav___item____desc {
-  margin-top: 15px;
   display: flex;
-  gap: 5px;
+  gap: 10px;
   flex-direction: column;
   text-decoration: none;
   color: #000;
   padding-left: 20px;
-  margin-bottom: 10px;
 }
 
 .admin_data__nav___item____desc a {
@@ -209,13 +208,10 @@
 
 .admin_data__info {
   width: 100%;
-  padding-bottom: 40px;
   height: 100dvh;
   overflow: hidden;
   overflow-y: scroll;
-  padding-top: 40px;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding: 30px;
   position: relative;
   /* Firefox: задаем тонкий скроллбар */
   scrollbar-width: thin; /* auto, thin */
@@ -226,8 +222,8 @@
   display: flex;
   gap: 20px;
   position: absolute;
-  right: 20px;
-  top: 20px;
+  right: 30px;
+  top: 30px;
 }
 
 .admin_data__info_top_date {

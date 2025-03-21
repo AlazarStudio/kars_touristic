@@ -77,7 +77,8 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
         const normalizedItem = item.toLowerCase();
         const matchedPlace = places.find(place => place.title.toLowerCase().includes(normalizedItem));
         return matchedPlace ? (
-            <Link to={`/visits/${matchedPlace._id}`} key={matchedPlace._id}>
+            <Link to={`/visits/${matchedPlace._id}`} key={matchedPlace._id} style={{
+                textTransform: 'capitalize'}}>
                 {item}
             </Link>
         ) : (

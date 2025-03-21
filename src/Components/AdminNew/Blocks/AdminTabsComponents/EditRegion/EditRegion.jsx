@@ -30,7 +30,8 @@ function EditRegion({ children, role, userName, userID, ...props }) {
                 <div className={classes.edit}>
                     {role === 'admin' && region.length > 0 ?
                         <div className={classes.editTitle}>
-                            Редактировать РЕГИОН: «{region[0].title}»
+                            {/* Редактировать РЕГИОН:  */}
+                            «{region[0].title}»
                             <Link to={`/admin/${id}/${title}/editRegionData`}><img src="/edit.webp" alt="" /></Link>
                         </div>
                         : null

@@ -38,7 +38,7 @@ function DraggableRegion({
   role,
 }) {
   const navigate = useNavigate();
-  const { id } = useParams(); // Получаем id из URL
+  const { id, title } = useParams(); // Получаем id из URL
 
   const [, ref] = useDrag({
     type: ItemType.REGION,
@@ -56,7 +56,7 @@ function DraggableRegion({
   });
 
   // Проверяем, активен ли этот регион
-  const isActive = id === region.link ? classes.boldText : '';
+  const isActive = title === region.link ? classes.boldText : '';
 
   return (
     <div ref={(node) => ref(drop(node))} className={`${classes.elemBlock} ${isActive}`}>
@@ -373,7 +373,7 @@ function AdminPageNew({ children, ...props }) {
   // const id = routeId || ""; // Теперь id всегда строка
   
   useEffect(() => {
-    console.log("Current ID:", id); // Для отладки
+    // console.log("Current ID:", id); // Для отладки
   
     if (id.startsWith("edit")) { 
       setActiveTab(`editRegion-${id.replace("edit/", "")}`);
@@ -669,6 +669,7 @@ function AdminPageNew({ children, ...props }) {
                   )}
                 </div>
               </div>
+
               {/* Добавить регион */}
               {activeTab === 'addRegion' && (
                 <AddRegion fetchRegions={fetchRegions} />

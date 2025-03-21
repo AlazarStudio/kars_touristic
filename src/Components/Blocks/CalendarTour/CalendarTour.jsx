@@ -15,9 +15,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         gender: "",
         birthDate: ""
     }]);
-
-    console.log(tour);
-    
+   
 
     const [paymentMethod, setPaymentMethod] = useState("card");
     const [isAgreed, setIsAgreed] = useState(false);
@@ -462,7 +460,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         <div className={classes.calendar}>
             <h2>Бронирование тура на дату: {formatDateRange(selectedDate)}</h2>
 
-            {user && (user.role == 'agent' || user.role == 'admin') &&
+            {/* {user && (user.role == 'agent' || user.role == 'admin') && */}
                 <div className={classes.field}>
                     <label>Количество пассажиров:</label>
                     <input
@@ -473,7 +471,7 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                         className={classes.input}
                     />
                 </div>
-            }
+            {/* } */}
 
             <div className={classes.passengerBlock}>
                 {Array.from({ length: passengerCount }, (_, i) => (
