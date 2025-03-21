@@ -334,7 +334,7 @@ function Cart_Page({ children, ...props }) {
                                                         </div>
                                                     </div>
                                                     <div className={classes.objectData_price}>
-                                                        <div className={classes.objectData_price__num}>{formatNumber(item.cost)} ₽</div>
+                                                        <div className={classes.objectData_price__num}>{formatNumber(item.cost)}</div>
                                                         <div className={classes.objectData_price__delete} onClick={() => handleDeleteItem(item._id)}>Удалить</div>
                                                     </div>
                                                 </div>
@@ -347,7 +347,7 @@ function Cart_Page({ children, ...props }) {
                             <div className={classes.cartPage_right}>
                                 <div className={classes.cartPage_right__info}>
                                     <div className={classes.cartPage_right__info___title}>Итого</div>
-                                    <div className={classes.cartPage_right__info___num}>{formatNumber(totalCost)} ₽</div>
+                                    <div className={classes.cartPage_right__info___num}>{formatNumber(totalCost)}</div>
                                 </div>
                                 <div className={classes.cartPage_right__infoBlock}>
                                     {/* <div className={classes.cartPage_right__info___lower}>

@@ -119,7 +119,7 @@ function AddAgent({ setActiveTab }) {
                                 <div className={classes.gids_info__elem}>{item.email}</div>
                                 <div className={classes.gids_info__elem}>{item.phone}</div>
                                 <div className={classes.gids_info__elem}>{item.username}</div>
-                                <div className={classes.gids_info__elem}>{item.debt.toLocaleString('ru-RU')} ₽</div>
+                                <div className={classes.gids_info__elem}>{item.debt.toLocaleString('ru-RU')}</div>
                             </Link>
                         </div>
                     ))

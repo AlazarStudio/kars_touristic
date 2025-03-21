@@ -3,9 +3,10 @@
     max-height: 800px;
     margin: 0 auto;
     background-color: #fff;
-    border-radius: 8px;
+    border-radius: 20px;
 }
 
+/* 
 .calendar h2 {
     font-size: 28px;
     margin-bottom: 40px;
@@ -139,7 +140,98 @@
 
 .passengerBlock::-webkit-scrollbar-thumb:hover {
     background-color: #000;
+} */
+
+.calendar_left {
+    width: 371px;
+    padding: 30px;
+    box-shadow: 0px 8px 14.1px 0px #00000026;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
+
+.calendar_left_title {
+    font-weight: 600;
+    font-size: 24px;
+    text-transform: uppercase;
+}
+
+.calendar_left_dates,
+.calendar_left_count {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.calendar_left_dates_title,
+.calendar_left_count_title {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+    color: #8C8C8C;
+}
+
+.calendar_left_count_select select {
+    border: 1px solid #C1C1C1;
+    width: 100%;
+    border-radius: 10px;
+    height: 41px;
+    outline: none;
+    padding: 0 10px;
+}
+
+.calendar_left_price {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.calendar_left_price_forOne {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.calendar_left_price_full {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.calendar_left_send {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar_left_send_button {
+    background-color: #69A64B;
+    border: 1px solid #69A64B;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    height: 50px;
+    width: 80%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.calendar_left_send_button:hover{
+    border: 1px solid #000;
+    background-color: #fff;
+    color: #000;
+}
+
 
 @media (min-width: 0px) and (max-width: 1299px) {
     .calendar {
@@ -150,6 +242,7 @@
         overflow-y: scroll;
     }
 
+    /* 
     .passengerInfo {
         padding: 10px;
     }
@@ -165,5 +258,5 @@
     .calendar h2{
         font-size: 18px !important;
         margin-bottom: 10px;
-    }
+    } */
 }

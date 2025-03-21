@@ -283,7 +283,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
         const amount = parseFloat(match[0]);
 
-        return amount.toLocaleString('ru-RU');
+        return `${amount.toLocaleString('ru-RU')} ₽`;
     };
     return (
         <>
@@ -331,7 +331,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                 </div>
                                                 <div className={classes.tour_topInfo__left___items____element}>
                                                     <div className={classes.tour_topInfo__left___items____element_____title}>Стоимость:</div>
-                                                    <div className={classes.tour_topInfo__left___items____element_____info}>{extractAmount(tour.cost)} ₽</div>
+                                                    <div className={classes.tour_topInfo__left___items____element_____info}>{extractAmount(tour.cost)}</div>
                                                 </div>
                                             </div>
 
@@ -449,7 +449,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
 
                         <ToursTab tabs={tour.days} />
 
-                        {(tour.departureDates.length > 0 && tour.departureDates[0]) &&
+                        {/* {(tour.departureDates.length > 0 && tour.departureDates[0]) &&
                             <div id="date" className={classes.docBlocks}>
                                 <CenterBlock>
                                     <H2 text_transform="uppercase" font_size="36px">Даты и наличие мест</H2>
@@ -498,7 +498,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                                         <div className={classes.departureDates_line_column}>{`${formatDateRange(start)} - ${formatDateRange(end)}`}</div>
                                                         <div className={classes.departureDates_line_column}>{duration}</div>
                                                         <div className={classes.departureDates_line_column}>{departureTime}</div>
-                                                        <div className={classes.departureDates_line_column}>{cost} ₽</div>
+                                                        <div className={classes.departureDates_line_column}>{cost}</div>
                                                         <div className={classes.departureDates_line_column}>
                                                             <div className={classes.departureDates_line_column_btn} onClick={() => openModal(range)}>
                                                                 {(tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') && 'Забронировать'}
@@ -511,7 +511,7 @@ function Tours({ children, requestType, pageName, tableName, similar, setCartCou
                                         ))}
                                 </div>
                             </div>
-                        }
+                        } */}
 
                         <ReactModal
                             isOpen={isModalOpen}

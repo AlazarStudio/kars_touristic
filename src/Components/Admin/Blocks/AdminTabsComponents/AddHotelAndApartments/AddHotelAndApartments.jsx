@@ -92,7 +92,7 @@ function AddHotelAndApartments({ setActiveTab }) {
                             <div className={classes.gids_info__elem}>{formatDate(item.createdAt)}</div>
                             <div className={classes.gids_info__elem}>{item.name}</div>
                             <div className={classes.gids_info__elem}>{item.guests}</div>
-                            <div className={classes.gids_info__elem}>{Number(item.fullPrice).toLocaleString('ru-RU')} ₽</div>
+                            <div className={classes.gids_info__elem}>{Number(item.fullPrice).toLocaleString('ru-RU')}</div>
                             <div className={classes.gids_info__elem}>{formatDate(item.arrivalDate)} - {formatDate(item.departureDate)}</div>
                             <div className={classes.gids_info__elem} onClick={() => handleRemovePhoto(item._id)}>
                                 <div className={classes.bookButton}>Удалить</div>

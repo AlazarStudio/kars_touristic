@@ -250,7 +250,7 @@ function Profile({ children, ...props }) {
                                 <div className={classes.contacts}>
                                     <div className={classes.titleBlock}>
                                         <H2 text_transform={'uppercase'}>Брони туров</H2>
-                                        {user.role == 'agent' && <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>}
+                                        {user.role == 'agent' && <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')}</b></div>}
                                     </div>
 
                                     <ul className={classes.listBron}>
@@ -270,7 +270,7 @@ function Profile({ children, ...props }) {
                                                 <div className={`${classes.listBronItem}`}>{agent.tours.map((tour) => tour.tourTitle).join(', ')}</div>
                                                 {/* {user.role == 'agent' && <div className={classes.listBronItem}>{agent.passengers.map((tour) => tour.name).join(', ')}</div>} */}
                                                 <div className={`${classes.listBronItem}`}>{formatDateRange(agent.bookingDate)}</div>
-                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{Number(agent.price).toLocaleString('ru-RU')}</div>
                                                 <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{agent.paymentType == 'cash' ? 'Наличными' : 'Картой'}</div>
                                                 <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{
                                                     (agent.paymentType === 'cash' && agent.confirm == false) ?
@@ -299,7 +299,7 @@ function Profile({ children, ...props }) {
                                 <div className={classes.contacts}>
                                     <div className={classes.titleBlock}>
                                         <H2 text_transform={'uppercase'}>Брони отелей / апартаментов</H2>
-                                        {user.role == 'agent' && <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')} ₽</b></div>}
+                                        {user.role == 'agent' && <div className={classes.titleBlockPrice}>Задолженность: <b>{user.debt.toLocaleString('ru-RU')}</b></div>}
                                     </div>
 
                                     <ul className={classes.listBron}>
@@ -317,7 +317,7 @@ function Profile({ children, ...props }) {
                                                 <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{formatDate(hotelBron.createdAt)}</div>
                                                 <div className={`${classes.listBronItem}`}>{hotelBron.name}</div>
                                                 <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{hotelBron.guests}</div>
-                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{Number(hotelBron.fullPrice).toLocaleString('ru-RU')} ₽</div>
+                                                <div className={`${classes.listBronItem} ${classes.mobileHide}`}>{Number(hotelBron.fullPrice).toLocaleString('ru-RU')}</div>
                                                 <div className={`${classes.listBronItem}`}>{formatDate(hotelBron.arrivalDate)}</div>
                                                 <div className={`${classes.listBronItem}`}>{formatDate(hotelBron.departureDate)}</div>
                                                 <div className={`${classes.listBronItem}`}>

@@ -153,7 +153,7 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
 
         const amount = parseFloat(match[0]);
 
-        return amount.toLocaleString('ru-RU');
+        return `${amount.toLocaleString('ru-RU')} ₽`;
     };
 
     return (
@@ -209,7 +209,7 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
 
                             <div className={classes.objects_item_top_desc_info}>
                                 <div className={classes.objects_item__price}>
-                                    <div>Стоимость: <span>{extractAmount(regionData.cost)} ₽</span></div>
+                                    <div>Стоимость: <span>{extractAmount(regionData.cost)}</span></div>
                                 </div>
                                 <div className={classes.buttons}>
                                     <Link to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>

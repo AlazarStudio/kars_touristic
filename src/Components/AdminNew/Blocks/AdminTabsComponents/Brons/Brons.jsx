@@ -384,7 +384,7 @@ function Brons({ children, ...props }) {
                     </div>
                     <div className={classes.listBronItem}>{new Date(agent.createdAt).toLocaleDateString('ru-RU')}</div>
                     <div className={classes.listBronItem}>{agent.tours.map(tour => tour.tourTitle).join(', ')}</div>
-                    <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')} ₽</div>
+                    <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')}</div>
                     <div className={classes.listBronItem}>
                       {agent.paymentType === 'cash' ? 'Наличные' : agent.paymentType === 'Заявка с сайта' ? '-' : 'Карта'}
                     </div>

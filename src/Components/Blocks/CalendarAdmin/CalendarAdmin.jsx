@@ -347,7 +347,7 @@ function CalendarAdmin({ children, hotels, allRooms, closeModal, fetchBronHotels
                         )}
 
                         <br />
-                        {(bron.price !== '' && bron.guests !== '') && <b>Итого к оплате: {bron.fullPrice} ₽</b>}
+                        {(bron.price !== '' && bron.guests !== '') && <b>Итого к оплате: {bron.fullPrice}</b>}
                     </div>
                 </div>
             </div>

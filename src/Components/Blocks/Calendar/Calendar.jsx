@@ -528,7 +528,7 @@ function Calendar({ children, hotel, rooms, closeModal, ...props }) {
                 </div>
             </div>
 
-            {(bron.price !== '' && bron.guests !== '') && <div className={classes.priceFull}>Итого к оплате: {bron.fullPrice} ₽</div>}
+            {(bron.price !== '' && bron.guests !== '') && <div className={classes.priceFull}>Итого к оплате: {bron.fullPrice}</div>}
             {
                 (
                     bron.name !== '' &&
