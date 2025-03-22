@@ -1,11 +1,22 @@
 .calendar {
     width: 1200px;
-    max-height: 800px;
+    height: 765px;
     margin: 0 auto;
     background-color: #fff;
     border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
 }
 
+.calendar input,
+.calendar select {
+    border: 1px solid #C1C1C1;
+    width: 100%;
+    border-radius: 10px;
+    height: 41px;
+    outline: none;
+    padding: 0 10px;
+}
 /* 
 .calendar h2 {
     font-size: 28px;
@@ -143,12 +154,18 @@
 } */
 
 .calendar_left {
-    width: 371px;
+    width: 370px;
     padding: 30px;
     box-shadow: 0px 8px 14.1px 0px #00000026;
     display: flex;
     flex-direction: column;
     gap: 20px;
+}
+
+.vanillaCalendar{
+    width: 100% !important;
+    height: 300px !important;
+    border: 1px solid #E0E0E0;
 }
 
 .calendar_left_title {
@@ -164,6 +181,12 @@
     gap: 20px;
 }
 
+.calendar_left_count_select {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .calendar_left_dates_title,
 .calendar_left_count_title {
     font-family: Montserrat;
@@ -173,15 +196,6 @@
     letter-spacing: 0%;
     vertical-align: middle;
     color: #8C8C8C;
-}
-
-.calendar_left_count_select select {
-    border: 1px solid #C1C1C1;
-    width: 100%;
-    border-radius: 10px;
-    height: 41px;
-    outline: none;
-    padding: 0 10px;
 }
 
 .calendar_left_price {
@@ -226,21 +240,55 @@
     transition: all 0.3s ease-in-out;
 }
 
-.calendar_left_send_button:hover{
+.calendar_left_send_button:hover {
     border: 1px solid #000;
     background-color: #fff;
     color: #000;
 }
 
+.calendar_right {
+    width: calc(100% - 371px);
+    height: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+.passengerInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.passengerInfo_data{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border: 1px solid #E0E0E0;
+    padding: 25px;
+    border-radius: 10px;
+}
+
+.field{
+    display: flex;
+    flex-direction: column;
+    width: 48%;
+    gap: 8px;
+}
+
 
 @media (min-width: 0px) and (max-width: 1299px) {
-    .calendar {
+    /* .calendar {
         width: 350px;
         height: fit-content;
         max-height: 100vh;
         overflow: hidden;
         overflow-y: scroll;
-    }
+    } */
 
     /* 
     .passengerInfo {
