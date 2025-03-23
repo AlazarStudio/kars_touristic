@@ -79,18 +79,21 @@ const PaymentButton = ({ order_name, order_cost, onPaymentSuccess, setPaymentID,
                             display: flex;
                             align-items: center;
                             justify-content: center;
-                            width: 150px;
-                            border: 1px solid #000;
+                            width: 160px;
+                            border: 1px solid transparent;
+                            background-color: #69A64B;
                             padding: 12px 15px;
                             border-radius: 10px;
                             cursor: pointer;
                             transition: all 0.3s ease-in-out;
-                            color: #000;
+                            color: #fff;
+                            font-size: 14px;
+                            font-weight: bold;
                         }
 
                         .payButtonHere:hover{
-                            background-color: #000;
-                            color: #fff;
+                            background-color:rgb(94, 148, 68);
+                            box-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)
                         }
                     `
                 }
@@ -105,7 +108,7 @@ const PaymentButton = ({ order_name, order_cost, onPaymentSuccess, setPaymentID,
                     alt="Оплатить"
                 /> */}
 
-                Оплатить
+                Забронировать
             </a>
         </div>
     );
