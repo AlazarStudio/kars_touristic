@@ -208,7 +208,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                     position: 'fixed',
                     top: '10px',
                     right: '10px',
-                    zIndex: 99999999999999,
+                    zIndex: 1,
                     backgroundColor: '#fff',
                     '&:hover': {
                         backgroundColor: '#fff',

@@ -441,7 +441,7 @@
     outline: none;
     width: fit-content;
     height: fit-content;
-    z-index: 9999999999999999999999999;
+    z-index: 1301;
 }
 
 .overlay {
@@ -452,7 +452,7 @@
     bottom: 0;
     z-index: 5;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 9999999999999999999999999;
+    z-index: 1301;
 }
 
 .modalCloseButton {

@@ -3,20 +3,11 @@ import classes from './CalendarTour.module.css';
 import server from '../../../serverConfig';
 import PaymentButton from '../../PaymentButton/PaymentButton';
 import VanillaCalendar from 'vanilla-calendar-pro';
+import ConfirmBookingModal from '../ConfirmBookingModal/ConfirmBookingModal';
 
 function CalendarTour({ closeModal, tour, selectedDate }) {
-    const [passengerCount, setPassengerCount] = useState(tour.days.length > 1 ? 2 : 1);
-    const [passengerInfo, setPassengerInfo] = useState([{
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        passportNumber: "",
-        passportSeries: "",
-        gender: "",
-        birthDate: ""
-    }]);
-
+    const [passengerCount, setPassengerCount] = useState(0);
+    const [passengerInfo, setPassengerInfo] = useState([]);
 
     const [tourDay, setTourDay] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState("card");
@@ -91,17 +82,35 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             }
             return newInfo;
         });
-        setPassengerCount(count);
+
+        if (tour.days.length > 1 && count < 2) {
+            alert('Бронирование многодневных туров доступно при оформлении минимум на 2-х человек')
+            setPassengerCount(2);
+        } else {
+            setPassengerCount(count);
+        }
     };
 
     const handlePassengerInfoChange = (index, field, value) => {
         setPassengerInfo(prevInfo => {
             const newInfo = [...prevInfo];
+            if (!newInfo[index]) {
+                // Если по какой-то причине объект не существует, создаем его
+                newInfo[index] = {
+                    name: "",
+                    email: "",
+                    phone: "",
+                    address: "",
+                    passportNumber: "",
+                    passportSeries: "",
+                    gender: "",
+                    birthDate: ""
+                };
+            }
             newInfo[index][field] = value;
             return newInfo;
         });
 
-        // Если поле изначально было пустым и теперь заполнено, помечаем его для обновления
         if (fieldsToUpdate[field]) {
             setFieldsToUpdate(prevState => ({
                 ...prevState,
@@ -339,7 +348,6 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         }
     };
 
-
     function formatDateRange(dateRange) {
         if (!dateRange) return '';
 
@@ -444,6 +452,42 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
 
     }
 
+    const validateForm = () => {
+        if (tourDay.length === 0) {
+            alert("Пожалуйста, выберите дату отправления.");
+            return false;
+        }
+
+        if (passengerCount === 0) {
+            alert("Пожалуйста, введите количество участников тура.");
+            return false;
+        }
+
+        // console.log(passengerInfo)
+
+        for (let i = 0; i < passengerInfo.length; i++) {
+            const passenger = passengerInfo[i];
+            const requiredFields = ["name", "email", "phone", "address", "passportNumber", "passportSeries", "gender", "birthDate"];
+            const requiredFieldsRu = {
+                "name": "ФИО",
+                "email": "Почта",
+                "phone": "Телефон",
+                "address": "Адрес",
+                "passportNumber": "Номер паспорта",
+                "passportSeries": "Серия паспорта",
+                "gender": "Пол",
+                "birthDate": "Дата рождения"
+            };
+            for (let field of requiredFields) {
+                if (!passenger[field] || passenger[field].trim() === "") {
+                    alert(`Пожалуйста, заполните поле "${requiredFieldsRu[field]}" для участника ${i + 1}.`);
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    };
 
     const extractAmount = (input) => {
         if (!input) return null;
@@ -491,7 +535,9 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
         }
     }, []);
 
-    console.log(tourDay)
+    // console.log(passengerCount, passengerInfo, tourDay)
+    const [modalOpen, setModalOpen] = useState(false);
+
     return (
         <div className={classes.calendar}>
             <div className={classes.calendar_left}>
@@ -532,291 +578,156 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
                 </div>
 
                 <div className={classes.calendar_left_send}>
-                    <div className={classes.calendar_left_send_button}>
+                    <button className={classes.calendar_left_send_button} onClick={() => {
+                        if (!validateForm()) return;
+                        setModalOpen(true)
+                    }}>
                         Забронировать
-                    </div>
+                    </button>
                 </div>
             </div>
-            <div className={classes.calendar_right}>
-                {Array.from({ length: passengerCount }, (_, i) => (
-                    <div key={i} className={classes.passengerInfo}>
-                        <h3>Участник {i + 1}</h3>
 
-                        <div className={classes.passengerInfo_data}>
-                            <div className={classes.field}>
-                                <label>ФИО</label>
-                                <input
-                                    type="text"
-                                    placeholder="Введите ФИО"
-                                    value={passengerInfo[i]?.name || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "name", e.target.value)}
-                                    className={classes.input}
-                                />
-                            </div>
+            {passengerCount > 0 &&
+                <div className={classes.calendar_right}>
+                    <div className={classes.calendar_right_scroll}>
+                        {Array.from({ length: passengerCount }, (_, i) => (
+                            <div key={i} className={classes.passengerInfo}>
+                                <h3>{(user && i == 0) ? 'Данные текущего пользователя' : `Данные участника ${i + 1}`}</h3>
 
-                            <div className={classes.field}>
-                                <label>Почта</label>
-                                <input
-                                    type="email"
-                                    placeholder="Введите почту"
-                                    value={passengerInfo[i]?.email || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "email", e.target.value)}
-                                    className={classes.input}
-                                />
-                            </div>
+                                <div className={classes.passengerInfo_data}>
+                                    <div className={classes.field}>
+                                        <label>ФИО</label>
+                                        <input
+                                            disabled={tourDay.length === 0 ? true : false}
+                                            type="text"
+                                            placeholder="Введите ФИО"
+                                            value={passengerInfo[i]?.name || ""}
+                                            onChange={(e) => handlePassengerInfoChange(i, "name", e.target.value)}
+                                            className={classes.input}
+                                        />
+                                    </div>
 
-                            <div className={classes.field}>
-                                <label>Телефон</label>
-                                <input
-                                    type="text"
-                                    placeholder="Введите номер телефона"
-                                    value={passengerInfo[i]?.phone || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "phone", e.target.value)}
-                                    className={classes.input}
-                                />
-                            </div>
+                                    <div className={classes.field}>
+                                        <label>Почта</label>
+                                        <input
+                                            disabled={tourDay.length === 0 ? true : false}
+                                            type="email"
+                                            placeholder="Введите почту"
+                                            value={passengerInfo[i]?.email || ""}
+                                            onChange={(e) => handlePassengerInfoChange(i, "email", e.target.value)}
+                                            className={classes.input}
+                                        />
+                                    </div>
 
-                            <div className={classes.field}>
-                                <label>Адрес</label>
-                                <input
-                                    type="text"
-                                    placeholder="Введите адрес"
-                                    value={passengerInfo[i]?.address || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "address", e.target.value)}
-                                    className={classes.input}
-                                />
-                            </div>
+                                    <div className={classes.field}>
+                                        <label>Телефон</label>
+                                        <input
+                                            disabled={tourDay.length === 0 ? true : false}
+                                            type="text"
+                                            placeholder="Введите номер телефона"
+                                            value={passengerInfo[i]?.phone || ""}
+                                            onChange={(e) => handlePassengerInfoChange(i, "phone", e.target.value)}
+                                            className={classes.input}
+                                        />
+                                    </div>
 
-                            <div className={classes.field}>
-                                <label>Номер паспорта</label>
-                                <input
-                                    type="text"
-                                    placeholder="Введите номер паспорта"
-                                    value={passengerInfo[i]?.passportNumber || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "passportNumber", e.target.value)}
-                                    className={classes.input}
-                                />
-                            </div>
+                                    <div className={classes.field}>
+                                        <label>Адрес</label>
+                                        <input
+                                            disabled={tourDay.length === 0 ? true : false}
+                                            type="text"
+                                            placeholder="Введите адрес"
+                                            value={passengerInfo[i]?.address || ""}
+                                            onChange={(e) => handlePassengerInfoChange(i, "address", e.target.value)}
+                                            className={classes.input}
+                                        />
+                                    </div>
 
-                            <div className={classes.field}>
-                                <label>Серия паспорта</label>
-                                <input
-                                    type="text"
-                                    placeholder="Введите серию паспорта"
-                                    value={passengerInfo[i]?.passportSeries || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "passportSeries", e.target.value)}
-                                    className={classes.input}
-                                />
-                            </div>
+                                    <div className={classes.field}>
+                                        <label>Номер паспорта</label>
+                                        <input
+                                            disabled={tourDay.length === 0 ? true : false}
+                                            type="text"
+                                            placeholder="Введите номер паспорта"
+                                            value={passengerInfo[i]?.passportNumber || ""}
+                                            onChange={(e) => handlePassengerInfoChange(i, "passportNumber", e.target.value)}
+                                            className={classes.input}
+                                        />
+                                    </div>
 
-                            <div className={classes.field}>
-                                <label>Пол</label>
-                                <select
-                                    value={passengerInfo[i]?.gender || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "gender", e.target.value)}
-                                    className={classes.input}
-                                >
-                                    <option value="">Выберите пол</option>
-                                    <option value="male">Мужской</option>
-                                    <option value="female">Женский</option>
-                                </select>
-                            </div>
+                                    <div className={classes.field}>
+                                        <label>Серия паспорта</label>
+                                        <input
+                                            disabled={tourDay.length === 0 ? true : false}
+                                            type="text"
+                                            placeholder="Введите серию паспорта"
+                                            value={passengerInfo[i]?.passportSeries || ""}
+                                            onChange={(e) => handlePassengerInfoChange(i, "passportSeries", e.target.value)}
+                                            className={classes.input}
+                                        />
+                                    </div>
 
-                            <div className={classes.field}>
-                                <label>Дата рождения</label>
-                                <input
-                                    type="date"
-                                    value={passengerInfo[i]?.birthDate || ""}
-                                    onChange={(e) => handlePassengerInfoChange(i, "birthDate", e.target.value)}
-                                    className={classes.input}
-                                />
+                                    <div className={classes.field}>
+                                        <label>Пол</label>
+                                        <select
+                                            disabled={tourDay.length === 0 ? true : false}
+                                            value={passengerInfo[i]?.gender || ""}
+                                            onChange={(e) => handlePassengerInfoChange(i, "gender", e.target.value)}
+                                            className={classes.input}
+                                        >
+                                            <option value="">Выберите пол</option>
+                                            <option value="male">Мужской</option>
+                                            <option value="female">Женский</option>
+                                        </select>
+                                    </div>
+
+                                    <div className={classes.field}>
+                                        <label>Дата рождения</label>
+                                        <input
+                                            disabled={tourDay.length === 0 ? true : false}
+                                            type="date"
+                                            value={passengerInfo[i]?.birthDate || ""}
+                                            onChange={(e) => handlePassengerInfoChange(i, "birthDate", e.target.value)}
+                                            className={classes.input}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                ))}
-            </div >
+                        ))}
+                    </div >
+                </div >
+            }
+
+            <ConfirmBookingModal
+                open={modalOpen}
+                user={user}
+                tour={tour}
+                paymentMethod={paymentMethod}
+                setPaymentMethod={setPaymentMethod}
+                isAgreed={isAgreed}
+                paymentID={paymentID}
+                setPaymentID={setPaymentID}
+                setIsAgreed={setIsAgreed}
+                handleBooking={handleBooking}
+                sendRequestFromUser={sendRequestFromUser}
+                totalCost={totalCost}
+
+                handleClose={() => setModalOpen(false)}
+                handleConfirm={() => {
+                    // setModalOpen(false);
+                }}
+            />
+
         </div >
 
 
 
 
-        // <div className={classes.calendar}>
-        //     <h2>Бронирование тура на дату: {formatDateRange(selectedDate)}</h2>
-
-        //     {/* {user && (user.role == 'agent' || user.role == 'admin') && */}
-        // <div className={classes.field}>
-        //     <label>Количество пассажиров:</label>
-        //     <input
-        //         type="number"
-        //         min={tour.days.length > 1 ? 2 : 1}
-        //         value={passengerCount}
-        //         onChange={handlePassengerCountChange}
-        //         className={classes.input}
-        //     />
-        // </div>
-        //     {/* } */}
-
-        // <div className={classes.passengerBlock}>
-        //     {Array.from({ length: passengerCount }, (_, i) => (
-        //         <div key={i} className={classes.passengerInfo}>
-        //             {user && (user.role == 'agent' || user.role == 'admin') && <h3>Участник {i + 1}</h3>}
-
-        //             <div className={classes.passengerInfo_data}>
-        //                 <div className={classes.field}>
-        //                     <label>ФИО</label>
-        //                     <input
-        //                         type="text"
-        //                         placeholder="Введите ФИО"
-        //                         value={passengerInfo[i]?.name || ""}
-        //                         onChange={(e) => handlePassengerInfoChange(i, "name", e.target.value)}
-        //                         className={classes.input}
-        //                     />
-        //                 </div>
-
-        //                 <div className={classes.field}>
-        //                     <label>Почта</label>
-        //                     <input
-        //                         type="email"
-        //                         placeholder="Введите почту"
-        //                         value={passengerInfo[i]?.email || ""}
-        //                         onChange={(e) => handlePassengerInfoChange(i, "email", e.target.value)}
-        //                         className={classes.input}
-        //                     />
-        //                 </div>
-
-        //                 <div className={classes.field}>
-        //                     <label>Телефон</label>
-        //                     <input
-        //                         type="text"
-        //                         placeholder="Введите номер телефона"
-        //                         value={passengerInfo[i]?.phone || ""}
-        //                         onChange={(e) => handlePassengerInfoChange(i, "phone", e.target.value)}
-        //                         className={classes.input}
-        //                     />
-        //                 </div>
-
-        //                 <div className={classes.field}>
-        //                     <label>Адрес</label>
-        //                     <input
-        //                         type="text"
-        //                         placeholder="Введите адрес"
-        //                         value={passengerInfo[i]?.address || ""}
-        //                         onChange={(e) => handlePassengerInfoChange(i, "address", e.target.value)}
-        //                         className={classes.input}
-        //                     />
-        //                 </div>
-
-        //                 <div className={classes.field}>
-        //                     <label>Номер паспорта</label>
-        //                     <input
-        //                         type="text"
-        //                         placeholder="Введите номер паспорта"
-        //                         value={passengerInfo[i]?.passportNumber || ""}
-        //                         onChange={(e) => handlePassengerInfoChange(i, "passportNumber", e.target.value)}
-        //                         className={classes.input}
-        //                     />
-        //                 </div>
-
-        //                 <div className={classes.field}>
-        //                     <label>Серия паспорта</label>
-        //                     <input
-        //                         type="text"
-        //                         placeholder="Введите серию паспорта"
-        //                         value={passengerInfo[i]?.passportSeries || ""}
-        //                         onChange={(e) => handlePassengerInfoChange(i, "passportSeries", e.target.value)}
-        //                         className={classes.input}
-        //                     />
-        //                 </div>
-
-        //                 <div className={classes.field}>
-        //                     <label>Пол</label>
-        //                     <select
-        //                         value={passengerInfo[i]?.gender || ""}
-        //                         onChange={(e) => handlePassengerInfoChange(i, "gender", e.target.value)}
-        //                         className={classes.input}
-        //                     >
-        //                         <option value="">Выберите пол</option>
-        //                         <option value="male">Мужской</option>
-        //                         <option value="female">Женский</option>
-        //                     </select>
-        //                 </div>
-
-        //                 <div className={classes.field}>
-        //                     <label>Дата рождения</label>
-        //                     <input
-        //                         type="date"
-        //                         value={passengerInfo[i]?.birthDate || ""}
-        //                         onChange={(e) => handlePassengerInfoChange(i, "birthDate", e.target.value)}
-        //                         className={classes.input}
-        //                     />
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     ))}
-        // </div>
-        //     {user && (user.role == 'agent' || user.role == 'admin') && (tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&
-        //         <>
-        //             <h3>Выберите способ оплаты</h3>
-        //             <div className={classes.paymentMethods}>
-        //                 <label className={classes.radioLabel}>
-        //                     <input
-        //                         type="radio"
-        //                         value="card"
-        //                         checked={paymentMethod === "card"}
-        //                         onChange={(e) => setPaymentMethod(e.target.value)}
-        //                         className={classes.radioInput}
-        //                     />
-        //                     Карта
-        //                 </label>
-        //                 <label className={classes.radioLabel}>
-        //                     <input
-        //                         type="radio"
-        //                         value="cash"
-        //                         checked={paymentMethod === "cash"}
-        //                         onChange={(e) => setPaymentMethod(e.target.value)}
-        //                         className={classes.radioInput}
-        //                     />
-        //                     Наличные
-        //                 </label>
-        //             </div>
-        //         </>
-        //     }
-
-        //     <div className={classes.totalSum}>
-        //         Итоговая сумма: {extractAmount(totalCost)} ₽
-        //     </div>
-
-        //     {(tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&
-        //         <div className={classes.agreement}>
-        //             <input
-        //                 type="checkbox"
-        //                 checked={isAgreed}
-        //                 onChange={(e) => setIsAgreed(e.target.checked)}
-        //                 className={classes.checkbox}
-        //             />
-        //             <p>Согласен с правилами бронирования</p>
-        //         </div>
-        //     }
 
 
-        //     {(isAgreed && tour.typeOfBron && tour.typeOfBron == 'Оплата на сайте') &&
-        //         <PaymentButton
-        //             style={{}}
-        //             order_name={tour.tourTitle}
-        //             order_cost={totalCost}
-        //             setPaymentID={setPaymentID}
-        //             onPaymentSuccess={(paymentID) => handleBooking(paymentID)}
-        //         />
-        //     }
 
-        //     {(tour.typeOfBron && tour.typeOfBron == 'Оставить заявку') &&
-        //         <button
-        //             onClick={sendRequestFromUser}
-        //             className={classes.activeButtonRequests}
-        //         >
-        //             Оставить заявку
-        //         </button>
-        //     }
+
+
 
         // </div>
     );

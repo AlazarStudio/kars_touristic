@@ -1,5 +1,5 @@
 .calendar {
-    width: 1200px;
+    /* width: 1200px; */
     height: 765px;
     margin: 0 auto;
     background-color: #fff;
@@ -247,15 +247,19 @@
 }
 
 .calendar_right {
-    width: calc(100% - 371px);
-    height: 100%;
+    width: calc(1200px - 371px);
     padding: 30px;
+}
+
+.calendar_right_scroll{
+    width: calc(100% - 10px);
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    overflow: hidden;
-    overflow-y: scroll;
-    scrollbar-width: none;
+    /* scrollbar-width: 1px; */
 }
 
 .passengerInfo{
@@ -266,6 +270,7 @@
 
 .passengerInfo_data{
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
     border: 1px solid #E0E0E0;
