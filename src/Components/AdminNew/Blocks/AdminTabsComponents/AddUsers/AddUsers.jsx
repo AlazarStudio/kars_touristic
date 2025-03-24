@@ -98,7 +98,7 @@ function AddUsers({ setActiveTab }) {
     const response = await fetch(`${server}/api/getUsers`);
     if (response.ok) {
       const data = await response.json();
-      setAgents(data.users.filter((user) => user.role === 'user'));
+      setAgents(data.users);
     } else {
       console.error('Ошибка загрузки пользователей');
     }

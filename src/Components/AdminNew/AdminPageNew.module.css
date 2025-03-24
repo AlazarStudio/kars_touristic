@@ -281,7 +281,7 @@
   /* borderRadius: 8; */
   /* padding: 12; */
   /* minWidth: 200; */
-  zindex: 10;
+  z-index: 10;
   /* outline: 1px solid red; */
 }
 
