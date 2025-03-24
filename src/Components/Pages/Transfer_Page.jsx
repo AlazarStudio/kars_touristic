@@ -22,8 +22,8 @@ function Transfer_Page({ children, ...props }) {
     
     return (
         <>
-            <Header_black />
-            {transferInfo ? <Transfer data={transferInfo}/> : null}
+            <Header_black /> 
+            <Transfer data={transferInfo}/>
         </>
     );
 }

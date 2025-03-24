@@ -52,9 +52,6 @@ function App() {
 
           <Route path="/search" element={<Search_Page />} />
         
-        
-
-
           <Route path="/tours/:id" element={<RedirectOldTours />} />
           <Route path="/excursions/:id" element={<RedirectOldTours />} />
           <Route path="/gids/:id" element={<RedirectOldTours />} />
@@ -70,7 +67,6 @@ function App() {
           {/* <Route path="/hotels/:id/:numID" element={<Number_Page />} /> */}
           {/* <Route path="/visits/:id" element={<Visit_Page />} /> */}
           {/* <Route path="/events/:id" element={<Event_Page />} /> */}
-
 
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/signIn" element={<SignIn />} />
