@@ -204,7 +204,7 @@
   padding: 20px 10px;
   align-items: center;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .listBron li:nth-child(2n) {
@@ -290,7 +290,7 @@
 .filterBlock select {
   width: 15%;
   border: 1px solid #8c8c8c;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 12px 10px;
   cursor: pointer;
   font-family: Montserrat;

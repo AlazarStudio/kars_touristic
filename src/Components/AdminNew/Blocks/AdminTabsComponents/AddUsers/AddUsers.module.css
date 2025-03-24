@@ -394,7 +394,7 @@
 
 .gids_info__elem {
   font-family: Montserrat;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 24.38px;
   display: flex;
@@ -459,7 +459,7 @@
   flex-direction: column;
   gap: 40px;
   /* margin-left: 10px; */
-  margin-top: 40px;
+  /* margin-top: 40px; */
   /* outline: 1px solid red; */
 }
 
@@ -477,7 +477,7 @@
   font-weight: 600;
   /* line-height: 48px; */
   text-transform: uppercase;
-  padding-left: 30px;
+  /* padding-left: 30px; */
 }
 
 .multidayTours_top__date {
@@ -499,7 +499,7 @@
 .buttons {
   display: flex;
   gap: 16px;
-  padding-left: 30px;
+  /* padding-left: 30px; */
 }
 
 .buttons button {
