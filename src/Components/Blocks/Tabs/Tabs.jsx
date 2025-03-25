@@ -21,12 +21,14 @@ import Number_Page from "../../Pages/Number_Page";
 import Visit_Page from "../../Pages/Visit_Page";
 import Event_Page from "../../Pages/Event_Page";
 
-function Tabs({ children, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, idTour, idRoom, ...props }) {
+function Tabs({ children, setActiveTab, regionName, requestType, tableName, pageName, titleObject, checkModered, setCartCount, idTour, idRoom, ...props }) {
     const [objects, setObjects] = useState([]);
     const [filteredObjects, setFilteredObjects] = useState([]);
 
+    const [requestTypeNow, setRequestTypeNow] = useState(requestType);
+
     const fetchData = () => {
-        fetch(`${server}/api/${requestType}`)
+        fetch(`${server}/api/${requestTypeNow}`)
             .then(response => response.json())
             .then(data => {
                 let sortedTours = data[tableName].sort((a, b) => a.order - b.order);
@@ -138,7 +140,7 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
 
     let requestTypeOne
 
-    switch (requestType) {
+    switch (requestTypeNow) {
         case "getMultidayTours":
             requestTypeOne = 'getOneMultidayTour'
             break;
@@ -165,6 +167,36 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
             break;
     }
 
+
+    useEffect(() => {
+        if (!idTour) return;
+
+        const detectAndOpen = async (type, page, activeTabNum) => {
+            try {
+                const res = await fetch(`${server}/api/${type}/${idTour}`);
+                
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data) {
+                        // console.log(page)
+                        setRequestTypeNow(page)
+                        localStorage.setItem("activeTab", activeTabNum);
+                        setActiveTab(activeTabNum)
+                    }
+                }
+            } catch (e) {
+                console.error(`Ошибка при проверке ${key}:`, e);
+            }
+        }
+        detectAndOpen('getOneMultidayTour', 'getMultidayTours', 1)
+        detectAndOpen('getOneOnedayTour', 'getOnedayTours', 2)
+        detectAndOpen('getOneAuthorTours', 'getAuthorTours', 3)
+        detectAndOpen('getOneHotel', 'getHotels', 4)
+        detectAndOpen('getOneRoom', 'getHotels', 4)
+        detectAndOpen('getOnePlace', 'getPlaces', 5)
+        detectAndOpen('getOneEvent', 'getEvents', 6)
+    }, [idTour]);
+
     return (
         <>
             {foundData &&
@@ -176,12 +208,12 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                                 {/* <span style={{ marginTop: '10px' }}>(Найдено: {foundData.length})</span> */}
                             </CenterBlock>
 
-                            {(requestType == 'getMultidayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                            {(requestType == 'getOnedayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                            {(requestType == 'getAuthorTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                            {(requestType == 'getHotels' && objects.length > 0) && <FilterHotels objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                            {(requestType == 'getPlaces' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
-                            {(requestType == 'getEvents' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestTypeNow == 'getMultidayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestTypeNow == 'getOnedayTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestTypeNow == 'getAuthorTours' && objects.length > 0) && <Filter objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestTypeNow == 'getHotels' && objects.length > 0) && <FilterHotels objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestTypeNow == 'getPlaces' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
+                            {(requestTypeNow == 'getEvents' && objects.length > 0) && <FilterPlaces objects={objects} updateFilteredObjects={setFilteredObjects} />}
 
 
                             <div className={classes.objects}>
@@ -229,18 +261,18 @@ function Tabs({ children, regionName, requestType, tableName, pageName, titleObj
                 <Slide direction="up" in={open} mountOnEnter unmountOnExit>
                     <Box sx={style}>
                         {(
-                            requestType == 'getMultidayTours' ||
-                            requestType == 'getOnedayTours' ||
-                            requestType == 'getAuthorTours'
+                            requestTypeNow == 'getMultidayTours' ||
+                            requestTypeNow == 'getOnedayTours' ||
+                            requestTypeNow == 'getAuthorTours'
                         )
                             &&
-                            <Tours_Page regionName={regionName} tableName={tableName} requestType={requestTypeOne} similar={requestType} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
+                            <Tours_Page regionName={regionName} tableName={tableName} requestType={requestTypeOne} similar={requestTypeNow} pageName={'tours'} idToModal={idToModal} handleOpen={handleOpen} open={open} />
                         }
-                        {(requestType == 'getHotels' && idTour && !idRoom) && <Hotels_Page user={user} handleOpen={handleOpen} isSimillar={false} />}
-                        {(requestType == 'getHotels' && idTour && idRoom) && <Number_Page user={user} />}
+                        {(requestTypeNow == 'getHotels' && idTour && !idRoom) && <Hotels_Page user={user} handleOpen={handleOpen} isSimillar={false} />}
+                        {(requestTypeNow == 'getHotels' && idTour && idRoom) && <Number_Page user={user} />}
 
-                        {(requestType == 'getPlaces' && idTour) && <Visit_Page user={user} />}
-                        {(requestType == 'getEvents' && idTour) && <Event_Page user={user} />}
+                        {(requestTypeNow == 'getPlaces' && idTour) && <Visit_Page user={user} />}
+                        {(requestTypeNow == 'getEvents' && idTour) && <Event_Page user={user} />}
                     </Box>
                 </Slide>
             </Modal>
