@@ -74,7 +74,7 @@ function Header_white({ children, cartCount, ...props }) {
                     </div>
                     <div className={classes.navigation_btn}>
                         <ul>
-                            <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li>
+                            {/* <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li> */}
                             <li><Link to="/profile"><img src={profile} alt="" /></Link></li>
                             {/* <li>
                                 <Link to="/cart">

@@ -72,7 +72,7 @@ function Favorites_Page({ children, ...props }) {
 
     return (
         <>
-            <Header_black />
+        
             <CenterBlock>
                 <WidthBlock>
                     {filteredMultidayTours.length > 0 ?

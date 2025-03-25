@@ -78,7 +78,7 @@ function Header_black({ children, cartCount, tempMain, ...props }) {
                             </div>
                             <div className={classes.navigation_btn}>
                                 <ul>
-                                    <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li>
+                                    {/* <li><Link to="/favourites"><img src={favourite} alt="" /></Link></li> */}
                                     <li><Link to="/profile"><img src={profile} alt="" /></Link></li>
                                     {/* <li>
                                 <Link to="/cart">
