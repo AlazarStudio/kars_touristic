@@ -81,7 +81,7 @@ function Favorites_Page({ children, ...props }) {
                             <div className={classes.objects}>
                                 {
                                     filteredMultidayTours.map((item, index) => (
-                                        <Object key={index} regionData={item} pageName={'multidayTour'} titleObject={'tourTitle'} />
+                                        <Object isOpenNewPage={true} key={index} regionData={item} regionName={item.region} pageName={'multidayTour'} titleObject={'tourTitle'} />
                                     ))
                                 }
                             </div>
@@ -94,7 +94,7 @@ function Favorites_Page({ children, ...props }) {
                             <div className={classes.objects}>
                                 {
                                     filteredOnedayTours.map((item, index) => (
-                                        <Object key={index} regionData={item} pageName={'onedayTour'} titleObject={'tourTitle'} />
+                                        <Object isOpenNewPage={true} key={index} regionData={item} regionName={item.region} pageName={'onedayTour'} titleObject={'tourTitle'} />
                                     ))
                                 }
                             </div>
@@ -107,7 +107,7 @@ function Favorites_Page({ children, ...props }) {
                             <div className={classes.objects}>
                                 {
                                     filteredHotels.map((item, index) => (
-                                        <Object key={index} regionData={item} pageName={'hotels'} titleObject={'title'} />
+                                        <Object isOpenNewPage={true} key={index} regionData={item} regionName={item.region} pageName={'hotels'} titleObject={'title'} />
                                     ))
                                 }
                             </div>
@@ -120,7 +120,7 @@ function Favorites_Page({ children, ...props }) {
                             <div className={classes.objects}>
                                 {
                                     filteredPlaces.map((item, index) => (
-                                        <Object key={index} regionData={item} pageName={'places'} titleObject={'title'} />
+                                        <Object isOpenNewPage={true} key={index} regionData={item} regionName={item.region} pageName={'places'} titleObject={'title'} />
                                     ))
                                 }
                             </div>
@@ -133,7 +133,7 @@ function Favorites_Page({ children, ...props }) {
                             <div className={classes.objects}>
                                 {
                                     filteredAuthor.map((item, index) => (
-                                        <Object key={index} regionData={item} pageName={'authorTour'} titleObject={'tourTitle'} />
+                                        <Object isOpenNewPage={true} key={index} regionData={item} regionName={item.region} pageName={'authorTour'} titleObject={'tourTitle'} />
                                     ))
                                 }
                             </div>

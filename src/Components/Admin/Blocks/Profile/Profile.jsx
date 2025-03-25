@@ -226,8 +226,7 @@ function Profile({ children, ...props }) {
                     <b>Телефон:</b> {user.phone}
                   </div>
                   <div>
-                    <b>Почта:</b>
-                    {user.email}
+                    <b>Почта:</b> {user.email}
                   </div>
                 </div>
               </div>
@@ -334,7 +333,7 @@ function Profile({ children, ...props }) {
                           className={`${classes.listBronItem} ${classes.mobileHide}`}
                         >
                           {agent.paymentType === 'cash' &&
-                          agent.confirm == false
+                            agent.confirm == false
                             ? 'Не подтверждено'
                             : 'Подтверждено'}
                         </div>

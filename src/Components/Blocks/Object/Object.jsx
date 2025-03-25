@@ -7,7 +7,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-function Object({ pageName, titleObject, regionData, width, inCart, setCartCount, handleOpen, open, isSimillar, regionName }) {
+function Object({ isOpenNewPage, pageName, titleObject, regionData, width, inCart, setCartCount, handleOpen, open, isSimillar, regionName }) {
 
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
@@ -212,7 +212,7 @@ function Object({ pageName, titleObject, regionData, width, inCart, setCartCount
                                     <div>Стоимость: <span>{extractAmount(regionData.cost)}</span></div>
                                 </div>
                                 <div className={classes.buttons}>
-                                    <Link to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
+                                    <Link target={isOpenNewPage ? '_blank' : ''} to={`/region/${regionName}/${regionData._id}`} className={classes.objects_item__button} >Подробнее</Link>
 
                                     {/*{(regionData.departureDates.length > 0 && regionData.departureDates[0] && regionData.typeOfBron && regionData.typeOfBron == 'Оплата на сайте') &&
                                         <Link to={`/${pageName ? pageName : pageNameVisit}/${regionData._id}#date`} className={classes.objects_item__button} >Забронировать</Link>
