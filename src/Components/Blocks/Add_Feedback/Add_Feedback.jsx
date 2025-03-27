@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import classes from './Add_Feedback.module.css';
 import axios from 'axios';
 
+import server from '../../../serverConfig';
 
-function Add_Feedback({ userId, tourId }) {
+
+    function Add_Feedback({ userID, tourId, hotelId, roomID  }) {
     const [rating, setRating] = useState(0);
     const [text, setText] = useState('');
     const [hovered, setHovered] = useState(0);
@@ -17,10 +19,11 @@ function Add_Feedback({ userId, tourId }) {
             alert("Пожалуйста, заполните отзыв и выберите рейтинг.");
             return;
         }
-
+ 
         try {
-            await axios.post('/api/feedback', {
-                userId,
+            await axios.post(`${server}/api/addReview`,
+                 {
+                userID,
                 hotelId,
                 text,
                 rating,
@@ -31,7 +34,7 @@ function Add_Feedback({ userId, tourId }) {
             setText('');
             setRating(0);
         } catch (err) {
-            console.log('123', userId, text, rating, tourId);
+            console.log('123', userID);
             console.error("Ошибка при отправке отзыва", err);
             alert("Произошла ошибка. Попробуйте позже.");
         }

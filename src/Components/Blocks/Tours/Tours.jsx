@@ -737,7 +737,7 @@ function Tours({
             </CenterBlock>
 
             {user && tour && (
-              <Add_Feedback userId={user._id} tourId={tour._id} />
+              <Add_Feedback userID={user._id} tourId={tour._id} />
             )}
 
             <Feedback />
