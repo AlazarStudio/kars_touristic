@@ -4,6 +4,8 @@ import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import classes from './AdminPageNew.module.css';
 
+import { Eye, EyeOff } from 'lucide-react';
+
 import server from '../../serverConfig';
 
 import AddRegion from './Blocks/AdminTabsComponents/AddRegion/AddRegion';
@@ -36,9 +38,10 @@ function DraggableRegion({
   deleteElement,
   setActiveTab,
   role,
+  setRegions,
 }) {
   const navigate = useNavigate();
-  const { id, title } = useParams(); // Получаем id из URL
+  const { title } = useParams();
 
   const [, ref] = useDrag({
     type: ItemType.REGION,
@@ -55,11 +58,42 @@ function DraggableRegion({
     },
   });
 
-  // Проверяем, активен ли этот регион
   const isActive = title === region.link ? classes.boldText : '';
 
+  // 🆕 Toggle visibility
+  const toggleVisibility = async () => {
+    try {
+      const response = await fetch(`${server}/api/updateRegion/${region._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          visible: !region.visible,
+        }),
+      });
+  
+      const data = await response.json();
+      if (data) {
+        setRegions(prev =>
+          prev.map(r =>
+            r._id === region._id ? { ...r, visible: !region.visible } : r
+          )
+        );
+      } else {
+        console.error('Ошибка: ', data.message);
+      }
+    } catch (error) {
+      console.error('Ошибка при изменении видимости:', error);
+    }
+  };
+  
+
   return (
-    <div ref={(node) => ref(drop(node))} className={`${classes.elemBlock} ${isActive}`}>
+    <div
+      ref={(node) => ref(drop(node))}
+      className={`${classes.elemBlock} ${isActive}`}
+    >
       <span
         className={classes.admin_data__nav___item____subItem}
         onClick={() => {
@@ -70,17 +104,35 @@ function DraggableRegion({
       >
         {region.title}
       </span>
-      {role === 'admin' ? (
-        <img src="/delete_region.webp" alt="Удалить" onClick={() => deleteElement(region._id)} />
-      ) : null}
+
+      {/* 👁️ Глаз */}
+      <span
+        onClick={toggleVisibility}
+        style={{ cursor: 'pointer', marginLeft: '5px', display: 'inline-flex', marginRight: '5px' }}
+        title={region.visible ? 'Скрыть регион' : 'Показать регион'}
+        aria-label={region.visible ? 'Регион виден' : 'Регион скрыт'}
+      >
+        {region.visible ? (
+          <Eye size={20} color="green" />
+        ) : (
+          <EyeOff size={20} color="gray" />
+        )}
+      </span>
+
+      {/* 🗑️ Удалить */}
+      {role === 'admin' && (
+        <img
+          src="/delete_region.webp"
+          alt="Удалить"
+          onClick={() => deleteElement(region._id)}
+        />
+      )}
     </div>
   );
 }
 
-
 function AdminPageNew({ children, ...props }) {
-    const { id = "", title } = useParams(); // Теперь id всегда строка
-  
+  const { id = '', title } = useParams(); // Теперь id всегда строка
 
   // Храним состояние открытых секций
 
@@ -92,7 +144,6 @@ function AdminPageNew({ children, ...props }) {
       }
     }
   }, [id]);
-  
 
   // useEffect(() => {
   //   setActiveTab(id); // Устанавливаем активный таб сразу при изменении id
@@ -110,6 +161,7 @@ function AdminPageNew({ children, ...props }) {
           brons: false,
           regions: false,
           about: false,
+          moderedAuthorTours: false,
         };
   });
 
@@ -377,32 +429,20 @@ function AdminPageNew({ children, ...props }) {
     fetchTours();
   }, []);
 
-
-
-
-
   // const { id: routeId } = useParams(); // Переименовываем id в routeId
   // const id = routeId || ""; // Теперь id всегда строка
-  
+
   useEffect(() => {
     // console.log("Current ID:", id); // Для отладки
-  
-    if (id.startsWith("edit")) { 
-      setActiveTab(`editRegion-${id.replace("edit/", "")}`);
+
+    if (id.startsWith('edit')) {
+      setActiveTab(`editRegion-${id.replace('edit/', '')}`);
       setOpenSections((prev) => ({
         ...prev,
         regions: true,
       }));
     }
   }, [id]);
-  
-  
-  
-  
-
-  
-  
-  
 
   const logout = () => {
     localStorage.clear();
@@ -429,7 +469,9 @@ function AdminPageNew({ children, ...props }) {
 
               <Link
                 to={`/admin/addUsers`}
-                className={classes.nav_title}
+                className={`${classes.nav_title} ${
+                  activeTab === 'addUsers' ? classes.boldText : ''
+                }`}
                 onClick={() => {
                   setActiveTab('addUsers');
                   setOpenSection('addUsers');
@@ -440,7 +482,9 @@ function AdminPageNew({ children, ...props }) {
 
               {/* Страницы */}
               <div
-                className={classes.nav_title}
+                className={`${classes.nav_title} ${
+                  openSections.pages ? classes.boldText : ''
+                }`}
                 onClick={() => toggleSection('pages')}
               >
                 Страницы
@@ -480,9 +524,9 @@ function AdminPageNew({ children, ...props }) {
                           index={index}
                           moveRegion={moveRegion}
                           deleteElement={deleteElement}
-                          activeTab={activeTab}
                           setActiveTab={setActiveTab}
                           role={user.role}
+                          setRegions={setRegions} // ✅ Добавили
                         />
                       ))}
                     </div>
@@ -588,7 +632,9 @@ function AdminPageNew({ children, ...props }) {
               {/* Брони */}
 
               <div
-                className={classes.nav_title}
+                className={`${classes.nav_title} ${
+                  openSections.brons ? classes.boldText : ''
+                }`}
                 onClick={() => toggleSection('brons')}
               >
                 Брони
@@ -618,13 +664,15 @@ function AdminPageNew({ children, ...props }) {
                 </div>
               )}
 
-              <Link
-                to={'/admin/moderedAuthorTours'}
-                className={classes.admin_header__items___item}
+              <span
+                className={`${classes.nav_title} ${
+                  activeTab === 'moderedAuthorTours' ? classes.boldText : ''
+                }`}
                 onClick={() => setActiveTab('moderedAuthorTours')}
               >
-                <span className={classes.nav_title}>Неподтвержденные туры</span>
-              </Link>
+                Неподтвержденные туры
+              </span>
+
               <a
                 href="/"
                 target="_blank"

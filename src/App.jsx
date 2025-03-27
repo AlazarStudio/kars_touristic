@@ -1,6 +1,9 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+
+
+import server from "./serverConfig";
 
 
 import Layout from './Components/Standart/Layout/Layout';
@@ -33,7 +36,30 @@ import RedirectOldTours from "./Components/Pages/RedirectOldTours";
 
 
 function App() {
-  const [tempMain, setTempMain] = useState('Karachaevo-Cherkessiya');
+  // const [tempMain, setTempMain] = useState('Karachaevo-Cherkessiya');
+
+  const [tempMain, setTempMain] = useState(null); // начально пусто
+
+  useEffect(() => {
+    const fetchRegions = async () => {
+      try {
+        const response = await fetch(`${server}/api/getRegions`);
+        const data = await response.json();
+        if (data?.regions?.length > 0) {
+          const visibleRegions = data.regions.filter(r => r.visible !== false);
+          if (visibleRegions.length === 1) {
+            setTempMain(visibleRegions[0].link); // 👈 если один видимый
+          } else {
+            setTempMain(null); // 👈 иначе tempMain не нужен
+          }
+        }
+      } catch (error) {
+        console.error("Ошибка при загрузке регионов:", error);
+      }
+    };
+
+    fetchRegions();
+  }, []);
 
   return (
     <>
