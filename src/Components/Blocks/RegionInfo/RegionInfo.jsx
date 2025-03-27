@@ -232,7 +232,7 @@ function RegionInfo({ children, setCartCount, ...props }) {
 
                                         <div className={classes.newRegionBlockLineTop_BlockText}>
                                             <div className={classes.newRegionBlockLineTop_BlockText_description}>
-                                                {parseHTML(foundRegion.description)}
+                                                {parseHTML(foundRegion.descriptionSecond)}
                                             </div>
                                         </div>
                                     </div>

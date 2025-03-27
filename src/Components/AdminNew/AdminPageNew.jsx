@@ -85,11 +85,21 @@ function AdminPageNew({ children, ...props }) {
   // Храним состояние открытых секций
 
   useEffect(() => {
-    setActiveTab(id); // Устанавливаем активный таб сразу при изменении id
-    if (id === 'editRegion') {
-      setOpenSection('regions'); // Устанавливаем секцию для редактирования
+    if (id) {
+      setActiveTab(id);
+      if (id === 'editRegion') {
+        setOpenSection('regions');
+      }
     }
-  }, [id]); // Следим за изменением id
+  }, [id]);
+  
+
+  // useEffect(() => {
+  //   setActiveTab(id); // Устанавливаем активный таб сразу при изменении id
+  //   if (id === 'editRegion') {
+  //     setOpenSection('regions'); // Устанавливаем секцию для редактирования
+  //   }
+  // }, [id]); // Следим за изменением id
 
   const [openSections, setOpenSections] = useState(() => {
     const savedSections = localStorage.getItem('openSections');
@@ -173,7 +183,9 @@ function AdminPageNew({ children, ...props }) {
     section = 'about';
   }
 
-  const [activeTab, setActiveTab] = useState(block);
+  const [activeTab, setActiveTab] = useState(block || 'addUsers');
+
+  // const [activeTab, setActiveTab] = useState(block);
   const [openSection, setOpenSection] = useState(section);
   const [regions, setRegions] = useState([]);
 
@@ -387,6 +399,7 @@ function AdminPageNew({ children, ...props }) {
   
   
   
+
   
   
   

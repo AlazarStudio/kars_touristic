@@ -111,6 +111,15 @@
   outline: none;
 }
 
+.registerForm select {
+  width: 100%;
+  height: 50px;
+  border-radius: 50px;
+  border: 1px solid #8c8c8c;
+  padding: 0 20px;
+  outline: none;
+}
+
 .registerForm button {
   width: 100%;
   height: 50px;
