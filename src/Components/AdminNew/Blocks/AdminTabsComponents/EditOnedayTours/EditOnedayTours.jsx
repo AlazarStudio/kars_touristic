@@ -368,7 +368,7 @@ function EditOnedayTours({ children, activeTab, setIsDirty, region, onTourAdded,
                 {/* Пятый этап - Дни */}
                 <label className={classes.addData_step}>
                     Шаг 6 - Информация по дням
-                    {/* <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div> */}
+                    <div className={classes.addData_addButtonElements} type="button" onClick={handleAddDay}>+</div>
                 </label>
                 {days.map((day, index) => (
                     <div key={index} className={classes.addData_blockAddData}>
