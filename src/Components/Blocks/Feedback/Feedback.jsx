@@ -13,8 +13,27 @@ import 'swiper/css/navigation';
 
 import server from '../../../serverConfig';
 
-function Feedback({ hotelID, roomID, multiTourID, oneTourID, autorTourID }) {
+function Feedback({ hotelID, userID, roomID, multiTourID, oneTourID, autorTourID }) {
   const [feedbacks, setFeedbacks] = useState([]);
+  const [users, setUsers] = useState({});
+
+
+  useEffect(() => {
+    const userIds = [...new Set(feedbacks.map(f => f.userID))].filter(Boolean);
+    if (userIds.length === 0) return;
+  
+    axios
+      .get(`${server}/api/getUsers?ids=${userIds.join(',')}`)
+      .then(res => {
+        const usersObj = {};
+        res.data.users.forEach(user => {
+          usersObj[user._id] = user.username;
+        });
+        setUsers(usersObj);
+      })
+      .catch(err => console.error('Ошибка при получении пользователей', err));
+  }, [feedbacks]);
+  
 
   useEffect(() => {
     const queryParams = [];
@@ -64,7 +83,9 @@ function Feedback({ hotelID, roomID, multiTourID, oneTourID, autorTourID }) {
               }}
             >
               {feedbacks.length > 0 ? (
-                feedbacks.map((item, index) => (
+                feedbacks
+                .filter((f) => f.visible)
+                .map((item, index) => (
                   <SwiperSlide key={index}>
                     <div className={classes.feedback_slide}>
                       <div className={classes.feedback_slide__top}>
@@ -72,7 +93,8 @@ function Feedback({ hotelID, roomID, multiTourID, oneTourID, autorTourID }) {
                           <img src="/feedback_photo.webp" alt="Фото" />
                         </div>
                         <div className={classes.feedback_slide__top___name}>
-                          {item.username || 'Аноним'}
+                        {users[item.userID] || 'Аноним'}
+
                         </div>
                         <div className={classes.feedback_slide__top___stars}>
                           {Array.from({ length: item.rating || 5 }).map(

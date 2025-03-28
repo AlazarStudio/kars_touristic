@@ -232,10 +232,11 @@
 }
 
 .gids_buttons {
-  width: 25%;
+  width: 30%;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
+  margin-right: 20px;
   /* justify-content: space-between; */
 }
 
@@ -369,7 +370,7 @@
 .gids_info__elements {
   display: flex;
   width: 70%;
-  gap: 25px;
+  gap: 20px;
   padding-left: 15px;
   /* outline: 1px solid blue; */
 }
@@ -377,7 +378,7 @@
 .gids_info__elements2 {
   display: flex;
   width: 70%;
-  gap: 25px;
+  gap: 15px;
 }
 
 .gids_info__elem2 {

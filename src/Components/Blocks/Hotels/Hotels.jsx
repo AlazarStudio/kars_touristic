@@ -223,7 +223,7 @@ function Hotels({ children, handleOpen, isSimillar, user, ...props }) {
                             {user && <Add_Feedback userID={user._id} hotelID={hotel._id}  />}
 
 
-                            <Feedback hotelID={hotel._id} />
+                            <Feedback hotelID={hotel._id} userID={user._id} />
 
                             <br />
 

@@ -20,20 +20,19 @@
 }
 
 .feedback {
+    display: flex;
     box-shadow: none;
-    height: 200px;
 }
 
 .feedback_slide {
-    width: 100%;
-    height: 100%;
+    display: flex;
+    height: 203px;
     border: 1px solid #8A8EA3;
     border-radius: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 35px;
+  
     gap: 10px;
 }
 
@@ -42,7 +41,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 40px;
+    padding: 20px;
+    gap: 20px;
 }
 
 .feedback_slide__top___name {
@@ -53,9 +53,12 @@
     width: 100%;
 }
 
+.feedback_slide__top___stars{
+    width: 100px;
+}
+
 .feedback_slide__bottom {
-    font-family: Montserrat;
-    font-size: 14px;
+    font-size: 18px !important;
     font-weight: 500;
     line-height: 21px;
 }
@@ -87,7 +90,7 @@
     }
 
     .feedback_slide__top div:last-child img {
-        width: 50px;
+        width: 20px;
     }
 
     .feedback_slide__top___name {

@@ -25,6 +25,7 @@ import AddAgent from './Blocks/AdminTabsComponents/AddAgent/AddAgent';
 import Brons from './Blocks/AdminTabsComponents/Brons/Brons';
 import AddUsers from './Blocks/AdminTabsComponents/AddUsers/AddUsers';
 import AddHotelAndApartments from './Blocks/AdminTabsComponents/AddHotelAndApartments/AddHotelAndApartments';
+import AdminReviews from './Blocks/AdminTabsComponents/AdminReviews/AdminReviews';
 
 const ItemType = {
   REGION: 'region',
@@ -673,6 +674,15 @@ function AdminPageNew({ children, ...props }) {
                 Неподтвержденные туры
               </span>
 
+              <span
+                className={`${classes.nav_title} ${
+                  activeTab === 'adminReviews' ? classes.boldText : ''
+                }`}
+                onClick={() => setActiveTab('adminReviews')}
+              >
+                Отзывы
+              </span>
+
               <a
                 href="/"
                 target="_blank"
@@ -778,6 +788,8 @@ function AdminPageNew({ children, ...props }) {
               {activeTab === 'addHotelAndApartments' && (
                 <AddHotelAndApartments setActiveTab={setActiveTab} />
               )}
+              {activeTab === 'adminReviews' && <AdminReviews />}
+
             </div>
           </div>
         </div>
