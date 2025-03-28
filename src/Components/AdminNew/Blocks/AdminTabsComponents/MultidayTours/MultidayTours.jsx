@@ -12,7 +12,9 @@ const ItemTypes = {
   TOUR: 'tour',
 };
 
-function Tour({ tour, index, moveTour, deleteElement, openModal }) {
+import { Eye, EyeOff } from 'lucide-react';
+
+function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.TOUR,
     item: { index },
@@ -30,6 +32,29 @@ function Tour({ tour, index, moveTour, deleteElement, openModal }) {
       }
     },
   });
+
+  const toggleVisibility = async () => {
+    try {
+      const res = await fetch(`${server}/api/updateOneMultidayTour/${tour._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ visible: !tour.visible }),
+      });
+
+      const data = await res.json();
+      if (data) {
+        setTours((prev) =>
+          prev.map((t) =>
+            t._id === tour._id ? { ...t, visible: !tour.visible } : t
+          )
+        );
+      }
+    } catch (err) {
+      console.error('Ошибка при изменении видимости тура:', err);
+    }
+  };
 
   return (
     <div
@@ -53,6 +78,19 @@ function Tour({ tour, index, moveTour, deleteElement, openModal }) {
         </div>
       </div>
       <div className={classes.multidayTours_data__tour___btns}>
+        {/* 👁️ Иконка отображения */}
+        <div
+          className={classes.multidayTours_data__tour___btns____item}
+          onClick={toggleVisibility}
+          title={tour.visible ? 'Скрыть тур' : 'Показать тур'}
+        >
+          {tour.visible ? (
+            <Eye size={20} color="green" />
+          ) : (
+            <EyeOff size={20} color="gray" />
+          )}
+        </div>
+
         <div
           className={`${classes.multidayTours_data__tour___btns____item}`}
           onClick={() => openModal(tour)}
@@ -75,6 +113,7 @@ function Tour({ tour, index, moveTour, deleteElement, openModal }) {
     </div>
   );
 }
+
 
 function MultidayTours({ children, title, type, role, ...props }) {
   const { add } = useParams();
@@ -164,14 +203,16 @@ function MultidayTours({ children, title, type, role, ...props }) {
 
             <div className={classes.multidayTours_data}>
               {tours.map((tour, index) => (
-                <Tour
-                  key={tour._id}
-                  index={index}
-                  tour={tour}
-                  moveTour={moveTour}
-                  deleteElement={deleteElement}
-                  openModal={openModal}
-                />
+            <Tour
+            key={tour._id}
+            index={index}
+            tour={tour}
+            moveTour={moveTour}
+            deleteElement={deleteElement}
+            openModal={openModal}
+            setTours={setTours}
+          />
+          
               ))}
             </div>
           </div>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import server from '../../../serverConfig';
 
 function HotelNumber({ children, handleOpen, isSimillar, ...props }) {
-    console.log(props.numbers);
+    // console.log('123',props.numbers);
     
     return (
         <>

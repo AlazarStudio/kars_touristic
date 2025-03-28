@@ -220,9 +220,10 @@ function Hotels({ children, handleOpen, isSimillar, user, ...props }) {
                                 <H2 text_transform="uppercase" font_size="36px">ОТЗЫВЫ</H2>
                             </CenterBlock>
 
-                            {user && <Add_Feedback />}
+                            {user && <Add_Feedback userID={user._id} hotelID={hotel._id}  />}
 
-                            <Feedback />
+
+                            <Feedback hotelID={hotel._id} />
 
                             <br />
 

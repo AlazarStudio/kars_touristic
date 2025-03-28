@@ -9,6 +9,8 @@ import 'swiper/css/navigation';
 
 function Object({ isOpenNewPage, pageName, titleObject, regionData, width, inCart, setCartCount, handleOpen, open, isSimillar, regionName }) {
 
+    if (regionData.visible === false) return null;
+
     function truncateString(str, maxLength) {
         if (str.length > maxLength) {
             return str.substring(0, maxLength) + '...';
@@ -155,6 +157,9 @@ function Object({ isOpenNewPage, pageName, titleObject, regionData, width, inCar
 
         return `${amount.toLocaleString('ru-RU')} ₽`;
     };
+
+
+
 
     return (
         <div className={classes.objects_item} style={{ width: width }}>

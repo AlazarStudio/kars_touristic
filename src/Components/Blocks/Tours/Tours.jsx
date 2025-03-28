@@ -11,7 +11,6 @@ import H2 from '../../Standart/H2/H2';
 import Object from '../Object/Object';
 import { jwtDecode } from 'jwt-decode';
 
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -45,6 +44,19 @@ function Tours({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
+  //Отзывы
+
+  const feedbackTourId =
+    requestType === 'getOneMultidayTour'
+      ? { multiTourID: idToModal }
+      : requestType === 'getOneOnedayTour'
+      ? { oneTourID: idToModal }
+      : requestType === 'getOneAuthorTour'
+      ? { autorTourID: idToModal }
+      : {};
+
+  //Отзывы
+
   const fetchTour = () => {
     fetch(`${server}/api/${requestType}/${idToModal}`)
       .then((response) => response.json())
@@ -55,6 +67,8 @@ function Tours({
   useEffect(() => {
     fetchTour();
   }, [idToModal]);
+
+  // console.log('1111', requestType);
 
   const [regions, setRegions] = useState([]);
 
@@ -736,11 +750,15 @@ function Tours({
               </H2>
             </CenterBlock>
 
-            {user && tour && (
+            {/* {user && tour && (
               <Add_Feedback userID={user._id} tourId={tour._id} />
+            )} */}
+
+            {user && tour && (
+              <Add_Feedback userID={user._id} {...feedbackTourId} />
             )}
 
-            <Feedback />
+            <Feedback {...feedbackTourId} />
 
             {foundRegion.length > 1 ? (
               <>
