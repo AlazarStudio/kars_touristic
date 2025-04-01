@@ -90,44 +90,34 @@ function Feedback({
                 1024: { slidesPerView: 2 },
               }}
             >
-              {feedbacks.length > 0 ? (
-                feedbacks
-                  .filter((f) => f.visible)
-                  .map((item, index) => (
-                    <SwiperSlide key={index}>
-                      <div className={classes.feedback_slide}>
-                        <div className={classes.feedback_slide__top}>
-                          <div className={classes.feedback_slide__top___img}>
-                            <img src="/feedback_photo.webp" alt="Фото" />
-                          </div>
-                          <div className={classes.feedback_slide__top___info}>
-                            <div className={classes.feedback_slide__top___name}>
-                              {users[item.userID] || 'Аноним'}
-                            </div>
-                            <div
-                              className={classes.feedback_slide__top___stars}
-                            >
-                              {Array.from({ length: item.rating || 5 }).map(
-                                (_, i) => (
-                                  <Star key={i} style={{ color: '#FFD700' }} />
-                                )
-                              )}
-                            </div>
-                          </div>
+              {feedbacks
+                .filter((f) => f.visible)
+                .map((item, index) => (
+                  <SwiperSlide key={index}>
+                    <div className={classes.feedback_slide}>
+                      <div className={classes.feedback_slide__top}>
+                        <div className={classes.feedback_slide__top___img}>
+                          <img src="/feedback_photo.webp" alt="Фото" />
                         </div>
-                        <div className={classes.feedback_slide__bottom}>
-                          {item.text}
+                        <div className={classes.feedback_slide__top___info}>
+                          <div className={classes.feedback_slide__top___name}>
+                            {users[item.userID] || 'Аноним'}
+                          </div>
+                          <div className={classes.feedback_slide__top___stars}>
+                            {Array.from({ length: item.rating || 5 }).map(
+                              (_, i) => (
+                                <Star key={i} style={{ color: '#FFD700' }} />
+                              )
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </SwiperSlide>
-                  ))
-              ) : (
-                <SwiperSlide>
-                  <div className={classes.feedback_slide}>
-                    Отзывов пока нет.
-                  </div>
-                </SwiperSlide>
-              )}
+                      <div className={classes.feedback_slide__bottom}>
+                        {item.text}
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
             </Swiper>
           </div>
         </div>
