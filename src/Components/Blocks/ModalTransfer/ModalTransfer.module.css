@@ -1,0 +1,65 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+}
+
+.modalForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modalForm select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 1px solid rgb(189, 189, 189);
+    outline: none;
+}
+
+.modalForm input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 1px solid rgb(189, 189, 189);
+    outline: none;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modalButtons button {
+    display: flex;
+    padding: 5px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    border: none;
+    background-color: gray;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.modalButtons button:hover {
+    background-color: #000;
+    color: #fff;
+}
