@@ -66,6 +66,7 @@ function Header_black({ children, cartCount, tempMain, ...props }) {
                         <div className={classes.navigation}>
                             <Link to="/" className={classes.navigation_logo}>
                                 <img src={logo} alt="Logo Kars Touristic" />
+                                
                             </Link>
                             <div className={classes.navigation_links}>
                                 <ul>

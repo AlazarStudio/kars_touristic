@@ -94,8 +94,8 @@ useEffect(() => {
       if (room) {
         const hotel = hotels.find((h) => h._id === room.hotelID);
         return hotel
-          ? ` Комната: ${room.title} в отеле ${hotel.title}`
-          : ` Комната: ${room.title}`;
+          ? ` Комната / ${room.title} в отеле ${hotel.title}`
+          : ` Комната / ${room.title}`;
       } else {
         return ' Комната (не найдена)';
       }
@@ -103,17 +103,17 @@ useEffect(() => {
   
     if (review.oneTourID) {
       const tour = onedayTours.find((t) => t._id === review.oneTourID);
-      return tour ? ` Однодневный тур: ${tour.tourTitle}` : ' Тур (не найден)';
+      return tour ? ` Однодневный тур / ${tour.tourTitle}` : ' Тур (не найден)';
     }
   
     if (review.multiTourID) {
       const tour = multidayTours.find((t) => t._id === review.multiTourID);
-      return tour ? ` Многодневный тур: ${tour.tourTitle}` : ' Тур (не найден)';
+      return tour ? ` Многодневный тур / ${tour.tourTitle}` : ' Тур (не найден)';
     }
   
     if (review.autorTourID) {
       const tour = authorTours.find((t) => t._id === review.autorTourID);
-      return tour ? ` Авторский тур: ${tour.tourTitle}` : ' Тур (не найден)';
+      return tour ? ` Авторский тур / ${tour.tourTitle}` : ' Тур (не найден)';
     }
   
     return ' Неизвестное место';
@@ -129,8 +129,8 @@ useEffect(() => {
         reviews.map((review) => (
           <div key={review._id} className={classes.reviewItem}>
             <div className={classes.reviewText}>
-              <strong>{review.name}</strong>: {review.text}
-              <div className={classes.reviewPlace}>{getPlaceName(review)}</div>
+              <strong>Отзыв :</strong> {review.text}
+              <div className={classes.reviewPlace}> <strong>Для :</strong>{getPlaceName(review)}</div>
               <div className={classes.reviewDate}>
                 {new Date(review.createdAt).toLocaleString()}
               </div>

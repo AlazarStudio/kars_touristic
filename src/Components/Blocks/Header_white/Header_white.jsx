@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 
 import server from '../../../serverConfig';
 
-import logo from '/favicon.webp';
+// import logo from '/favicon_black.webp';
+import logo from '/Logo11.png';
 import arnament from '/header_arnament.webp';
 import favourite from '/header_favourite.webp';
 import cart from '/header_cart.webp';

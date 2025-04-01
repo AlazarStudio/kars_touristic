@@ -8,6 +8,7 @@ import EditOnedayTours from '../EditOnedayTours/EditOnedayTours';
 import server from '../../../../../serverConfig';
 import DuplicateOneDayTourModal from '../DuplicateOneDayTourModal/DuplicateOneDayTourModal';
 import { Eye, EyeOff } from 'lucide-react'; // уже должен быть
+import { Star, StarBorder } from '@mui/icons-material';
 
 const ItemTypes = {
   TOUR: 'tour',
@@ -58,6 +59,32 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
     },
   });
 
+    const togglePopular = async () => {
+      try {
+        const res = await fetch(
+          `${server}/api/updateOneOnedayTour/${tour._id}`,
+          {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ popular: !tour.popular }),
+          }
+        );
+  
+        const data = await res.json();
+        if (data) {
+          setTours((prev) =>
+            prev.map((t) =>
+              t._id === tour._id ? { ...t, popular: !tour.popular } : t
+            )
+          );
+        }
+      } catch (err) {
+        console.error('Ошибка при изменении популярности тура:', err);
+      }
+    };
+
   return (
     <div
       ref={(node) => drag(drop(node))}
@@ -91,6 +118,20 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
             <EyeOff size={20} color="gray" />
           )}
         </div>
+
+        <div
+                  className={classes.multidayTours_data__tour___btns____item}
+                  onClick={togglePopular}
+                  title={
+                    tour.popular ? 'Убрать из популярных' : 'Добавить в популярные'
+                  }
+                >
+                  {tour.popular ? (
+                    <Star style={{ color: '#FFD700' }} />
+                  ) : (
+                    <StarBorder style={{ color: '#aaa' }} />
+                  )}
+                </div>
 
         <div
           className={`${classes.multidayTours_data__tour___btns____item}`}

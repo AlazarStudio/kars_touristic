@@ -45,7 +45,16 @@ function Tabs({ children, setActiveTab, regionName, requestType, tableName, page
         fetchData();
     }, []);
 
-    const foundData = filteredObjects ? filteredObjects.filter(filteredObject => filteredObject.region === regionName) : [];
+    // const foundData = filteredObjects ? filteredObjects.filter(filteredObject => filteredObject.region === regionName) : [];
+    const foundData = filteredObjects
+    ? filteredObjects
+        .filter((obj) => obj.region === regionName)
+        .sort((a, b) => {
+          if (a.popular === b.popular) return 0;
+          return a.popular ? -1 : 1;
+        })
+    : [];
+  
 
     const [user, setUser] = useState(null);
 

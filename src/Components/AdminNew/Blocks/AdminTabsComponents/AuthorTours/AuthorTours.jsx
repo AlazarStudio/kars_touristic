@@ -8,6 +8,8 @@ import AddMultidayTours from "../AddMultidayTours/AddMultidayTours";
 import EditMultidayTours from "../EditMultidayTours/EditMultidayTours";
 import AddAuthorTours from "../AddAuthorTours/AddAuthorTours";
 import EditAuthorTours from "../EditAuthorTours/EditAuthorTours";
+import { Eye, EyeOff } from 'lucide-react'; // уже должен быть
+import { Star, StarBorder } from '@mui/icons-material';
 
 const ItemTypes = {
     TOUR: 'tour',
@@ -31,6 +33,8 @@ function Tour({ tour, index, moveTour, deleteElement }) {
             }
         },
     });
+
+    
 
     return (
         <div

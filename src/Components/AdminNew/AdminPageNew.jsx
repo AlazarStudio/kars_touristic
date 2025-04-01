@@ -73,11 +73,11 @@ function DraggableRegion({
           visible: !region.visible,
         }),
       });
-  
+
       const data = await response.json();
       if (data) {
-        setRegions(prev =>
-          prev.map(r =>
+        setRegions((prev) =>
+          prev.map((r) =>
             r._id === region._id ? { ...r, visible: !region.visible } : r
           )
         );
@@ -88,7 +88,6 @@ function DraggableRegion({
       console.error('Ошибка при изменении видимости:', error);
     }
   };
-  
 
   return (
     <div
@@ -109,7 +108,12 @@ function DraggableRegion({
       {/* 👁️ Глаз */}
       <span
         onClick={toggleVisibility}
-        style={{ cursor: 'pointer', marginLeft: '5px', display: 'inline-flex', marginRight: '5px' }}
+        style={{
+          cursor: 'pointer',
+          marginLeft: '5px',
+          display: 'inline-flex',
+          marginRight: '5px',
+        }}
         title={region.visible ? 'Скрыть регион' : 'Показать регион'}
         aria-label={region.visible ? 'Регион виден' : 'Регион скрыт'}
       >
@@ -140,8 +144,11 @@ function AdminPageNew({ children, ...props }) {
   useEffect(() => {
     if (id) {
       setActiveTab(id);
+
       if (id === 'editRegion') {
         setOpenSection('regions');
+      } else if (id === 'adminReviews') {
+        setOpenSection('adminReviews'); // 👉 можно даже просто setOpenSection('') если секция не вложенная
       }
     }
   }, [id]);
@@ -225,6 +232,10 @@ function AdminPageNew({ children, ...props }) {
     section = 'regions';
   }
 
+  if (block === 'adminReviews') {
+    section = 'adminReviews';
+  }
+
   if (block === 'addRegion') {
     section = 'regions';
   }
@@ -236,7 +247,16 @@ function AdminPageNew({ children, ...props }) {
     section = 'about';
   }
 
-  const [activeTab, setActiveTab] = useState(block || 'addUsers');
+  const [activeTab, setActiveTab] = useState(() => {
+    const savedTab = localStorage.getItem('activeTab');
+    return id || savedTab || 'addUsers';
+  });
+
+  useEffect(() => {
+    if (activeTab) {
+      localStorage.setItem('activeTab', activeTab);
+    }
+  }, [activeTab]);
 
   // const [activeTab, setActiveTab] = useState(block);
   const [openSection, setOpenSection] = useState(section);
@@ -255,6 +275,10 @@ function AdminPageNew({ children, ...props }) {
   useEffect(() => {
     fetchRegions();
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('activeTab', activeTab);
+  }, [activeTab]);
 
   const isActive = (sectionName) =>
     boldName === sectionName ? `${classes.boldText}` : '';
@@ -665,23 +689,25 @@ function AdminPageNew({ children, ...props }) {
                 </div>
               )}
 
-              <span
+              <Link
+                to="/admin/moderedAuthorTours"
                 className={`${classes.nav_title} ${
                   activeTab === 'moderedAuthorTours' ? classes.boldText : ''
                 }`}
                 onClick={() => setActiveTab('moderedAuthorTours')}
               >
                 Неподтвержденные туры
-              </span>
+              </Link>
 
-              <span
+              <Link
+                to="/admin/adminReviews"
                 className={`${classes.nav_title} ${
                   activeTab === 'adminReviews' ? classes.boldText : ''
                 }`}
                 onClick={() => setActiveTab('adminReviews')}
               >
                 Отзывы
-              </span>
+              </Link>
 
               <a
                 href="/"
@@ -789,7 +815,6 @@ function AdminPageNew({ children, ...props }) {
                 <AddHotelAndApartments setActiveTab={setActiveTab} />
               )}
               {activeTab === 'adminReviews' && <AdminReviews />}
-
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import AddMultidayTours from '../AddMultidayTours/AddMultidayTours';
 import EditMultidayTours from '../EditMultidayTours/EditMultidayTours';
 import DuplicateTourModal from '../DuplicateTourModal/DuplicateTourModal';
+import { Star, StarBorder } from '@mui/icons-material';
 
 const ItemTypes = {
   TOUR: 'tour',
@@ -35,13 +36,16 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
 
   const toggleVisibility = async () => {
     try {
-      const res = await fetch(`${server}/api/updateOneMultidayTour/${tour._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ visible: !tour.visible }),
-      });
+      const res = await fetch(
+        `${server}/api/updateOneMultidayTour/${tour._id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ visible: !tour.visible }),
+        }
+      );
 
       const data = await res.json();
       if (data) {
@@ -53,6 +57,32 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
       }
     } catch (err) {
       console.error('Ошибка при изменении видимости тура:', err);
+    }
+  };
+
+  const togglePopular = async () => {
+    try {
+      const res = await fetch(
+        `${server}/api/updateOneMultidayTour/${tour._id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ popular: !tour.popular }),
+        }
+      );
+
+      const data = await res.json();
+      if (data) {
+        setTours((prev) =>
+          prev.map((t) =>
+            t._id === tour._id ? { ...t, popular: !tour.popular } : t
+          )
+        );
+      }
+    } catch (err) {
+      console.error('Ошибка при изменении популярности тура:', err);
     }
   };
 
@@ -90,6 +120,19 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
             <EyeOff size={20} color="gray" />
           )}
         </div>
+        <div
+          className={classes.multidayTours_data__tour___btns____item}
+          onClick={togglePopular}
+          title={
+            tour.popular ? 'Убрать из популярных' : 'Добавить в популярные'
+          }
+        >
+          {tour.popular ? (
+            <Star style={{ color: '#FFD700' }} />
+          ) : (
+            <StarBorder style={{ color: '#aaa' }} />
+          )}
+        </div>
 
         <div
           className={`${classes.multidayTours_data__tour___btns____item}`}
@@ -113,7 +156,6 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
     </div>
   );
 }
-
 
 function MultidayTours({ children, title, type, role, ...props }) {
   const { add } = useParams();
@@ -198,21 +240,25 @@ function MultidayTours({ children, title, type, role, ...props }) {
               <div className={classes.multidayTours_top__title}>
                 Многодневные туры региона
               </div>
-               <Link to={'addMultiday_tour'} className={classes.multidayTours_top__add}>Добавить тур</Link>
+              <Link
+                to={'addMultiday_tour'}
+                className={classes.multidayTours_top__add}
+              >
+                Добавить тур
+              </Link>
             </div>
 
             <div className={classes.multidayTours_data}>
               {tours.map((tour, index) => (
-            <Tour
-            key={tour._id}
-            index={index}
-            tour={tour}
-            moveTour={moveTour}
-            deleteElement={deleteElement}
-            openModal={openModal}
-            setTours={setTours}
-          />
-          
+                <Tour
+                  key={tour._id}
+                  index={index}
+                  tour={tour}
+                  moveTour={moveTour}
+                  deleteElement={deleteElement}
+                  openModal={openModal}
+                  setTours={setTours}
+                />
               ))}
             </div>
           </div>
