@@ -4,7 +4,7 @@ import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import server from '../../../../../serverConfig';
 import { Calculate } from '@mui/icons-material';
 
-function Brons({ children, ...props }) {
+function Brons({ fetchBronsData }) {
   const location = useLocation();
   const receivedData = location.state;
 
@@ -19,9 +19,6 @@ function Brons({ children, ...props }) {
     }, 100);
   };
 
-
-
-
   const [touragents, setTouragents] = useState([]);
   const [filteredAgents, setFilteredAgents] = useState([]);
   const [users, setUsers] = useState([]);
@@ -34,6 +31,11 @@ function Brons({ children, ...props }) {
       const data = await response.json();
       setTouragents(data.agent.reverse());
       setFilteredAgents(data.agent);
+
+      // Обновляем количество броней в админке
+      if (fetchBronsData) {
+        fetchBronsData();
+      }
     } catch (error) {
       console.error('Ошибка загрузки агентов:', error);
     }
@@ -60,25 +62,29 @@ function Brons({ children, ...props }) {
     if (selectedAgents.length === filteredAgents.length) {
       setSelectedAgents([]); // Если все уже выбраны, снимаем выделение
     } else {
-      setSelectedAgents(filteredAgents.map(agent => agent._id)); // Выбираем все
+      setSelectedAgents(filteredAgents.map((agent) => agent._id)); // Выбираем все
     }
   };
 
   // Функция выбора одной записи
   const handleSelectItem = (id) => {
-    setSelectedAgents(prev =>
-      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    setSelectedAgents((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
   // Функция удаления выбранных бронирований
   const handleDeleteSelected = async () => {
     if (selectedAgents.length === 0) {
-      alert("Выберите хотя бы одно бронирование!");
+      alert('Выберите хотя бы одно бронирование!');
       return;
     }
+    await fetchTouragents();
+    if (fetchBronsData) fetchBronsData();
 
-    if (window.confirm("Вы уверены, что хотите удалить выбранные бронирования?")) {
+    if (
+      window.confirm('Вы уверены, что хотите удалить выбранные бронирования?')
+    ) {
       for (const id of selectedAgents) {
         try {
           await fetch(`${server}/api/deleteAgent/${id}`, { method: 'DELETE' });
@@ -90,8 +96,6 @@ function Brons({ children, ...props }) {
       setSelectedAgents([]);
     }
   };
-
-
 
   const [paymentType, setPaymentType] = useState(
     receivedData?.paymentType || ''
@@ -105,15 +109,9 @@ function Brons({ children, ...props }) {
   );
   const [dateQuery, setDateQuery] = useState('');
 
-
-
   useEffect(() => {
     fetchTouragents();
   }, []);
-
-
-
-
 
   useEffect(() => {
     getUserInfo();
@@ -256,7 +254,9 @@ function Brons({ children, ...props }) {
               )
             );
 
+            
             fetchTouragents();
+            if (fetchBronsData) fetchBronsData();
           } else {
             console.error('Error updating user debt');
           }
@@ -355,7 +355,9 @@ function Brons({ children, ...props }) {
           <div className={classes.gids}>
             <div className={classes.gidsButtons}>
               <button onClick={handleSelectAll}>
-                {selectedAgents.length === filteredAgents.length ? "Снять выделение" : "Выбрать все"}
+                {selectedAgents.length === filteredAgents.length
+                  ? 'Снять выделение'
+                  : 'Выбрать все'}
               </button>
               <button onClick={handleDeleteSelected}>Удалить</button>
             </div>
@@ -363,18 +365,37 @@ function Brons({ children, ...props }) {
             <ul className={classes.listBron}>
               <div className={classes.listBronTop}>
                 <li>
-                  <div className={classes.listBronItem}><b>Выбрать</b></div>
-                  <div className={classes.listBronItem}><b>Дата брони</b></div>
-                  <div className={classes.listBronItem}><b>Название тура</b></div>
-                  <div className={classes.listBronItem}><b>Полная цена</b></div>
-                  <div className={classes.listBronItem}><b>Оплата</b></div>
-                  <div className={classes.listBronItem}><b>Состояние</b></div>
+                  <div className={classes.listBronItem}>
+                    <b>Выбрать</b>
+                  </div>
+                  <div className={classes.listBronItem}>
+                    <b>Дата брони</b>
+                  </div>
+                  <div className={classes.listBronItem}>
+                    <b>Название тура</b>
+                  </div>
+                  <div className={classes.listBronItem}>
+                    <b>Полная цена</b>
+                  </div>
+                  <div className={classes.listBronItem}>
+                    <b>Оплата</b>
+                  </div>
+                  <div className={classes.listBronItem}>
+                    <b>Состояние</b>
+                  </div>
                 </li>
               </div>
 
               {filteredAgents.length > 0 ? (
                 filteredAgents.map((agent, index) => (
-                  <li key={index} className={agent.confirm ? classes.statusConfirmDone : classes.statusConfirmCash}>
+                  <li
+                    key={index}
+                    className={
+                      agent.confirm
+                        ? classes.statusConfirmDone
+                        : classes.statusConfirmCash
+                    }
+                  >
                     <div className={classes.listBronItem}>
                       <input
                         type="checkbox"
@@ -382,15 +403,32 @@ function Brons({ children, ...props }) {
                         onChange={() => handleSelectItem(agent._id)}
                       />
                     </div>
-                    <div className={classes.listBronItem}>{new Date(agent.createdAt).toLocaleDateString('ru-RU')}</div>
-                    <div className={classes.listBronItem}>{agent.tours.map(tour => tour.tourTitle).join(', ')}</div>
-                    <div className={classes.listBronItem}>{Number(agent.price).toLocaleString('ru-RU')}</div>
                     <div className={classes.listBronItem}>
-                      {agent.paymentType === 'cash' ? 'Наличные' : agent.paymentType === 'Заявка с сайта' ? '-' : 'Карта'}
+                      {new Date(agent.createdAt).toLocaleDateString('ru-RU')}
                     </div>
                     <div className={classes.listBronItem}>
-                      {agent.confirm ? <span className={classes.confirmedStatus}>Подтверждено</span> :
-                        <button onClick={() => updateConfirm(agent._id)}>Подтвердить</button>}
+                      {agent.tours.map((tour) => tour.tourTitle).join(', ')}
+                    </div>
+                    <div className={classes.listBronItem}>
+                      {Number(agent.price).toLocaleString('ru-RU')}
+                    </div>
+                    <div className={classes.listBronItem}>
+                      {agent.paymentType === 'cash'
+                        ? 'Наличные'
+                        : agent.paymentType === 'Заявка с сайта'
+                        ? '-'
+                        : 'Карта'}
+                    </div>
+                    <div className={classes.listBronItem}>
+                      {agent.confirm ? (
+                        <span className={classes.confirmedStatus}>
+                          Подтверждено
+                        </span>
+                      ) : (
+                        <button onClick={() => updateConfirm(agent._id)}>
+                          Подтвердить
+                        </button>
+                      )}
                     </div>
                   </li>
                 ))

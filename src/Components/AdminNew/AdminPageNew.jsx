@@ -418,6 +418,7 @@ function AdminPageNew({ children, ...props }) {
   }, []);
 
   const [brons, setBrons] = useState([]);
+  const [unconfirmedHotelCount, setUnconfirmedHotelCount] = useState(0);
 
   useEffect(() => {
     async function fetchBrons() {
@@ -431,6 +432,21 @@ function AdminPageNew({ children, ...props }) {
       }
     }
     fetchBrons();
+  }, []);
+
+  useEffect(() => {
+    async function fetchHotelBrons() {
+      try {
+        const response = await fetch(`${server}/api/getHotelBrons`);
+        const data = await response.json();
+        const unconfirmed = data.hotelBron.filter((bron) => !bron.confirm);
+        setUnconfirmedHotelCount(unconfirmed.length);
+      } catch (error) {
+        console.error('Ошибка при загрузке броней отелей:', error);
+      }
+    }
+
+    fetchHotelBrons();
   }, []);
 
   const [tours, setTours] = useState([]);
@@ -487,6 +503,35 @@ function AdminPageNew({ children, ...props }) {
   }, []);
 
   // Трансфер
+
+  //Брони
+  const fetchBronsData = async () => {
+    try {
+      const [agentsRes, hotelsRes] = await Promise.all([
+        fetch(`${server}/api/getAgents`),
+        fetch(`${server}/api/getHotelBrons`),
+      ]);
+
+      const agentsData = await agentsRes.json();
+      const hotelsData = await hotelsRes.json();
+
+      const filteredBrons = agentsData.agent.filter((agent) => !agent.confirm);
+      const unconfirmedHotels = hotelsData.hotelBron.filter(
+        (bron) => !bron.confirm
+      );
+
+      setBrons(filteredBrons);
+      setUnconfirmedHotelCount(unconfirmedHotels.length);
+    } catch (error) {
+      console.error('Ошибка при загрузке броней:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBronsData();
+  }, []);
+
+  //Брони
 
   // Отзывы
 
@@ -557,6 +602,7 @@ function AdminPageNew({ children, ...props }) {
                 onClick={() => toggleSection('pages')}
               >
                 Страницы
+                <span style={{ color: 'red' }}>({hiddenTransferCount})</span>
               </div>
 
               {openSections.pages && (
@@ -712,6 +758,9 @@ function AdminPageNew({ children, ...props }) {
                 onClick={() => toggleSection('brons')}
               >
                 Брони
+                <span style={{ color: 'red' }}>
+                  ({brons.length + unconfirmedHotelCount})
+                </span>
               </div>
               {openSections.brons && (
                 <div className={classes.admin_data__nav___item1}>
@@ -722,8 +771,12 @@ function AdminPageNew({ children, ...props }) {
                     }`}
                     onClick={() => setActiveTab('brons')}
                   >
-                    Брони туров
+                    Брони туров{' '}
+                    {brons.length > 0 && (
+                      <span style={{ color: 'red' }}>({brons.length})</span>
+                    )}
                   </Link>
+
                   <Link
                     to="/admin/addHotelAndApartments"
                     className={`${classes.admin_data__nav___item} ${
@@ -733,7 +786,12 @@ function AdminPageNew({ children, ...props }) {
                     }`}
                     onClick={() => setActiveTab('addHotelAndApartments')}
                   >
-                    Брони отелей
+                    Брони отелей{' '}
+                    {unconfirmedHotelCount > 0 && (
+                      <span style={{ color: 'red' }}>
+                        ({unconfirmedHotelCount})
+                      </span>
+                    )}
                   </Link>
                 </div>
               )}
@@ -835,7 +893,10 @@ function AdminPageNew({ children, ...props }) {
               )}
 
               {/* Редактировать авторов туров */}
-              {activeTab === 'brons' && <Brons />}
+              {activeTab === 'brons' && (
+                <Brons fetchBronsData={fetchBronsData} />
+              )}
+
               {activeTab === 'touragents' && <Gids />}
               {activeTab === 'moderedAuthorTours' && <ModeredAuthorTours />}
 

@@ -140,12 +140,12 @@ function Favorites_Page({ children, ...props }) {
                         </>
                         : null}
 
-                    {filteredMultidayTours.length == 0 && filteredOnedayTours.length == 0 && filteredHotels.length == 0 && filteredPlaces.length == 0 ?
+                    {/* {filteredMultidayTours.length == 0 && filteredOnedayTours.length == 0 && filteredHotels.length == 0 && filteredPlaces.length == 0 ?
                         <div className={classes.nonFoundFavorites}>
                             <H2 text_transform={'uppercase'} text_align={'center'} margin={'0 0 40px 0'}>В избранном еще ничего нет</H2>
                         </div>
                         : <br />
-                    }
+                    } */}
                 </WidthBlock>
             </CenterBlock>
         </>

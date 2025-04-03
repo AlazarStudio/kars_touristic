@@ -69,12 +69,15 @@ function RegionInfo({ children, setCartCount, ...props }) {
         }, 500);
     };
 
-    useEffect(() => {
-        const storedTab = localStorage.getItem("activeTab");
-        if (storedTab) {
-            setActiveTab(parseInt(storedTab));
-        }
-    }, []);
+   useEffect(() => {
+    const storedTab = localStorage.getItem("activeTab");
+    if (storedTab !== null) {
+        setActiveTab(parseInt(storedTab));
+    } else {
+        setActiveTab(1); // multidaytours
+    }
+}, []);
+
 
     setTimeout(() => {
         setPreloaderShowFirst(false)
