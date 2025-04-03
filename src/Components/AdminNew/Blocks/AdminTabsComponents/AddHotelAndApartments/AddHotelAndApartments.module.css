@@ -64,6 +64,59 @@
   text-align: center;
 }
 
+
+.tableWrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.hotelsTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-size: 14px;
+}
+
+.hotelsTable th,
+.hotelsTable td {
+  border: 1px solid #ddd;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.hotelsTable th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.deleteButton {
+  background-color: #ff4d4f;
+  color: white;
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: #d9363e;
+}
+
+
+.resetButton {
+  padding: 8px 12px;
+  background-color: inherit;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.resetButton:hover {
+  color: #fff;
+  background-color: #000;
+}
 .teamMemberDelete {
   width: 50%;
   padding: 12px 20px;

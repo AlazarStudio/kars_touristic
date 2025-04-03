@@ -193,47 +193,43 @@ function AddUsers({ setActiveTab }) {
           </div>
         </div>
 
-        <div className={classes.gids_info1}>
-          <div className={classes.gids_info_data}>
-            <div className={classes.gids_info__elements2}>
-              {/* <div className={classes.gids_info__elem2}><b>Выбрать</b></div> */}
-              <div className={classes.gids_info__elem2}>
-                <b>ФИО</b>
-              </div>
-              <div className={classes.gids_info__elem2}>
-                <b>Почта</b>
-              </div>
-              <div className={classes.gids_info__elem2}>
-                <b>Телефон</b>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div className={classes.tableWrapper}>
+  <table className={classes.usersTable}>
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>ФИО</th>
+        <th>Почта</th>
+        <th>Телефон</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredAgents.length > 0 ? (
+        filteredAgents.map((item, index) => (
+          <tr key={item._id}>
+            <td>{index + 1}</td>
+            <td>{item.name}</td>
+            <td>{item.email}</td>
+            <td>{item.phone}</td>
+            <td>
+              <button onClick={() => handleProfileClick(item)}>Профиль</button>{' '}
+              <button onClick={() => setActiveTab('brons')}>Брони</button>{' '}
+              <button onClick={() => handleDeleteUser(item._id)}>Удалить</button>
+            </td>
+          </tr>
+        ))
+      ) : (
+        <tr>
+          <td colSpan="5" style={{ textAlign: 'center' }}>
+            Пользователи не найдены.
+          </td>
+        </tr>
+      )}
+    </tbody>
+  </table>
+</div>
 
-        {filteredAgents.length > 0 ? (
-          filteredAgents.map((item) => (
-            <div className={classes.gids_info} key={item._id}>
-              <div className={classes.gids_info__elements}>
-                <div className={classes.gids_info__elem}>{item.name}</div>
-                <div className={classes.gids_info__elem}>{item.email}</div>
-                <div className={classes.gids_info__elem}>{item.phone}</div>
-              </div>
-              <div className={classes.gids_buttons}>
-                <button onClick={() => handleProfileClick(item)}>
-                  Просмотреть профиль
-                </button>
-                <button onClick={() => setActiveTab('brons')}>
-                  Просмотреть бронь
-                </button>
-                <button onClick={() => handleDeleteUser(item._id)}>
-                  Удалить
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p style={{ padding: '10px' }}>Пользователи не найдены.</p>
-        )}
       </div>
 
       {/* Модалка регистрации */}

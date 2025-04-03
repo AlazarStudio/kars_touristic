@@ -307,6 +307,43 @@
   color: #fff;
 }
 
+
+
+.tableWrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.usersTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-size: 14px;
+}
+
+.usersTable th,
+.usersTable td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.usersTable th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+.usersTable button {
+  margin: 0 3px;
+  padding: 4px 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+
+
+
+
 .gids_info:last-child {
   border: none;
 }

@@ -110,9 +110,21 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
       <div className={classes.multidayTours_data__tour___btns}>
         {/* 👁️ Иконка отображения */}
         <div
-          className={classes.multidayTours_data__tour___btns____item}
           onClick={toggleVisibility}
           title={tour.visible ? 'Скрыть тур' : 'Показать тур'}
+          style={{
+            width: 25,
+            height: 25,
+            borderRadius: '50%',
+            backgroundColor: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '2px solid green',
+            // boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+          }}
         >
           {tour.visible ? (
             <Eye size={20} color="green" />
@@ -121,16 +133,27 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
           )}
         </div>
         <div
-          className={classes.multidayTours_data__tour___btns____item}
           onClick={togglePopular}
           title={
             tour.popular ? 'Убрать из популярных' : 'Добавить в популярные'
           }
+          style={{
+            width: 25,
+            height: 25,
+            borderRadius: '50%',
+            backgroundColor: '#000',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+          }}
         >
           {tour.popular ? (
             <Star style={{ color: '#FFD700' }} />
           ) : (
-            <StarBorder style={{ color: '#aaa' }} />
+            <Star style={{ color: '#aaa' }} />
           )}
         </div>
 

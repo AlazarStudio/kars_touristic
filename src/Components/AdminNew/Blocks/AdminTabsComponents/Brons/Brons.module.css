@@ -14,6 +14,94 @@
   align-items: center;
 }
 
+.tableWrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.bronTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-size: 14px;
+}
+
+.bronTable th,
+.bronTable td {
+  border: 1px solid #ddd;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.bronTable th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.confirmedStatus {
+  color: green;
+  font-weight: bold;
+}
+
+.statusConfirmDone {
+  background-color: #f2fff2;
+}
+
+.statusConfirmCash {
+  background-color: #fff9f2;
+}
+
+.confirmButton {
+  margin-right: 8px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.confirmButton:hover {
+  background-color: #43a047;
+}
+
+.cancelButton {
+  background-color: #888888;
+}
+
+.cancelButton:hover {
+  background-color: #757575;
+}
+
+.deleteButton {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+}
+
+.resetButton {
+  padding: 8px 12px;
+  background-color: inherit;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.resetButton:hover {
+  color: #fff;
+  background-color: #000;
+}
+
 .multidayTours_top__title {
   font-family: Montserrat;
   font-size: 32px;
@@ -66,7 +154,7 @@
 .gids {
   display: flex;
   flex-direction: column;
-  padding: 30px 25px;
+  padding: 20px 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
   border-radius: 20px;
   /* outline: 1px solid red; */

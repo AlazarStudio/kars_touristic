@@ -12,6 +12,12 @@
   margin-top: 20px;
 }
 
+/* AddTransfer.module.css */
+.processedRow {
+  opacity: 0.5;
+}
+
+
 .addData_title {
   font-family: Montserrat;
   font-size: 32px;
