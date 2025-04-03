@@ -78,21 +78,15 @@ function RegionInfo({ children, setCartCount, ...props }) {
 //     }
 // }, []);
 
-// useEffect(() => {
-//     const storedTab = localStorage.getItem("activeTab");
-//     if (storedTab !== null) {
-//         setActiveTab(parseInt(storedTab));
-//     } else {
-//         setActiveTab(1); // многодневные туры по умолчанию
-//         localStorage.setItem("activeTab", "1");
-//     }
-// }, []);
-
 useEffect(() => {
-    localStorage.setItem("activeTab", "1");
-    setActiveTab(1);
+    const storedTab = localStorage.getItem("activeTab");
+    if (storedTab !== null) {
+        setActiveTab(parseInt(storedTab));
+    } else {
+        setActiveTab(1); // многодневные туры по умолчанию
+        localStorage.setItem("activeTab", "1");
+    }
 }, []);
-
 
 
 // useEffect(() => {

@@ -25,8 +25,21 @@ function ToursTab({ children, tabs, ...props }) {
                 const props = {};
                 for (let i = 0; i < node.attributes.length; i++) {
                     const { name, value } = node.attributes[i];
-                    props[name] = value;
+                    if (name === "style") {
+                        const styleObj = {};
+                        value.split(";").forEach(styleRule => {
+                            const [key, val] = styleRule.split(":");
+                            if (key && val) {
+                                const camelKey = key.trim().replace(/-([a-z])/g, g => g[1].toUpperCase());
+                                styleObj[camelKey] = val.trim();
+                            }
+                        });
+                        props[name] = styleObj;
+                    } else {
+                        props[name] = value;
+                    }
                 }
+                
                 const children = Array.from(node.childNodes).map(parseNode);
                 return React.createElement(node.tagName.toLowerCase(), { key: index, ...props }, ...children);
             }
