@@ -1,28 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import classes from './AddTransfer.module.css';
-import Form from '../../Form/Form';
-
 import server from '../../../../../serverConfig';
-import Transfer from '../../../../Blocks/Transfer/Transfer';
 
-function AddTransfer({ children, activeTab, ...props }) {
-  const [transferInfo, setTransferInfo] = useState('');
-  const [transferRequests, setTransferRequests] = useState([]); // для заявок
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch(`${server}/api/transfer`);
-        const data = await res.json();
-        setTransferRequests(data);
-      } catch (error) {
-        console.error('Ошибка при получении заявок:', error);
-      }
-    }
-
-    fetchData();
-  }, []);
-
+function AddTransfer({ transferRequests = [], fetchTransferRequests }) {
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm(
       'Вы уверены, что хотите удалить эту заявку?'
@@ -35,8 +15,7 @@ function AddTransfer({ children, activeTab, ...props }) {
       });
 
       if (res.ok) {
-        // Удаление из локального состояния
-        setTransferRequests((prev) => prev.filter((req) => req._id !== id));
+        fetchTransferRequests(); // Обновить данные после удаления
       } else {
         alert('Ошибка при удалении');
       }
@@ -45,38 +24,37 @@ function AddTransfer({ children, activeTab, ...props }) {
     }
   };
 
-  // useEffect(() => {
-  //     async function fetchMissionInfo() {
-  //         try {
-  //             const response = await fetch(`${server}/api/transfer`);
-  //             const data = await response.json();
-  //             setTransferInfo(data);
-  //         } catch (error) {
-  //             console.error("Error fetching transfer info:", error);
-  //         }
-  //     }
+  const handleProcess = async (id, currentStatus) => {
+    try {
+      const newStatus = !currentStatus; // переключаем
 
-  //     fetchMissionInfo();
-  // }, []);
+      const res = await fetch(`${server}/api/transfer/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }), // переключаемый статус
+      });
 
-  // async function handleFormSuccess() {
-  //     try {
-  //         const response = await fetch(`${server}/api/transfer`);
-  //         const data = await response.json();
-  //         setTransferInfo(data);
-  //     } catch (error) {
-  //         console.error("Error fetching transfer info after form submission:", error);
-  //     }
-  // }
+      if (res.ok) {
+        fetchTransferRequests(); // обновляем данные
+      } else {
+        const text = await res.text();
+        alert(`Ошибка: ${text}`);
+      }
+    } catch (err) {
+      console.error('Ошибка при обновлении статуса:', err);
+      alert('Ошибка при обновлении статуса');
+    }
+  };
 
   return (
     <div className={classes.addData}>
-      {transferRequests.length > 0 && (
+      {transferRequests.length > 0 ? (
         <div className={classes.requestsTableWrapper}>
           <div className={classes.addData_title}>Заявки на трансфер</div>
           <table className={classes.requestsTable}>
             <thead>
               <tr>
+                <th>№</th>
                 <th>ФИО</th>
                 <th>Точка А</th>
                 <th>Точка В</th>
@@ -87,12 +65,18 @@ function AddTransfer({ children, activeTab, ...props }) {
                 <th>Класс авто</th>
                 <th>Сегмент</th>
                 <th>Багаж</th>
-                <th></th>
+                <th>Статус</th>
+                <th>Действия</th>
               </tr>
             </thead>
+
             <tbody>
               {transferRequests.map((req, index) => (
-                <tr key={index}>
+                <tr
+                  key={req._id}
+                  className={req.status === true ? classes.processedRow : ''}
+                >
+                  <td>{index + 1}</td>
                   <td>{req.personName}</td>
                   <td>{req.from}</td>
                   <td>{req.to}</td>
@@ -105,17 +89,25 @@ function AddTransfer({ children, activeTab, ...props }) {
                       minute: '2-digit',
                     })}
                   </td>
-
                   <td>{req.passengers}</td>
                   <td>{req.personPhone}</td>
                   <td>{req.region}</td>
                   <td>{req.transportClass}</td>
                   <td>{req.transportType}</td>
                   <td>{req.additionalServices}</td>
+                  <td>{req.status ? 'Обработано' : 'Не обработано'}</td>
                   <td>
+                    <button
+                      onClick={() => handleProcess(req._id, req.status)}
+                      className={classes.processButton}
+                    >
+                      {req.status ? 'Отменить' : 'Обработать'}
+                    </button>
+
                     <button
                       onClick={() => handleDelete(req._id)}
                       className={classes.deleteButton}
+                      style={{ marginLeft: 8 }}
                     >
                       Удалить
                     </button>
@@ -125,26 +117,9 @@ function AddTransfer({ children, activeTab, ...props }) {
             </tbody>
           </table>
         </div>
+      ) : (
+        <p className={classes.noRequests}>Заявок пока нет.</p>
       )}
-
-      {/* <div className={classes.addData_title}>Трансфер</div> */}
-
-      {/* <Form actionUrl={`${server}/api/transfer`} method="put" type={'query'}  onSuccess={handleFormSuccess}>
-                <label>Введите заголовок</label>
-                <input name="title" type="text" placeholder="Название"  />
-
-                <label>Добавить краткое описание раздела</label>
-                <textarea name="description" placeholder="Описание"  />
-                
-                <label>Введите ссылку на телеграмм</label>
-                <input name="link" type="text" placeholder="https://t.me/username"  />
-
-                <button type="submit">Добавить трансфер</button>
-            </Form> */}
-      {/* 
-            {transferInfo ? <div className={classes.addData_title}>Текущий трансфер:</div> : null}
-
-            {transferInfo ? <Transfer data={transferInfo}/> : null} */}
     </div>
   );
 }

@@ -454,12 +454,7 @@ function AdminPageNew({ children, ...props }) {
     fetchTours();
   }, []);
 
-  // const { id: routeId } = useParams(); // Переименовываем id в routeId
-  // const id = routeId || ""; // Теперь id всегда строка
-
   useEffect(() => {
-    // console.log("Current ID:", id); // Для отладки
-
     if (id.startsWith('edit')) {
       setActiveTab(`editRegion-${id.replace('edit/', '')}`);
       setOpenSections((prev) => ({
@@ -468,6 +463,55 @@ function AdminPageNew({ children, ...props }) {
       }));
     }
   }, [id]);
+
+  // Трансфер
+
+  const [transferRequests, setTransferRequests] = useState([]);
+  const [hiddenTransferCount, setHiddenTransferCount] = useState(0);
+
+  const fetchTransferRequests = async () => {
+    try {
+      const res = await fetch(`${server}/api/transfer`);
+      const data = await res.json();
+      setTransferRequests(data);
+
+      const hidden = data.filter((req) => req.status === false);
+      setHiddenTransferCount(hidden.length);
+    } catch (error) {
+      console.error('Ошибка при получении заявок на трансфер:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTransferRequests();
+  }, []);
+
+  // Трансфер
+
+  // Отзывы
+
+  const [reviews, setReviews] = useState([]);
+  const [hiddenReviewCount, setHiddenReviewCount] = useState(0);
+
+  const fetchReviews = async () => {
+    try {
+      const response = await fetch(`${server}/api/getReview`);
+      const data = await response.json();
+      setReviews(data.reviews || []);
+      const hidden = (data.reviews || []).filter(
+        (review) => review.visible === false
+      );
+      setHiddenReviewCount(hidden.length);
+    } catch (error) {
+      console.error('Ошибка при загрузке отзывов:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
+  // Отзывы
 
   const logout = () => {
     localStorage.clear();
@@ -616,7 +660,12 @@ function AdminPageNew({ children, ...props }) {
                     } ${classes.hoverBlock}`}
                     onClick={() => setActiveTab('addTransfer')}
                   >
-                    Трансфер
+                    Трансфер{' '}
+                    {hiddenTransferCount > 0 && (
+                      <span style={{ color: 'red' }}>
+                        ({hiddenTransferCount})
+                      </span>
+                    )}
                   </Link>
 
                   {/* FAQ */}
@@ -706,7 +755,10 @@ function AdminPageNew({ children, ...props }) {
                 }`}
                 onClick={() => setActiveTab('adminReviews')}
               >
-                Отзывы
+                Отзывы{' '}
+                {hiddenReviewCount > 0 && (
+                  <span style={{ color: 'red' }}>({hiddenReviewCount})</span>
+                )}
               </Link>
 
               <a
@@ -793,7 +845,12 @@ function AdminPageNew({ children, ...props }) {
               {activeTab === 'addOurMission' && <AddOurMission />}
 
               {/* Добавить Транфер */}
-              {activeTab === 'addTransfer' && <AddTransfer />}
+              {activeTab === 'addTransfer' && (
+                <AddTransfer
+                  transferRequests={transferRequests}
+                  fetchTransferRequests={fetchTransferRequests}
+                />
+              )}
 
               {/* Добавить FAQ */}
               {activeTab === 'addFAQ' && <AddFAQ />}
@@ -814,7 +871,9 @@ function AdminPageNew({ children, ...props }) {
               {activeTab === 'addHotelAndApartments' && (
                 <AddHotelAndApartments setActiveTab={setActiveTab} />
               )}
-              {activeTab === 'adminReviews' && <AdminReviews />}
+              {activeTab === 'adminReviews' && (
+                <AdminReviews fetchReviews={fetchReviews} />
+              )}
             </div>
           </div>
         </div>

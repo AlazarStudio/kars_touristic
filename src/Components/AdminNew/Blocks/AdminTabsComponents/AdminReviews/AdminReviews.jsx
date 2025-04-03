@@ -3,7 +3,7 @@ import server from '../../../../../serverConfig';
 import classes from './AdminReviews.module.css';
 import { Eye, EyeOff, Trash2 } from 'lucide-react';
 
-function AdminReviews() {
+function AdminReviews({ fetchReviews: updateCount }) {
   const [reviews, setReviews] = useState([]);
 
   const fetchReviews = async () => {
@@ -14,6 +14,19 @@ function AdminReviews() {
     } catch (err) {
       console.error('Ошибка при получении отзывов:', err);
     }
+  };
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch(`${server}/api/getUsers`) // ❗️Убедись, что этот эндпоинт возвращает всех пользователей
+      .then((res) => res.json())
+      .then((data) => setUsers(data.users || []));
+  }, []);
+
+  const getUserName = (userID) => {
+    const user = users.find((u) => u._id === userID);
+    return user ? user.name : 'Неизвестно';
   };
 
   const toggleVisibility = async (id, current) => {
@@ -29,12 +42,22 @@ function AdminReviews() {
           prev.map((r) => (r._id === id ? { ...r, visible: !current } : r))
         );
       }
+      if (data) {
+        setReviews((prev) =>
+          prev.map((r) => (r._id === id ? { ...r, visible: !current } : r))
+        );
+        if (updateCount) updateCount(); // обновляем количество
+      }
     } catch (err) {
       console.error('Ошибка при смене видимости:', err);
     }
   };
 
   const deleteReview = async (id) => {
+    await fetch(`${server}/api/deleteReview/${id}`, { method: 'DELETE' });
+    setReviews((prev) => prev.filter((r) => r._id !== id));
+    if (updateCount) updateCount(); // обновляем количество
+
     if (confirm('Удалить отзыв?')) {
       try {
         await fetch(`${server}/api/deleteReview/${id}`, { method: 'DELETE' });
@@ -55,12 +78,11 @@ function AdminReviews() {
   const [authorTours, setAuthorTours] = useState([]);
   const [rooms, setRooms] = useState([]);
 
-useEffect(() => {
-  fetch(`${server}/api/getRooms`)
-    .then((res) => res.json())
-    .then((data) => setRooms(data.rooms || []));
-}, []);
-
+  useEffect(() => {
+    fetch(`${server}/api/getRooms`)
+      .then((res) => res.json())
+      .then((data) => setRooms(data.rooms || []));
+  }, []);
 
   useEffect(() => {
     fetchReviews();
@@ -88,7 +110,7 @@ useEffect(() => {
       const hotel = hotels.find((h) => h._id === review.hotelID);
       return hotel ? ` Отель: ${hotel.title}` : ' Отель (не найден)';
     }
-  
+
     if (review.roomID) {
       const room = rooms.find((r) => r._id === review.roomID);
       if (room) {
@@ -100,60 +122,91 @@ useEffect(() => {
         return ' Комната (не найдена)';
       }
     }
-  
+
     if (review.oneTourID) {
       const tour = onedayTours.find((t) => t._id === review.oneTourID);
       return tour ? ` Однодневный тур / ${tour.tourTitle}` : ' Тур (не найден)';
     }
-  
+
     if (review.multiTourID) {
       const tour = multidayTours.find((t) => t._id === review.multiTourID);
-      return tour ? ` Многодневный тур / ${tour.tourTitle}` : ' Тур (не найден)';
+      return tour
+        ? ` Многодневный тур / ${tour.tourTitle}`
+        : ' Тур (не найден)';
     }
-  
+
     if (review.autorTourID) {
       const tour = authorTours.find((t) => t._id === review.autorTourID);
       return tour ? ` Авторский тур / ${tour.tourTitle}` : ' Тур (не найден)';
     }
-  
+
     return ' Неизвестное место';
   };
-  
+
+  const sortedReviews = [...reviews].sort((a, b) => {
+    return a.visible === b.visible ? 0 : a.visible ? 1 : -1;
+  });
 
   return (
     <div className={classes.reviewList}>
       <h2>Отзывы пользователей</h2>
+
       {reviews.length === 0 ? (
         <p>Отзывов пока нет.</p>
       ) : (
-        reviews.map((review) => (
-          <div key={review._id} className={classes.reviewItem}>
-            <div className={classes.reviewText}>
-              <strong>Отзыв :</strong> {review.text}
-              <div className={classes.reviewPlace}> <strong>Для :</strong>{getPlaceName(review)}</div>
-              <div className={classes.reviewDate}>
-                {new Date(review.createdAt).toLocaleString()}
-              </div>
-            </div>
-
-            <div className={classes.reviewActions}>
-              <button
-                title={review.visible ? 'Скрыть' : 'Показать'}
-                onClick={() => toggleVisibility(review._id, review.visible)}
+        <table className={classes.reviewTable}>
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Пользователь</th>
+              <th>Отзыв</th>
+              <th>Объект</th>
+              <th>Дата</th>
+              <th>Видимость</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedReviews.map((review, index) => (
+              <tr
+                key={review._id}
+                className={review.visible ? classes.visibleReview : ''}
               >
-                {review.visible ? (
-                  <Eye color="green" size={20} />
-                ) : (
-                  <EyeOff color="gray" size={20} />
-                )}
-              </button>
-
-              <button onClick={() => deleteReview(review._id)} title="Удалить">
-                <Trash2 color="red" size={20} />
-              </button>
-            </div>
-          </div>
-        ))
+                <td>{index + 1}</td> {/* номер строки */}
+                <td>{getUserName(review.userID)}</td>
+                <td>{review.text}</td>
+                <td>{getPlaceName(review)}</td>
+                <td>
+                  {new Date(review.createdAt).toLocaleString('ru-RU', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </td>
+                <td style={{ textAlign: 'center' }}>
+                  {review.visible ? 'Да' : 'Нет'}
+                </td>
+                <td>
+                  <button
+                    onClick={() => toggleVisibility(review._id, review.visible)}
+                    title={review.visible ? 'Скрыть' : 'Показать'}
+                  >
+                    {review.visible ? 'Скрыть' : 'Показать'}
+                  </button>
+                  <button
+                    onClick={() => deleteReview(review._id)}
+                    title="Удалить"
+                    style={{ marginLeft: 4 }}
+                  >
+                    Удалить
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
     </div>
   );
