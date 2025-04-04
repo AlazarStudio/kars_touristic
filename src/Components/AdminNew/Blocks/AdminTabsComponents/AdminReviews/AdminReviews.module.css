@@ -15,6 +15,7 @@
 }
 
 .reviewTable th {
+  align-items: center;
   background-color: #f7f7f7;
 }
 
@@ -25,14 +26,22 @@
 .reviewTable button{
   border: none;
   margin-top: 5px;
-  background-color: #000;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 20px;
+  background-color: inherit;
+  border: 1px solid #000;
+  padding: 3px 10px;
+  border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
 
-.reviewTable button:hover{
+.deleteButton:hover{
+  background-color: red;
+  border: 1px solid red;
+  color: #fff;
+}
+
+.viewButton:hover{
   background-color: #69A64B;
+  border: 1px solid #69A64B;
+  color: #fff;
 }

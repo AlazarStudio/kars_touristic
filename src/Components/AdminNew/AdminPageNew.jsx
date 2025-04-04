@@ -142,16 +142,17 @@ function AdminPageNew({ children, ...props }) {
   // Храним состояние открытых секций
 
   useEffect(() => {
-    if (id) {
+    if (id && id !== '') {
       setActiveTab(id);
-
+  
       if (id === 'editRegion') {
         setOpenSection('regions');
       } else if (id === 'adminReviews') {
-        setOpenSection('adminReviews'); // 👉 можно даже просто setOpenSection('') если секция не вложенная
+        setOpenSection('adminReviews');
       }
     }
   }, [id]);
+  
 
   // useEffect(() => {
   //   setActiveTab(id); // Устанавливаем активный таб сразу при изменении id
@@ -162,16 +163,21 @@ function AdminPageNew({ children, ...props }) {
 
   const [openSections, setOpenSections] = useState(() => {
     const savedSections = localStorage.getItem('openSections');
-    return savedSections
-      ? JSON.parse(savedSections)
-      : {
-          pages: false,
-          brons: false,
-          regions: false,
-          about: false,
-          moderedAuthorTours: false,
-        };
+    if (!savedSections) {
+      const defaultSections = {
+        pages: false,
+        brons: false,
+        regions: false,
+        about: false,
+        moderedAuthorTours: false,
+        addUsers: true, // 👈 можно явно задать или использовать отдельно
+      };
+      localStorage.setItem('openSections', JSON.stringify(defaultSections));
+      return defaultSections;
+    }
+    return JSON.parse(savedSections);
   });
+  
 
   // Функция для переключения секций с сохранением в локальное хранилище
   // const toggleSection = (section) => {
@@ -249,8 +255,13 @@ function AdminPageNew({ children, ...props }) {
 
   const [activeTab, setActiveTab] = useState(() => {
     const savedTab = localStorage.getItem('activeTab');
+    if (!savedTab && !id) {
+      localStorage.setItem('activeTab', 'addUsers');
+      return 'addUsers';
+    }
     return id || savedTab || 'addUsers';
   });
+  
 
   useEffect(() => {
     if (activeTab) {
@@ -480,6 +491,13 @@ function AdminPageNew({ children, ...props }) {
     }
   }, [id]);
 
+  useEffect(() => {
+    if (!id || id === '') {
+      setActiveTab('addUsers');
+    }
+  }, [id]);
+  
+
   // Трансфер
 
   const [transferRequests, setTransferRequests] = useState([]);
@@ -556,6 +574,8 @@ function AdminPageNew({ children, ...props }) {
     fetchReviews();
   }, []);
 
+
+
   // Отзывы
 
   const logout = () => {
@@ -602,7 +622,7 @@ function AdminPageNew({ children, ...props }) {
                 onClick={() => toggleSection('pages')}
               >
                 Страницы
-                <span style={{ color: 'red' }}>({hiddenTransferCount})</span>
+                <span className={classes.counter}>{hiddenTransferCount}</span>
               </div>
 
               {openSections.pages && (
@@ -708,8 +728,8 @@ function AdminPageNew({ children, ...props }) {
                   >
                     Трансфер{' '}
                     {hiddenTransferCount > 0 && (
-                      <span style={{ color: 'red' }}>
-                        ({hiddenTransferCount})
+                      <span className={classes.counter}>
+                        {hiddenTransferCount}
                       </span>
                     )}
                   </Link>
@@ -758,8 +778,8 @@ function AdminPageNew({ children, ...props }) {
                 onClick={() => toggleSection('brons')}
               >
                 Брони
-                <span style={{ color: 'red' }}>
-                  ({brons.length + unconfirmedHotelCount})
+                <span className={classes.counter}>
+                  {brons.length + unconfirmedHotelCount}
                 </span>
               </div>
               {openSections.brons && (
@@ -773,7 +793,7 @@ function AdminPageNew({ children, ...props }) {
                   >
                     Брони туров{' '}
                     {brons.length > 0 && (
-                      <span style={{ color: 'red' }}>({brons.length})</span>
+                      <span className={classes.counter}>{brons.length}</span>
                     )}
                   </Link>
 
@@ -788,8 +808,8 @@ function AdminPageNew({ children, ...props }) {
                   >
                     Брони отелей{' '}
                     {unconfirmedHotelCount > 0 && (
-                      <span style={{ color: 'red' }}>
-                        ({unconfirmedHotelCount})
+                      <span className={classes.counter}>
+                        {unconfirmedHotelCount}
                       </span>
                     )}
                   </Link>
@@ -815,7 +835,7 @@ function AdminPageNew({ children, ...props }) {
               >
                 Отзывы{' '}
                 {hiddenReviewCount > 0 && (
-                  <span style={{ color: 'red' }}>({hiddenReviewCount})</span>
+                  <span className={classes.counter}>{hiddenReviewCount}</span>
                 )}
               </Link>
 

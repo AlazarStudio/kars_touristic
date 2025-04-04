@@ -190,12 +190,14 @@ function AdminReviews({ fetchReviews: updateCount }) {
                 </td>
                 <td>
                   <button
+                  className={classes.viewButton}
                     onClick={() => toggleVisibility(review._id, review.visible)}
                     title={review.visible ? 'Скрыть' : 'Показать'}
                   >
                     {review.visible ? 'Скрыть' : 'Показать'}
                   </button>
                   <button
+                    className={classes.deleteButton}
                     onClick={() => deleteReview(review._id)}
                     title="Удалить"
                     style={{ marginLeft: 4 }}

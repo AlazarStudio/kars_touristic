@@ -213,9 +213,9 @@ function AddUsers({ setActiveTab }) {
             <td>{item.email}</td>
             <td>{item.phone}</td>
             <td>
-              <button onClick={() => handleProfileClick(item)}>Профиль</button>{' '}
-              <button onClick={() => setActiveTab('brons')}>Брони</button>{' '}
-              <button onClick={() => handleDeleteUser(item._id)}>Удалить</button>
+              <button className={classes.tableBut} onClick={() => handleProfileClick(item)}>Профиль</button>{' '}
+              <button className={classes.tableBut} onClick={() => setActiveTab('brons')}>Брони</button>{' '}
+              <button className={classes.tableButDel} onClick={() => handleDeleteUser(item._id)}>Удалить</button>
             </td>
           </tr>
         ))

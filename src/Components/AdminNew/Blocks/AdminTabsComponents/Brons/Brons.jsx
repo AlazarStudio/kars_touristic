@@ -101,10 +101,26 @@ function Brons({ fetchBronsData }) {
     getUserInfo();
   }, []);
 
-  const getUserNameById = (userId) => {
-    const user = users.find((user) => user._id === userId);
-    return user ? user.name : '-';
+  const getUserNameById = (agentField) => {
+    if (!agentField) return '-';
+    const id = typeof agentField === 'object' ? agentField._id : agentField;
+    const found = users.find((u) => u._id === id);
+    return found ? found.name : `ID: ${id}`;
   };
+  
+  const getUserPhoneById = (agentField) => {
+    if (!agentField) return '-';
+    const id = typeof agentField === 'object' ? agentField._id : agentField;
+    const found = users.find((u) => u._id === id);
+    return found ? found.phone : 'не найден';
+  };
+  
+  
+  
+
+  
+
+  
 
   // Функция для фильтрации данных
   const applyFilters = () => {
@@ -245,6 +261,9 @@ function Brons({ fetchBronsData }) {
     }
   };
 
+
+
+
   // Сброс Фильтров
 
   const resetFilters = () => {
@@ -282,150 +301,155 @@ function Brons({ fetchBronsData }) {
                             />
                         </div> */}
 
- 
-
-          <div className={classes.gids}>
-            {/* <div className={classes.gidsButtons}>
+            <div className={classes.gids}>
+              {/* <div className={classes.gidsButtons}>
               <button onClick={handleDeleteSelected}>Удалить</button>
             </div> */}
 
-<div className={classes.filterBlock}>
-              <input
-                type="text"
-                placeholder="Поиск"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className={classes.filterInput}
-              />
-              <select
-                name="bronTypeRole"
-                value={bronTypeRole}
-                onChange={handleBronTypeRoleChange}
-                className={classes.filterSelect}
-              >
-                <option value="">Тип брони</option>
-                <option value="Заявка с сайта">Заявка с сайта</option>
-                <option value="agent">Бронирования представителя</option>
-                <option value="user">Бронирования пользователя</option>
-              </select>
-              <input
-                type="date"
-                value={dateQuery}
-                onChange={handleDateQueryChange}
-                className={classes.filterInput}
-              />
-              <select
-                name="paymentType"
-                value={paymentType}
-                onChange={handlePaymentTypeChange}
-                className={classes.filterSelect}
-              >
-                <option value="">Все способы оплаты</option>
-                <option value="cash">Наличные</option>
-                <option value="card">Карта</option>
-              </select>
-              <select
-                name="paymentState"
-                value={paymentState}
-                onChange={handlePaymentStateChange}
-                className={classes.filterSelect}
-              >
-                <option value="">Все состояния</option>
-                <option value={'true'}>Подтверждено</option>
-                <option value={'false'}>Не подтверждено</option>
-              </select>
-              <button onClick={resetFilters} className={classes.resetButton}>
-                Сбросить фильтры
-              </button>
-            </div>
-     
+              <div className={classes.filterBlock}>
+                <input
+                  type="text"
+                  placeholder="Поиск"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className={classes.filterInput}
+                />
+                <select
+                  name="bronTypeRole"
+                  value={bronTypeRole}
+                  onChange={handleBronTypeRoleChange}
+                  className={classes.filterSelect}
+                >
+                  <option value="">Тип брони</option>
+                  <option value="Заявка с сайта">Заявка с сайта</option>
+                  <option value="agent">Бронирования представителя</option>
+                  <option value="user">Бронирования пользователя</option>
+                </select>
+                <input
+                  type="date"
+                  value={dateQuery}
+                  onChange={handleDateQueryChange}
+                  className={classes.filterInput}
+                />
+                <select
+                  name="paymentType"
+                  value={paymentType}
+                  onChange={handlePaymentTypeChange}
+                  className={classes.filterSelect}
+                >
+                  <option value="">Все способы оплаты</option>
+                  <option value="cash">Наличные</option>
+                  <option value="card">Карта</option>
+                </select>
+                <select
+                  name="paymentState"
+                  value={paymentState}
+                  onChange={handlePaymentStateChange}
+                  className={classes.filterSelect}
+                >
+                  <option value="">Все состояния</option>
+                  <option value={'true'}>Подтверждено</option>
+                  <option value={'false'}>Не подтверждено</option>
+                </select>
+                <button onClick={resetFilters} className={classes.resetButton}>
+                  Сбросить фильтры
+                </button>
+              </div>
 
-            <div className={classes.tableWrapper}>
-              <table className={classes.bronTable}>
-                <thead>
-                  <tr>
-                    <th>№</th>
-                    <th>Дата брони</th>
-                    <th>Название тура</th>
-                    <th>Полная цена</th>
-                    <th>Оплата</th>
-                    <th>Состояния</th>
-                    <th>Действия</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredAgents.length > 0 ? (
-                    filteredAgents.map((agent, index) => (
-                      <tr
-                        key={agent._id}
-                        className={
-                          agent.confirm
-                            ? classes.statusConfirmDone
-                            : classes.statusConfirmCash
-                        }
-                      >
-                        <td>{index + 1}</td>
-                        <td>{formatDate(agent.createdAt)}</td>
-                        <td>
-                          {agent.tours.map((tour) => tour.tourTitle).join(', ')}
-                        </td>
-                        <td>{Number(agent.price).toLocaleString('ru-RU')}</td>
-                        <td>
-                          {agent.paymentType === 'cash'
-                            ? 'Наличные'
-                            : agent.paymentType === 'Заявка с сайта'
-                            ? '-'
-                            : 'Карта'}
-                        </td>
-                        <td>
-                          {agent.confirm ? (
-                            <span className={classes.confirmedStatus}>
-                              Подтверждено
-                            </span>
-                          ) : (
-                            <span className={classes.unconfirmedStatus}>
-                              Не подтверждено
-                            </span>
-                          )}
-                        </td>
-                        <td>
-                          <button
-                            onClick={() =>
-                              updateConfirm(
-                                agent._id,
-                                agent.price,
-                                agent.agent,
-                                agent.paymentType,
+              <div className={classes.tableWrapper}>
+                <table className={classes.bronTable}>
+                  <thead>
+                    <tr>
+                      <th>№</th>
+                      <th>Дата брони</th>
+                      <th>Название тура</th>
+                      <th>Полная цена</th>
+                      <th>Оплата</th>
+
+                      <th>Имя клиента</th>
+                      <th>Телефон</th>
+                      <th>Состояния</th>
+                      <th>Действия</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredAgents.length > 0 ? (
+                      filteredAgents.map((agent, index) => (
+                        
+                        <tr
+                          key={agent._id}
+                          className={
+                            agent.confirm
+                              ? classes.statusConfirmDone
+                              : classes.statusConfirmCash
+                          }
+                        >
+                          <td>{index + 1}</td>
+                          <td>{formatDate(agent.createdAt)}</td>
+                          <td>
+                            {agent.tours
+                              .map((tour) => tour.tourTitle)
+                              .join(', ')}
+                          </td>
+                          <td>{Number(agent.price).toLocaleString('ru-RU')}</td>
+                          <td>
+                            {agent.paymentType === 'cash'
+                              ? 'Наличные'
+                              : agent.paymentType === 'Заявка с сайта'
+                              ? '-'
+                              : 'Карта'}
+                          </td>
+
+                          <td>{getUserNameById(agent.agent)}</td>
+                          <td>{getUserPhoneById(agent.agent)}</td>
+                          <td>
+                            {agent.confirm ? (
+                              <span className={classes.confirmedStatus}>
+                                Подтверждено
+                              </span>
+                            ) : (
+                              <span className={classes.unconfirmedStatus}>
+                                Не подтверждено
+                              </span>
+                            )}
+                          </td>
+                          <td>
+                            <button
+                              onClick={() =>
+                                updateConfirm(
+                                  agent._id,
+                                  agent.price,
+                                  agent.agent,
+                                  agent.paymentType,
+                                  agent.confirm
+                                )
+                              }
+                              className={
                                 agent.confirm
-                              )
-                            }
-                            className={
-                              agent.confirm
-                                ? `${classes.confirmButton} ${classes.cancelButton}`
-                                : classes.confirmButton
-                            }
-                          >
-                            {agent.confirm ? 'Отменить' : 'Подтвердить'}
-                          </button>
-
-                          <button
-                            onClick={() => handleDeleteOne(agent._id)}
-                            className={classes.deleteButton}
-                          >
-                            Удалить
-                          </button>
+                                  ? `${classes.confirmButton} ${classes.cancelButton}`
+                                  : classes.confirmButton
+                              }
+                            >
+                              {agent.confirm ? 'Отменить' : 'Подтвердить'}
+                            </button>
+                            <button
+                              onClick={() => handleDeleteOne(agent._id)}
+                              className={classes.deleteButton}
+                            >
+                              Удалить
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={9} style={{ textAlign: 'center' }}>
+                          Нет данных, соответствующих фильтру
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan={7} style={{ textAlign: 'center' }}>
-                        Нет данных, соответствующих фильтру
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                    )}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

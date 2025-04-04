@@ -21,8 +21,19 @@
   height: 98px;
 }
 
-
-
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: red;
+  border-radius: 40px !important;
+  color: #fff;
+  /* width: 25px; */
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 7px;
+  border-radius: 0px;
+}
 
 .admin_header__logo img {
   width: 100%;
@@ -100,6 +111,10 @@
 }
 
 .nav_title {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  /* justify-content: space-between; */
   font-size: 16px;
   font-weight: 400;
   color: #000;
@@ -128,8 +143,6 @@
   /* outline: 1px solid red; */
 }
 
-
-
 .admin_data_nav_logo img {
   width: 83px;
   margin-top: 10px;
@@ -143,6 +156,8 @@
 }
 
 .admin_data__nav___item {
+  display: flex;
+  gap: 15px;
   color: #000;
   text-decoration: none;
   font-weight: normal;
@@ -152,9 +167,8 @@
 .admin_data__nav___item____subItem.activeLink,
 .hoverBlock.activeLink {
   font-weight: bold;
-  color: #000;; /* Цвет выделения */
+  color: #000; /* Цвет выделения */
 }
-
 
 .admin_data__nav___item {
   cursor: pointer;

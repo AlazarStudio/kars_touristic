@@ -185,7 +185,7 @@ function Profile({ children, ...props }) {
     }
   }
 
-  console.log(filteredAgents);
+  // console.log(filteredAgents);
   return (
     <>
       <Header_black />

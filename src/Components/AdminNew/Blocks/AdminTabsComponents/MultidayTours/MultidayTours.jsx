@@ -108,6 +108,8 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
         </div>
       </div>
       <div className={classes.multidayTours_data__tour___btns}>
+        <div className={classes.likesCount}>❤️ {tour.likes?.length || 0}</div>
+
         {/* 👁️ Иконка отображения */}
         <div
           onClick={toggleVisibility}
