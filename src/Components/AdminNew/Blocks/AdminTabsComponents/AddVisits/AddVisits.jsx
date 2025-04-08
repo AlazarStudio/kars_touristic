@@ -4,18 +4,18 @@ import Form from "../../Form/Form";
 import server from '../../../../../serverConfig';
 
 function AddVisits({ children, activeTab, setIsDirty, region, onTourAdded, ...props }) {
-    const [items, setItems] = useState([{ title: '', description: '' }]);
+    const [items, setItems] = useState([{ title: '', description: '', city:'' }]);
     const [checklists, setChecklists] = useState(['']);
     const [days, setDays] = useState(['']);
     const [photos, setPhotos] = useState([]);
 
-    const handleAddItem = () => setItems([...items, { title: '', description: '' }]);
+    const handleAddItem = () => setItems([...items, { title: '', description: '', city:'' }]);
     const handleAddChecklist = () => setChecklists([...checklists, '']);
     const handleAddDay = () => setDays([...days, '']);
     const handleFileChange = (event) => setPhotos([...photos, ...Array.from(event.target.files)]);
 
     const resetAll = () => {
-        setItems([{ title: '', description: '' }]);
+        setItems([{ title: '', description: '', city:'' }]);
         setChecklists(['']);
         setDays(['']);
         setPhotos([]);
@@ -70,6 +70,9 @@ function AddVisits({ children, activeTab, setIsDirty, region, onTourAdded, ...pr
 
                 <label>Название места</label>
                 <input name="title" type="text" placeholder="Название места" required />
+
+                <label>Город</label>
+                <input name="city" type="text" placeholder="Город" required />
 
                 <label>Описание места</label>
                 <textarea name="description" type="text" placeholder="Описание места" required ></textarea>
