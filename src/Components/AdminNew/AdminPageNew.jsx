@@ -598,7 +598,7 @@ function AdminPageNew({ children, ...props }) {
                 target="_blank"
                 className={classes.admin_data_nav_logo}
               >
-                <img src="/about_title_logo.webp" alt="" />
+                <img src="/logo33.png" alt="" />
               </a>
 
               <Link

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import server from '../../../serverConfig';
 
 // import logo from '/favicon_black.webp';
-import logo from '/Logo11.png';
+// import logo from '/Logo11.png';
 import arnament from '/header_arnament.webp';
 import favourite from '/header_favourite.webp';
 import cart from '/header_cart.webp';
@@ -62,7 +62,7 @@ function Header_white({ children, cartCount, ...props }) {
             <header className={classes.header}>
                 <div className={classes.navigation}>
                     <Link to="/" className={classes.navigation_logo}>
-                        <img src={logo} alt="Logo Kars Touristic" />
+                    <img src={'/logo33.png'} alt="Logo Kars Touristic" />
                     </Link>
                     <div className={classes.navigation_links}>
                         <ul>

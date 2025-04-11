@@ -3,7 +3,12 @@
     border-radius: 30px;
     justify-content: space-between;
     align-items: center;
-    background: url("/about_title.webp");
+    background: 
+    linear-gradient(
+      rgba(0,0,0,0.6), 
+      rgba(0,0,0,0.6)
+    ),
+    url("/about_title.webp");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
@@ -14,6 +19,13 @@
     justify-content: center;
     align-items: center;
     width: 45%;
+}
+
+.about_title__left img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
 }
 
 .about_title__right {

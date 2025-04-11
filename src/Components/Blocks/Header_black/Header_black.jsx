@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from './Header_black.module.css';
 import { Link, useLocation } from "react-router-dom";
 
-import logo from '/favicon_black.webp';
+// import logo from '/favicon_black.webp';
 import arnament from '/header_arnament.webp';
 import favourite from '/header_favourite_black.webp';
 import cart from '/header_cart_black.webp';
@@ -65,7 +65,7 @@ function Header_black({ children, cartCount, tempMain, ...props }) {
                     <header className={classes.header}>
                         <div className={classes.navigation}>
                             <Link to="/" className={classes.navigation_logo}>
-                                <img src={logo} alt="Logo Kars Touristic" />
+                                <img src={'/logo33.png'} alt="Logo Kars Touristic" />
                                 
                             </Link>
                             <div className={classes.navigation_links}>

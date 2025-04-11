@@ -118,6 +118,30 @@
     cursor: pointer;
 }
 
+.bronBtn {
+    margin: 10px auto 10px;
+    padding: 10px 20px;
+    background-color: #69A64B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    font-weight: 500;
+    transition: 0.2s ease;
+  }
+  
+  /* .bronBtn:hover {
+    background-color: #a72c3a;
+  } */
+  
+  .hotelNumbers_item__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+
 
 
 @media (min-width: 0px) and (max-width: 1299px) {

@@ -11,6 +11,7 @@ footer {
     width: var(--blockWidth);
     display: flex;
     justify-content: space-between;
+    gap: 110px;
 }
 
 .footer_data__column {
@@ -56,6 +57,10 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.footer_data__column___item img {
+    width: 40%;
 }
 
 

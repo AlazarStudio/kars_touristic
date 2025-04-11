@@ -85,7 +85,7 @@ function About({ children, ...props }) {
                     <WidthBlock>
                         <div className={classes.about_title}>
                             <div className={classes.about_title__left}>
-                                <img src={logo} alt="" />
+                            <img src={'/logo33.png'} alt="Logo Kars Touristic" />
                             </div>
                             <div className={classes.about_title__right}>
                                 <div className={classes.about_title__right___name}>О компании</div>

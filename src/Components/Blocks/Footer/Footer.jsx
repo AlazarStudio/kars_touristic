@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import classes from './Footer.module.css';
 import { Link } from "react-router-dom";
 
-import logo from '/favicon.webp';
+// import logo from '/logo33.png';
 import alazar from '/alazar_light.png';
 import tg from '/tg.webp';
 import vk from '/vk.webp';
@@ -32,7 +32,7 @@ function Footer({ children, ...props }) {
                 <div className={classes.footer_data}>
                     <div className={classes.footer_data__column}>
                         <div className={classes.footer_data__column___item}>
-                            <Link to="/"><img src={logo} alt="" /></Link>
+                            <Link to="/"><img src={'/logo33.png'} alt="" /></Link>
                         </div>
 
                         <div className={classes.footer_data__column___block}>

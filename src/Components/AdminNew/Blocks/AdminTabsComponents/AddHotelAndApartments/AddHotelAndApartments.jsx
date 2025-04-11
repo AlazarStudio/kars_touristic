@@ -101,6 +101,32 @@ function AddHotelAndApartments({ setActiveTab }) {
   //     }
   //   };
 
+  const handleToggleStatus = async (id, currentStatus) => {
+    const newStatus =
+      currentStatus === 'Обработано' ? 'В ожидании' : 'Обработано';
+
+    try {
+      const response = await fetch(
+        `${server}/api/updateHotelBronStatus/${id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ status: newStatus }),
+        }
+      );
+
+      if (response.ok) {
+        fetchBronHotels(); // обновить список после изменения
+      } else {
+        console.error('Ошибка при обновлении статуса');
+      }
+    } catch (error) {
+      console.error('Ошибка при отправке запроса:', error);
+    }
+  };
+
   const handleDeleteOne = async (id) => {
     if (window.confirm('Вы уверены, что хотите удалить эту бронь?')) {
       try {
@@ -123,71 +149,98 @@ function AddHotelAndApartments({ setActiveTab }) {
       </div>
 
       <div className={classes.gids}>
-  <div className={classes.gids_menu}>
-    <div className={classes.gids_menu_left}>
-      <button className={classes.multidayTours_top__add} onClick={openModal}>
-        Забронировать отель
-      </button>
-      <input
-        type="text"
-        placeholder="Поиск по названию"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-      />
-      <input
-        type="date"
-        value={searchDate}
-        onChange={(e) => setSearchDate(e.target.value)}
-      />
-      <button onClick={resetFilters} className={classes.resetButton}>
-        Сбросить фильтры
-      </button>
-    </div>
-  </div>
+        <div className={classes.gids_menu}>
+          <div className={classes.gids_menu_left}>
+            <button
+              className={classes.multidayTours_top__add}
+              onClick={openModal}
+            >
+              Забронировать отель
+            </button>
+            <input
+              type="text"
+              placeholder="Поиск по названию"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <input
+              type="date"
+              value={searchDate}
+              onChange={(e) => setSearchDate(e.target.value)}
+            />
+            <button onClick={resetFilters} className={classes.resetButton}>
+              Сбросить фильтры
+            </button>
+          </div>
+        </div>
 
-  {filteredHotels.length > 0 ? (
-    <div className={classes.tableWrapper}>
-      <table className={classes.hotelsTable}>
-        <thead>
-          <tr>
-            <th>№</th>
-            <th>Дата брони</th>
-            <th>Название отеля</th>
-            <th>Гости</th>
-            <th>Полная цена</th>
-            <th>Дата заезда - выезда</th>
-            <th>Действие</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredHotels.map((item, index) => (
-            <tr key={item._id}>
-              <td>{index + 1}</td>
-              <td>{formatDate(item.createdAt)}</td>
-              <td>{item.name}</td>
-              <td>{item.guests}</td>
-              <td>{Number(item.fullPrice).toLocaleString('ru-RU')}</td>
-              <td>
-                {formatDate(item.arrivalDate)} – {formatDate(item.departureDate)}
-              </td>
-              <td>
-                <button
-                  onClick={() => handleDeleteOne(item._id)}
-                  className={classes.deleteButton}
-                >
-                  Удалить
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  ) : (
-    <div className={classes.noResults}>Нет доступных бронирований</div>
-  )}
-</div>
+        {filteredHotels.length > 0 ? (
+          <div className={classes.tableWrapper}>
+            <table className={classes.hotelsTable}>
+              <thead>
+                <tr>
+                  <th>№</th>
+                  <th>Дата брони</th>
+                  <th>Название отеля</th>
+                  <th>ФИО</th>
+                  <th>Телефон</th>
+                  <th>Номер</th>
+                  <th>Гости</th>
+                  <th>Полная цена</th>
+                  <th>Дата заезда - выезда</th>
+                  <th>Статус</th>
+                  <th>Действие</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredHotels.map((item, index) => (
+                  <tr
+                    key={item._id}
+                    style={{
+                      opacity: item.status === 'Обработано' ? 0.5 : 1, // Прозрачность для обработанных
+                    }}
+                  >
+                    <td>{index + 1}</td>
+                    <td>{formatDate(item.createdAt)}</td>
+                    <td>{item.name}</td>
+                    <td>{item.client?.name || '-'}</td>
+                    <td>{item.client?.phone || '-'}</td>
+                    <td>{item.roomNumber || '-'}</td>
+                    <td>{item.guests}</td>
+                    <td>{Number(item.fullPrice).toLocaleString('ru-RU')}</td>
+                    <td>
+                      {formatDate(item.arrivalDate)} –{' '}
+                      {formatDate(item.departureDate)}
+                    </td>
+                    <td>{item.status || 'В ожидании'}</td>
+                    <td style={{ display: 'flex', gap: '8px' }}>
+                      <button
+                        onClick={() =>
+                          handleToggleStatus(item._id, item.status)
+                        }
+                        className={classes.statusButton}
+                      >
+                        {item.status === 'Обработано'
+                          ? 'Вернуть'
+                          : 'Обработать'}
+                      </button>
 
+                      <button
+                        onClick={() => handleDeleteOne(item._id)}
+                        className={classes.deleteButton}
+                      >
+                        Удалить
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className={classes.noResults}>Нет доступных бронирований</div>
+        )}
+      </div>
 
       {/* Модальное окно */}
       <ReactModal

@@ -109,7 +109,30 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
       </div>
       <div className={classes.multidayTours_data__tour___btns}>
         <div className={classes.likesCount}>❤️ {tour.likesCount || 0}</div>
-
+        <div
+          onClick={togglePopular}
+          title={
+            tour.popular ? 'Убрать из популярных' : 'Добавить в популярные'
+          }
+          style={{
+            width: 25,
+            height: 25,
+            // borderRadius: '50%',
+            // backgroundColor: '#000',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+          }}
+        >
+          {tour.popular ? (
+            <Star style={{ color: '#FFD700' }} />
+          ) : (
+            <Star style={{ color: '#aaa' }} />
+          )}
+        </div>
         {/* 👁️ Иконка отображения */}
         <div
           onClick={toggleVisibility}
@@ -134,30 +157,7 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
             <EyeOff size={20} color="gray" />
           )}
         </div>
-        <div
-          onClick={togglePopular}
-          title={
-            tour.popular ? 'Убрать из популярных' : 'Добавить в популярные'
-          }
-          style={{
-            width: 25,
-            height: 25,
-            borderRadius: '50%',
-            backgroundColor: '#000',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            // boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-          }}
-        >
-          {tour.popular ? (
-            <Star style={{ color: '#FFD700' }} />
-          ) : (
-            <Star style={{ color: '#aaa' }} />
-          )}
-        </div>
+       
 
         <div
           className={`${classes.multidayTours_data__tour___btns____item}`}

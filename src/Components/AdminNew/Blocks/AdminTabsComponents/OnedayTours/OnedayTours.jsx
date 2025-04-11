@@ -15,8 +15,6 @@ const ItemTypes = {
 };
 
 function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
-
-
   const toggleVisibility = async () => {
     try {
       const res = await fetch(`${server}/api/updateOneOnedayTour/${tour._id}`, {
@@ -59,31 +57,28 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
     },
   });
 
-    const togglePopular = async () => {
-      try {
-        const res = await fetch(
-          `${server}/api/updateOneOnedayTour/${tour._id}`,
-          {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ popular: !tour.popular }),
-          }
+  const togglePopular = async () => {
+    try {
+      const res = await fetch(`${server}/api/updateOneOnedayTour/${tour._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ popular: !tour.popular }),
+      });
+
+      const data = await res.json();
+      if (data) {
+        setTours((prev) =>
+          prev.map((t) =>
+            t._id === tour._id ? { ...t, popular: !tour.popular } : t
+          )
         );
-  
-        const data = await res.json();
-        if (data) {
-          setTours((prev) =>
-            prev.map((t) =>
-              t._id === tour._id ? { ...t, popular: !tour.popular } : t
-            )
-          );
-        }
-      } catch (err) {
-        console.error('Ошибка при изменении популярности тура:', err);
       }
-    };
+    } catch (err) {
+      console.error('Ошибка при изменении популярности тура:', err);
+    }
+  };
 
   return (
     <div
@@ -107,12 +102,47 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
         </div>
       </div>
       <div className={classes.multidayTours_data__tour___btns}>
-      <div className={classes.likesCount}>❤️ {tour.likesCount || 0}</div>
-
+        <div className={classes.likesCount}>❤️ {tour.likesCount || 0}</div>
         <div
-          className={classes.multidayTours_data__tour___btns____item}
+          onClick={togglePopular}
+          title={
+            tour.popular ? 'Убрать из популярных' : 'Добавить в популярные'
+          }
+          style={{
+            width: 25,
+            height: 25,
+            // borderRadius: '50%',
+            // backgroundColor: '#000',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+          }}
+        >
+          {tour.popular ? (
+            <Star style={{ color: '#FFD700' }} />
+          ) : (
+            <Star style={{ color: '#aaa' }} />
+          )}
+        </div>
+        <div
           onClick={toggleVisibility}
           title={tour.visible ? 'Скрыть тур' : 'Показать тур'}
+          style={{
+            width: 25,
+            height: 25,
+            borderRadius: '50%',
+            backgroundColor: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: '2px solid green',
+            // boxShadow: '0 0 0 1px rgba(0,0,0,0.1)',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+          }}
         >
           {tour.visible ? (
             <Eye size={20} color="green" />
@@ -120,20 +150,6 @@ function Tour({ tour, index, moveTour, deleteElement, openModal, setTours }) {
             <EyeOff size={20} color="gray" />
           )}
         </div>
-
-        <div
-                  className={classes.multidayTours_data__tour___btns____item}
-                  onClick={togglePopular}
-                  title={
-                    tour.popular ? 'Убрать из популярных' : 'Добавить в популярные'
-                  }
-                >
-                  {tour.popular ? (
-                    <Star style={{ color: '#FFD700' }} />
-                  ) : (
-                    <StarBorder style={{ color: '#aaa' }} />
-                  )}
-                </div>
 
         <div
           className={`${classes.multidayTours_data__tour___btns____item}`}
@@ -247,16 +263,15 @@ function OnedayTours({ children, title, type, role, ...props }) {
 
             <div className={classes.multidayTours_data}>
               {tours.map((tour, index) => (
-              <Tour
-              key={tour._id}
-              index={index}
-              tour={tour}
-              moveTour={moveTour}
-              deleteElement={deleteElement}
-              openModal={openModal}
-              setTours={setTours}
-            />
-            
+                <Tour
+                  key={tour._id}
+                  index={index}
+                  tour={tour}
+                  moveTour={moveTour}
+                  deleteElement={deleteElement}
+                  openModal={openModal}
+                  setTours={setTours}
+                />
               ))}
             </div>
           </div>

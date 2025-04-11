@@ -12,6 +12,10 @@
     margin-top: 20px;
 }
 
+.navigation_logo img{
+    width: 110px;
+}
+
 .navigation {
     width: var(--blockWidth);
     display: flex;

@@ -81,6 +81,25 @@
     margin-top: 20px;
 }
 
+/* В Calendar.module.css */
+.requestBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #69A64B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    /* font-weight: bold; */
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .requestBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+
 @media (min-width: 0px) and (max-width: 1299px) {
     .calendar {
         width: 100%;

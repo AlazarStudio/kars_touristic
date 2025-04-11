@@ -506,6 +506,28 @@
   outline: none;
 }
 
+.statusButton {
+  padding: 6px 12px; /* Отступы для кнопки */
+  font-size: 14px; /* Размер шрифта */
+  border: 1px solid #ccc; /* Граница */
+  border-radius: 5px; /* Радиус скругления */
+  min-width: 120px; /* Минимальная ширина для кнопки */
+  text-align: center; /* Текст по центру */
+  background-color: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.statusButton:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.statusButton:active {
+  transform: scale(0.98);
+}
+
+
 .multidayTours_back button img {
   width: 14px;
 }
