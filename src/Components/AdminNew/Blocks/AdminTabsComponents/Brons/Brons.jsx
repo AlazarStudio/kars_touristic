@@ -4,9 +4,11 @@ import { useParams, useNavigate, Link, useLocation } from 'react-router-dom';
 import server from '../../../../../serverConfig';
 import { Calculate } from '@mui/icons-material';
 
-function Brons({ fetchBronsData }) {
+function Brons({ fetchBronsData, user }) {
   const location = useLocation();
   const receivedData = location.state;
+
+  const { userId, name } = location.state || {};
 
   const { add } = useParams();
   const navigate = useNavigate();
@@ -107,20 +109,13 @@ function Brons({ fetchBronsData }) {
     const found = users.find((u) => u._id === id);
     return found ? found.name : `ID: ${id}`;
   };
-  
+
   const getUserPhoneById = (agentField) => {
     if (!agentField) return '-';
     const id = typeof agentField === 'object' ? agentField._id : agentField;
     const found = users.find((u) => u._id === id);
     return found ? found.phone : 'не найден';
   };
-  
-  
-  
-
-  
-
-  
 
   // Функция для фильтрации данных
   const applyFilters = () => {
@@ -154,7 +149,20 @@ function Brons({ fetchBronsData }) {
         .split('T')[0];
       const matchesDateQuery =
         dateQuery === '' || agentBookingDate === dateQuery;
-
+      if (userId) {
+        filtered = filtered.filter((agent) => {
+          // Допустим, agent.agent = userId
+          return String(agent.agent) === String(userId);
+        });
+      }
+      if (user) {
+        filtered = filtered.filter((agent) => {
+          const agentId = typeof agent.agent === 'object'
+            ? agent.agent._id
+            : agent.agent;
+          return String(agentId) === String(user._id);
+        });
+      }
       return (
         matchesTourTitleOrAgent &&
         matchesPaymentType &&
@@ -260,9 +268,6 @@ function Brons({ fetchBronsData }) {
       }
     }
   };
-
-
-
 
   // Сброс Фильтров
 
@@ -375,7 +380,6 @@ function Brons({ fetchBronsData }) {
                   <tbody>
                     {filteredAgents.length > 0 ? (
                       filteredAgents.map((agent, index) => (
-                        
                         <tr
                           key={agent._id}
                           className={

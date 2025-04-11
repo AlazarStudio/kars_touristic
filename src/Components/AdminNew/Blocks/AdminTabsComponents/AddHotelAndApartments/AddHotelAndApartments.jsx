@@ -3,21 +3,32 @@ import classes from './AddHotelAndApartments.module.css';
 import server from '../../../../../serverConfig';
 import ReactModal from 'react-modal';
 import CalendarAdmin from '../../../../Blocks/CalendarAdmin/CalendarAdmin';
+import { useLocation } from 'react-router-dom';
 
 // Устанавливаем корневой элемент для модального окна
 ReactModal.setAppElement('#root');
 
-function AddHotelAndApartments({ setActiveTab }) {
+function AddHotelAndApartments({ setActiveTab, user }) {
   const [bronHotels, setBronHotels] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hotel, setHotel] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(user ? user.name : '');
   const [searchDate, setSearchDate] = useState('');
   //   const [selectedItems, setSelectedItems] = useState([]);
   const resetFilters = () => {
     setSearchQuery('');
     setSearchDate('');
   };
+
+  const location = useLocation();
+  const { userId } = location.state || {};
+
+
+  useEffect(() => {
+    if (user && user.name) {
+      setSearchQuery(user.name);
+    }
+  }, [user]);
 
   // Загрузка списка отелей
   const fetchHotel = () => {
@@ -54,52 +65,46 @@ function AddHotelAndApartments({ setActiveTab }) {
     return date.toLocaleDateString('ru-RU');
   }
 
-  // Фильтрация списка по названию отеля
-  const filteredHotels = bronHotels.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
-      (searchDate
-        ? formatDate(item.createdAt) === formatDate(searchDate)
-        : true)
-  );
-
-  // Обработчик выбора всех записей
-  //   const handleSelectAll = () => {
-  //     if (selectedItems.length === filteredHotels.length) {
-  //       setSelectedItems([]); // Если уже выбраны все, снимаем выделение
-  //     } else {
-  //       setSelectedItems(filteredHotels.map((item) => item._id)); // Выбираем все
-  //     }
-  //   };
-
-  // Обработчик выбора конкретной записи
-  //   const handleSelectItem = (id) => {
-  //     setSelectedItems((prev) =>
-  //       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-  //     );
-  //   };
-
-  // Удаление выбранных бронирований
-  //   const handleDeleteSelected = async () => {
-  //     if (selectedItems.length === 0)
-  //       return alert('Выберите записи для удаления!');
-
-  //     if (
-  //       window.confirm('Вы уверены, что хотите удалить выбранные бронирования?')
-  //     ) {
-  //       for (const id of selectedItems) {
-  //         try {
-  //           await fetch(`${server}/api/deleteHotelBron/${id}`, {
-  //             method: 'DELETE',
-  //           });
-  //         } catch (error) {
-  //           console.error(`Ошибка при удалении брони ${id}`, error);
-  //         }
-  //       }
-  //       fetchBronHotels();
-  //       setSelectedItems([]);
-  //     }
-  //   };
+  const filteredHotels = bronHotels.filter((item) => {
+    // 1) Если передан userId – ограничиваем поиск по пользователю:
+    let matchesUserId = true;
+    if (userId) {
+      // Здесь сравниваем, например, если в брони хранится ID клиента в поле client._id:
+      matchesUserId = String(item.client?._id) === String(userId);
+    }
+  
+    // 2) Приводим поисковый запрос к нижнему регистру
+    const query = searchQuery.toLowerCase().trim();
+  
+    // 3) Собираем все поля, по которым хотим осуществлять поиск.
+    // Можно добавить любые поля: название отеля, ФИО, телефон, номер, количество гостей, цену, даты и статус.
+    const combinedFields = [
+      item.name,                               // название отеля
+      item.client?.name,                       // ФИО клиента
+      item.client?.phone,                      // телефон клиента
+      item.roomNumber,                         // номер (если есть)
+      String(item.guests),                     // количество гостей
+      String(item.fullPrice),                  // полная цена
+      formatDate(item.createdAt),              // дата бронирования
+      formatDate(item.arrivalDate),            // дата заезда
+      formatDate(item.departureDate),          // дата выезда
+      item.status                              // статус брони
+    ]
+      .filter((field) => field !== undefined && field !== null)
+      .join(' ')
+      .toLowerCase();
+  
+    // Если поисковая строка пуста, всегда возвращаем true.
+    const matchesSearch = query === '' || combinedFields.includes(query);
+  
+    // 4) Если отдельно нужен фильтр по дате (например, по дате создания записи), можно оставить дополнительную проверку:
+    const matchesDate = searchDate
+      ? formatDate(item.createdAt) === formatDate(searchDate)
+      : true;
+  
+    return matchesUserId && matchesSearch && matchesDate;
+  });
+  
 
   const handleToggleStatus = async (id, currentStatus) => {
     const newStatus =
@@ -159,7 +164,7 @@ function AddHotelAndApartments({ setActiveTab }) {
             </button>
             <input
               type="text"
-              placeholder="Поиск по названию"
+              placeholder="Поиск"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />

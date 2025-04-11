@@ -138,13 +138,13 @@ function DraggableRegion({
 
 function AdminPageNew({ children, ...props }) {
   const { id = '', title } = useParams(); // Теперь id всегда строка
-
+  const [selectedUser, setSelectedUser] = useState(null);
   // Храним состояние открытых секций
 
   useEffect(() => {
     if (id && id !== '') {
       setActiveTab(id);
-  
+
       if (id === 'editRegion') {
         setOpenSection('regions');
       } else if (id === 'adminReviews') {
@@ -152,7 +152,6 @@ function AdminPageNew({ children, ...props }) {
       }
     }
   }, [id]);
-  
 
   // useEffect(() => {
   //   setActiveTab(id); // Устанавливаем активный таб сразу при изменении id
@@ -177,7 +176,6 @@ function AdminPageNew({ children, ...props }) {
     }
     return JSON.parse(savedSections);
   });
-  
 
   // Функция для переключения секций с сохранением в локальное хранилище
   // const toggleSection = (section) => {
@@ -261,7 +259,6 @@ function AdminPageNew({ children, ...props }) {
     }
     return id || savedTab || 'addUsers';
   });
-  
 
   useEffect(() => {
     if (activeTab) {
@@ -496,7 +493,6 @@ function AdminPageNew({ children, ...props }) {
       setActiveTab('addUsers');
     }
   }, [id]);
-  
 
   // Трансфер
 
@@ -573,8 +569,6 @@ function AdminPageNew({ children, ...props }) {
   useEffect(() => {
     fetchReviews();
   }, []);
-
-
 
   // Отзывы
 
@@ -914,7 +908,7 @@ function AdminPageNew({ children, ...props }) {
 
               {/* Редактировать авторов туров */}
               {activeTab === 'brons' && (
-                <Brons fetchBronsData={fetchBronsData} />
+                <Brons fetchBronsData={fetchBronsData} user={selectedUser} />
               )}
 
               {activeTab === 'touragents' && <Gids />}
@@ -947,10 +941,16 @@ function AdminPageNew({ children, ...props }) {
                 <AddAgent setActiveTab={setActiveTab} />
               )}
               {activeTab === 'addUsers' && (
-                <AddUsers setActiveTab={setActiveTab} />
+                <AddUsers
+                  setActiveTab={setActiveTab}
+                  onSelectedUser={setSelectedUser} // прокидываем метод
+                />
               )}
               {activeTab === 'addHotelAndApartments' && (
-                <AddHotelAndApartments setActiveTab={setActiveTab} />
+                <AddHotelAndApartments
+                  setActiveTab={setActiveTab}
+                  user={selectedUser}
+                />
               )}
               {activeTab === 'adminReviews' && (
                 <AdminReviews fetchReviews={fetchReviews} />

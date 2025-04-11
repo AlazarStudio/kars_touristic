@@ -23,7 +23,7 @@ function Modal({ isActive, onClose, children }) {
   );
 }
 
-function AddUsers({ setActiveTab }) {
+function AddUsers({ setActiveTab, onSelectedUser }) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -168,6 +168,8 @@ function AddUsers({ setActiveTab }) {
     setIsProfileModalActive(true);
   };
 
+
+
   return (
     <div className={classes.multidayTours}>
       <div className={classes.multidayTours_top}>
@@ -194,42 +196,67 @@ function AddUsers({ setActiveTab }) {
         </div>
 
         <div className={classes.tableWrapper}>
-  <table className={classes.usersTable}>
-    <thead>
-      <tr>
-        <th>№</th>
-        <th>ФИО</th>
-        <th>Почта</th>
-        <th>Телефон</th>
-        <th>Действия</th>
-      </tr>
-    </thead>
-    <tbody>
-      {filteredAgents.length > 0 ? (
-        filteredAgents.map((item, index) => (
-          <tr key={item._id}>
-            <td>{index + 1}</td>
-            <td>{item.name}</td>
-            <td>{item.email}</td>
-            <td>{item.phone}</td>
-            <td>
-              <button className={classes.tableBut} onClick={() => handleProfileClick(item)}>Профиль</button>{' '}
-              <button className={classes.tableBut} onClick={() => setActiveTab('brons')}>Брони</button>{' '}
-              <button className={classes.tableButDel} onClick={() => handleDeleteUser(item._id)}>Удалить</button>
-            </td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td colSpan="5" style={{ textAlign: 'center' }}>
-            Пользователи не найдены.
-          </td>
-        </tr>
-      )}
-    </tbody>
-  </table>
-</div>
-
+          <table className={classes.usersTable}>
+            <thead>
+              <tr>
+                <th>№</th>
+                <th>ФИО</th>
+                <th>Почта</th>
+                <th>Телефон</th>
+                <th>Действия</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredAgents.length > 0 ? (
+                filteredAgents.map((item, index) => (
+                  <tr key={item._id}>
+                    <td>{index + 1}</td>
+                    <td>{item.name}</td>
+                    <td>{item.email}</td>
+                    <td>{item.phone}</td>
+                    <td>
+                      <button
+                        className={classes.tableBut}
+                        onClick={() => handleProfileClick(item)}
+                      >
+                        Профиль
+                      </button>{' '}
+                      <button
+                        onClick={() => {
+                          onSelectedUser(item); // Сохраняем выбранного пользователя
+                          setActiveTab('brons'); // Переключаемся на вкладку "Брони"
+                        }}
+                      >
+                        Туры
+                      </button>
+                      {/* Аналогично, если нужен отдельный раздел под отели */}
+                      <button
+                        onClick={() => {
+                          onSelectedUser(item);
+                          setActiveTab('addHotelAndApartments');
+                        }}
+                      >
+                        Отели
+                      </button>
+                      <button
+                        className={classes.tableButDel}
+                        onClick={() => handleDeleteUser(item._id)}
+                      >
+                        Удалить
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="5" style={{ textAlign: 'center' }}>
+                    Пользователи не найдены.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Модалка регистрации */}
