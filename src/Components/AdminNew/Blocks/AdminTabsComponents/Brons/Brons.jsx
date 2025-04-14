@@ -27,6 +27,10 @@ function Brons({ fetchBronsData, user }) {
   const [searchQuery, setSearchQuery] = useState(receivedData?.name || '');
   const [selectedAgents, setSelectedAgents] = useState([]);
 
+  const [userIdFromState, setUserIdFromState] = useState(userId);
+  const [nameFromState, setNameFromState] = useState(name);
+  const [filtersReset, setFiltersReset] = useState(false);
+
   const fetchTouragents = async () => {
     try {
       const response = await fetch(`${server}/api/getAgents`);
@@ -103,12 +107,6 @@ function Brons({ fetchBronsData, user }) {
     getUserInfo();
   }, []);
 
-  useEffect(() => {
-    if (user && user.name) {
-      setSearchQuery(user.name);
-    }
-  }, [user]);
-
   const getUserNameById = (agentField) => {
     if (!agentField) return '-';
     const id = typeof agentField === 'object' ? agentField._id : agentField;
@@ -127,9 +125,15 @@ function Brons({ fetchBronsData, user }) {
   const applyFilters = () => {
     let filtered = touragents;
 
-    if (userId) {
+    // if (userId) {
+    //   filtered = filtered.filter((agent) => {
+    //     return String(agent.agent) === String(userId);
+    //   });
+    // }
+
+    if (userIdFromState) {
       filtered = filtered.filter((agent) => {
-        return String(agent.agent) === String(userId);
+        return String(agent.agent) === String(userIdFromState);
       });
     }
 
@@ -193,6 +197,8 @@ function Brons({ fetchBronsData, user }) {
     dateQuery,
     touragents,
     users,
+    userIdFromState,
+    nameFromState,
   ]);
 
   const handleSearchChange = (e) => {
@@ -296,6 +302,13 @@ function Brons({ fetchBronsData, user }) {
     }
   };
 
+  useEffect(() => {
+    if (filtersReset) {
+      applyFilters();
+      setFiltersReset(false); // сбрасываем обратно
+    }
+  }, [filtersReset]);
+
   // Сброс Фильтров
 
   const resetFilters = () => {
@@ -304,7 +317,27 @@ function Brons({ fetchBronsData, user }) {
     setPaymentState('');
     setBronTypeRole('');
     setDateQuery('');
+    setUserIdFromState(null);
+    setFiltersReset(true);
+  
+    // Сначала сбрасываем URL
+    navigate('/admin/brons', { replace: true });
+  
+    // А затем принудительно обновляем страницу
+    setTimeout(() => {
+      window.location.reload();
+    }, 50);
   };
+  
+
+  useEffect(() => {
+    if (receivedData?.name && !filtersReset) {
+      setSearchQuery(receivedData.name);
+    }
+    if (receivedData?.userId && !filtersReset) {
+      setUserIdFromState(receivedData.userId);
+    }
+  }, [receivedData, filtersReset]);
 
   // Сброс Фильтров
 
@@ -471,9 +504,7 @@ function Brons({ fetchBronsData, user }) {
                                   : classes.confirmButton
                               }
                             >
-                              {agent.status
-                                ? 'Отменить'
-                                : 'Обработать'}
+                              {agent.status ? 'Отменить' : 'Обработать'}
                             </button>
 
                             <button
@@ -492,7 +523,7 @@ function Brons({ fetchBronsData, user }) {
                                   : classes.confirmButton
                               }
                             >
-                              {agent.confirm ? 'Не оплачено' : 'Оплчено'}
+                              {agent.confirm ? 'Не оплачено' : 'Оплачено'}
                             </button>
                             <button
                               onClick={() => {
@@ -544,15 +575,11 @@ function Brons({ fetchBronsData, user }) {
               <h3>Основные данные</h3>
               <p>
                 <b>Оплта:</b>{' '}
-                {selectedBron.confirm
-                  ? '✅ Оплачено'
-                  : '❌ Не оплачено'}
+                {selectedBron.confirm ? '✅ Оплачено' : '❌ Не оплачено'}
               </p>
               <p>
                 <b>Статус:</b>{' '}
-                {selectedBron.status
-                  ? '✅ Подтверждено'
-                  : '❌ Не подтверждено'}
+                {selectedBron.status ? '✅ Подтверждено' : '❌ Не подтверждено'}
               </p>
               <p>
                 <b>Тип брони:</b> {selectedBron.bronTypeRole}

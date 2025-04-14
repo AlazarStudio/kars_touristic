@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './AddUsers.module.css';
 import server from '../../../../../serverConfig';
+import { useNavigate } from 'react-router-dom';
 
 function Modal({ isActive, onClose, children }) {
   if (!isActive) return null;
@@ -33,7 +34,7 @@ function AddUsers({ setActiveTab, onSelectedUser }) {
     role: 'user',
     adminPanelAccess: true,
   });
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [isModalActive, setIsModalActive] = useState(false);
   const [isProfileModalActive, setIsProfileModalActive] = useState(false);
@@ -168,8 +169,6 @@ function AddUsers({ setActiveTab, onSelectedUser }) {
     setIsProfileModalActive(true);
   };
 
-
-
   return (
     <div className={classes.multidayTours}>
       <div className={classes.multidayTours_top}>
@@ -223,8 +222,9 @@ function AddUsers({ setActiveTab, onSelectedUser }) {
                       </button>{' '}
                       <button
                         onClick={() => {
-                          onSelectedUser(item); // Сохраняем выбранного пользователя
-                          setActiveTab('brons'); // Переключаемся на вкладку "Брони"
+                          onSelectedUser(item);
+                          navigate('/admin/brons', { state: item });
+                          setActiveTab('brons');
                         }}
                       >
                         Туры
