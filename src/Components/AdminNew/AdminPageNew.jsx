@@ -26,6 +26,7 @@ import Brons from './Blocks/AdminTabsComponents/Brons/Brons';
 import AddUsers from './Blocks/AdminTabsComponents/AddUsers/AddUsers';
 import AddHotelAndApartments from './Blocks/AdminTabsComponents/AddHotelAndApartments/AddHotelAndApartments';
 import AdminReviews from './Blocks/AdminTabsComponents/AdminReviews/AdminReviews';
+import AddPartners from './Blocks/AdminTabsComponents/AddPartners/AddPartners';
 
 const ItemType = {
   REGION: 'region',
@@ -760,6 +761,17 @@ function AdminPageNew({ children, ...props }) {
                   >
                     Турагентам
                   </Link>
+
+                  {/* Партнеры */}
+                  <Link
+                    to={`/admin/partners`}
+                    className={`${classes.admin_data__nav___item} ${
+                      activeTab === 'addPartners' ? classes.activeLink : ''
+                    } ${classes.hoverBlock}`}
+                    onClick={() => setActiveTab('addPartners')}
+                  >
+                    Партнеры
+                  </Link>
                 </div>
               )}
 
@@ -918,6 +930,9 @@ function AdminPageNew({ children, ...props }) {
               {activeTab === 'addAboutCompany' && <AddAboutCompany />}
               {activeTab === 'addOurTeam' && <AddOurTeam />}
               {activeTab === 'addOurMission' && <AddOurMission />}
+
+              {/* Партнеры */}
+              {activeTab === 'addPartners' && <AddPartners />}
 
               {/* Добавить Транфер */}
               {activeTab === 'addTransfer' && (

@@ -33,6 +33,7 @@ import SignUpTouragent from './Components/Admin/Blocks/SignUpTouragent/SignUpTou
 import ToursModered_Page from './Components/Pages/ToursModered_Page';
 import AdminPageNew from './Components/AdminNew/AdminPageNew';
 import RedirectOldTours from "./Components/Pages/RedirectOldTours";
+import Partners_Page from "./Components/Pages/Partners_Page/Partners_Page";
 
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
           <Route path="/faq" element={<Faq_Page />} />
           <Route path="/contacts" element={<Contacts_Page />} />
           <Route path="/turagents" element={<Turagents_Page />} />
+          <Route path="/partners" element={<Partners_Page />} />
 
           <Route path="/region/:id" element={<Region_Page />} />
           <Route path="/region/:id/:idTour/" element={<Region_Page />} />

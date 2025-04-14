@@ -288,7 +288,8 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             paymentType: paymentMethod,
             tours: [tour],
             passengers: passengerInfo,
-            bookingDate: selectedDate,
+            bookingDate: tourDay[0], // одна выбранная дата
+
             bookingTime: tour.departureTime,
             confirm: paymentMethod === 'cash' ? false : true,
         };
@@ -376,7 +377,8 @@ function CalendarTour({ closeModal, tour, selectedDate }) {
             paymentType: 'Заявка с сайта',
             tours: [tour],
             passengers: passengerInfo,
-            bookingDate: selectedDate,
+            bookingDate: tourDay[0], // одна выбранная дата
+
             bookingTime: tour.departureTime,
             confirm: false,
         };

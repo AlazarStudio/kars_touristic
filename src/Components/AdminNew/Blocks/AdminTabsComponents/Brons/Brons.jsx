@@ -103,6 +103,12 @@ function Brons({ fetchBronsData, user }) {
     getUserInfo();
   }, []);
 
+  useEffect(() => {
+    if (user && user.name) {
+      setSearchQuery(user.name);
+    }
+  }, [user]);
+
   const getUserNameById = (agentField) => {
     if (!agentField) return '-';
     const id = typeof agentField === 'object' ? agentField._id : agentField;
@@ -119,7 +125,23 @@ function Brons({ fetchBronsData, user }) {
 
   // Функция для фильтрации данных
   const applyFilters = () => {
-    let filtered = touragents.filter((agent) => {
+    let filtered = touragents;
+
+    if (userId) {
+      filtered = filtered.filter((agent) => {
+        return String(agent.agent) === String(userId);
+      });
+    }
+
+    if (user) {
+      filtered = filtered.filter((agent) => {
+        const agentId =
+          typeof agent.agent === 'object' ? agent.agent._id : agent.agent;
+        return String(agentId) === String(user._id);
+      });
+    }
+
+    filtered = filtered.filter((agent) => {
       const tourTitles = agent.tours
         .map((tour) => tour.tourTitle.toLowerCase())
         .join(', ');
@@ -143,26 +165,12 @@ function Brons({ fetchBronsData, user }) {
       const matchesBronTypeRole =
         bronTypeRole === '' || agent.bronTypeRole === bronTypeRole;
 
-      // Приведение дат к одному формату для сравнения
       const agentBookingDate = new Date(agent.createdAt)
         .toISOString()
         .split('T')[0];
       const matchesDateQuery =
         dateQuery === '' || agentBookingDate === dateQuery;
-      if (userId) {
-        filtered = filtered.filter((agent) => {
-          // Допустим, agent.agent = userId
-          return String(agent.agent) === String(userId);
-        });
-      }
-      if (user) {
-        filtered = filtered.filter((agent) => {
-          const agentId = typeof agent.agent === 'object'
-            ? agent.agent._id
-            : agent.agent;
-          return String(agentId) === String(user._id);
-        });
-      }
+
       return (
         matchesTourTitleOrAgent &&
         matchesPaymentType &&
@@ -246,6 +254,25 @@ function Brons({ fetchBronsData, user }) {
     }
   }
 
+  async function updateStatus(id, currentStatus) {
+    try {
+      const response = await fetch(`${server}/api/updateOneAgent/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: !currentStatus }),
+      });
+
+      if (response.ok) {
+        fetchTouragents(); // обновим список
+        if (fetchBronsData) fetchBronsData();
+      } else {
+        console.error('Ошибка при обновлении статуса');
+      }
+    } catch (error) {
+      console.error('Ошибка при обновлении статуса:', error);
+    }
+  }
+
   function formatDate(isoDate) {
     const date = new Date(isoDate);
 
@@ -280,6 +307,9 @@ function Brons({ fetchBronsData, user }) {
   };
 
   // Сброс Фильтров
+
+  const [selectedBron, setSelectedBron] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
@@ -373,7 +403,8 @@ function Brons({ fetchBronsData, user }) {
 
                       <th>Имя клиента</th>
                       <th>Телефон</th>
-                      <th>Состояния</th>
+                      <th>Статус</th>
+                      <th>Оплата</th>
                       <th>Действия</th>
                     </tr>
                   </thead>
@@ -407,7 +438,7 @@ function Brons({ fetchBronsData, user }) {
                           <td>{getUserNameById(agent.agent)}</td>
                           <td>{getUserPhoneById(agent.agent)}</td>
                           <td>
-                            {agent.confirm ? (
+                            {agent.status ? (
                               <span className={classes.confirmedStatus}>
                                 Подтверждено
                               </span>
@@ -417,7 +448,34 @@ function Brons({ fetchBronsData, user }) {
                               </span>
                             )}
                           </td>
+
                           <td>
+                            {agent.confirm ? (
+                              <span className={classes.confirmedStatus}>
+                                Оплачено
+                              </span>
+                            ) : (
+                              <span className={classes.unconfirmedStatus}>
+                                Не оплачено
+                              </span>
+                            )}
+                          </td>
+                          <td className={classes.serviceButton}>
+                            <button
+                              onClick={() =>
+                                updateStatus(agent._id, agent.status)
+                              }
+                              className={
+                                agent.status
+                                  ? `${classes.confirmButton} ${classes.cancelButton}`
+                                  : classes.confirmButton
+                              }
+                            >
+                              {agent.status
+                                ? 'Отменить'
+                                : 'Обработать'}
+                            </button>
+
                             <button
                               onClick={() =>
                                 updateConfirm(
@@ -434,8 +492,18 @@ function Brons({ fetchBronsData, user }) {
                                   : classes.confirmButton
                               }
                             >
-                              {agent.confirm ? 'Отменить' : 'Подтвердить'}
+                              {agent.confirm ? 'Не оплачено' : 'Оплчено'}
                             </button>
+                            <button
+                              onClick={() => {
+                                setSelectedBron(agent);
+                                setIsModalOpen(true);
+                              }}
+                              className={classes.viewButton}
+                            >
+                              Просмотр
+                            </button>
+
                             <button
                               onClick={() => handleDeleteOne(agent._id)}
                               className={classes.deleteButton}
@@ -459,6 +527,116 @@ function Brons({ fetchBronsData, user }) {
           </div>
         </div>
       ) : null}
+      {isModalOpen && selectedBron && (
+        <div className={classes.modalOverlay}>
+          <div className={classes.modal}>
+            <div className={classes.modalHeader}>
+              <h2>Информация о бронировании</h2>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className={classes.modalClose}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className={classes.modalSection}>
+              <h3>Основные данные</h3>
+              <p>
+                <b>Оплта:</b>{' '}
+                {selectedBron.confirm
+                  ? '✅ Оплачено'
+                  : '❌ Не оплачено'}
+              </p>
+              <p>
+                <b>Статус:</b>{' '}
+                {selectedBron.status
+                  ? '✅ Подтверждено'
+                  : '❌ Не подтверждено'}
+              </p>
+              <p>
+                <b>Тип брони:</b> {selectedBron.bronTypeRole}
+              </p>
+              <p>
+                <b>Тип оплаты:</b> {selectedBron.paymentType}
+              </p>
+              <p>
+                <b>Сумма:</b>{' '}
+                {Number(selectedBron.price).toLocaleString('ru-RU')} ₽
+              </p>
+              <p>
+                <b>Дата отправления:</b> {selectedBron.bookingDate}
+              </p>
+              <p>
+                <b>Время отправления:</b> {selectedBron.bookingTime}
+              </p>
+            </div>
+
+            <div className={classes.modalSection}>
+              <h3>Информация о турах</h3>
+              {selectedBron.tours?.map((tour, index) => (
+                <div key={index} className={classes.modalSubBlock}>
+                  <p>
+                    <b>Название:</b> {tour.tourTitle}
+                  </p>
+                  <p>
+                    <b>Метод:</b> {tour.travelMethod}
+                  </p>
+                  <p>
+                    <b>Тип:</b> {tour.tourType}
+                  </p>
+                  <p>
+                    <b>Сложность:</b> {tour.difficulty}
+                  </p>
+                  <p>
+                    <b>Продолжительность:</b> {tour.duration}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className={classes.modalSection}>
+              <h3>Пассажиры</h3>
+              {selectedBron.passengers?.map((passenger, i) => (
+                <div key={i} className={classes.modalSubBlock}>
+                  <p>
+                    <b>ФИО:</b> {passenger.name}
+                  </p>
+                  <p>
+                    <b>Почта:</b> {passenger.email}
+                  </p>
+                  <p>
+                    <b>Телефон:</b> {passenger.phone}
+                  </p>
+                  <p>
+                    <b>Адрес:</b> {passenger.address}
+                  </p>
+                  <p>
+                    <b>Паспорт:</b> {passenger.passportSeries}{' '}
+                    {passenger.passportNumber}
+                  </p>
+                  <p>
+                    <b>Пол:</b>{' '}
+                    {passenger.gender === 'male' ? 'Мужской' : 'Женский'}
+                  </p>
+                  <p>
+                    <b>Дата рождения:</b> {passenger.birthDate}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className={classes.modalFooter}>
+              <button
+                className={classes.modalCloseBtn}
+                onClick={() => setIsModalOpen(false)}
+              >
+                Закрыть
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
