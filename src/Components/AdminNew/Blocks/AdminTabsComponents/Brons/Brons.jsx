@@ -324,6 +324,7 @@ function Brons({ fetchBronsData, user }) {
     // Сначала сбрасываем URL
     navigate('/admin/brons', { replace: true });
   
+    
     // А затем принудительно обновляем страницу
     setTimeout(() => {
       window.location.reload();
