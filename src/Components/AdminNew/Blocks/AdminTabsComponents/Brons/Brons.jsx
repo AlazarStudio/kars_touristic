@@ -318,6 +318,7 @@ function Brons({ fetchBronsData, user }) {
     setBronTypeRole('');
     setDateQuery('');
     setUserIdFromState(null);
+    
     setFiltersReset(true);
   
     // Сначала сбрасываем URL
