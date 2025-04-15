@@ -202,7 +202,7 @@
   padding: 40px;
   border-radius: 8px;
   position: relative;
-  width: 500px;
+  width: 1000px;
 }
 
 .closeButton {
@@ -625,4 +625,94 @@
 
 .mb40 {
   margin-bottom: 40px;
+}
+
+
+.fullProfile {
+  padding: 24px;
+  max-height: 80vh;
+  overflow-y: auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.fullProfile h2 {
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.fullProfile p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.fullProfile p b {
+  font-weight: 600;
+}
+
+.sectionTitle {
+  margin-top: 24px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+}
+
+.bronBlock {
+  margin-top: 16px;
+}
+
+.bronTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bronTable th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.bronTable td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.bronTable td:last-child {
+  text-align: center;
+}
+
+.statusConfirmed {
+  color: green;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.statusUnconfirmed {
+  color: #d00;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bronTable img {
+  width: 20px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+
+.bronTable img:hover {
+  opacity: 1;
 }

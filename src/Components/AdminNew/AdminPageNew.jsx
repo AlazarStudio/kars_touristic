@@ -764,7 +764,7 @@ function AdminPageNew({ children, ...props }) {
 
                   {/* Партнеры */}
                   <Link
-                    to={`/admin/partners`}
+                    to={`/admin/addPartners`}
                     className={`${classes.admin_data__nav___item} ${
                       activeTab === 'addPartners' ? classes.activeLink : ''
                     } ${classes.hoverBlock}`}

@@ -188,11 +188,11 @@ function AddMultidayTours({ children, activeTab, setIsDirty, region, onTourAdded
                 <label>Сложность</label>
                 <input name="difficulty" type="text" placeholder="Сложность" required />
 
-                <label>Минимальное количество людей</label>
-                <input name="min" type="number" placeholder="Минимальное количество людей" required />
+                <label>Минимальная цена</label>
+                <input name="min" type="number" placeholder="Минимальная цена" required />
 
-                <label>Максимальное количество людей</label>
-                <input name="max" type="number" placeholder="Максимальное количество людей" required />
+                <label>Максимальная цена</label>
+                <input name="max" type="number" placeholder="Максимальная цена" required />
 
                 <label>Стоимость</label>
                 <input name="cost" type="text" placeholder="Стоимость" required />

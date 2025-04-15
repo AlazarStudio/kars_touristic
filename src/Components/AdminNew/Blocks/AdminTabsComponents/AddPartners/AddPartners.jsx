@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import classes from './AddPartners.module.css';
 import server from '../../../../../serverConfig';
-
-function Modal({ isOpen, onClose, children }) {
-  if (!isOpen) return null;
-  return (
-    <div className={classes.modalBackdrop} onClick={onClose}>
-      <div className={classes.modalContent} onClick={(e) => e.stopPropagation()}>
-        <button className={classes.closeButton} onClick={onClose}>×</button>
-        {children}
-      </div>
-    </div>
-  );
-}
+import Form from '../../Form/Form';
 
 function AddPartners({ setActiveTab }) {
   const [partners, setPartners] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     link: '',
-    img: ''
+    imgs: [],
   });
 
   const fetchPartners = async () => {
@@ -39,66 +26,53 @@ function AddPartners({ setActiveTab }) {
     fetchPartners();
   }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const resetAll = () => {
+    setFormData({
+      name: '',
+      description: '',
+      link: '',
+      imgs: [],
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files); 
     setFormData((prev) => ({
       ...prev,
-      [name]: value
+      imgs: files,
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`${server}/api/addPartner`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      if (res.ok) {
-        setFormData({ name: '', description: '', link: '', img: '' });
-        fetchPartners();
-        setIsModalOpen(false);
-      } else {
-        console.error('Ошибка при добавлении партнера');
-      }
-    } catch (error) {
-      console.error('Ошибка запроса:', error);
-    }
+  const initialValues = {
+    name: '',
+    link: '',
+    description: '',
+    imgs: [],
   };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm('Удалить партнера?')) return;
-    try {
-      const res = await fetch(`${server}/api/deletePartner/${id}`, {
-        method: 'DELETE'
-      });
-      if (res.ok) {
-        fetchPartners();
-      } else {
-        console.error('Ошибка удаления');
-      }
-    } catch (err) {
-      console.error('Ошибка запроса:', err);
-    }
-  };
+  
 
   return (
     <div className={classes.container}>
       <div className={classes.headerRow}>
         <h2>Партнеры</h2>
-        <button onClick={() => setIsModalOpen(true)}>+ Добавить партнёра</button>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <form onSubmit={handleSubmit} className={classes.partnerForm}>
+      <Form
+        actionUrl={`${server}/api/Partner`}
+        method="post"
+        resetAll={resetAll}
+        initialValues={{}}
+        needNavigate={false}
+        onTourAdded={fetchPartners}
+        customFormData={{ imgs: formData.imgs }} // передаём массив
+      >
+        <div className={classes.partnerForm}>
           <input
             type="text"
             name="name"
-            placeholder="Название партнера"
+            placeholder="Название партнёра"
             value={formData.name}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             required
           />
           <input
@@ -106,31 +80,35 @@ function AddPartners({ setActiveTab }) {
             name="link"
             placeholder="Ссылка на сайт"
             value={formData.link}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="img"
-            placeholder="Ссылка на логотип"
-            value={formData.img}
-            onChange={handleChange}
+            onChange={(e) => setFormData({ ...formData, link: e.target.value })}
             required
           />
           <textarea
             name="description"
             placeholder="Описание"
             value={formData.description}
-            onChange={handleChange}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
             required
           />
-          <button type="submit">Сохранить</button>
-        </form>
-      </Modal>
+
+          <input
+            type="file"
+            name="imgs"
+            accept="image/*"
+            multiple
+            onChange={handleFileChange}
+            required
+          />
+
+          <button type="submit">Добавить партнёра</button>
+        </div>
+      </Form>
 
       <div className={classes.partnerList}>
         {partners.length === 0 ? (
-          <p>Нет партнеров</p>
+          <p>Нет партнёров</p>
         ) : (
           partners.map((partner) => (
             <div className={classes.partnerCard} key={partner.id}>
@@ -138,7 +116,11 @@ function AddPartners({ setActiveTab }) {
               <div>
                 <h3>{partner.name}</h3>
                 <p>{partner.description}</p>
-                <a href={partner.link} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={partner.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Перейти на сайт
                 </a>
               </div>
@@ -149,6 +131,22 @@ function AddPartners({ setActiveTab }) {
       </div>
     </div>
   );
+
+  async function handleDelete(id) {
+    if (!window.confirm('Удалить партнёра?')) return;
+    try {
+      const res = await fetch(`${server}/api/deletePartner/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        fetchPartners();
+      } else {
+        console.error('Ошибка удаления партнёра');
+      }
+    } catch (err) {
+      console.error('Ошибка запроса:', err);
+    }
+  }
 }
 
 export default AddPartners;

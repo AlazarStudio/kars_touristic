@@ -237,6 +237,12 @@ function Object({
                 <div>
                   Сложность: <span>{regionData.difficulty}</span>
                 </div>
+                <div>
+                  Минимальная стоимость: <span>{regionData.min}{' '}₽</span>
+                </div>
+                <div>
+                Максимальная стоимость: <span>{regionData.max}{' '}₽</span>
+                </div>
               </div>
               {/* {regionData.optional &&
                                     <div className={classes.objects_item__optional}>

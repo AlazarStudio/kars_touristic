@@ -22,14 +22,13 @@
   background: white;
   border-radius: 15px;
   padding: 20px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .partnerCard img {
   width: 100px;
   margin-right: 20px;
 }
-
 
 .modalBackdrop {
   position: fixed;
@@ -66,6 +65,24 @@
 
 .headerRow {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+}
+
+.headerRow button {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  width: 230px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background-color: #949494;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.headerRow button:hover {
+  background-color: #43a047;
 }

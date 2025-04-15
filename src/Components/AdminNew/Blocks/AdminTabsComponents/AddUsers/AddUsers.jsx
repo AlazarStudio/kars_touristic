@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import classes from './AddUsers.module.css';
 import server from '../../../../../serverConfig';
 import { useNavigate } from 'react-router-dom';
+import Feedback from '../../../../Blocks/Feedback/Feedback';
 
 function Modal({ isActive, onClose, children }) {
   if (!isActive) return null;
@@ -41,6 +42,38 @@ function AddUsers({ setActiveTab, onSelectedUser }) {
   const [agents, setAgents] = useState([]);
   const [user, setUser] = useState(null);
   const [selectedUser, setSelectedUser] = useState(null);
+
+  const [userTourBrons, setUserTourBrons] = useState([]);
+  const [userHotelBrons, setUserHotelBrons] = useState([]);
+
+  const getBronsForSelectedUser = async (userId) => {
+    try {
+      const [tourRes, hotelRes] = await Promise.all([
+        fetch(`${server}/api/getAgents`),
+        fetch(`${server}/api/getHotelBrons`),
+      ]);
+
+      const tourData = await tourRes.json();
+      const hotelData = await hotelRes.json();
+
+      const filteredTours = tourData.agent.filter(
+        (agent) =>
+          agent.agent === userId ||
+          agent.passengers.some(
+            (p) => p.userID === userId || p.name === selectedUser.name
+          )
+      );
+
+      const filteredHotels = hotelData.hotelBron.filter(
+        (bron) => bron.userID === userId
+      );
+
+      setUserTourBrons(filteredTours.reverse());
+      setUserHotelBrons(filteredHotels.reverse());
+    } catch (err) {
+      console.error('Ошибка получения броней:', err);
+    }
+  };
 
   // Фильтрация
 
@@ -166,8 +199,24 @@ function AddUsers({ setActiveTab, onSelectedUser }) {
 
   const handleProfileClick = (user) => {
     setSelectedUser(user);
+    getBronsForSelectedUser(user._id);
     setIsProfileModalActive(true);
   };
+
+  function formatDate(isoDate) {
+    const date = new Date(isoDate);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  }
+
+  function formatDateRange(dateRange) {
+    if (!dateRange) return '';
+    const [start, end] = dateRange.split(' - ');
+    const format = (d) => d.split('-').reverse().join('.');
+    return end ? `${format(start)} - ${format(end)}` : format(start);
+  }
 
   return (
     <div className={classes.multidayTours}>
@@ -329,12 +378,125 @@ function AddUsers({ setActiveTab, onSelectedUser }) {
         onClose={() => setIsProfileModalActive(false)}
       >
         {selectedUser && (
-          <div className={classes.profileData}>
-            <h3>Профиль пользователя {selectedUser.name}</h3>
-            <p>Email: {selectedUser.email}</p>
-            <p>Телефон: {selectedUser.phone}</p>
-            <p>Логин: {selectedUser.username}</p>
-            <p>Роль: {selectedUser.role}</p>
+          <div className={classes.fullProfile}>
+            <h2>Профиль пользователя</h2>
+            <p>
+              <b>Имя:</b> {selectedUser.name}
+            </p>
+            <p>
+              <b>Email:</b> {selectedUser.email}
+            </p>
+            <p>
+              <b>Телефон:</b> {selectedUser.phone}
+            </p>
+            <p>
+              <b>Логин:</b> {selectedUser.username}
+            </p>
+            <p>
+              <b>Роль:</b> {selectedUser.role}
+            </p>
+
+            {/* <p>
+                <b>Задолженность:</b>{' '}
+                {selectedUser.debt?.toLocaleString('ru-RU')} ₽
+              </p> */}
+
+            {userTourBrons.length > 0 && (
+              <div className={classes.bronBlock}>
+                <h3>Брони туров</h3>
+                <table className={classes.bronTable}>
+                  <thead>
+                    <tr>
+                      <th>Дата брони</th>
+                      <th>Название тура</th>
+                      <th>Дата тура</th>
+                      <th>Сумма</th>
+                      <th>Оплата</th>
+                      <th>Состояние</th>
+                      <th>Скачать</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {userTourBrons.map((bron) => (
+                      <tr key={bron._id}>
+                        <td>{formatDate(bron.createdAt)}</td>
+                        <td>{bron.tours.map((t) => t.tourTitle).join(', ')}</td>
+                        <td>{formatDateRange(bron.bookingDate)}</td>
+                        <td>{Number(bron.price).toLocaleString('ru-RU')} ₽</td>
+                        <td>
+                          {bron.paymentType === 'cash' ? 'Наличные' : 'Карта'}
+                        </td>
+                        <td>
+                          {bron.confirm
+                            ? '✅ Подтверждено'
+                            : '❌ Не подтверждено'}
+                        </td>
+                        <td>
+                          <a
+                            href={`${server}/refs/VOUCHER для тура ${bron.tours[0]?.tourTitle} - ${bron.passengers[0]?.name}.docx`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src="/voucher.png"
+                              alt="Скачать ваучер"
+                              width={20}
+                            />
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {userHotelBrons.length > 0 && (
+              <div className={classes.bronBlock}>
+                <h3>Брони отелей</h3>
+                <table className={classes.bronTable}>
+                  <thead>
+                    <tr>
+                      <th>Дата брони</th>
+                      <th>Название отеля</th>
+                      <th>Гостей</th>
+                      <th>Сумма</th>
+                      <th>Прибытие</th>
+                      <th>Выезд</th>
+                      <th>Скачать</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {userHotelBrons.map((bron) => (
+                      <tr key={bron._id}>
+                        <td>{formatDate(bron.createdAt)}</td>
+                        <td>{bron.name}</td>
+                        <td>{bron.guests}</td>
+                        <td>
+                          {Number(bron.fullPrice).toLocaleString('ru-RU')} ₽
+                        </td>
+                        <td>{formatDate(bron.arrivalDate)}</td>
+                        <td>{formatDate(bron.departureDate)}</td>
+                        <td>
+                          <a
+                            href={`${server}/refs/VOUCHER для отеля ${bron.name} - ${bron.client[0]?.name}.docx`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <img
+                              src="/voucher.png"
+                              alt="Скачать ваучер"
+                              width={20}
+                            />
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            <Feedback />
           </div>
         )}
       </Modal>

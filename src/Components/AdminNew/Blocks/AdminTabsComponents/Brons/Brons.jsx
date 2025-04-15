@@ -449,7 +449,7 @@ function Brons({ fetchBronsData, user }) {
                         <tr
                           key={agent._id}
                           className={
-                            agent.confirm
+                            agent.status
                               ? classes.statusConfirmDone
                               : classes.statusConfirmCash
                           }
