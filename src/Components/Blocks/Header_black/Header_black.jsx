@@ -75,7 +75,7 @@ function Header_black({ children, cartCount, tempMain, ...props }) {
                                     <li><Link to="/faq" className={`${pageName == '/faq' && classes.activeLink}`}>FAQ</Link></li>
                                     <li><Link to="/contacts" className={`${pageName == '/contacts' && classes.activeLink}`}>Контакты</Link></li>
                                     <li><Link to="/turagents" className={`${pageName == '/turagents' && classes.activeLink}`}>Турагентам</Link></li>
-                                    <li><Link to="/turagents" className={`${pageName == '/partners' && classes.activeLink}`}>Партнеры</Link></li>
+                                    <li><Link to="/partners" className={`${pageName == '/partners' && classes.activeLink}`}>Партнеры</Link></li>
                                 </ul>
                             </div>
                             <div className={classes.navigation_btn}>

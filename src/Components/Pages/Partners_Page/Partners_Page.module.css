@@ -25,15 +25,20 @@
 
 .partnerCard {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    /* align-items: flex-start; */
     width: 100%;
+    padding: 15px;
     min-height: 340px;
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   }
   
-
+.partnerLogo{
+  display: flex;
+  border-radius: 10px;
+}
 .partnerLogo img {
   width: 450px;
   height: 343px;
@@ -59,7 +64,7 @@
 .partnerContent p {
   font-size: 16px;
   line-height: 1.5;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
 }
 
 .partnerButton {
@@ -108,6 +113,7 @@
       .partnerLogo img {
         width: 250px;
         object-fit: contain;
+       
         /* outline: 1px solid red; */
       }
       
