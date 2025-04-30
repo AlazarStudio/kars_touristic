@@ -1,0 +1,157 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* outline: 1px solid red; */
+}
+
+.containerTitle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
+.cardsWrapper {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.partnerCard {
+    display: flex;
+    align-items: center;
+    /* align-items: flex-start; */
+    width: 100%;
+    padding: 15px;
+    min-height: 340px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+.partnerLogo{
+  display: flex;
+  border-radius: 10px;
+}
+.partnerLogo img {
+  width: 450px;
+  height: 343px;
+  object-fit: contain;
+  /* outline: 1px solid red; */
+}
+
+.partnerContent {
+    height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+  gap: 30px;
+}
+
+.partnerContent h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.partnerContent p {
+  font-size: 16px;
+  line-height: 1.5;
+  /* margin-bottom: 15px; */
+}
+
+.partnerButton {
+  display: flex;
+  width: 200px;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  background-color: #868686;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.partnerButton:hover {
+  background-color: #69A64B;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {
+
+      
+      .containerTitle {
+        font-size: 30px;
+      }
+      
+      .cardsWrapper {
+        width: 100%;
+        padding: 15px;
+        flex-direction: column;
+      }
+      
+      .partnerCard {
+          flex-direction: column;
+          width: 100%;
+        }
+        
+        .partnerLogo{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+      
+      .partnerLogo img {
+        width: 250px;
+        object-fit: contain;
+       
+        /* outline: 1px solid red; */
+      }
+      
+      .partnerContent {
+          height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 20px;
+        gap: 20px;
+      }
+      
+      .partnerContent h3 {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      
+      .partnerContent p {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+      
+      .partnerButton {
+        display: flex;
+        width: 200px;
+        height: 50px;
+        align-items: center;
+        justify-content: center;
+        background-color: #868686;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+      
+      .partnerButton:hover {
+        background-color: #69A64B;
+      }
+}

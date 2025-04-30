@@ -1,0 +1,201 @@
+.hotelNumbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 45px;
+}
+
+.hotelNumbers_item {
+    width: 31%;
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.hotelNumbers_item__img {
+    width: 100%;
+    height: 270px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hotelNumbers_like {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5;
+    cursor: pointer;
+  }
+  
+  
+  .hotelNumbers_like img {
+    width: 20px;
+    height: 20px;
+  }
+  
+
+.hotelNumbers_item__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hotelNumbers_item__bottom {
+    padding: 20px;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.hotelNumbers_item__bottom___title {
+    font-weight: 700;
+    font-size: 18px;
+    color: #545873;
+    height: 50px;
+}
+
+.hotelNumbers_item__bottom___feedback {
+    display: flex;
+    border: 1px solid var(--black_color);
+    border-radius: 5px;
+    width: 250px;
+    padding: 8px;
+}
+
+.hotelNumbers_item__bottom___feedback____item {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19.5px;
+    color: var(--black_color);
+}
+
+.hotelNumbers_item__bottom___infoBlocks_text{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.hotelNumbers_item__bottom___infoBlocks____price {
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #545873;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.hotelNumbers_item__bottom___infoBlocks____price span {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #9E9E9E;
+}
+
+.hotelNumbers_item__bottom___feedback____item:last-child {
+    width: 60%;
+    border-left: 1px solid var(--black_color);
+}
+
+.hotelNumbers_item__bottom___infoBlocks {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.hotelNumbers_item__bottom___infoBlocks____block {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #0057C3;
+}
+
+.hotelNumbers_item__bottom___button {
+    width: 100%;
+    background-color: var(--black_color);
+    color: var(--white_color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-radius: 20px;
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.bronBtn {
+    margin: 10px auto 10px;
+    padding: 10px 20px;
+    background-color: #69A64B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    font-weight: 500;
+    transition: 0.2s ease;
+  }
+  
+  /* .bronBtn:hover {
+    background-color: #a72c3a;
+  } */
+  
+  .hotelNumbers_item__link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .hotelNumbers {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .hotelNumbers_item {
+        width: 100%;
+    }
+
+    .hotelNumbers_item__img {
+        height: 200px;
+    }
+
+    .hotelNumbers_item__bottom {
+        padding: 20px;
+        gap: 15px;
+        height: auto;
+    }
+
+    .hotelNumbers_item__bottom___title {
+        width: 100%;
+    }
+
+    .hotelNumbers_item__bottom___feedback {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .hotelNumbers_item__bottom___feedback____item {
+        font-size: 12px;
+    }
+
+    .hotelNumbers_item__bottom___button {
+        font-size: 14px;
+        line-height: normal;
+        padding: 10px;
+    }
+}

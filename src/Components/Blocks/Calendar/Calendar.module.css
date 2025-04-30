@@ -1,0 +1,169 @@
+.calendar {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.calendarSeparate {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.calendarSeparate_right {
+    width: 100%;
+    display: flex;
+    gap: 30px;
+}
+
+.calendarSeparate_right_item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 350px;
+}
+
+.calendarSeparate_right_item_client {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 11px;
+}
+
+.calendarSeparate_right_item h3 {
+    margin-bottom: 20px;
+}
+
+.vanillaCalendar {
+    width: 100%;
+    border: 1px solid #cecece;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.formGroup input,
+.formGroup select {
+    width: 100%;
+    height: 35px;
+    border: 1px solid #cecece;
+    border-radius: 5px;
+    outline: none;
+    padding: 0 10px;
+}
+
+.bookButton {
+    width: 300px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.calendarSeparate_right_item_client .formGroup {
+    width: 24%;
+    justify-content: space-between;
+}
+
+.priceFull {
+    font-weight: 600;
+    font-size: 28px;
+    width: 100%;
+    text-align: right;
+    margin-top: 20px;
+}
+
+/* В Calendar.module.css */
+.requestBtn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #69A64B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    /* font-weight: bold; */
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .requestBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .calendar {
+        width: 100%;
+        height: fit-content;
+        max-height: 800px;
+        overflow: hidden;
+        overflow-y: scroll;
+        gap: 10px;
+    }
+
+    .passengerInfo {
+        padding: 10px;
+    }
+
+    .passengerInfo_data {
+        gap: 10px;
+    }
+
+    .field {
+        width: 100%;
+    }
+
+    .calendar h2 {
+        font-size: 18px !important;
+        margin-bottom: 10px;
+    }
+
+    .calendarSeparate {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .formGroup {
+        gap: 10px;
+    }
+
+    .calendarSeparate_right_item h3 {
+        margin-bottom: 0px;
+    }
+
+    .calendarSeparate_right_item_client{
+        max-height: 200px;
+        overflow: hidden;
+        overflow-y: scroll;
+    }
+
+    .calendarSeparate_right_item_client .formGroup {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .formGroup input,
+    .formGroup select {
+        width: 100%;
+        height: 30px;
+        border: 1px solid #cecece;
+        border-radius: 5px;
+        outline: none;
+        padding: 0 10px;
+    }
+
+    .priceFull{
+        margin-top: 0;
+        font-size: 18px;
+    }
+    
+}

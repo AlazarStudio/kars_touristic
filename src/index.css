@@ -1,0 +1,359 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif !important;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --blockWidth: 1300px;
+    --white_color: #fff;
+    --black_color: #000000;
+    --dark_color: #181818;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    :root {
+        --blockWidth: 100%;
+    }
+
+    h2 {
+        text-align: center;
+        font-size: 22px !important;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+body {
+    background-color: #fff;
+}
+
+main {
+    min-height: 100vh;
+    min-height: 100svh;
+}
+
+.nonFoundPage {
+    width: 100%;
+    height: calc(100vh - 162px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: var(--black_color);
+    color: var(--white_color); */
+    font-size: 28px;
+}
+
+.modal-swiper-show-img .swiper-button-prev {
+    color: var(--white_color);
+    border: 1px solid var(--white_color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    left: 10px;
+}
+
+.modal-swiper-show-img .swiper-button-next {
+    color: var(--white_color);
+    border: 1px solid var(--white_color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    right: 10px;
+}
+
+.swiper-button-prev {
+    color: var(--black_color);
+    border: 1px solid var(--black_color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    left: -90px;
+}
+
+.swiper-button-next {
+    color: var(--black_color);
+    border: 1px solid var(--black_color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    right: -90px;
+}
+
+.tourPhotos:hover .swiper-button-prev,
+.tourPhotos:hover .swiper-button-next {
+    opacity: 1;
+}
+
+.tourPhotos .swiper-button-prev {
+    color: var(--white_color);
+    border: 1px solid var(--white_color);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    left: 20px;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.tourPhotos .swiper-button-next {
+    color: var(--white_color);
+    border: 1px solid var(--white_color);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    right: 20px;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.tourPhotos .swiper-button-prev:hover {
+    color: #000000;
+    background-color: #fff;
+}
+
+.tourPhotos .swiper-button-next:hover {
+    color: #000000;
+    background-color: #fff;
+}
+
+.tourPhotos .swiper-button-prev:after {
+    font-size: 16px;
+    margin-right: 2px;
+}
+
+.tourPhotos .swiper-button-next:after {
+    font-size: 16px;
+    margin-left: 2px;
+}
+
+.swiper-button-prev:after {
+    font-size: 35px;
+    margin-right: 5px;
+}
+
+.swiper-button-next:after {
+    font-size: 35px;
+    margin-left: 5px;
+}
+
+.swiper {
+    height: 100%;
+}
+
+.feedback,
+.checklistSlider {
+    overflow: visible;
+    height: 100%;
+}
+
+.tourPointsSlider {
+    overflow: visible;
+}
+
+.tourDaysSlider {
+    width: 100%;
+}
+
+.tourPointsSlider .swiper-pagination {
+    top: auto;
+    bottom: -35px;
+}
+
+.tourPointsSlider .swiper-pagination-bullet {
+    background: #fff;
+    opacity: 1;
+}
+
+.tourPhotos .swiper-pagination-bullet {
+    background: #ffffff7e;
+    opacity: 1;
+}
+
+.tourPhotos .swiper-pagination-bullet-active{
+    background: #fff;
+    opacity: 1;
+}
+
+.checklistSlider::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -130px;
+    background-color: var(--white_color);
+    height: 100%;
+    width: 11%;
+    z-index: 2;
+}
+
+.checklistSlider::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -130px;
+    background-color: var(--white_color);
+    height: 100%;
+    width: 11%;
+    z-index: 2;
+}
+
+.feedback::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -130px;
+    background-color: var(--white_color);
+    height: 100%;
+    width: 11%;
+    z-index: 2;
+}
+
+.feedback::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -130px;
+    background-color: var(--white_color);
+    height: 100%;
+    width: 11%;
+    z-index: 2;
+}
+
+.numberSlider .swiper-button-prev {
+    color: var(--black_color);
+    background-color: #FFFFFFB2;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    left: 10px;
+}
+
+.numberSlider .swiper-button-next {
+    color: var(--black_color);
+    background-color: #FFFFFFB2;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 3px;
+    right: 10px;
+}
+
+.checklistSlider .swiper-button-prev {
+    color: var(--black_color);
+    border: 1px solid var(--black_color);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    right: -90px;
+    top: 50%;
+}
+
+.checklistSlider .swiper-button-next {
+    color: var(--black_color);
+    border: 1px solid var(--black_color);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    right: -90px;
+    top: 50%;
+}
+
+
+.checklistSlider .swiper-button-prev:after {
+    font-size: 25px;
+    font-weight: 600;
+    margin-right: 2px;
+}
+
+.checklistSlider .swiper-button-next:after {
+    font-size: 25px;
+    margin-left: 2px;
+    font-weight: 600;
+}
+
+
+.numberSlider .swiper-button-prev:after {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 2px;
+}
+
+.numberSlider .swiper-button-next:after {
+    font-size: 20px;
+    margin-left: 2px;
+    font-weight: 600;
+}
+
+.similarTours {
+    width: 100%;
+    overflow: visible;
+}
+
+.similarTours .swiper-button-prev {
+    color: var(--black_color);
+    border: 1px solid var(--black_color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    left: -90px;
+}
+
+.similarTours .swiper-button-next {
+    color: var(--black_color);
+    border: 1px solid var(--black_color);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    right: -90px;
+}
+
+.similarTours::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -130px;
+    background-color: var(--white_color);
+    height: 100%;
+    width: 11%;
+    z-index: 2;
+}
+
+.similarTours::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -130px;
+    background-color: var(--white_color);
+    height: 100%;
+    width: 11%;
+    z-index: 2;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .vanilla-calendar {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .vanilla-calendar-days {
+        row-gap: 0;
+    }
+
+    .tourPointsSlider .swiper-pagination {
+        display: none;
+    }
+}

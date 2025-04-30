@@ -1,0 +1,53 @@
+/* 
+.admin_data__info::-webkit-scrollbar{
+    width: 0;
+} */
+
+.addData {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-bottom: 40px;
+}
+
+.addData1 button{
+    padding: 5px 10px;
+    background-color: #727272;
+    color: #fff;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .addData1 button:hover{
+    background-color: #69a64b;
+  }
+
+  .addData1 h3{
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+.addData_title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
+
+.addData .noBorder {
+    border: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+.addData_subtitle {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}

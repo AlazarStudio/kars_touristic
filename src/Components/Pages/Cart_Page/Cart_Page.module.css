@@ -1,0 +1,356 @@
+.cart {
+    min-height: 50vh;
+}
+
+.cartPage {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.cartPage_left {
+    width: 70%;
+    box-shadow: 0px 4px 24px 0px #B4B4B440;
+    border-radius: 30px;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.cartPage_right {
+    width: 30%;
+    box-shadow: 0px 4px 24px 0px #B4B4B440;
+    border-radius: 30px;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-height: 335px;
+    height: fit-content;
+}
+
+.cartPage_left__title {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29.26px;
+    text-transform: uppercase;
+    padding-bottom: 40px;
+    border-bottom: 2px solid #AAC6EC;
+}
+
+.cartPage_left__data {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.cartPage_left__data___elem {
+    display: flex;
+    gap: 25px;
+}
+
+.cartPage_left__data___elem____objectData {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cartPage_left__data___elem____objectData___info {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.objectData_img {
+    width: 200px;
+    height: 140px;
+}
+
+.objectData_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.objectData_info {
+    display: flex;
+    width: 400px;
+    height: 100%;
+    gap: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.objectData_info__title {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 19.5px;
+}
+
+.objectData_info__list {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16.8px;
+    text-align: left;
+    opacity: 0.7;
+}
+
+.objectData_info__list span {
+    font-weight: 600;
+}
+
+.objectData_price {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.objectData_price__num {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29.26px;
+}
+
+.objectData_price__delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #8C8C8C;
+    border-radius: 50px;
+    padding: 8px 15px;
+    color: #8C8C8C;
+    cursor: pointer;
+}
+
+.cartPage_right__info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cartPage_right__info___title {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24.38px;
+    text-transform: uppercase;
+}
+
+.cartPage_right__info___num {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 24.38px;
+}
+
+.cartPage_right__info___lower {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cartPage_right__info___lower___title {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 17.02px;
+}
+
+.cartPage_right__info___lower___num {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 17.02px;
+}
+
+.cartPage_right__button {
+    width: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 19.5px;
+    padding: 15px;
+    border-radius: 50px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.cartPage_right__infoBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cartPage_right__oferta label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 17.07px;
+    color: #8C8C8C;
+}
+
+.cartPage_right__oferta label input {
+    margin-top: 3px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Полупрозрачный черный фон */
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 1000;
+    /* Обеспечивает, что модальное окно будет поверх других элементов */
+}
+
+.modalContent {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
+    margin-top: 40px;
+}
+
+.modalContent h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.passengerInfo {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.passengerInfo h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.passangerCount {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+.passengerBlock input{
+    width: calc(100% - 10px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+}
+
+.totalSum {
+    margin-top: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.paymentMethod {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.paymentMethod h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.paymentMethod label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.paymentMethod input[type="radio"] {
+    margin-right: 10px;
+    outline: none;
+}
+
+.cartPage_right__oferta button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cartPage_right__oferta button:hover {
+    background-color: #0056b3;
+}
+
+.closeButton {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    font-weight: 600;
+}
+
+.closeButton:hover {
+    color: #ff0000;
+    /* Красный цвет при наведении */
+}
+
+.passengerBlock {
+    width: 100%;
+    max-height: 370px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+
+.passengerBlock::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.passengerBlock::-webkit-scrollbar-thumb {
+    background-color: #0057C3;
+    border-radius: 10px;
+}
+
+.passengerBlock::-webkit-scrollbar-thumb:hover {
+    background-color: #0063DE;
+}
+
+
+@media (min-width: 0px) and (max-width: 1299px) {}

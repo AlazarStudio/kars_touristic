@@ -1,0 +1,386 @@
+.main {
+    width: 100%;
+    height: 100vh;
+    min-height: 900px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.main::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    min-height: 900px;
+    background: #00000069;
+    z-index: 1;
+}
+
+.separateBlock {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-top: 160px;
+}
+
+.hotelBronSide {
+    width: 50%;
+    position: relative;
+    z-index: 2;
+}
+
+.hotelInfo {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    color: var(--white_color);
+    width: 50%;
+}
+
+.hotelTitle {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 39.01px;
+}
+
+.hotelDesc {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: justify;
+}
+
+.hotelItems {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 80px 0;
+    gap: 20px;
+}
+
+.hotelItems_elem {
+    width: 25%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+    border: 1px solid var(--black_color);
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.hotelItems_elem__img {
+    height: 125px;
+}
+
+.hotelItems_elem__img img {
+    height: 100%;
+}
+
+.hotelItems_elem__title {
+    font-weight: 600;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.aboutHotel {
+    width: 100%;
+    background-color: var(--dark_color);
+    color: var(--white_color);
+    margin-bottom: 80px;
+}
+
+.aboutHotel_info {
+    display: flex;
+    justify-content: space-between;
+    height: 600px;
+    gap: 120px;
+}
+
+.aboutHotel_info__left {
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.aboutHotel_info__left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.aboutHotel_info__right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 60px;
+    padding: 60px 0;
+}
+
+.aboutHotel_info__right___title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 39.01px;
+}
+
+.aboutHotel_info__right___text {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.similar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 80px;
+}
+
+.links {
+    display: flex;
+}
+
+.links_item {
+    width: 40px;
+    height: 40px;
+    background-color: #181818;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 40px;
+    padding: 10px;
+}
+
+.links_item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.hotelInfo_stars_links {
+    display: flex;
+    /* justify-content: space-between; */
+    width: 100%;
+    gap: 20px;
+}
+
+.hotelStars {
+    background-color: #000000a8;
+    border-radius: 50px;
+    overflow: hidden;
+    display: flex;
+    gap: 8px;
+    width: fit-content;
+    padding: 12px 20px;
+}
+
+.hotelStars img {
+    width: 100%;
+    height: 17px;
+    object-fit: contain;
+}
+
+.hotelBron {
+    width: 450px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #69A64B;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 150%;
+    letter-spacing: 0%;
+}
+
+.tour_topInfo__bread {
+    width: 100%;
+    color: #fff;
+    font-size: 14px;
+}
+
+.tour_topInfo__bread a {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+/* Hotels.module.css */
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px;
+    border-radius: 4px;
+    outline: none;
+    width: 1000px;
+    height: fit-content;
+    z-index: 9999999;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999999;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modalCloseButton {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .hotelBron{
+        width: 100%;
+    }
+    .main {
+        height: auto;
+        padding: 80px 10px 20px 10px;
+        gap: 20px;
+        min-height: auto;
+    }
+
+    .main::before {
+        height: 100%;
+        min-height: auto;
+    }
+
+    .hotelInfo {
+        width: 100%;
+        align-items: center;
+        margin-top: 0;
+    }
+
+    .hotelItems {
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .hotelItems_elem {
+        width: 48%;
+        height: 150px;
+    }
+
+    .hotelItems_elem__title {
+        font-size: 14px;
+    }
+
+    .aboutHotel {
+        margin-bottom: 20px;
+    }
+
+    .aboutHotel_info {
+        flex-direction: column;
+        gap: 10px;
+        height: auto;
+    }
+
+    .aboutHotel_info__left {
+        width: 100%;
+    }
+
+    .aboutHotel_info__right {
+        width: 100%;
+        gap: 10px;
+        padding: 0 10px 20px 10px;
+    }
+
+    .aboutHotel_info__right___title {
+        text-align: center;
+        font-size: 22px;
+    }
+
+    .aboutHotel_info__right___text {
+        line-height: normal;
+        text-align: justify;
+    }
+
+    .links_item {
+        width: 40px;
+        height: 100%;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .links_item img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .hotelDesc {
+        font-size: 16px;
+        line-height: normal;
+        text-align: justify;
+    }
+
+    .modal {
+        padding: 15px;
+        width: auto;
+    }
+
+    .separateBlock {
+        margin-top: 0;
+    }
+
+    .hotelStars {
+        align-items: center;
+        padding: 10px 20px;
+    }
+
+    .hotelStars img {
+        width: 100%;
+        height: 20px;
+        object-fit: contain;
+    }
+
+}
