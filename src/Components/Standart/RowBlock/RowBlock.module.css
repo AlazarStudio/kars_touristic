@@ -1,0 +1,15 @@
+.RowBlock{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .RowBlock{
+        padding: 0 20px;
+        gap: 10px;
+    }
+}

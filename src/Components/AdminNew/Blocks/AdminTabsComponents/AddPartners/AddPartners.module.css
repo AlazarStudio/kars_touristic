@@ -1,0 +1,304 @@
+.container {
+  padding: 40px 20px;
+}
+
+.headerRow {
+  display: flex;
+  gap: 150px;
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.headerRow h2 {
+  font-size: 28px;
+  color: #333;
+}
+
+.addButton {
+  padding: 10px 20px;
+  background-color: #646464;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.addButton:hover {
+  background-color: #69A64B;
+}
+
+/* Список партнёров */
+.partnerList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Карточка */
+.partnerCard {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid ;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+
+
+.partnerImage {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 12px;
+  background-color: #f4f4f4;
+}
+
+.partnerCard > div {
+  flex: 1;
+}
+
+.partnerCard p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.partnerCard a {
+  color: #4a90e2;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.partnerCard a:hover {
+  text-decoration: underline;
+}
+
+.cardButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.cardButtons button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+
+.cardButtons button:last-child {
+  background-color: #e53935;
+  color: white;
+}
+
+.cardButtons button:last-child:hover {
+  background-color: #c62828;
+}
+
+/* Модалка */
+.modalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modalContent {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #999;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.closeButton:hover {
+  color: #000;
+}
+
+/* Форма */
+.partnerForm input,
+.partnerForm textarea {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  outline: none;
+  width: 100%;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.partnerForm textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.partnerForm input:focus,
+.partnerForm textarea:focus {
+  border-color: #81212d;
+  box-shadow: 0 0 0 2px rgba(129, 33, 45, 0.2);
+}
+
+.partnerForm input[type='file'] {
+  border: none;
+  background: none;
+  padding: 0;
+
+}
+
+.formButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.saveButton {
+  background-color: #797979;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.saveButton:hover {
+  background-color: #69A64B;
+}
+
+.cancelButton {
+  background-color: #797979;
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.cancelButton:hover {
+  background-color: #ff0000;
+}
+
+
+.partnerTable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+
+.partnerTable th,
+.partnerTable td {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.partnerTable th:last-child,
+.partnerTable td:last-child {
+  border-right: none;
+}
+
+.partnerTable th {
+  background-color: #f7f7f7;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #d0d0d0;
+}
+
+.partnerTable tr:last-child td {
+  border-bottom: none;
+}
+
+
+.partnerImage {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+}
+
+.partnerLink {
+  color: #4a90e2;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.partnerLink:hover {
+  text-decoration: underline;
+}
+
+.cardButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cardButtons button {
+  background-color: #797979;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cardButtons button:hover {
+  background-color: #69A64B;
+}
+
+.cardButtons button:last-child {
+  background-color: #797979;
+  color: white;
+  border: none;
+}
+
+.cardButtons button:last-child:hover {
+  background-color: #ff0000;
+}

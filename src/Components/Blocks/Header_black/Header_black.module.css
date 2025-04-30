@@ -1,0 +1,153 @@
+.header {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 999;
+    margin-bottom: 40px;
+    margin-top: 20px;
+}
+
+.navigation_logo img{
+    height: 80px;
+}
+
+.navigation {
+    width: var(--blockWidth);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navigation_links ul {
+    display: flex;
+    gap: 80px;
+}
+
+.navigation_links ul li a {
+    color: var(--black_color);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.navigation_btn ul {
+    display: flex;
+    height: 25px;
+    gap: 35px;
+}
+
+.navigation_btn ul li a {
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
+
+.mobileHeader {
+    display: none;
+}
+
+.mobileMenu {
+    display: none;
+}
+
+.cartCount{
+    color: #fff;
+    background-color: #000;
+    font-weight: 600;
+    width: fit-content;
+    height: fit-conten;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    padding: 2px 7px;
+    margin-left: 5px;
+}
+
+.activeLink{
+    font-weight: 600 !important;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .header {
+        margin: 0;
+        padding: 10px;
+    }
+
+    .navigation_links {
+        display: none;
+    }
+
+    .navigation_logo {
+        width: 55px;
+    }
+
+    .navigation_logo img {
+        width: 100%;
+    }
+
+    .navigation_btn ul {
+        gap: 20px;
+    }
+
+    .navigation_btn ul li img {
+        height: 15px;
+    }
+
+    .mobileHeader {
+        display: block;
+    }
+
+    .navigation_btn ul li {
+        display: flex;
+        align-items: center;
+    }
+
+    .mobileHeader {
+        cursor: pointer;
+    }
+
+    .mobileMenu {
+        display: flex;
+        position: fixed;
+        top: 70px;
+        right: 0;
+        width: 50%;
+        background-color: white;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        z-index: 99999999;
+        border-radius: 10px 0 0 10px;
+        transform: translateX(0);
+        /* Начальное состояние */
+    }
+
+    .mobileMenuClosed {
+        transform: translateX(100%);
+        /* Закрытое состояние */
+    }
+
+    .mobileMenu ul {
+        list-style: none;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .mobileMenu li a {
+        color: #000;
+        padding: 10px 20px;
+        display: flex;
+    }
+
+    .mobileMenu li:nth-child(1) a {
+        padding-top: 20px;
+    }
+
+    .mobileMenu li:last-child a {
+        padding-bottom: 20px;
+    }
+}

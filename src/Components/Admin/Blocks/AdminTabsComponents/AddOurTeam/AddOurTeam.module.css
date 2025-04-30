@@ -1,0 +1,87 @@
+/* 
+.admin_data__info::-webkit-scrollbar{
+    width: 0;
+} */
+
+.addData {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-bottom: 40px;
+}
+
+.addData_title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
+
+.addData .noBorder {
+    border: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+.addData_subtitle {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
+
+.teamList {
+    display: flex;
+    gap: 30px;
+}
+
+.teamMember {
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.teamMember_img {
+    width: 100%;
+    height: 300px;
+}
+
+.teamMember_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.teamMemberInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+.teamMemberDelete {
+    width: 50%;
+    padding: 12px 20px;
+    border: 1px solid var(--black_color);
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: var(--black_color);
+    margin: 0 auto;
+}
+.teamMemberDelete:hover {
+    border: 1px solid #fa1919;
+    background-color: #fa1919;
+    color: #fff;
+}

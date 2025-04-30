@@ -1,0 +1,150 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 600px;
+}
+
+.modalTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modalTop img {
+  width: 22px;
+  cursor: pointer;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.modalFormBlock {
+  display: flex;
+  width: 100%;
+  /* gap: 16px; */
+  /* outline: 1px solid red; */
+  justify-content: space-between;
+}
+
+.modalFormBlock span {
+  font-size: 13px;
+  line-height: 15px;
+  font-weight: 500;
+  color: #8c8c8c;
+  margin: 0;
+  padding-left: 2px;
+}
+
+.modalFormBlock input {
+  font-size: 14px;
+  border: 1px solid #c1c1c1;
+  outline: none;
+  height: 41px;
+  padding: 1px 5px;
+  margin-bottom: 20px;
+  margin-top: 3px;
+  border-radius: 10px;
+}
+
+.modalFormBlockLeft {
+  display: flex;
+  flex-direction: column;
+  /* outline: 1px solid red; */
+  width: 48% !important;
+}
+
+.modalFormBlockRight {
+  display: flex;
+  flex-direction: column;
+  /* outline: 1px solid blue; */
+  width: 48% !important;
+}
+
+.modalForm select {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid rgb(189, 189, 189);
+  outline: none;
+}
+
+/* .modalForm input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 20px;
+  border: 1px solid rgb(189, 189, 189);
+  outline: none;
+} */
+
+.modalButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modalButtons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+
+  padding: 5px 40px;
+  border-radius: 30px;
+  font-size: 16px;
+  border: none;
+  background-color: gray;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.modalButtons button:hover {
+  background-color: #69a64b;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .modalFormBlock {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .modalFormBlockLeft {
+    width: 100% !important;
+  }
+
+  .modalFormBlockRight {
+    width: 100% !important;
+  }
+
+  .modalContent {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+
+    /* Добавляем ограничения по высоте */
+    max-height: 85vh; /* или 90vh, сколько нужно */
+    overflow-y: auto; /* чтобы при превышении высоты был скролл */
+  }
+}

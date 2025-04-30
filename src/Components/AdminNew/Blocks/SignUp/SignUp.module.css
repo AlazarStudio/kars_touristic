@@ -1,0 +1,85 @@
+.registerForm{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    gap: 20px;
+    margin-bottom: 80px;
+}
+.registerForm form{
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    gap: 20px;
+}
+
+.registerForm input {
+    width: 100%;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid #8C8C8C;
+    padding: 0 20px;
+    outline: none;
+}
+
+.registerForm button {
+    width: 100%;
+    height: 50px;
+    border-radius: 50px;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.registerForm h2{
+    margin-bottom: 20px;
+    font-size: 36px;
+}
+
+.loaderWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+    z-index: 1000; /* Высокий z-index, чтобы быть поверх всего */
+}
+
+.loader {
+    border: 8px solid #f3f3f3; /* Светло-серый цвет */
+    border-top: 8px solid #3498db; /* Синий цвет */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+}
+
+/* Анимация вращения */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .registerForm{
+        height: auto;
+        margin-top: 0px;
+        width: 100%;
+        margin-bottom: 0;
+        padding: 20px;
+    }
+
+    .registerForm form{
+        width: 100%;
+    }
+}

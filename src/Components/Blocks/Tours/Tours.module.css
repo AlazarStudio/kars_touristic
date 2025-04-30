@@ -1,0 +1,693 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    align-items: center;
+    background-color: #fff;
+    /* border-radius: 30px 30px 0 0; */
+    overflow: hidden;
+}
+
+.tour {
+    width: 100%;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.tour:before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-size: cover;
+    background-position: 50% 50%;
+    z-index: 0;
+}
+
+.centerPosition {
+    width: 100%;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 2;
+    /* margin-top: 60px;
+    margin-bottom: 60px; */
+    gap: 60px;
+    /* overflow: hidden; */
+}
+
+.tour_topInfo {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 1;
+    gap: 40px;
+}
+
+.tour_topInfo__left {
+    width: 42%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.tour_topInfo__right {
+    width: 57%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    position: relative;
+}
+
+.tour_topInfo__left___items {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.tour_topInfo__left___items____element {
+    width: 48%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF26;
+    border-radius: 20px;
+    backdrop-filter: blur(3px);
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: var(--white_color);
+    text-align: center;
+    border: 1px solid var(--white_color);
+    gap: 10px;
+}
+
+.tour_topInfo__left___items____element_____title {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffffb6;
+}
+
+.tour_topInfo__left___items____element_____info {
+    font-family: Montserrat;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.tour_topInfo__left___title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-align: center;
+    color: var(--white_color);
+    text-transform: uppercase;
+}
+
+.tour_topInfo__left___btn {
+    width: 100%;
+    height: 67px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    color: var(--white_color);
+    background-color: #69A64B;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: Montserrat;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__left___btn:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.tour_topInfo__right___img {
+    width: 100%;
+    height: 440px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.tour_topInfo__right___img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tour_topInfo__right___places_gradient {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.tour_topInfo__right___places {
+    width: 100%;
+}
+
+.tour_topInfo_withLine {
+    display: flex;
+    align-items: center;
+}
+
+.tour_topInfo_withLine_option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    height: 46px;
+}
+
+.tour_topInfo_withLine_option img {
+    width: 90%;
+}
+
+.tour_topInfo_withLine_option_num {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+}
+
+.tour_topInfo__right___places____place {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 20px;
+    background-color: #fff;
+    padding: 10px 7px;
+    width: 100%;
+    height: 46px;
+}
+
+.tour_topInfo__right___places____place_empty {
+    display: flex;
+    width: 100px;
+}
+
+.tour_topInfo__right___places____place:hover {
+    background-color: var(--white_color);
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____title {
+    color: var(--black_color);
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____img svg path {
+    fill: var(--black_color)
+}
+
+.tour_topInfo__right___places____place_____img {
+    height: 100%;
+}
+
+.tour_topInfo__right___places____place_____img svg {
+    height: 100%;
+}
+
+.tour_topInfo__right___places____place_____img svg path {
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__right___places____place_____title {
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: normal;
+    color: var(--black_color);
+    transition: all 0.3s ease-in-out;
+    text-align: center;
+}
+
+.tour_topInfo__right___places____place_____title a {
+    color: var(--black_color);
+    transition: all 0.3s ease-in-out;
+}
+
+.tour_topInfo__right___places____place:hover .tour_topInfo__right___places____place_____title a {
+    color: var(--black_color);
+}
+
+.title{
+    display: flex;
+    gap: 200px;
+}
+
+.feedback {
+    box-shadow: none;
+    height: 200px;
+}
+
+.feedback_slide {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #8A8EA3;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 35px;
+    gap: 10px;
+}
+
+.feedback_slide__top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.feedback_slide__top___name {
+    font-family: Montserrat;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24.38px;
+    width: 100%;
+}
+
+.feedback_slide__bottom {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 21px;
+}
+
+.similar {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+
+.similarBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    /* margin-bottom: 80px; */
+    width: 80%;
+}
+
+.similarTours {
+    width: 100%;
+}
+
+.tour_topInfo__bread {
+    width: 100%;
+    color: #fff;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.tour_topInfo__bread a {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+
+.tour_topInfo__left___items____elementAuthor {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #FFFFFF26;
+    border-radius: 20px;
+    backdrop-filter: blur(3px);
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    color: var(--white_color);
+    text-align: center;
+    border: 1px solid var(--white_color);
+    gap: 10px;
+}
+
+.departureDates {
+    display: flex;
+    flex-direction: column;
+}
+
+.departureDates_line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #dfdfdf;
+    padding: 20px;
+    margin-top: -1px;
+}
+
+.departureDates_line:nth-child(1) {
+    font-weight: 600;
+}
+
+.departureDates_line_column {
+    width: 20%;
+    text-align: center;
+}
+
+.departureDates_line_column:last-child {
+    width: 160px;
+}
+
+.departureDates_line_column_btn {
+    border: 1px solid #000;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease-in-out;
+}
+
+.departureDates_line_column_btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.tabs button {
+    background: #fff;
+    border: 1px solid #dfdfdf;
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    color: #000;
+    transition: color 0.3s;
+    border-radius: 50px;
+}
+
+.tabs button:hover {
+    color: #000;
+}
+
+.tabs button.activeTab {
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+}
+
+.docBlocks {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+/* Hotels.module.css */
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 20px;
+    outline: none;
+    width: fit-content;
+    height: fit-content;
+    z-index: 1301;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1301;
+}
+
+.modalCloseButton {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:transparent;
+    font-size: 22px;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.checkList {
+    background-color: #fff;
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    width: 100%;
+    border-radius: 20px;
+    padding: 40px;
+}
+
+.checkList_block {
+    display: flex;
+  
+    /* gap: 20px; */
+    width: 100%;
+}
+
+
+.checkList_blockLeft {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    border-right: 1px solid #000;
+}
+
+.checkList_blockRight {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+}
+
+
+.checkList_block_item {
+    width: 40%;
+    display: flex;
+    gap: 16px;
+}
+
+.checkList_block_item img {
+    width: 20px;
+    height: 20px;
+}
+
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .main {
+        height: auto;
+        gap: 20px;
+    }
+
+    .tour_topInfo {
+        margin: 0;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .tour_topInfo__right___img {
+        height: 200px;
+    }
+
+    .centerPosition {
+        height: auto;
+        min-height: auto;
+        padding: 20px 10px 20px 10px;
+        margin: 0;
+        gap: 20px;
+    }
+
+    .tour_topInfo__left {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .tour_topInfo__right {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .tour_topInfo__left___title {
+        font-size: 22px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__left___items {
+        gap: 10px;
+    }
+
+    .tour_topInfo__left___items____element_____title {
+        font-size: 12px;
+    }
+
+    .tour_topInfo__left___items____element_____info {
+        font-size: 16px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__right___places____place_____title {
+        font-size: 12px;
+        line-height: normal;
+    }
+
+    .tour_topInfo__right___places {
+        gap: 10px;
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+    }
+
+    .tour_topInfo__right___places____place {
+        width: 100%;
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .similarBlock {
+        width: 90%;
+        margin-bottom: 20px;
+    }
+
+    .tabs {
+        flex-wrap: wrap;
+        padding: 0 5px;
+        gap: 10px;
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+
+    .tabs button {
+        font-size: 12px;
+        width: 48%;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .docBlocks {
+        gap: 20px;
+    }
+
+    .departureDates {
+        padding: 0 10px;
+    }
+
+    .departureDates_line {
+        padding: 10px 5px;
+    }
+
+    .departureDates_line_column {
+        font-size: 12px;
+    }
+
+    .departureDates_line_column_btn {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .departureDates_line_column:nth-child(1) {
+        width: 140px;
+    }
+
+    .departureDates_line_column:nth-child(2) {
+        display: none;
+    }
+
+    .departureDates_line_column:nth-child(3) {
+        display: none;
+    }
+
+    .departureDates_line_column:nth-child(4) {
+        width: 70px;
+    }
+
+    .departureDates_line_column:nth-child(5) {
+        width: 120px;
+    }
+
+    .modal {
+        padding: 10px;
+    }
+
+
+    .tour_topInfo__right___places_gradient {
+        gap: 20px
+    }
+
+    .tour_topInfo__right___places {
+        justify-content: space-between;
+    }
+
+    .similar {
+        margin-bottom: 0px;
+    }
+
+    .checkList_block_item {
+        width: 100%;
+    }
+
+    .checkList {
+        padding: 20px;
+        margin: 0 10px;
+        width: calc(100% - 20px);
+    }
+
+    .checkList_block {
+        gap: 15px;
+        width: 100%;
+        font-size: 14px;
+    }
+
+}

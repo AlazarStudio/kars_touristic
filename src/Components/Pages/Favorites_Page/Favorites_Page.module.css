@@ -1,0 +1,39 @@
+.fullBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 65px;
+    padding: 5px 0;
+}
+
+.objects {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px 26px;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);  */
+    border-radius: 20px; /* опционально — для скругления углов */
+}
+
+
+
+.nonFoundFavorites {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 45vh;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .fullBlock {
+        padding: 20px 10px;
+        gap: 20px;
+    }
+
+    .fullBlock h2 {
+        text-align: center;
+    }
+
+    .objects {
+        justify-content: center;
+        gap: 20px 10px;
+    }
+}

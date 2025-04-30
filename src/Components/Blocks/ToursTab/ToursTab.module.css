@@ -1,0 +1,118 @@
+.tabs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.tabButtons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 15px;
+}
+
+.tabButton {
+    padding: 15px;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #8C8C8C;
+    background-color: var(--white_color);
+    border-radius: 60px;
+    width: 100%;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.tabButtonCircle{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
+}
+
+.tabButtonCircle_block{
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.tabButtonCircle_lineLeft{
+    position: absolute;
+    width: 50%;
+    border: 1px solid #000;
+    left: -10px;
+}
+
+.tabButtonCircle_lineRight{
+    position: absolute;
+    width: 50%;
+    border: 1px solid #000;
+    right: -10px;
+}
+
+.activeCircle,
+.tabButtonCircle_block:hover{
+    background-color: #000;
+}
+
+.tabButton:hover,
+.active {
+    border: 1px solid #ffffff00;
+    box-shadow: 0px 4px 14.7px 0px #D9D9D9A3;
+    background-color: #000;
+    color: #fff;
+}
+
+
+.tabContent {
+    width: 100%;
+    box-shadow: 0px 4px 46.4px 0px #B4B4B440;
+    padding: 40px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    /* gap: 20px; */
+    text-align: justify;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    border: 1px solid #000;
+}
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .tabs {
+        gap: 20px;
+    }
+
+    .tabButtons {
+        gap: 10px;
+        padding: 0 10px;
+        line-height: normal;
+    }
+
+    .tabButton {
+        width: 100%;
+        padding: 10px 0;
+        font-size: 14px;
+    }
+
+    .tabContent {
+        padding: 15px;
+        margin: 0 10px;
+        width: calc(100% - 20px);
+        font-size: 14px;
+        line-height: normal;
+    }
+}

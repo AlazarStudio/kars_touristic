@@ -1,0 +1,48 @@
+.edit {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.editTitle {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.editTitle img{
+    width: 25px;
+    cursor: pointer;
+}
+
+.editBlocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.editBlocks_item {
+    width: 25%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #000000;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    padding: 20px;
+    transition: all 0.2s ease-in-out;
+    background-color: var(--white_color);
+    color: var(--black_color);
+}
+
+.editBlocks_item:hover{
+    transform: translateY(-10px);
+}

@@ -1,0 +1,45 @@
+.filter {
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.filter select{
+    width: 25%;
+    border: 1px solid #8C8C8C;
+    border-radius: 30px;
+    padding: 12px 15px;
+    cursor: pointer;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    /* line-height: 24px; */
+    outline: none;
+}
+
+.filter input {
+    width: 100%;
+    border: 1px solid #8C8C8C;
+    border-radius: 30px;
+    padding: 12px 15px;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    /* line-height: 24px; */
+    outline: none;
+}
+
+
+@media (min-width: 0px) and (max-width: 1299px) {
+    .filter {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filter select,
+    .filter input {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+}

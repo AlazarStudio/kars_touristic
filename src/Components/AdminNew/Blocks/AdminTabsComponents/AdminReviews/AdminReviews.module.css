@@ -1,0 +1,47 @@
+.reviewTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 15px;
+  margin-top: 50px;
+}
+
+.reviewTable th,
+.reviewTable td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  vertical-align: top;
+  text-align: left;
+}
+
+.reviewTable th {
+  align-items: center;
+  background-color: #f7f7f7;
+}
+
+.visibleReview {
+  opacity: 0.5;
+}
+
+.reviewTable button{
+  border: none;
+  margin-top: 5px;
+  background-color: inherit;
+  border: 1px solid #000;
+  padding: 3px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.deleteButton:hover{
+  background-color: red;
+  border: 1px solid red;
+  color: #fff;
+}
+
+.viewButton:hover{
+  background-color: #69A64B;
+  border: 1px solid #69A64B;
+  color: #fff;
+}

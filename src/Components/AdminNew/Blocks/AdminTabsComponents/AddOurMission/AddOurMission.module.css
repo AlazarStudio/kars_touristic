@@ -1,0 +1,50 @@
+/* 
+.admin_data__info::-webkit-scrollbar{
+    width: 0;
+} */
+
+.addData {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding-bottom: 40px;
+    margin-left: 10px;
+}
+
+.addData_title {
+    font-family: Montserrat;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
+
+.addData .noBorder {
+    border: none;
+    padding: 0;
+    border-radius: 0;
+}
+
+.addData_subtitle {
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 48px;
+    text-transform: uppercase;
+}
+
+
+.missionInfo{
+    width: 100%;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 4px 24px 0px #B4B4B440;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 30px;
+}

@@ -1,0 +1,535 @@
+.multidayTours {
+  width: 100%;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  /* padding-left: 20px; */
+  /* margin-top: 40px; */
+}
+
+.multidayTours_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.bronTable {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-size: 14px;
+}
+
+.bronTable th,
+.bronTable td {
+  border: 1px solid #ddd;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.bronTable th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+
+.confirmedStatus {
+  color: green;
+  font-weight: bold;
+}
+
+.statusConfirmDone {
+  background-color: #f2fff2;
+}
+
+.statusConfirmCash {
+  background-color: #fff9f2;
+}
+
+.serviceButton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.serviceButton button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+  max-width: 125px;
+  padding: 3px 4px;
+  border: none;
+  border-radius: 5px;
+}
+
+.viewButton{
+  background-color: #4556a1;
+  color: #fff;
+}
+
+.confirmButton {
+  background-color: #4caf50;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.confirmButton:hover {
+  background-color: #43a047;
+}
+
+.cancelButton {
+  background-color: #888888;
+}
+
+.cancelButton:hover {
+  background-color: #757575;
+}
+
+.deleteButton {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+}
+
+.resetButton {
+  padding: 8px 12px;
+  background-color: inherit;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s ease;
+}
+
+.resetButton:hover {
+  color: #fff;
+  background-color: #000;
+}
+
+.multidayTours_top__title {
+  font-family: Montserrat;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 48px;
+  text-transform: uppercase;
+}
+
+.multidayTours_top__add {
+  color: var(--black_color);
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--black_color);
+  border-radius: 30px;
+  padding: 15px 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.multidayTours_top__add:hover {
+  color: var(--white_color);
+  background-color: var(--black_color);
+}
+
+.multidayTours_back button {
+  color: var(--black_color);
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 170px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.multidayTours_back button img {
+  width: 14px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
+}
+
+.gids {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  /* outline: 1px solid red; */
+}
+
+.gidsButtons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.gidsButtons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  background-color: inherit;
+  padding: 13px 24px;
+  cursor: pointer;
+  color: #000;
+  border: 1px solid #d1d1d1;
+  border-radius: 20px;
+  font-size: 12px;
+  transition: all 0.3s ease-in-out;
+}
+
+.gidsButtons button:hover {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+}
+
+.gids_info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--black_color);
+}
+
+.gids_info:last-child {
+  border: none;
+}
+
+.gids_info__img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.gids_info__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gids_info__elem {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24.38px;
+  display: flex;
+  gap: 10px;
+  width: 20%;
+}
+
+.gids_info__elem:nth-child(1) {
+  width: 30%;
+}
+
+.gids_info__access {
+  color: #169a4c;
+  border-radius: 30px;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.gids_info__noAccess {
+  color: #9a2516;
+  border-radius: 30px;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gids_info__changeBTN {
+  background: var(--black_color);
+  border-radius: 30px;
+  padding: 10px 15px;
+  color: var(--white_color);
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gids_info_data {
+  display: flex;
+  align-items: center;
+  width: calc(100% - 210px);
+  gap: 50px;
+}
+
+.listBron {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 2px;
+  /* background-color: #575656; */
+  border-radius: 15px;
+}
+
+.listBronTop {
+  background-color: #f4f4f4;
+  font-size: 12px;
+  border-radius: 20px;
+}
+
+.listBronTop li {
+  font-size: 12px;
+}
+
+.listBron li {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 10px;
+  align-items: center;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.listBron li:nth-child(2n) {
+  /* background-color: #ececec; */
+}
+
+.listBronItem {
+  width: 15%;
+}
+
+.listBronItemButton {
+}
+
+.listBronItem:nth-child(1) {
+  width: 12%;
+}
+
+.listBronItem:nth-child(2) {
+  width: 30%;
+}
+
+.listBronItem:nth-child(3) {
+  width: 20%;
+}
+
+.listBronItem:nth-child(7) {
+  width: 20%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.titleBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleBlockPrice {
+  font-size: 18px;
+}
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.searchBlock {
+  width: 100%;
+}
+
+.searchBlock input {
+  width: 100%;
+  border: 1px solid #8c8c8c;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-family: Montserrat;
+  font-size: 16px;
+  outline: none;
+}
+
+.filterBlock {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.filterBlock input:nth-of-type(1) {
+  width: 30%;
+  border: 1px solid #8c8c8c;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-family: Montserrat;
+  font-size: 12px;
+  outline: none;
+  border-radius: 20px;
+  border: 1px solid #d1d1d1;
+}
+
+.filterBlock select {
+  width: 15%;
+  border: 1px solid #8c8c8c;
+  border-radius: 20px;
+  padding: 12px 10px;
+  cursor: pointer;
+  font-family: Montserrat;
+  font-size: 12px;
+  outline: none;
+  border: 1px solid #d1d1d1;
+}
+
+.filterBlock input:nth-of-type(2) {
+  width: 15%;
+  border: 1px solid #8c8c8c;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font-family: Montserrat;
+  font-size: 12px;
+  outline: none;
+  border-radius: 20px;
+  border: 1px solid #d1d1d1;
+}
+
+.confirmedStatus {
+  color: #10ab5e;
+}
+
+/* .confirmedStatus img{
+    width: 13px;
+    height: 10px;
+    outline: 1px solid red;
+} */
+
+.statusConfirmCash {
+  /* background-color: rgba(255, 166, 0, 0.2) !important; */
+}
+
+.statusConfirmRequest {
+  /* background-color: rgba(0, 0, 255, 0.2) !important; */
+}
+
+.statusConfirmDone {
+  /* background-color: rgba(0, 128, 0, 0.2) !important; */
+}
+
+.listBronItem button {
+  /* padding: 10px; */
+  /* width: 100%; */
+  padding: 10px 24px;
+  cursor: pointer;
+  border: 1px solid #000;
+  background-color: inherit;
+  font-size: 12px;
+  border-radius: 20px;
+  transition: all 0.2s ease-in-out;
+}
+
+.listBronItem button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modalHeader h2 {
+  margin: 0;
+}
+
+.modalClose {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.modalSection {
+  margin-bottom: 25px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.modalSection h3 {
+  margin-top: 0;
+  color: #81212d;
+}
+
+.modalSubBlock {
+  background: #f9f9f9;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+.modalFooter {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.modalCloseBtn {
+  background-color: #81212d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modalCloseBtn:hover {
+  background-color: #a7303d;
+}
