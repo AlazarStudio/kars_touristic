@@ -68,9 +68,10 @@ function AddContacts({ children, activeTab, ...props }) {
 
       <br />
       {contactsInfo ? (
+        
         <div className={classes.addData_title}>Текущие контакты:</div>
       ) : null}
-      
+
 
       {contactsInfo ? (
         <BlockTopInfo
